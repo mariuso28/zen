@@ -5,6 +5,7 @@ import org.zen.user.punter.Punter;
 public abstract class ModelEvent {
 	private EventType eventType;
 	protected Punter punter;
+	boolean executed = false;
 	
 	public ModelEvent(EventType eventType,Punter punter)
 	{
@@ -29,4 +30,14 @@ public abstract class ModelEvent {
 	public void setPunter(Punter punter) {
 		this.punter = punter;
 	}
+
+	public boolean isExecuted() {
+		return executed;
+	}
+
+	public void setExecuted(boolean executed) {
+		this.executed = executed;
+	}
+	
+	
 }

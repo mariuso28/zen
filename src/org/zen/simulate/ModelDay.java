@@ -1,12 +1,11 @@
 package org.zen.simulate;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class ModelDay {
 	private Date date;
-	private List<ModelEvent> events = new ArrayList<ModelEvent>();
+	private ConcurrentLinkedQueue<ModelEvent> events = new ConcurrentLinkedQueue<ModelEvent>();
 	
 	public ModelDay()
 	{
@@ -24,14 +23,14 @@ public class ModelDay {
 		this.date = date;
 	}
 
-	public List<ModelEvent> getEvents() {
+	public ConcurrentLinkedQueue<ModelEvent> getEvents() {
 		return events;
 	}
 
-	public void setEvents(List<ModelEvent> events) {
+	public void setEvents(ConcurrentLinkedQueue<ModelEvent> events) {
 		this.events = events;
 	}
-	
+
 	
 
 }

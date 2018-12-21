@@ -11,18 +11,22 @@ xsi:schemaLocation="http://www.springframework.org/schema/beans
 			http://www.springframework.org/schema/context
 http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-		<context:annotation-config />
-		<bean class="org.zen.config.SecurityConfiguration" />
-		<bean class="org.zen.config.OAuth2AuthorizationServerConfig" />
-		<bean class="org.zen.config.OAuth2ResourceServerConfig" />
-		<bean class="org.zen.config.service.CustomUserDetailsService" />
-		<bean class="org.zen.config.service.CustomAuthenticationSuccessHandler" />
-		<bean class="org.zen.config.service.CustomAuthenticationFailureHandler" />
-		
-		<import resource="zen-persistence.xml"/>
+	<context:annotation-config />
+	<bean class="org.zen.config.SecurityConfiguration" />
+	<bean class="org.zen.config.OAuth2AuthorizationServerConfig" />
+	<bean class="org.zen.config.OAuth2ResourceServerConfig" />
+	<bean class="org.zen.config.service.CustomUserDetailsService" />
+	<bean class="org.zen.config.service.CustomAuthenticationSuccessHandler" />
+	<bean class="org.zen.config.service.CustomAuthenticationFailureHandler" />
+	
+	<import resource="zen-persistence.xml"/>
 
-		<bean id="services"
-			class="org.zen.services.Services" >		
+	<bean id="services"
+		class="org.zen.services.Services" init-method="initServices">		
+	</bean>
+
+	<bean id="restServices"
+			class="org.zen.rest.services.RestServices" >
 		</bean>
 
 </beans>

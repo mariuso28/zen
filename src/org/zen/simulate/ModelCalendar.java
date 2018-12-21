@@ -5,8 +5,13 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 public class ModelCalendar {
 
+	@SuppressWarnings("unused")
+	private static Logger log = Logger.getLogger(ModelCalendar.class); 
+	
 	private int duration;
 	private List<ModelDay> days;
 	private int nextDay;
@@ -22,6 +27,7 @@ public class ModelCalendar {
 		gc.clear(Calendar.MILLISECOND);
 		for (int i=0; i<duration; i++)
 		{
+			gc.add(Calendar.DAY_OF_YEAR, 1);
 			days.add(new ModelDay(gc.getTime()));
 		}
 	}

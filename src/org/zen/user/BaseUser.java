@@ -4,6 +4,7 @@ import java.util.UUID;
 
 public class BaseUser {
 	private UUID id;
+	private long seqId;
 	private String contact;
 	private String email;
 	private String phone;
@@ -15,11 +16,13 @@ public class BaseUser {
 	
 	public BaseUser()
 	{
+		id = UUID.randomUUID();
 	}
 	
 	public void copyValues(BaseUser bu)
 	{
 		setId(bu.getId());
+		setSeqId(bu.getSeqId());
 		setContact(bu.getContact());
 		setEmail(bu.getEmail());
 		setPhone(bu.getPhone());
@@ -87,6 +90,14 @@ public class BaseUser {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public long getSeqId() {
+		return seqId;
+	}
+
+	public void setSeqId(long seqId) {
+		this.seqId = seqId;
 	}
 	
 }

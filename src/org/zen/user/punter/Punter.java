@@ -3,25 +3,23 @@ package org.zen.user.punter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.zen.level.Level;
+import org.zen.rating.Rating;
 import org.zen.user.BaseUser;
 import org.zen.user.account.Account;
 
 public class Punter extends BaseUser {
 
-	private Level level;
+	private Rating rating;
 	private List<Punter> children = new ArrayList<Punter>();
 	private Punter parent;
 	private Account account = new Account();
+	private boolean upgradeScheduled;
+	private int level;
 	
 	public Punter()
 	{
+		super();
 		setRole(BaseUser.ROLE_PUNTER);
-	}
-	
-	public boolean getFullChildList(int max)
-	{
-		return getChildren().size()==max;
 	}
 	
 	public List<Punter> getChildren() {
@@ -32,12 +30,12 @@ public class Punter extends BaseUser {
 		this.children = children;
 	}
 
-	public Level getLevel() {
-		return level;
+	public Rating getRating() {
+		return rating;
 	}
 
-	public void setLevel(Level level) {
-		this.level = level;
+	public void setRating(Rating rating) {
+		this.rating = rating;
 	}
 
 	public Punter getParent() {
@@ -54,6 +52,22 @@ public class Punter extends BaseUser {
 
 	public void setAccount(Account account) {
 		this.account = account;
+	}
+
+	public boolean isUpgradeScheduled() {
+		return upgradeScheduled;
+	}
+
+	public void setUpgradeScheduled(boolean upgradeScheduled) {
+		this.upgradeScheduled = upgradeScheduled;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
 	}
 	
 	
