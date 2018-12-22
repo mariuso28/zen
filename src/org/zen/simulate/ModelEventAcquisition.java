@@ -19,11 +19,11 @@ public class ModelEventAcquisition extends ModelEvent {
 		Punter parent = model.getZenModel().getTrueParent(punter);
 		log.info("Executing acquisition for : " + parent.getEmail());
 		String contact = ModelCodeMaker.makeCode(parent);
-		Punter child = model.getZenModel().addChild(parent,contact+"@test.com", contact,"88888888");
-		List<Punter> upgradables = model.getZenModel().canUpgrade(parent);
+		Punter child = model.getZenModel().addChild(parent,punter,contact+"@test.com", contact,"88888888");
+		List<Punter> upgradables = model.getZenModel().canUpgrade(punter);
 		for (Punter up : upgradables)
-		if (!up.isUpgradeScheduled())
-			model.scheduleUpgrade(up);
+			if (!up.isUpgradeScheduled())
+				model.scheduleUpgrade(up);
 		
 		model.scheduleAcquisitions(child);
 	}

@@ -32,9 +32,13 @@ public class RatingMgr {
 		ratings.add(new Rating(11,1000,RatingImageImport.loadImage("11")));
 		ratings.add(new Rating(12,1000,RatingImageImport.loadImage("13")));		// use 12 image for root
 		for (int i=1; i<=12; i++)
-			ratings.get(i).setUpgradeThreshold((int) Math.pow(3,i));
+		{
+			ratings.get(i).setUpgradeThreshold(ratings.get(i-1).getUpgradeThreshold() + (int) Math.pow(3,i));
+			log.info("Rating : " + i + " Threshold : " + ratings.get(i).getUpgradeThreshold());
+		}
 	}
 
+	
 	public List<Rating> getRatings() {
 		return ratings;
 	}
@@ -53,8 +57,7 @@ public class RatingMgr {
 
 	public static void main(String[] args)
 	{
-		for (int i=0; i<13; i++)
-			log.info(i + " " + Math.pow(3, i));
+		new RatingMgr();
 	}
 	
 }

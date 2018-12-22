@@ -22,8 +22,6 @@
  <div id="tree"></div>
  <script>
 
- var treeSource;
-
  $.ajax({
 
  type: "POST",
@@ -33,17 +31,15 @@
     dataType: "json",
      success: function(data) {
        var result = $.parseJSON(JSON.stringify(data));
-       alert(JSON.stringify(data));
        if (result.status != 'OK')
        {
          alert(result.message);
          return;
        }
-       alert(result.result);
-       treeSource = result.result;
+       alert(JSON.stringify(result.result));
 
        $('#tree').tree({
-             dataSource: treeSource,
+             dataSource: JSON.stringify(result.result),
              imageUrlField: 'image'
          });
      }

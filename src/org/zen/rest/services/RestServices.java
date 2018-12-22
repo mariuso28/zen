@@ -37,7 +37,10 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 	{
 		PunterJson pj = new PunterJson();
 		pj.setId(punter.getSeqId());
-		pj.setImageUrl("../../../img/" + punter.getRating().getRating() + ".jpeg");
+		int imageId = 12;
+		if (!punter.getEmail().equals("zen@test.com"))
+			imageId = punter.getRating().getRating();
+		pj.setImageUrl("../../../img/" + imageId + ".jpeg");
 		String text = punter.getEmail();
 		pj.setText(text);
 		return pj;

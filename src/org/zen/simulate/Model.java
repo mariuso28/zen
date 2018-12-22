@@ -9,9 +9,12 @@ import org.zen.user.punter.Punter;
 
 public class Model {
 
+	private static final int ACQUISITIONMEAN = 10;
+	private static final int ACQUISITIONVARIANCE = 3;
+	private static final int DURATION = 20;
 	private static Logger log = Logger.getLogger(Model.class); 
 	private ZenModel zenModel;
-	private ModelCalendar modelCalendar = new ModelCalendar(100);
+	private ModelCalendar modelCalendar = new ModelCalendar(DURATION);
 	
 	public Model()
 	{
@@ -45,8 +48,9 @@ public class Model {
 	public void scheduleUpgrade(Punter punter)
 	{
 		int sd = upgradeDays(punter);
+		int newRating = punter.getRating().getRating()+1;
 		log.info("Scheduling upgrade for " + punter.getEmail() + " to rating : " 
-				+ punter.getRating()+1 + " in " + sd + " days");
+				+ newRating + " in " + sd + " days");
 		ModelDay day = modelCalendar.getDays().get(sd);
 		ModelEventUpgrade meu = new ModelEventUpgrade(punter);
 		day.getEvents().add(meu);
@@ -100,7 +104,7 @@ public class Model {
 		
 		Normal normal = new Normal();
 		
-		return normal.getGaussian(5, 5);
+		return normal.getGaussian(ACQUISITIONMEAN, ACQUISITIONVARIANCE);
 	}
 	
 	@SuppressWarnings("unused")
@@ -129,7 +133,7 @@ public class Model {
 	{
 		Model model = new Model();
 		log.info("Model ran - population : " + model.getZenModel().getPopulation());
-		new PrintModel(model);
+		new ModelPrint(model);
 	}
 	
 }

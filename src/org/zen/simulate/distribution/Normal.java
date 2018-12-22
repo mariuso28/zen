@@ -20,11 +20,17 @@ public final class Normal {
 
 	public static void main(String... aArgs){
 		Normal gaussian = new Normal();
-		int MEAN = 5; 
-		int VARIANCE = 1;
-		for (int idx = 1; idx <= 100; ++idx){
-			log.info("Generated : " + gaussian.getGaussian(MEAN, VARIANCE));
+		int MEAN = 10; 
+		int VARIANCE = 3;
+		int mc = 0;
+		int cnt = 100;
+		for (int idx = 0; idx < cnt; ++idx){
+			int rnd = gaussian.getGaussian(MEAN, VARIANCE);
+			log.info("Generated : " + rnd);
+			if (rnd<0)
+				mc += 1;
 		}
+		log.info("Cnt : " + cnt + " MC : " + mc);
 	}
 	/*
 	public static void main(String... aArgs){

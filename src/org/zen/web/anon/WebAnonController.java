@@ -27,6 +27,6 @@ public class WebAnonController {
 			
 		log.info("Received getTree");
 			
-		return "tree";
+		return "tree1";
 	}
 }
