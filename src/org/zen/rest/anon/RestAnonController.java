@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.zen.json.PunterJson;
 import org.zen.json.ResultJson;
 import org.zen.rest.services.RestServices;
 
@@ -35,8 +34,7 @@ public class RestAnonController {
 		ResultJson result = new ResultJson();
 		try
 		{
-			PunterJson root = restServices.getPunters();
-			result.success(root);
+			result.success(restServices.getPunters());
 		}
 		catch (Exception e)
 		{
@@ -45,4 +43,22 @@ public class RestAnonController {
 		}
 		return result;
 	}
+	/*	
+	@RequestMapping(value = "/getPunterTree")
+	// root contains tree if success, message if fail
+	public Object getPunterTree()
+	{
+		log.info("Received getPunterTree");
+		try
+		{
+			PunterJson root = restServices.getPunters();
+			return root;
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			return null;
+		}
+	}
+	*/
 }

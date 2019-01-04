@@ -1,5 +1,10 @@
 package org.zen.rest.services;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.zen.json.PunterJson;
@@ -16,12 +21,14 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 	{
 	}
 	
-	public PunterJson getPunters()
+	public List<PunterJson> getPunters()
 	{
 		Punter root = services.getZenModel().getRoot();
 		PunterJson parent = addPunter(root);	
 		log.info("created " + services.getZenModel().getPopulation() + " punterJsons");
-		return parent;
+		List<PunterJson> result =  new ArrayList<PunterJson>();
+		result.add(parent);
+		return result;
 	}
 
 	private PunterJson addPunter(Punter punter) {
@@ -42,7 +49,11 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			imageId = punter.getRating().getRating();
 		pj.setImageUrl("../../../img/" + imageId + ".jpeg");
 		String text = punter.getEmail();
-		pj.setText(text);
+		NumberFormat formatter = new DecimalFormat("#0.00");
+		String bal = " RM" + formatter.format(punter.getAccount().getBalance());
+		String href = "<a href=\"/zen/zx4/web/anon/punter&email=" + punter.getEmail() + "\""
+		+ "<font color='#045023'>"+ text + bal + "</font></a>";
+		pj.setText(href);
 		return pj;
 	}
 

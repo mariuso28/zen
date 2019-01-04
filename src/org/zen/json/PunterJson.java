@@ -12,13 +12,14 @@ public class PunterJson {
     public PunterJson()
     {
     }
-    
+ 
 	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
 		this.id = id;
 	}
+    
 	public String getText() {
 		return text;
 	}
@@ -41,7 +42,4 @@ public class PunterJson {
 		this.children = children;
 	}
 	
-    
-    
-    
 }
