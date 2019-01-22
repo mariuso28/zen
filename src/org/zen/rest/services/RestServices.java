@@ -7,8 +7,12 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.zen.json.AccountJson;
+import org.zen.json.ModelJson;
+import org.zen.json.PunterDetailJson;
 import org.zen.json.PunterJson;
 import org.zen.services.Services;
+import org.zen.user.account.Account;
 import org.zen.user.punter.Punter;
 
 public class RestServices {
@@ -21,7 +25,17 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 	{
 	}
 	
-	public List<PunterJson> getPunters()
+	public ModelJson getModel()
+	{
+		ModelJson mj = new ModelJson();
+		List<PunterJson> punters = getPunters();
+		mj.setPunters(punters);
+		mj.setPopulation(services.getZenModel().getPopulation());
+		mj.setTopRevenue(punters.get(0).getAccount().getBalance());
+		return mj;
+	}
+	
+	private List<PunterJson> getPunters()
 	{
 		Punter root = services.getZenModel().getRoot();
 		PunterJson parent = addPunter(root);	
@@ -51,10 +65,38 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		String text = punter.getEmail();
 		NumberFormat formatter = new DecimalFormat("#0.00");
 		String bal = " RM" + formatter.format(punter.getAccount().getBalance());
-		String href = "<a href=\"/zen/zx4/web/anon/punter&email=" + punter.getEmail() + "\""
+		String href = "<a href=# onclick=\"return getPunterDetails(" + 
+					punter.getEmail() + ")\"" 
 		+ "<font color='#045023'>"+ text + bal + "</font></a>";
 		pj.setText(href);
+		pj.setAccount(createAccountJson(punter.getAccount()));
 		return pj;
+	}
+
+	private AccountJson createAccountJson(Account account) {
+		AccountJson aj = new AccountJson();
+		aj.setBalance(account.getBalance());
+		return aj;
+	}
+
+	public PunterDetailJson getPunterDetails(String email) {
+		
+		Punter punter = services.getZenModel().getMap().get(email);
+		if (punter==null)
+			throw new RestServicesException("Punter : " + email + " Not found.");
+		
+		return createPunterDetailsJson(punter);
+	}
+
+	private PunterDetailJson createPunterDetailsJson(Punter punter) {
+		PunterDetailJson pdj = new PunterDetailJson();
+		pdj.setAccount(createAccountJson(punter.getAccount()));
+		pdj.setContact(punter.getContact());
+		pdj.setEmail(punter.getEmail());
+		pdj.setLevel(punter.getLevel());
+		pdj.setPhone(punter.getPhone());
+		pdj.setRating(punter.getRating());
+		return pdj;
 	}
 
 	public Services getServices() {
@@ -64,4 +106,6 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 	public void setServices(Services services) {
 		this.services = services;
 	}
+
+	
 }

@@ -3,13 +3,13 @@ package org.zen.user.punter;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.zen.rating.Rating;
+import org.zen.json.RatingJson;
 import org.zen.user.BaseUser;
 import org.zen.user.account.Account;
 
 public class Punter extends BaseUser {
 
-	private Rating rating;
+	private RatingJson rating;
 	private List<Punter> children = new ArrayList<Punter>();
 	private Punter parent;
 	private Account account = new Account();
@@ -30,11 +30,11 @@ public class Punter extends BaseUser {
 		this.children = children;
 	}
 
-	public Rating getRating() {
+	public RatingJson getRating() {
 		return rating;
 	}
 
-	public void setRating(Rating rating) {
+	public void setRating(RatingJson rating) {
 		this.rating = rating;
 	}
 

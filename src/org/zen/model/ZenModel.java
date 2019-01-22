@@ -2,9 +2,10 @@ package org.zen.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.log4j.Logger;
-import org.zen.rating.Rating;
+import org.zen.json.RatingJson;
 import org.zen.rating.RatingMgr;
 import org.zen.user.punter.Punter;
 
@@ -14,6 +15,7 @@ public class ZenModel {
 	
 	public final static int FULLCHILDREN = 3;
 	private Punter root;
+	private ConcurrentHashMap<String,Punter> map = new ConcurrentHashMap<String,Punter>();
 	private RatingMgr ratingMgr = new RatingMgr();
 	private long population;
 	private int maxRating = 0;
@@ -21,6 +23,7 @@ public class ZenModel {
 	public ZenModel()
 	{
 		root = createPunter("zen@test.com","Zen","88888888",0);
+		map.put(root.getEmail(),root);
 	}
 	
 	public boolean getFullChildList(Punter punter)
@@ -50,6 +53,7 @@ public class ZenModel {
 			level++;
 		}
 		child.setLevel(level);
+		map.put(child.getEmail(),child);
 		return child;
 	}
 	
@@ -125,10 +129,12 @@ public class ZenModel {
 		punter.setUpgradeScheduled(false);
 		if (punter.getRating().getRating()==Integer.MAX_VALUE)
 			return;
-		Rating newRating = ratingMgr.getRatings().get(punter.getRating().getRating()+1);
+		RatingJson newRating = ratingMgr.getRatings().get(punter.getRating().getRating()+1);
 		punter.setRating(newRating);
 		Punter parentToPay = punter.getParent();
-		while (parentToPay.getRating().getRating()<newRating.getRating())
+		if (parentToPay.getParent()!=null)
+			parentToPay = parentToPay.getParent();
+		while (parentToPay != null && parentToPay.getRating().getRating()<newRating.getRating())
 		{
 			parentToPay.getParent();
 		}
@@ -182,6 +188,14 @@ public class ZenModel {
 
 	public void setMaxRating(int maxRating) {
 		this.maxRating = maxRating;
+	}
+
+	public ConcurrentHashMap<String,Punter> getMap() {
+		return map;
+	}
+
+	public void setMap(ConcurrentHashMap<String,Punter> map) {
+		this.map = map;
 	}
 	
 	

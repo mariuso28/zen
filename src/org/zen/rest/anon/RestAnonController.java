@@ -3,6 +3,7 @@ package org.zen.rest.anon;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.zen.json.ResultJson;
 import org.zen.rest.services.RestServices;
@@ -13,7 +14,6 @@ public class RestAnonController {
 	@Autowired RestServices restServices;
 	
 	private static Logger log = Logger.getLogger(RestAnonController.class);
-	
 	
 	@RequestMapping(value = "/getSuccess")
 	// ResultJson contains message if success, message if fail
@@ -26,15 +26,15 @@ public class RestAnonController {
 		return result;
 	}
 	
-	@RequestMapping(value = "/getPunterTree")
-	// ResultJson contains tree if success, message if fail
-	public ResultJson getPunterTree()
+	@RequestMapping(value = "/getPunterDetails")
+	// ResultJson contains punterDetails if success, message if fail
+	public ResultJson getPunterDetails(@RequestParam("email") String email)
 	{
-		log.info("Received getPunterTree");
+		log.info("Received getPunterDetails");
 		ResultJson result = new ResultJson();
 		try
 		{
-			result.success(restServices.getPunters());
+			result.success(restServices.getPunterDetails(email));
 		}
 		catch (Exception e)
 		{
@@ -43,22 +43,23 @@ public class RestAnonController {
 		}
 		return result;
 	}
-	/*	
-	@RequestMapping(value = "/getPunterTree")
-	// root contains tree if success, message if fail
-	public Object getPunterTree()
+	
+	@RequestMapping(value = "/getModel")
+	// ResultJson contains model if success, message if fail
+	public ResultJson getModel()
 	{
-		log.info("Received getPunterTree");
+		log.info("Received getModel");
+		ResultJson result = new ResultJson();
 		try
 		{
-			PunterJson root = restServices.getPunters();
-			return root;
+			result.success(restServices.getModel());
 		}
 		catch (Exception e)
 		{
 			log.error(e.getMessage(),e);
-			return null;
+			result.fail(e.getMessage());
 		}
+		return result;
 	}
-	*/
+	
 }

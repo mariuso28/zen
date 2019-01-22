@@ -7,6 +7,7 @@ public class PunterJson {
 	private long id;
     private String text;
     private String imageUrl;
+    private AccountJson account;
     private List<PunterJson> children = new ArrayList<PunterJson>();
     
     public PunterJson()
@@ -40,6 +41,14 @@ public class PunterJson {
 
 	public void setChildren(List<PunterJson> children) {
 		this.children = children;
+	}
+
+	public AccountJson getAccount() {
+		return account;
+	}
+
+	public void setAccount(AccountJson account) {
+		this.account = account;
 	}
 	
 }

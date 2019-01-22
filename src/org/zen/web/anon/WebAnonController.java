@@ -22,10 +22,10 @@ public class WebAnonController {
 		return "success";
 	}
 	
-	@RequestMapping(value = "/getTree", method = RequestMethod.GET)
+	@RequestMapping(value = "/getModel", method = RequestMethod.GET)
 	public String getTree() {
 			
-		log.info("Received getTree");
+		log.info("Received getModel");
 			
 		return "treeAjax";
 	}
