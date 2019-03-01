@@ -53,7 +53,7 @@ public class RestAuthController {
 		auth.setBody((LinkedHashMap<String, String>) rj.getResult());
 		try
 		{
-			BaseUser baseUser = services.getHome().getBaseUserDao().getByEmail(credentials.getUsername());
+			BaseUser baseUser = services.getHome().getBaseUserDao().getByContact(credentials.getUsername());
 			auth.setRole(baseUser.getRole());
 		}
 		catch (Exception e)
@@ -79,7 +79,7 @@ public class RestAuthController {
 		path = "http://localhost:8080/shell/oauth/token";
 		try
 		{
-			BaseUser baseUser = services.getHome().getBaseUserDao().getByEmail(username);
+			BaseUser baseUser = services.getHome().getBaseUserDao().getByContact(username);
 			log.info("Got baseuser : " + baseUser.getEmail());
 		}
 		catch (Exception e)
