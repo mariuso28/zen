@@ -37,8 +37,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		} catch (PunterMgrException e) {
 			log.error(e.getMessage());
 			throw new RestServicesException(e.getMessage());
-		}
-		
+		}		
 	}
 	
 	public ModelJson getModel()
