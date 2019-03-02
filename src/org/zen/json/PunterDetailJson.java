@@ -7,7 +7,6 @@ public class PunterDetailJson {
 	private RatingJson rating;
 	private AccountJson account = new AccountJson();
 	private boolean upgradeScheduled;
-	private int level;
 	
 	public PunterDetailJson()
 	{
@@ -61,14 +60,4 @@ public class PunterDetailJson {
 		this.upgradeScheduled = upgradeScheduled;
 	}
 
-	public int getLevel() {
-		return level;
-	}
-
-	public void setLevel(int level) {
-		this.level = level;
-	}
-	
-	
-	
 }

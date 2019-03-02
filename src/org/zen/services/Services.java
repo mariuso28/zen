@@ -1,6 +1,6 @@
 package org.zen.services;
 
-import org.zen.model.ZenModel;
+import org.zen.model.ZenModelOriginal;
 import org.zen.persistence.home.Home;
 import org.zen.simulate.Model;
 import org.zen.user.BaseUser;
@@ -9,7 +9,7 @@ import org.zen.user.agent.DefaultAgent;
 public class Services {
 
 	private Home home;
-	private ZenModel zenModel;
+	private ZenModelOriginal zenModel;
 	
 	public void initServices()
 	{
@@ -22,11 +22,11 @@ public class Services {
 		return DefaultAgent.get();
 	}
 
-	public ZenModel getZenModel() {
+	public ZenModelOriginal getZenModel() {
 		return zenModel;
 	}
 
-	public void setZenModel(ZenModel zenModel) {
+	public void setZenModel(ZenModelOriginal zenModel) {
 		this.zenModel = zenModel;
 	}
 

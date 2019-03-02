@@ -27,8 +27,6 @@ public class ModelPrint {
 	private void printLine(Punter punter)
 	{
 		String padding = "";
-		for (int i=0; i<=punter.getLevel(); i++)
-				padding += " ";
 		System.out.println(padding + punter.getContact() + " children : " 
 				+ punter.getChildren().size() + " Rating : "
 				+ punter.getRating().getRating() 

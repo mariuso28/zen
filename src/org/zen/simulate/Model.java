@@ -3,7 +3,7 @@ package org.zen.simulate;
 import java.util.Random;
 
 import org.apache.log4j.Logger;
-import org.zen.model.ZenModel;
+import org.zen.model.ZenModelOriginal;
 import org.zen.simulate.distribution.Normal;
 import org.zen.user.punter.Punter;
 
@@ -13,7 +13,7 @@ public class Model {
 	private static final int ACQUISITIONVARIANCE = 3;
 	private static final int DURATION = 20;
 	private static Logger log = Logger.getLogger(Model.class); 
-	private ZenModel zenModel;
+	private ZenModelOriginal zenModel;
 	private ModelCalendar modelCalendar = new ModelCalendar(DURATION);
 	
 	public Model()
@@ -41,7 +41,7 @@ public class Model {
 	
 	private void initialize()
 	{
-		zenModel = new ZenModel();
+		zenModel = new ZenModelOriginal();
 		scheduleAcquisitions(zenModel.getRoot());
 	}
 
@@ -121,11 +121,11 @@ public class Model {
 		this.modelCalendar = modelCalendar;
 	}
 
-	public ZenModel getZenModel() {
+	public ZenModelOriginal getZenModel() {
 		return zenModel;
 	}
 
-	public void setZenModel(ZenModel zenModel) {
+	public void setZenModel(ZenModelOriginal zenModel) {
 		this.zenModel = zenModel;
 	}
 

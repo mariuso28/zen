@@ -3,6 +3,7 @@ package org.zen.user.punter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.zen.json.ProfileJson;
 import org.zen.json.RatingJson;
 import org.zen.user.BaseUser;
 import org.zen.user.account.Account;
@@ -12,14 +13,23 @@ public class Punter extends BaseUser {
 	private RatingJson rating;
 	private List<Punter> children = new ArrayList<Punter>();
 	private Punter parent;
+	private Punter sponsor;
+	private List<Punter> sponsoredChildren = new ArrayList<Punter>();
 	private Account account = new Account();
-	private boolean upgradeScheduled;
-	private int level;
+	private boolean upgradeScheduled = false;;
 	
 	public Punter()
 	{
 		super();
 		setRole(BaseUser.ROLE_PUNTER);
+		setEnabled(false);
+	}
+	
+	public void copyProfileValues(ProfileJson profile)
+	{
+		setContact(profile.getContact());
+		setEmail(profile.getEmail());
+		setPhone(profile.getPhone());
 	}
 	
 	public List<Punter> getChildren() {
@@ -62,12 +72,20 @@ public class Punter extends BaseUser {
 		this.upgradeScheduled = upgradeScheduled;
 	}
 
-	public int getLevel() {
-		return level;
+	public Punter getSponsor() {
+		return sponsor;
 	}
 
-	public void setLevel(int level) {
-		this.level = level;
+	public void setSponsor(Punter sponsor) {
+		this.sponsor = sponsor;
+	}
+
+	public List<Punter> getSponsoredChildren() {
+		return sponsoredChildren;
+	}
+
+	public void setSponsoredChildren(List<Punter> sponsoredChildren) {
+		this.sponsoredChildren = sponsoredChildren;
 	}
 	
 	

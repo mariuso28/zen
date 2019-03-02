@@ -19,19 +19,23 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	private static Logger log = Logger.getLogger(PunterDaoImpl.class);
 
 	@Override
-	public void store(final Punter bu) throws PersistenceRuntimeException {
-		bu.setId(UUID.randomUUID());
+	public void store(final Punter punter) throws PersistenceRuntimeException {
+		punter.setId(UUID.randomUUID());
 		try
 		{
-			getJdbcTemplate().update("INSERT INTO baseuser (id,email,phone,password,role,enabled) "
-										+ "VALUES (?,?,?,?,?,false)"
+			getJdbcTemplate().update("INSERT INTO punter (id,email,phone,password,role,enabled,rating,parentId,sponsorId) "
+										+ "VALUES (?,?,?,?,?,?,?,?,?)"
 			        , new PreparedStatementSetter() {
 						public void setValues(PreparedStatement ps) throws SQLException {
-			    	  	ps.setObject(1, bu.getId());
-						ps.setString(2, bu.getEmail().toLowerCase());
-						ps.setString(3, bu.getPhone());
-						ps.setString(4, bu.getPassword());
-						ps.setString(5, bu.getRole());
+			    	  	ps.setObject(1, punter.getId());
+						ps.setString(2, punter.getEmail().toLowerCase());
+						ps.setString(3, punter.getPhone());
+						ps.setString(4, punter.getPassword());
+						ps.setString(5, punter.getRole());
+						ps.setBoolean(6, punter.isEnabled());
+						ps.setInt(7, punter.getRating().getRating());
+						ps.setObject(8, punter.getParent().getId());
+						ps.setObject(9, punter.getSponsor().getId());
 			      }
 			    });
 			
@@ -48,14 +52,14 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 		try
 		{
 			final String sql = "SELECT * FROM baseuser WHERE contact=?";
-			List<Punter> bus = getJdbcTemplate().query(sql,new PreparedStatementSetter() {
+			List<Punter> punters = getJdbcTemplate().query(sql,new PreparedStatementSetter() {
 				        public void setValues(PreparedStatement preparedStatement) throws SQLException {
 				          preparedStatement.setString(1, contact);
 				        }
 				      }, BeanPropertyRowMapper.newInstance(Punter.class));
-			if (bus.isEmpty())
+			if (punters.isEmpty())
 				return null;
-			return bus.get(0);
+			return punters.get(0);
 		}
 		catch (DataAccessException e)
 		{
@@ -69,14 +73,14 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 		try
 		{
 			final String sql = "SELECT * FROM baseUser WHERE id=?";
-			List<Punter> bus = getJdbcTemplate().query(sql,new PreparedStatementSetter() {
+			List<Punter> punters = getJdbcTemplate().query(sql,new PreparedStatementSetter() {
 				        public void setValues(PreparedStatement preparedStatement) throws SQLException {
 				          preparedStatement.setObject(1, id);
 				        }
 				      }, BeanPropertyRowMapper.newInstance(Punter.class));
-			if (bus.isEmpty())
+			if (punters.isEmpty())
 				return null;
-			return bus.get(0);
+			return punters.get(0);
 		}
 		catch (DataAccessException e)
 		{

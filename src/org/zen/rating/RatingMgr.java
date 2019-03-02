@@ -39,7 +39,6 @@ public class RatingMgr {
 		}
 	}
 
-	
 	public List<RatingJson> getRatings() {
 		return ratings;
 	}
