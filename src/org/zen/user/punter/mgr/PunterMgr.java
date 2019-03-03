@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.UUID;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.zen.json.ProfileJson;
@@ -23,15 +24,15 @@ public class PunterMgr {
 
 	private static final Logger log = Logger.getLogger(PunterMgr.class);
 
+	@Autowired
 	private Services services;
 	private RatingMgr ratingMgr;
+	@Autowired
 	private PunterDao punterDao;
 	
-	public PunterMgr(Services services)
+	public PunterMgr()
 	{
-		setServices(services); 
-		setRatingMgr(new RatingMgr());
-		punterDao = services.getHome().getPunterDao();
+		
 	}
 	
 	public int getLevel(Punter punter,Punter upstream) throws PunterMgrException
@@ -169,7 +170,7 @@ public class PunterMgr {
 	{
 		try
 		{
-			punterDao.deleteAllContacts();
+			punterDao.deleteAllPunters();
 		}
 		catch (Exception e)
 		{
@@ -179,11 +180,11 @@ public class PunterMgr {
 	}
 	
 	
-	public void deleteByContact(final String contact) throws PunterMgrException
+	public void deleteByContact(final Punter punter) throws PunterMgrException
 	{
 		try
 		{
-			punterDao.deleteByContact(contact);
+			punterDao.deletePunter(punter);
 		}
 		catch (Exception e)
 		{

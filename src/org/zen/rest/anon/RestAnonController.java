@@ -25,5 +25,5 @@ public interface RestAnonController
 		
 	@RequestMapping(value = "/getModel")
 	// ResultJson contains model if success, message if fail
-	public ResultJson getModel();	
+	public ResultJson getModel(@RequestParam("contact") String contact);	
 }

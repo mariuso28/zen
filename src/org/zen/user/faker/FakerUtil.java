@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+import org.zen.util.EmailValidator;
+
 import com.github.javafaker.Faker;
 
 public class FakerUtil {
@@ -37,6 +39,9 @@ public class FakerUtil {
 			if (Character.isDigit(ch) || Character.isAlphabetic(ch) || ch=='.')
 				s += ch;
 		}
+		EmailValidator ev = new EmailValidator();
+		if (!ev.validate(s+"@test.com"))
+			return null;
 		if (s.length() < 3 || s.length()>16)
 			return null;
 		return s;

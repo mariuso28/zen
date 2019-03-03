@@ -21,13 +21,29 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 	
 	<import resource="zen-persistence.xml"/>
 
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+
 	<bean id="services"
 		class="org.zen.services.Services" init-method="initServices">
 		<property name="home" ref="home" />		
 	</bean>
 
+	<bean id="punterMgr"
+		class="org.zen.user.punter.mgr.PunterMgr" >
+	</bean>
+
+	<bean id="zenModel"
+		class="org.zen.model.ZenModel" >	
+	</bean>
+	
+	<bean id="zenModelInitialize"
+		class="org.zen.model.ZenModelInitialize" >	
+	</bean>
+
 	<bean id="restServices"
 			class="org.zen.rest.services.RestServices" >
-		</bean>
+	</bean>
 
 </beans>

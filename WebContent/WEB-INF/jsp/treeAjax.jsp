@@ -128,7 +128,7 @@ function getModel()
 {
 	$.ajax({
 	type: "POST",
-	 url : "/zen/zx4/api/anon/getModel",
+	 url : "/zen/zx4/api/anon/getModel?contact=zen",
 	 cache: false,
 	 contentType: 'application/json;',
 	 dataType: "json",

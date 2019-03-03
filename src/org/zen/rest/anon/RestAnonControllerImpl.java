@@ -55,7 +55,7 @@ public class RestAnonControllerImpl implements RestAnonController{
 		ResultJson result = new ResultJson();
 		try
 		{
-			result.success(restServices.getPunterDetails(email));
+//			result.success(restServices.getPunterDetails(email));
 		}
 		catch (Exception e)
 		{
@@ -67,13 +67,13 @@ public class RestAnonControllerImpl implements RestAnonController{
 	
 	@RequestMapping(value = "/getModel")
 	// ResultJson contains model if success, message if fail
-	public ResultJson getModel()
+	public ResultJson getModel(@RequestParam("contact") String contact)
 	{
-		log.info("Received getModel");
+		log.info("Received getModel with : " + contact);
 		ResultJson result = new ResultJson();
 		try
 		{
-			result.success(restServices.getModel());
+			result.success(restServices.getModel(contact));
 		}
 		catch (Exception e)
 		{

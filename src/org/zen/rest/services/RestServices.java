@@ -9,27 +9,29 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.zen.json.AccountJson;
 import org.zen.json.ModelJson;
-import org.zen.json.PunterDetailJson;
+import org.zen.json.ProfileJson;
 import org.zen.json.PunterJson;
-import org.zen.json.RatingJson;
 import org.zen.rating.RatingMgr;
 import org.zen.services.Services;
 import org.zen.user.account.Account;
 import org.zen.user.punter.Punter;
+import org.zen.user.punter.mgr.PunterMgr;
+import org.zen.user.punter.mgr.PunterMgrException;
 
 public class RestServices {
 private static final Logger log = Logger.getLogger(RestServices.class);
 	
 	@Autowired
 	private Services services;
+	@Autowired
+	private PunterMgr punterMgr;
+	@SuppressWarnings("unused")
 	private RatingMgr ratingMgr;
-//	private PunterMgr punterMgr;
 	
 	public RestServices()
 	{
-//		punterMgr = new PunterMgr(services);
 	}
-/*	
+	
 	public void registerPunter(ProfileJson profile) throws RestServicesException
 	{
 		try {
@@ -39,32 +41,34 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			throw new RestServicesException(e.getMessage());
 		}		
 	}
-*/	
-	public ModelJson getModel()
+	
+	public ModelJson getModel(String rootContact) throws PunterMgrException
 	{
 		ModelJson mj = new ModelJson();
-		List<PunterJson> punters = getPunters();
+		List<PunterJson> punters = getPunters(rootContact,mj);
 		mj.setPunters(punters);
-		mj.setPopulation(services.getZenModel().getPopulation());
+//		mj.setPopulation(services.getZenModel().getPopulation());
 		mj.setTopRevenue(punters.get(0).getAccount().getBalance());
 		return mj;
 	}
 	
-	private List<PunterJson> getPunters()
+	private List<PunterJson> getPunters(String rootContact, ModelJson mj) throws PunterMgrException
 	{
-		Punter root = services.getZenModel().getRoot();
-		PunterJson parent = addPunter(root);	
-		log.info("created " + services.getZenModel().getPopulation() + " punterJsons");
+		Punter root = punterMgr.getByContact(rootContact);
+		PunterJson parent = addPunter(root,mj);	
+//		log.info("created " + services.getZenModel().getPopulation() + " punterJsons");
 		List<PunterJson> result =  new ArrayList<PunterJson>();
 		result.add(parent);
 		return result;
 	}
 
-	private PunterJson addPunter(Punter punter) {
+	private PunterJson addPunter(Punter punter, ModelJson mj) throws PunterMgrException {
 		PunterJson pj = createPunterJson(punter);
-		for (Punter p : punter.getChildren())
+		mj.setPopulation(mj.getPopulation()+1);
+		List<Punter> children = punterMgr.getChidren(punter);
+		for (Punter p : children)
 		{
-			pj.getChildren().add(addPunter(p));
+			pj.getChildren().add(addPunter(p,mj));
 		}
 		return pj;
 	}
@@ -93,6 +97,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		return aj;
 	}
 
+	/*
 	public PunterDetailJson getPunterDetails(String email) {
 		
 		Punter punter = services.getZenModel().getMap().get(email);
@@ -112,7 +117,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		pdj.setRating(rating);
 		return pdj;
 	}
-
+*/
 	public Services getServices() {
 		return services;
 	}

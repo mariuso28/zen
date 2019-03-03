@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Random;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.zen.json.ProfileJson;
-import org.zen.services.Services;
 import org.zen.user.faker.FakerUtil;
 import org.zen.user.punter.Punter;
 import org.zen.user.punter.mgr.PunterMgr;
@@ -17,11 +17,13 @@ import org.zen.user.punter.mgr.PunterMgrException;
 public class ZenModelInitialize {
 
 	private static Logger log = Logger.getLogger(ZenModelInitialize.class);
+	@Autowired
+	private ZenModel zenModel;
+	@Autowired
 	private PunterMgr punterMgr;
 	
-	public ZenModelInitialize(PunterMgr punterMgr)
+	public ZenModelInitialize()
 	{
-		setPunterMgr(punterMgr);
 	}
 	
 	public Punter initializeModel() throws Exception
@@ -48,6 +50,9 @@ public class ZenModelInitialize {
 			String phone = "012" + r.nextInt(10000000);
 			ProfileJson childProfile = makeProfile(contact,contact+"@test.com",phone,"88888888",parent.getContact());
 			Punter child = punterMgr.registerPunter(childProfile);
+			
+			zenModel.payJoinFee(child);
+			
 			recruitLevel(child,levels-1, fu);
 		}
 	}
@@ -71,6 +76,14 @@ public class ZenModelInitialize {
 		this.punterMgr = punterMgr;
 	}
 	
+	public ZenModel getZenModel() {
+		return zenModel;
+	}
+
+	public void setZenModel(ZenModel zenModel) {
+		this.zenModel = zenModel;
+	}
+
 	public void printModel(Punter root) throws PunterMgrException
 	{
 		List<Integer> levelCounts = new ArrayList<Integer>();
@@ -118,9 +131,7 @@ public class ZenModelInitialize {
 				"zen-service.xml");
 		try
 		{
-			Services services = (Services) context.getBean("services");
-			PunterMgr pm = new PunterMgr(services);
-			ZenModelInitialize zmi = new ZenModelInitialize(pm);
+			ZenModelInitialize zmi = (ZenModelInitialize) context.getBean("zenModelInitialize");
 			Punter root = zmi.initializeModel();
 			zmi.printModel(root);
 		}

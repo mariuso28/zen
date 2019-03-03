@@ -12,12 +12,32 @@ import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 import org.zen.persistence.PersistenceRuntimeException;
+import org.zen.user.account.Account;
 import org.zen.user.punter.Punter;
 
 @Transactional
 public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements PunterDao {
 	private static Logger log = Logger.getLogger(PunterDaoImpl.class);
 
+	public void updateAccount(final Account account)
+	{
+		try
+		{
+			getJdbcTemplate().update("UPDATE account SET balance=? WHERE id=?"
+				, new PreparedStatementSetter() {
+					public void setValues(PreparedStatement ps) throws SQLException {
+						ps.setDouble(1, account.getBalance());
+						ps.setObject(2, account.getId());
+					}
+				});
+		}
+		catch (DataAccessException e1)
+		{
+			log.error("Could not execute : " + e1.getMessage(),e1);
+			throw new PersistenceRuntimeException("Could not execute store : " + e1.getMessage());
+		}	
+	}
+	
 	@Override
 	public void store(final Punter punter) {
 		punter.setId(UUID.randomUUID());
@@ -47,13 +67,24 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 						}
 			      }
 			    });
-			
+			createPunterAccount(punter.getId());
 		}
 		catch (DataAccessException e1)
 		{
 			log.error("Could not execute : " + e1.getMessage(),e1);
 			throw new PersistenceRuntimeException("Could not execute store : " + e1.getMessage());
 		}	
+	}
+	
+	private void createPunterAccount(final UUID id) throws DataAccessException
+	{
+		getJdbcTemplate().update("INSERT INTO account (id,balance) "
+				+ "VALUES (?,0.0)"
+				, new PreparedStatementSetter() {
+					public void setValues(PreparedStatement ps) throws SQLException {
+						ps.setObject(1, id);
+					}
+				});
 	}
 
 	@Override
@@ -68,6 +99,7 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 				      }, BeanPropertyRowMapper.newInstance(Punter.class));
 			if (punters.isEmpty())
 				return null;
+			populateAccount(punters.get(0));
 			return punters.get(0);
 		}
 		catch (DataAccessException e)
@@ -75,6 +107,21 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 			log.error("Could not execute : " + e.getMessage(),e);
 			throw new PersistenceRuntimeException("Could not execute getByEmail : " + e.getMessage());
 		}
+	}
+
+	private void populateAccount(final Punter punter) throws DataAccessException{
+		final String sql = "SELECT * FROM account WHERE id=?";
+		List<Account> accounts = getJdbcTemplate().query(sql,new PreparedStatementSetter() {
+			        public void setValues(PreparedStatement preparedStatement) throws SQLException {
+			          preparedStatement.setObject(1, punter.getId());
+			        }
+			      }, BeanPropertyRowMapper.newInstance(Account.class));
+		if (accounts.isEmpty())
+		{
+			log.error("Account doesn't exist for punter : " + punter.getId());
+			return;
+		}
+		punter.setAccount(accounts.get(0));
 	}
 
 	@Override
@@ -87,12 +134,14 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 				          preparedStatement.setObject(1, parent.getId());
 				        }
 				      }, BeanPropertyRowMapper.newInstance(Punter.class));
+			for (Punter p : punters)
+				populateAccount(p);
 			return punters;
 		}
 		catch (DataAccessException e)
 		{
 			log.error("Could not execute : " + e.getMessage(),e);
-			throw new PersistenceRuntimeException("Could not execute getById : " + e.getMessage());
+			throw new PersistenceRuntimeException("Could not execute getChildren : " + e.getMessage());
 		}
 	}
 	
@@ -108,6 +157,7 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 				      }, BeanPropertyRowMapper.newInstance(Punter.class));
 			if (punters.isEmpty())
 				return null;
+			populateAccount(punters.get(0));
 			return punters.get(0);
 		}
 		catch (DataAccessException e)
@@ -118,30 +168,36 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	}
 	
 	@Override
-	public void deleteByContact(final String contact) {
+	public void deletePunter(final Punter punter) {
 		try
 		{
-			final String sql = "DELETE FROM baseuser WHERE contact=?";
-			getJdbcTemplate().update(sql,new Object[] { contact });
+			final String sql = "DELETE FROM account WHERE id=?";
+			getJdbcTemplate().update(sql,new Object[] { punter.getId() });
+			
+			final String sql2 = "DELETE FROM baseuser WHERE id=?";
+			getJdbcTemplate().update(sql2,new Object[] { punter.getId() });
 		}
 		catch (DataAccessException e)
 		{
 			log.error("Could not execute : " + e.getMessage(),e);
-			throw new PersistenceRuntimeException("Could not execute getByEmail : " + e.getMessage());
+			throw new PersistenceRuntimeException("Could not execute deletePunter : " + e.getMessage());
 		}
 	}
 	
 	@Override
-	public void deleteAllContacts() {
+	public void deleteAllPunters() {
 		try
 		{
-			final String sql = "DELETE FROM baseuser";
+			final String sql = "DELETE FROM account AS acc WHERE acc.id IN (SELECT bu.id FROM baseuser AS bu WHERE Role = 'ROLE_PUNTER')";
 			getJdbcTemplate().update(sql);
+			
+			final String sql2 = "DELETE FROM baseuser WHERE Role = 'ROLE_PUNTER'";
+			getJdbcTemplate().update(sql2);
 		}
 		catch (DataAccessException e)
 		{
 			log.error("Could not execute : " + e.getMessage(),e);
-			throw new PersistenceRuntimeException("Could not execute getByEmail : " + e.getMessage());
+			throw new PersistenceRuntimeException("Could not execute deleteAllPunters : " + e.getMessage());
 		}
 	}
 
