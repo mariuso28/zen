@@ -14,6 +14,14 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 public class WebAnonController {
 	private static Logger log = Logger.getLogger(WebAnonController.class);
 	
+	@RequestMapping(value = "/getZenHome", method = RequestMethod.GET)
+	public String getZenHome() {
+			
+		log.info("Received getZenHome");
+			
+		return "zenHome";
+	}
+	
 	@RequestMapping(value = "/getSuccess", method = RequestMethod.GET)
 	public String getSuccess() {
 			

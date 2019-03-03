@@ -29,7 +29,7 @@ public class ModelPrint {
 		String padding = "";
 		System.out.println(padding + punter.getContact() + " children : " 
 				+ punter.getChildren().size() + " Rating : "
-				+ punter.getRating().getRating() 
+				+ punter.getRating() 
 				+ "  $" + punter.getAccount().getBalance());
 			
 	}

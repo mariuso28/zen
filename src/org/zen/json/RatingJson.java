@@ -50,6 +50,9 @@ public class RatingJson {
 		this.upgradeThreshold = upgradeThreshold;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "RatingJson [rating=" + rating + ", upgrade=" + upgrade + ", upgradeThreshold=" + upgradeThreshold + "]";
+	}
 	
 }

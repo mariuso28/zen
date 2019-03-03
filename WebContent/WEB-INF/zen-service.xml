@@ -22,7 +22,8 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 	<import resource="zen-persistence.xml"/>
 
 	<bean id="services"
-		class="org.zen.services.Services" init-method="initServices">		
+		class="org.zen.services.Services" init-method="initServices">
+		<property name="home" ref="home" />		
 	</bean>
 
 	<bean id="restServices"

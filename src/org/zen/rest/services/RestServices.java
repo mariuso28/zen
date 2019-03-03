@@ -9,27 +9,27 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.zen.json.AccountJson;
 import org.zen.json.ModelJson;
-import org.zen.json.ProfileJson;
 import org.zen.json.PunterDetailJson;
 import org.zen.json.PunterJson;
+import org.zen.json.RatingJson;
+import org.zen.rating.RatingMgr;
 import org.zen.services.Services;
 import org.zen.user.account.Account;
 import org.zen.user.punter.Punter;
-import org.zen.user.punter.manager.PunterMgr;
-import org.zen.user.punter.manager.PunterMgrException;
 
 public class RestServices {
 private static final Logger log = Logger.getLogger(RestServices.class);
 	
 	@Autowired
 	private Services services;
-	private PunterMgr punterMgr;
+	private RatingMgr ratingMgr;
+//	private PunterMgr punterMgr;
 	
 	public RestServices()
 	{
-		punterMgr = new PunterMgr();
+//		punterMgr = new PunterMgr(services);
 	}
-	
+/*	
 	public void registerPunter(ProfileJson profile) throws RestServicesException
 	{
 		try {
@@ -39,7 +39,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			throw new RestServicesException(e.getMessage());
 		}		
 	}
-	
+*/	
 	public ModelJson getModel()
 	{
 		ModelJson mj = new ModelJson();
@@ -74,7 +74,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		PunterJson pj = new PunterJson();
 		int imageId = 12;
 		if (!punter.getEmail().equals("zen@test.com"))
-			imageId = punter.getRating().getRating();
+			imageId = punter.getRating();
 		pj.setImageUrl("../../../img/" + imageId + ".jpeg");
 		String text = punter.getEmail();
 		NumberFormat formatter = new DecimalFormat("#0.00");
@@ -108,7 +108,8 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		pdj.setContact(punter.getContact());
 		pdj.setEmail(punter.getEmail());
 		pdj.setPhone(punter.getPhone());
-		pdj.setRating(punter.getRating());
+		RatingJson rating = ratingMgr.getRatings().get(punter.getRating());
+		pdj.setRating(rating);
 		return pdj;
 	}
 

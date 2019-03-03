@@ -50,6 +50,12 @@ public class ProfileJson {
 	public void setSponsorContactId(String sponsorContactId) {
 		this.sponsorContactId = sponsorContactId;
 	}
+
+	@Override
+	public String toString() {
+		return "ProfileJson [contact=" + contact + ", email=" + email + ", phone=" + phone + ", password=" + password
+				+ ", sponsorContactId=" + sponsorContactId + "]";
+	}
 	
 	
 }

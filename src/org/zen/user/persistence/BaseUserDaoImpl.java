@@ -46,9 +46,9 @@ public class BaseUserDaoImpl extends NamedParameterJdbcDaoSupport implements Bas
 		try
 		{
 			final String sql = "SELECT contact FROM baseUser WHERE contact=?";
-			String contact = (String) getJdbcTemplate().queryForObject(
+			List<String> contacts = getJdbcTemplate().queryForList(
 			            sql, new Object[] { tryWith }, String.class);
-			if (contact == null)
+			if (contacts.size()==0)
 				return possibilities;
 			// tryWith taken generate some not taken
 			else
@@ -65,12 +65,13 @@ public class BaseUserDaoImpl extends NamedParameterJdbcDaoSupport implements Bas
 	private void generatePossibilities(List<String> possibilities,String tryWith) throws DataAccessException{
 		final String sql = "SELECT contact FROM baseUser WHERE contact=?";
 		int cnt = 0;
+		String orig = tryWith;
 		while (possibilities.size()<5)
 		{
-			tryWith += Integer.toString(cnt);
-			String contact = (String) getJdbcTemplate().queryForObject(
+			tryWith = orig + Integer.toString(cnt);
+			List<String> contacts = getJdbcTemplate().queryForList(
 		            sql, new Object[] { tryWith }, String.class);
-			if (contact == null)
+			if (contacts.size()==0)
 				possibilities.add(tryWith);
 			cnt++;
 		}

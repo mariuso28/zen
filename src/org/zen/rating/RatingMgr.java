@@ -9,6 +9,7 @@ import org.zen.rating.image.RatingImageImport;
 
 public class RatingMgr {
 	
+	@SuppressWarnings("unused")
 	private static Logger log = Logger.getLogger(RatingMgr.class);
 	private List<RatingJson> ratings = new ArrayList<RatingJson>();
 	private double buyIn = 50;
@@ -35,7 +36,7 @@ public class RatingMgr {
 		for (int i=1; i<=12; i++)
 		{
 			ratings.get(i).setUpgradeThreshold(ratings.get(i-1).getUpgradeThreshold() + (int) Math.pow(3,i));
-			log.info("Rating : " + i + " Threshold : " + ratings.get(i).getUpgradeThreshold());
+//			log.info("Rating : " + i + " Threshold : " + ratings.get(i).getUpgradeThreshold());
 		}
 	}
 

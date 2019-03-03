@@ -19,7 +19,7 @@ public class ZenModelOriginal {
 	private RatingMgr ratingMgr = new RatingMgr();
 	private long population;
 	private int maxRating = 0;
-	
+
 	public ZenModelOriginal()
 	{
 		root = createPunter("zen","Zen","88888888",0);
@@ -34,7 +34,7 @@ public class ZenModelOriginal {
 	public Punter addChild(Punter parent,Punter finder, String email,String contact,String phone)
 	{
 		Punter child = createPunter(email,contact,phone,1);
-		if (getFullChildList(parent) && parent.getRating().getRating()!=Integer.MAX_VALUE)
+		if (getFullChildList(parent) && parent.getRating()!=Integer.MAX_VALUE)
 			parent = getNextNode(parent);
 		
 		parent.getChildren().add(child);
@@ -42,7 +42,7 @@ public class ZenModelOriginal {
 		double buyIn = ratingMgr.getBuyIn();
 		child.getAccount().xfer(-1*buyIn);
 		finder.getAccount().xfer(buyIn);
-		log.info("Created punter : " + child.getEmail() + " rating : " + child.getRating().getRating() 
+		log.info("Created punter : " + child.getEmail() + " rating : " + child.getRating() 
 					+ " xferred : " + buyIn + " to " + finder.getEmail()
 					+ " population : " + population);
 		
@@ -86,7 +86,7 @@ public class ZenModelOriginal {
 	public List<Punter> canUpgrade(Punter punter)
 	{
 		List<Punter> upgradables = new ArrayList<Punter>();
-		if (countDownstreamChildren(punter,punter.getRating().getRating())==punter.getRating().getUpgradeThreshold())
+		if (countDownstreamChildren(punter,punter.getRating())==punter.getRating())
 		{
 			log.info("Punter : " + punter.getEmail() + " Rating : " + punter.getRating() + " is upgradable");
 			upgradables.add(punter);
@@ -98,7 +98,7 @@ public class ZenModelOriginal {
 	private void addDownstreamChildren(Punter punter,List<Punter> upgradables) {
 		for (Punter child : punter.getChildren())
 		{
-			if (countDownstreamChildren(child,child.getRating().getRating())==child.getRating().getUpgradeThreshold())
+			if (countDownstreamChildren(child,child.getRating())==child.getRating())
 			{
 				log.info("Child Punter : " + child.getEmail() + " Rating : " + child.getRating() + " is upgradable");
 				upgradables.add(child);
@@ -120,24 +120,24 @@ public class ZenModelOriginal {
 	public void upgrade(Punter punter)
 	{
 		punter.setUpgradeScheduled(false);
-		if (punter.getRating().getRating()==Integer.MAX_VALUE)
+		if (punter.getRating()==Integer.MAX_VALUE)
 			return;
-		RatingJson newRating = ratingMgr.getRatings().get(punter.getRating().getRating()+1);
-		punter.setRating(newRating);
+		punter.setRating(punter.getRating()+1);
 		Punter parentToPay = punter.getParent();
 		if (parentToPay.getParent()!=null)
 			parentToPay = parentToPay.getParent();
-		while (parentToPay != null && parentToPay.getRating().getRating()<newRating.getRating())
+		while (parentToPay != null && parentToPay.getRating()<punter.getRating())
 		{
 			parentToPay.getParent();
 		}
-		double upgrade = punter.getRating().getUpgrade();
+		RatingJson rating = ratingMgr.getRatings().get(punter.getRating());
+		double upgrade = rating.getUpgrade();
 		punter.getAccount().xfer(-1*upgrade);
 		parentToPay.getAccount().xfer(upgrade);
-		log.info("Upgraded punter : " + punter.getEmail() + " rating : " + punter.getRating().getImage()
+		log.info("Upgraded punter : " + punter.getEmail() + " rating : " + punter.getRating()
 				+ " xferred : " + upgrade + " to " + parentToPay.getEmail());
-		if (maxRating < punter.getRating().getRating())
-			maxRating = punter.getRating().getRating();
+		if (maxRating < punter.getRating())
+			maxRating = punter.getRating();
 	}
 	
 	private Punter createPunter(String email,String contact,String phone,int rating)
@@ -146,7 +146,7 @@ public class ZenModelOriginal {
 		punter.setEmail(email);
 		punter.setContact(contact);
 		punter.setPhone(phone);
-		punter.setRating(ratingMgr.getRatings().get(rating));
+		punter.setRating(rating);
 		population++;
 		return punter;
 	}

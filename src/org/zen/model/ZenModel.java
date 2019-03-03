@@ -1,29 +1,52 @@
 package org.zen.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.apache.log4j.Logger;
-import org.zen.json.RatingJson;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.zen.json.ProfileJson;
 import org.zen.rating.RatingMgr;
+import org.zen.services.Services;
 import org.zen.user.punter.Punter;
+import org.zen.user.punter.mgr.PunterMgr;
 
 public class ZenModel {
 
 	private static Logger log = Logger.getLogger(ZenModel.class);
 	
+	private Services services;
 	public final static int FULLCHILDREN = 3;
 	private Punter root;
 	private RatingMgr ratingMgr = new RatingMgr();
 	private long population;
 	private int maxRating = 0;
+	private PunterMgr punterMgr;
 	
-	public ZenModel()
+	public ZenModel(Services services)
 	{
-		root = createPunter("zen","Zen","88888888",0);
+		setServices(services);
+		punterMgr = new PunterMgr(services);
 	}
-
+	
+	public void initializeModel(int levels) throws Exception
+	{
+		punterMgr.deleteByContact("zen");
+		ProfileJson rootProfile = makeProfile("zen","zen@test.com","0123456789","88888888",null);
+		punterMgr.registerPunter(rootProfile);
+		Punter root = punterMgr.getByContact("zen");
+		log.info("Got root : " + root);
+	}
+	
+	private ProfileJson makeProfile(String contact,String email,String phone,String password,String sponsorContactId)
+	{
+		ProfileJson pj = new ProfileJson();
+		pj.setContact(contact);
+		pj.setEmail(email);
+		pj.setPassword(password);
+		pj.setPhone(phone);
+		pj.setSponsorContactId(sponsorContactId);
+		return pj;
+	}
+	
 	public Punter getRoot() {
 		return root;
 	}
@@ -55,7 +78,33 @@ public class ZenModel {
 	public void setMaxRating(int maxRating) {
 		this.maxRating = maxRating;
 	}
+
+	public Services getServices() {
+		return services;
+	}
+
+	public void setServices(Services services) {
+		this.services = services;
+	}
 	
+	public static void main(String[] args)
+	{
+		@SuppressWarnings("resource")
+		ApplicationContext context = new ClassPathXmlApplicationContext(
+				"zen-service.xml");
+		try
+		{
+			Services services = (Services) context.getBean("services");
+			ZenModel zm = new ZenModel(services);
+			zm.initializeModel(0);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		log.info("Done");
+		System.exit(0);
+	}
 	
 	
 }

@@ -19,23 +19,32 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	private static Logger log = Logger.getLogger(PunterDaoImpl.class);
 
 	@Override
-	public void store(final Punter punter) throws PersistenceRuntimeException {
+	public void store(final Punter punter) {
 		punter.setId(UUID.randomUUID());
 		try
 		{
-			getJdbcTemplate().update("INSERT INTO punter (id,email,phone,password,role,enabled,rating,parentId,sponsorId) "
-										+ "VALUES (?,?,?,?,?,?,?,?,?)"
+			getJdbcTemplate().update("INSERT INTO baseuser (id,contact,email,phone,password,role,enabled,rating,parentId,sponsorId) "
+										+ "VALUES (?,?,?,?,?,?,?,?,?,?)"
 			        , new PreparedStatementSetter() {
 						public void setValues(PreparedStatement ps) throws SQLException {
 			    	  	ps.setObject(1, punter.getId());
-						ps.setString(2, punter.getEmail().toLowerCase());
-						ps.setString(3, punter.getPhone());
-						ps.setString(4, punter.getPassword());
-						ps.setString(5, punter.getRole());
-						ps.setBoolean(6, punter.isEnabled());
-						ps.setInt(7, punter.getRating().getRating());
-						ps.setObject(8, punter.getParent().getId());
-						ps.setObject(9, punter.getSponsor().getId());
+			    	  	ps.setString(2, punter.getContact());
+						ps.setString(3, punter.getEmail().toLowerCase());
+						ps.setString(4, punter.getPhone());
+						ps.setString(5, punter.getPassword());
+						ps.setString(6, punter.getRole());
+						ps.setBoolean(7, punter.isEnabled());
+						ps.setInt(8, punter.getRating());
+						if (punter.getParent()==null)							// root
+						{
+							ps.setObject(9, null);
+							ps.setObject(10, null);
+						}
+						else
+						{
+							ps.setObject(9, punter.getParent().getId());
+							ps.setObject(10, punter.getSponsor().getId());
+						}
 			      }
 			    });
 			
@@ -48,7 +57,7 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	}
 
 	@Override
-	public Punter getByContact(final String contact) throws PersistenceRuntimeException {
+	public Punter getByContact(final String contact) {
 		try
 		{
 			final String sql = "SELECT * FROM baseuser WHERE contact=?";
@@ -69,7 +78,26 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	}
 
 	@Override
-	public Punter getById(final UUID id) throws PersistenceRuntimeException {
+	public List<Punter> getChildren(final Punter parent) {
+		try
+		{
+			final String sql = "SELECT * FROM baseUser WHERE parentid=?";
+			List<Punter> punters = getJdbcTemplate().query(sql,new PreparedStatementSetter() {
+				        public void setValues(PreparedStatement preparedStatement) throws SQLException {
+				          preparedStatement.setObject(1, parent.getId());
+				        }
+				      }, BeanPropertyRowMapper.newInstance(Punter.class));
+			return punters;
+		}
+		catch (DataAccessException e)
+		{
+			log.error("Could not execute : " + e.getMessage(),e);
+			throw new PersistenceRuntimeException("Could not execute getById : " + e.getMessage());
+		}
+	}
+	
+	@Override
+	public Punter getById(final UUID id) {
 		try
 		{
 			final String sql = "SELECT * FROM baseUser WHERE id=?";
@@ -88,5 +116,34 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 			throw new PersistenceRuntimeException("Could not execute getById : " + e.getMessage());
 		}
 	}
+	
+	@Override
+	public void deleteByContact(final String contact) {
+		try
+		{
+			final String sql = "DELETE FROM baseuser WHERE contact=?";
+			getJdbcTemplate().update(sql,new Object[] { contact });
+		}
+		catch (DataAccessException e)
+		{
+			log.error("Could not execute : " + e.getMessage(),e);
+			throw new PersistenceRuntimeException("Could not execute getByEmail : " + e.getMessage());
+		}
+	}
+	
+	@Override
+	public void deleteAllContacts() {
+		try
+		{
+			final String sql = "DELETE FROM baseuser";
+			getJdbcTemplate().update(sql);
+		}
+		catch (DataAccessException e)
+		{
+			log.error("Could not execute : " + e.getMessage(),e);
+			throw new PersistenceRuntimeException("Could not execute getByEmail : " + e.getMessage());
+		}
+	}
+
 	
 }

@@ -21,12 +21,12 @@ public class RestAnonControllerImpl implements RestAnonController{
 	// ResultJson contains message if success, message if fail
 	public ResultJson register(@RequestBody ProfileJson profile)
 	{
-		log.info("Received register");
+		log.info("Received register with profile : " + profile);
 		
 		ResultJson result = new ResultJson();
 		try
 		{
-			restServices.registerPunter(profile);
+//			restServices.registerPunter(profile);
 			result.success("Zen recriuter : " + profile.getContact() + " Successfully registered.");
 		}
 		catch (Exception e)

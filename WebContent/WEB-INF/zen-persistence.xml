@@ -23,18 +23,22 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 		class="org.springframework.jdbc.core.JdbcTemplate">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-<!--
+
 	<bean id="baseUserDao"
 		class="org.zen.user.persistence.BaseUserDaoImpl">
 		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
 
+	<bean id="punterDao"
+		class="org.zen.user.punter.persistence.PunterDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
 
 	<bean id="home"
 		class="org.zen.persistence.home.HomeImpl"> 
 		<property name="baseUserDao" ref="baseUserDao" />
-
+		<property name="punterDao" ref="punterDao" />
 	</bean>
--->
+
 
 </beans>

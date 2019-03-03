@@ -3,13 +3,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page trimDirectiveWhitespaces="true" %>
 
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<link rel="stylesheet" href="../../css/overlaystyle.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.1/css/foundation.min.css">
-<link rel="stylesheet" href="../../css/bootstrap.min.css" />
-<link rel="stylesheet" href="../../css/style.css" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+	<link rel="stylesheet" href="../../css/font-awesome.css">
+	<link rel="stylesheet" href="../../css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../../css/style.css" />
 <style>
 
 .headingPanel {
@@ -411,17 +412,11 @@
 
 				.modal-profile-content {
 					width: 544px;
-					height: 300px;
-					background-color: #fff;
+					height: 400px;
+					background-color: #a2dbd7;
 					/*margin: auto;*/
 					padding: 10px;
 					border: 1px solid #888;
-				}
-
-				.profileTopBar2 {
-				width: 500px;
-				height: 4px;
-				background-color: #129c94;
 				}
 
 				.profileTopBar {
@@ -432,20 +427,6 @@
 				font-size: 14px;
 				line-height: 16px;
 				font-weight: 900;
-				}
-
-				.profileTopBarMiddle {
-				float: left;
-				width: 495px;
-				height: 40px;
-				text-align: left;
-				padding-left: 5px;
-				}
-
-				.profileTopHiddenBar {
-				width: 500px;
-				height: 280px;
-				background-color: #129c94;
 				}
 
 				.profileEntryPanel{
@@ -474,7 +455,7 @@
 					font-family: myFont;
 					font-size: 14px;
 					font-weight: 700;
-					color: #fff;
+					color: #356aea;
 					text-shadow: 1px 1px 1px #666;
 					line-height: 28px;
 					padding-left: 0px;
@@ -503,7 +484,7 @@
 					font-family: myFont;
 					font-size: 14px;
 					font-weight: 700;
-					color: #fff;
+					color: #356aea;
 					text-shadow: 1px 1px 1px #666;
 					line-height: 28px;
 				}
@@ -519,10 +500,11 @@
 
 				.profileEntrySubmitButton {
 					float: left;
-					width: 70px;
-					height: 26px;
+					width: 160px;
+					height: 30px;
 					text-align: left;
 					padding-left: 5px;
+					padding-top: 15px;
 				}
 
 				.profileEntryErrorMessage {
@@ -531,17 +513,28 @@
 					height: 20px;
 					text-align: left;
 					padding-left: 0px;
+					padding-top: 20px;
 					 font-size: 18px;
 				}
 
-				modal-profile-content  {
-				width: 600px;
-				height: 600px;
-				background-color: #fff;
-				/*margin: auto;*/
-				padding: 10px;
-				border: 1px solid #888;
-			}
+				.signinEntryPanel{
+					float: left;
+					width: 475px;
+					height: 120px;
+					text-align: left;
+					line-height: 22px;
+					padding-left: 5px;
+				}
+
+				.modal-signin-content {
+					width: 544px;
+					height: 160px;
+					background-color: #a2dbd7;
+					/*margin: auto;*/
+					padding: 10px;
+					border: 1px solid #888;
+				}
+
 
 </style>
 
@@ -553,6 +546,8 @@ function numberWithCommas(x) {
 
 function registerProfile()
 {
+	alert('IN');
+
 	err = document.getElementById('profileError');
 	err.innerHTML="";
 
@@ -561,6 +556,13 @@ function registerProfile()
 	var password = document.getElementById('password-input');
 	var vpassword = document.getElementById('vpassword-input');
 	var phone = document.getElementById('phone-input');
+	var sponsorContactId = document.getElementById('sponsorContactId-input');
+
+	if (email.value=='' || contact.value=='' || password.value=='' || vpassword.value=='' || phone.value=='' || sponsorContactId=='')
+	{
+			err.appendChild(document.createTextNode('Please key in all fields'));
+			return;
+	}
 
 	if (password.value != vpassword.value)
 	{
@@ -573,15 +575,15 @@ function registerProfile()
 	jsonData['contact'] = contact.value;
 	jsonData['phone'] = phone.value;
 	jsonData['password'] = password.value;
+	jsonData['sponsorContactId'] = sponsorContactId.value;
 
 	access_token = sessionStorage.getItem("access_token");
 	var bearerHeader = 'Bearer ' + access_token;
 
-
 	$.ajax({
 
 		type: "POST",
-			 url : "/platez/api/anon/register",
+			 url : "/zen/zx4/api/anon/register",
 			 cache: false,
 			 contentType: 'application/json;',
 			 dataType: "json",
@@ -601,37 +603,13 @@ function registerProfile()
 	});
 }
 
-
-function setUpModal()
+function setUpModalSignin()
 {
-	var modalP = document.getElementById('myModalP');
-	var btnP = document.getElementById("modalOpener");
-	var spanP = document.getElementsByClassName("closeP")[0];
-// When the user clicks the button, open the modal
-
-	refreshOn = false;
-	modalP.style.display = "none";
-
-	btnP.onclick = function() {
-		refreshOn = false;
-		modalP.style.display = "block";
-		return false;
-	}
-
-// When the user clicks on <span> (x), close the modal
-	spanP.onclick = function() {
-		refreshOn = true;
-		modalP.style.display = "none";
-		return false;
-	}
-
-// When the user clicks anywhere outside of the modal, close it
-	window.onclick = function(event) {
-		if (event.target == modalP) {
-				refreshOn = true;
-				modalP.style.display = "none";
-		}
-	}
+	$(document).ready(function(){
+		$("#signin").click(function(){
+				$("#modalSignin").modal();
+		});
+	});
 }
 
 function setUpModalProfile()
@@ -657,7 +635,7 @@ function login() {
 	$.ajax({
 
      type: "POST",
-        url : "/platez/api/a/authorize1",
+        url : "/zen/api/a/authorize1",
         cache: false,
         contentType: 'application/json;',
         dataType: "json",
@@ -675,264 +653,12 @@ function login() {
            sessionStorage.setItem("access_token",access_token);
            at = sessionStorage.getItem("access_token");
   //         alert(at);
-           if (authorized.role=='ROLE_AGENT')
-              window.location.replace("/platez/web/anon/goAgentHome");
-            else
-						if (authorized.role=='ROLE_AUCTIONEER')
-							 window.location.replace("/platez/web/anon/goActioneerHome");
-            else
 						if (authorized.role=='ROLE_PUNTER')
-              	window.location.replace("/platez/web/anon/goPunterHome");
+              	window.location.replace("/zen/web/anon/goPunterHome");
         }
      });
  }
 
-function doClearQuery()
-{
-  getAllPlates();
-  getQueryParams();
-}
-
-function doSpecialQuery()
-{
-  var special = document.getElementById('special');
-  var jsonData = {};
-  // alert("Cot special : " + special.value);
-  jsonData['combo'] = special.value;
-
-  queryPlates(jsonData,'/platez/api/anon/queryDigits');
-}
-
-function doParamQuery()
-{
-  var prefix = document.getElementById('prefix');
-  var letter1 = document.getElementById('letter1');
-  var letter2 = document.getElementById('letter2');
-  var number1 = document.getElementById('number1');
-  var number2 = document.getElementById('number2');
-  var number3 = document.getElementById('number3');
-  var number4 = document.getElementById('number4');
-  var suffix = document.getElementById('suffix');
-
-  var jsonData = {};
-//  alert(prefix.value+letter1.value+letter2.value+number1.value+number2.value
-//        +number3.value+number4.value+suffix.value);
-
-  jsonData['prefix'] = prefix.value;
-  jsonData['letter1'] = letter1.value;
-  jsonData['letter2'] = letter2.value;
-  jsonData['number1'] = number1.value;
-  jsonData['number2'] = number2.value;
-  jsonData['number3'] = number3.value;
-  jsonData['number4'] = number4.value;
-  jsonData['suffix'] = suffix.value;
-
-  queryPlates(jsonData,'/platez/api/anon/queryPlate');
-}
-
-var plates;
-
-function queryPlates(jsonData,targetUrl) {
-
-     $.ajax({
-
-    type: "POST",
-        url : targetUrl,
-        cache: false,
-        contentType: 'application/json;',
-        dataType: "json",
-        data:JSON.stringify(jsonData),
-         success: function(data) {
-        //    alert(JSON.stringify(data));
-	          if (data == '')
-            {
-               return;
-            }
-
-     	      var result = $.parseJSON(JSON.stringify(data));
-            if (result.status != 'OK')
-            {
-              alert(result.message);
-              return;
-            }
-            plates = result.result;
-          //  alert('Plates # ' + plates.length);
-            displayPlates();
-          }
-      })
-}
-
-
-function getAllPlates() {
-
-     $.ajax({
-
-    type: "GET",
-         url : '/platez/api/anon/getAllPlates',
-    cache: false,
- 	 contentType: 'application/json;',
-         dataType: "json",
-           success: function(data) {
-        //    alert(JSON.stringify(data));
-	          if (data == '')
-            {
-               return;
-            }
-
-     	      var result = $.parseJSON(JSON.stringify(data));
-            if (result.status != 'OK')
-            {
-              alert(result.message);
-              return;
-            }
-            plates = result.result;
-      //      alert('Plates # ' + plates.length);
-            displayPlates();
-          }
-      })
-}
-
-var queryParams;
-
-function getQueryParams() {
-
-     $.ajax({
-
-    type: "GET",
-         url : '/platez/api/anon/getQueryParams',
-    cache: false,
- 	 contentType: 'application/json;',
-         dataType: "json",
-        // data: {key:key },
-         success: function(data) {
-        //    alert(JSON.stringify(data));
-	          if (data == '')
-            {
-               return;
-            }
-	  //  jdata = JSON.parse(data)
-
-     	      var result = $.parseJSON(JSON.stringify(data));
-            if (result.status != 'OK')
-            {
-              alert(result.message);
-              return;
-            }
-            queryParams = result.result;
-            displayQueryParams();
-          }
-      })
-}
-
-function displayQueryParams()
-{
-    var pf = document.getElementById('prefix');
-    queryParams.prefix.forEach((choice,i) => {
-      var option = createOption(choice);
-      pf.appendChild(option);
-    });
-    var l1 = document.getElementById('letter1');
-    queryParams.letter1.forEach((choice,i) => {
-      var option = createOption(choice);
-      l1.appendChild(option);
-    });
-    var l2 = document.getElementById('letter2');
-    queryParams.letter2.forEach((choice,i) => {
-      var option = createOption(choice);
-      l2.appendChild(option);
-    });
-    var n1 = document.getElementById('number1');
-    queryParams.number1.forEach((choice,i) => {
-      var option = createOption(choice);
-      n1.appendChild(option);
-    });
-    var n2 = document.getElementById('number2');
-    queryParams.number2.forEach((choice,i) => {
-      var option = createOption(choice);
-      n2.appendChild(option);
-    });
-    var n3 = document.getElementById('number3');
-    queryParams.number3.forEach((choice,i) => {
-      var option = createOption(choice);
-      n3.appendChild(option);
-    });
-    var n4 = document.getElementById('number4');
-    queryParams.number4.forEach((choice,i) => {
-      var option = createOption(choice);
-      n4.appendChild(option);
-    });
-    var sf = document.getElementById('suffix');
-    queryParams.suffix.forEach((choice,i) => {
-      var option = createOption(choice);
-      sf.appendChild(option);
-    });
-    var sp = document.getElementById('special');
-    queryParams.specials.forEach((choice,i) => {
-      var option = document.createElement('option');
-      option.value = choice[1];
-      option.text = choice[0];
-      sp.appendChild(option);
-    });
-}
-
-function createOption(choice)
-{
-  var option = document.createElement('option');
-  option.value = choice;
-  option.text = choice;
-  return option;
-}
-
-function displayPlates()
-{
-    document.getElementById('pc').innerHTML="";
-
-    plates.forEach((plate, i) => {
-    var pe = document.createElement('div');
-    pe.className = 'prodListEntry';
-
-    var peh = document.createElement('div');
-    peh.className = 'prodListEntryHeading';
-
-    if (plate.rating==1)
-    {
-      var np = document.createElement('div');
-      np.className = 'numberPlateSpe';
-      np.appendChild(document.createTextNode(plate.regNo));
-      peh.appendChild(np);
-    }
-    else
-    if (plate.rating==2)
-    {
-        var np = document.createElement('div');
-        np.className = 'numberPlateSpe2';
-        np.appendChild(document.createTextNode(plate.regNo));
-        peh.appendChild(np);
-    }
-    else {
-      var np = document.createElement('div');
-      np.className = 'numberPlateSpe3';
-      np.appendChild(document.createTextNode(plate.regNo));
-      peh.appendChild(np);
-    }
-
-    pe.appendChild(peh);
-    var pp = document.createElement('div');
-    pp.className = 'prodListEntryPrice';
-    var price = numberWithCommas(plate.listPrice);
-    pp.appendChild(document.createTextNode('RM'+price));
-    peh.appendChild(pp);
-
-    if (!(i % 5)) {
-        pl = document.createElement('div');
-        pl.className = 'prodList'
-        document.getElementById('pc').appendChild(pl);
-    }
-
-    pl.appendChild(pe);
-
-    });
-}
 
 </script>
 
@@ -941,7 +667,7 @@ function displayPlates()
 	<input type="hidden" name="${_csrf.parameterName}"  value="${_csrf.token}" />
 	<div class="headingPanelLogonHeader">
 		<div class="headingPanelLogonHeaderCell">
-			Already a member?&nbsp&nbsp<a id='modalOpener' href="#">Sign in</a>
+			Already a member?&nbsp&nbsp<a id='signin' href="#">Sign in</a>
 		</div>
 		<div class="headingPanelLogonHeaderCell">
 			<a id='register' href="#">Register to become a Zen Recruiter</a>
@@ -949,8 +675,8 @@ function displayPlates()
 	</div>
 
 	<div id="modalProfile" class="modal fade" role="dialog">
-		<div class="modal-dialog" style="float:left;width=1200px;height:600px;">
-				<div class="modal-profile-content ">
+		<div class="modal-dialog" style="float:left;width=1200px;height:700px;">
+				<div class="modal-profile-content">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal">&times;</button>
 							<h4 class="modal-title" id="pm-title" style="width=1200px">Profile Details</h4>
@@ -1002,22 +728,79 @@ function displayPlates()
 																	value="" style="height: 26px; width: 240px; font-size: 14px; "/>
 									</div>
 								</div>
-								<div class="profileEntrySubmitButton">
-										<input type="button" id="profile" value="Save Profile"
-											onClick="return registerProfile();"
-											class="btn btn-primary"
-											style="height: 26px; line-height:0px; font-weight:700; text-shadow:1px 1px 1px #666;" />
+								<div class="profileEntryLine">
+									<div class="profileEntryPrompt">
+										Sponsor Contact Id:
+									</div>
+									<div class="profileEntryInput">
+											<input id="sponsorContactId-input" type="text"
+																	value="" style="height: 26px; width: 240px; font-size: 14px; "/>
+									</div>
 								</div>
-							</br>
+
+								<div class="profileEntrySubmitButton">
+									<input id="registerBtn" value="Register"
+										type="button"
+										style="height:26px; width:140px; white-space:normal; font-family:inherit; font-size:large;
+																			color:#666; background-color:#fff; font-weight:bold;"
+										onClick="return registerProfile();"
+									/>
+								</div>
+
 								<div class="profileEntryErrorMessage" id='profileError'>
+								</div>
+							</div>  <!-- profileEntryPanel -->
+						</div>
+				</div>
+		</div>
+</div>
+<div id="modalLogon" class="modal fade" role="dialog">
+		<div class="modal-dialog" style="float:left;width=800px;height:200px;">
+				<div class="modal-signin-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h4 class="modal-title" id="si-title" style="width=800px">Zen Sign In</h4>
+						</div>
+						<div class="modal-body" style="width=800px">
+							<div class="profileSigninPanel">
+								<div class="profileEntryLine">
+									<div class="profileEntryPrompt">
+										Zen Contact Name:
+									</div>
+									<div class="profileEntryInput">
+											<input id="signin-contact-input" type="text"
+																	value="" style="height: 26px; width: 240px; font-size: 14px; "/>
+									</div>
+								</div>
+								<div class="profileEntryPasswordLine">
+									<div class="profileEntryPasswordPrompt">
+													Password:
+									</div>
+									<div class="profileEntryPasswordInput">
+												<input id="signin-password-input" type="password"
+													 style="height: 26px; width: 240px; font-size: 14px; "/>
+									</div>
+								<div class="profileEntrySubmitButton">
+									<input id="sigin" value="Sign In"
+										type="button"
+										style="height:26px; width:140px; white-space:normal; font-family:inherit; font-size:large;
+																			color:#666; background-color:#fff; font-weight:bold;"
+										onClick="return sigin();"
+									/>
+								</div>
+
+								<div class="profileEntryErrorMessage" id='siginError'>
 								</div>
 							</div>  <!-- profileEntryPanel -->
 						</div>
 				</div>
 			</div>
 	</div>
+</div>
+
 
 <script>
 	setUpModalProfile();
+	setUpModalSignin();
 </script>
 </html>

@@ -48,7 +48,7 @@ public class Model {
 	public void scheduleUpgrade(Punter punter)
 	{
 		int sd = upgradeDays(punter);
-		int newRating = punter.getRating().getRating()+1;
+		int newRating = punter.getRating()+1;
 		log.info("Scheduling upgrade for " + punter.getEmail() + " to rating : " 
 				+ newRating + " in " + sd + " days");
 		ModelDay day = modelCalendar.getDays().get(sd);
@@ -84,7 +84,7 @@ public class Model {
 
 	private int upgradeDays(Punter punter)
 	{
-		if (punter.getRating().getRating()==0)
+		if (punter.getRating()==0)
 			return 0;
 /*	
 		Normal normal = new Normal();
