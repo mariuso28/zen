@@ -46,8 +46,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 	{
 		ModelJson mj = new ModelJson();
 		List<PunterJson> punters = getPunters(rootContact,mj);
-		mj.setPunters(punters);
-//		mj.setPopulation(services.getZenModel().getPopulation());
+		mj.setPunters(punters);//		mj.setPopulation(services.getZenModel().getPopulation());
 		mj.setTopRevenue(punters.get(0).getAccount().getBalance());
 		return mj;
 	}
@@ -80,12 +79,13 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		if (!punter.getEmail().equals("zen@test.com"))
 			imageId = punter.getRating();
 		pj.setImageUrl("../../../img/" + imageId + ".jpeg");
-		String text = punter.getEmail();
+		String text = punter.getContact();
 		NumberFormat formatter = new DecimalFormat("#0.00");
 		String bal = " RM" + formatter.format(punter.getAccount().getBalance());
+		String lev = " #" + punter.getRating() + " ";
 		String href = "<a href=# onclick=\"return getPunterDetails(" + 
 					punter.getEmail() + ")\"" 
-		+ "<font color='#045023'>"+ text + bal + "</font></a>";
+		+ "<font color='#045023'>"+ text + bal + lev + "</font></a>";
 		pj.setText(href);
 		pj.setAccount(createAccountJson(punter.getAccount()));
 		return pj;

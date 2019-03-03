@@ -3,6 +3,7 @@ package org.zen.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,25 +36,51 @@ public class ZenModelInitialize {
 		log.info("Got root : " + root);
 		FakerUtil fu = new FakerUtil();
 		fu.exclude("zen");
-		recruitLevel(root,4,fu);
+		List<UUID> parentIds = new ArrayList<UUID>();
+		recruitLevel(root,4,fu,parentIds);
+		// upgrade from the leaf-1 nodes
+		doUpgrades(root,parentIds);
+		
 		return root;
 	}
 	
-	private void recruitLevel(Punter parent,int levels, FakerUtil fu) throws PunterMgrException
+	private void doUpgrades(Punter root, List<UUID> parentIds) throws PunterMgrException
+	{
+		log.info("Number to test upgrade : " + parentIds.size());
+		for (UUID pi : parentIds)
+		{
+			Punter parent = punterMgr.getByUUID(pi);
+			int lev = punterMgr.getLevel(parent, root);
+			log.info("Testing : " + parent.getContact() + " #L" + lev);
+			List<Punter> upgradables = zenModel.canUpgrade(parent);
+			for (Punter p : upgradables)
+				zenModel.upgrade(p);
+		}
+	}
+	
+	private void recruitLevel(Punter parent,int levels, FakerUtil fu, List<UUID> parentIds) throws PunterMgrException
 	{
 		if (levels==0)
 			return;
 		Random r = new Random();
+		List<Punter> recruits = new ArrayList<Punter>();
 		for (int i=0; i<ZenModel.FULLCHILDREN; i++)
 		{
 			String contact = fu.getExlusiveRandomName();
 			String phone = "012" + r.nextInt(10000000);
 			ProfileJson childProfile = makeProfile(contact,contact+"@test.com",phone,"88888888",parent.getContact());
 			Punter child = punterMgr.registerPunter(childProfile);
-			
+			recruits.add(child);
 			zenModel.payJoinFee(child);
-			
-			recruitLevel(child,levels-1, fu);
+//			if (levels==2)
+//				parentIds.add(child.getId());
+			if (i==ZenModel.FULLCHILDREN-1)
+			{
+				List<Punter> upgradables = zenModel.canUpgrade(parent);
+				for (Punter p : upgradables)
+					zenModel.upgrade(p);
+			}
+			recruitLevel(child,levels-1, fu,parentIds );
 		}
 	}
 	

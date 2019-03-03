@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.zen.json.RatingJson;
+import org.zen.model.ZenModel;
 import org.zen.rating.image.RatingImageImport;
 
 public class RatingMgr {
@@ -35,7 +36,7 @@ public class RatingMgr {
 		ratings.add(new RatingJson(12,1000,RatingImageImport.loadImage("13")));		// use 12 image for root
 		for (int i=1; i<=12; i++)
 		{
-			ratings.get(i).setUpgradeThreshold(ratings.get(i-1).getUpgradeThreshold() + (int) Math.pow(3,i));
+			ratings.get(i).setUpgradeThreshold(ratings.get(i-1).getUpgradeThreshold() + (int) Math.pow(ZenModel.FULLCHILDREN,i));
 //			log.info("Rating : " + i + " Threshold : " + ratings.get(i).getUpgradeThreshold());
 		}
 	}

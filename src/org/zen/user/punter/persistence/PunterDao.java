@@ -13,6 +13,7 @@ public interface PunterDao {
 	public Punter getById(UUID id);
 	public void deletePunter(Punter punter);
 	public List<Punter> getChildren(Punter root);
+	public int getChildrenCnt(final Punter parent);
 	public void deleteAllPunters();
 	public void updateAccount(Account account);
 }

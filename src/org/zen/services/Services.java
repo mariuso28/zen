@@ -14,6 +14,7 @@ import org.zen.user.punter.persistence.PunterDao;
 
 public class Services {
 
+	@SuppressWarnings("unused")
 	private static Logger log = Logger.getLogger(Services.class);
 	
 	@Autowired
@@ -25,7 +26,7 @@ public class Services {
 	}
 	
 	public synchronized void updateAccounts(Punter sponsor, Punter punter) {
-		log.info("%%%updateAccounts:");
+	//	log.info("%%%updateAccounts:");
 		new TransactionTemplate(getTransactionManager()).execute(new TransactionCallbackWithoutResult() {
 			@Override
 			protected void doInTransactionWithoutResult(TransactionStatus arg0) {

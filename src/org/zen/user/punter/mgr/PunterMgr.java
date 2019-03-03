@@ -222,6 +222,19 @@ public class PunterMgr {
 		}
 	}
 	
+	public int getChidrenCnt(final Punter punter) throws PunterMgrException
+	{
+		try
+		{
+			return punterDao.getChildrenCnt(punter);
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			throw new PunterMgrException("Could not get children - contact support.");
+		}
+	}
+	
 	public Punter getByUUID(final UUID id) throws PunterMgrException
 	{
 		try

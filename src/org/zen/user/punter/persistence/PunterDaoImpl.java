@@ -144,7 +144,21 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 			throw new PersistenceRuntimeException("Could not execute getChildren : " + e.getMessage());
 		}
 	}
-	
+		
+	public int getChildrenCnt(final Punter parent) {
+		try
+		{
+			final String sql = "SELECT COUNT(*) FROM baseUser WHERE parentid=?";
+			Integer cnt = getJdbcTemplate().queryForObject(sql,new Object[] { parent.getId() }, Integer.class );
+			return cnt;
+		}
+		catch (DataAccessException e)
+		{
+			log.error("Could not execute : " + e.getMessage(),e);
+			throw new PersistenceRuntimeException("Could not execute getChildren : " + e.getMessage());
+		}
+	}
+
 	@Override
 	public Punter getById(final UUID id) {
 		try

@@ -86,7 +86,8 @@ public class ZenModelOriginal {
 	public List<Punter> canUpgrade(Punter punter)
 	{
 		List<Punter> upgradables = new ArrayList<Punter>();
-		if (countDownstreamChildren(punter,punter.getRating())==punter.getRating())
+		RatingJson rating = ratingMgr.getRatings().get(punter.getRating());
+		if (countDownstreamChildren(punter,punter.getRating())==rating.getUpgradeThreshold())
 		{
 			log.info("Punter : " + punter.getEmail() + " Rating : " + punter.getRating() + " is upgradable");
 			upgradables.add(punter);
@@ -98,7 +99,8 @@ public class ZenModelOriginal {
 	private void addDownstreamChildren(Punter punter,List<Punter> upgradables) {
 		for (Punter child : punter.getChildren())
 		{
-			if (countDownstreamChildren(child,child.getRating())==child.getRating())
+			RatingJson rating = ratingMgr.getRatings().get(child.getRating());
+			if (countDownstreamChildren(child,child.getRating())==rating.getUpgradeThreshold())
 			{
 				log.info("Child Punter : " + child.getEmail() + " Rating : " + child.getRating() + " is upgradable");
 				upgradables.add(child);
