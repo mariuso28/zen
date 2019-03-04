@@ -146,13 +146,21 @@ function getModel()
 			pop.innerHtml = "";
 			pop.appendChild(document.createTextNode("Population: " + model.population));
 
-			rev = document.getElementById("revenue");
+			pop = document.getElementById("populationIn");
+			pop.innerHtml = "";
+			pop.appendChild(document.createTextNode("Inside: " + model.populationInside));
+
+			pop = document.getElementById("populationOut");
+			pop.innerHtml = "";
+			pop.appendChild(document.createTextNode("Outside: " + model.populationOutside));
+
+			rev = document.getElementById("puntRevenue");
 			rev.innerHtml = "";
-			rev.appendChild(document.createTextNode("Top Revenue: RM" + model.topRevenue));
+			rev.appendChild(document.createTextNode("Punter: RM" + model.punterOwnedRevenue));
 
 			rev = document.getElementById("sysRevenue");
 			rev.innerHtml = "";
-			rev.appendChild(document.createTextNode("System Revenue: RM" + model.systemOwnedRevenue));
+			rev.appendChild(document.createTextNode("System : RM" + model.systemOwnedRevenue));
 
 			var dText = model.punters;
 
@@ -170,10 +178,14 @@ function getModel()
 
 <div class="container-fluid">
 	<div style="float:left;width:1000px;">
+		<div style="float:center;width:200px;"><img src="../../../img/GoldenCircle_02.png" width="100px" height="100px"/></div>
+	</div>
+	<div style="float:left;width:1000px;">
 		<div style="float:left;width:200px;" id="population"></div>
-		<div style="float:left;width:300px;" id="revenue"></div>
-		<div style="float:left;width:300px;" id="sysRevenue"></div>
-		<div style="float:left;width:200px;"><img src="../../../img/GoldenCircle_02.png" width="100px" height="100px"/></div>
+		<div style="float:left;width:200px;" id="populationIn"></div>
+		<div style="float:left;width:200px;" id="populationOut"></div>
+		<div style="float:left;width:200px;" id="puntRevenue"></div>
+		<div style="float:left;width:200px;" id="sysRevenue"></div>
 	</div>
 	<div style="float:left;width:1000px;" id="tree"></div>
 </div>

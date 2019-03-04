@@ -1,12 +1,11 @@
 package org.zen.simulate;
 
-import org.zen.user.punter.Punter;
-
 public class ModelPrint {
 
-	private Model model;
+	/*
+	private ZenSimModel model;
 	
-	public ModelPrint(Model model)
+	public ModelPrint(ZenSimModel model)
 	{
 		setModel(model);
 		System.out.println("");
@@ -34,14 +33,14 @@ public class ModelPrint {
 			
 	}
 
-	public Model getModel() {
+	public ZenSimModel getModel() {
 		return model;
 	}
 
-	public void setModel(Model model) {
+	public void setModel(ZenSimModel model) {
 		this.model = model;
 	}
 	
-	
+	*/
 	
 }

@@ -20,6 +20,7 @@ public class ZenModel {
 	@Autowired
 	private PunterMgr punterMgr;
 	private RatingMgr ratingMgr;
+	private ZenModelFake zenModelFake = new ZenModelFake();
 	
 	public final static int FULLCHILDREN = 3;
 	
@@ -40,6 +41,9 @@ public class ZenModel {
 		services.updateAccounts(sponsor,punter);
 	}
 	
+	// COMBINED CHECK AND UPGRADE FOR MODEL INITIALIZATION - 
+	// OTHER SHOULD BE SEPARATE - FOR SIMULATION CHECK ELIGIBLE THEN SCHEDULE WHEN
+	// FOR REAL CHECK THEN PUNTER WILL EXECUTE WHEN WANTS
 	public void tryUpgrade(Punter punter) throws PunterMgrException
 	{
 		int newRating = canUpgrade2(punter);
@@ -48,7 +52,6 @@ public class ZenModel {
 		upgrade(punter,newRating);
 		while (true)
 		{
-			
 			Punter parent = punterMgr.getByUUID(punter.getParentId());
 			newRating = canUpgrade2(parent);
 			if (newRating<=0)
@@ -58,6 +61,7 @@ public class ZenModel {
 		}
 	}
 	
+	// COMBINED CHECK AND UPGRADE FOR MODEL INITIALIZATION WITH 
 	private int canUpgrade2(Punter punter) throws PunterMgrException
 	{
 		if (punter.getRating()==0)
@@ -144,6 +148,16 @@ public class ZenModel {
 
 	public void setPunterMgr(PunterMgr punterMgr) {
 		this.punterMgr = punterMgr;
+	}
+
+
+	public ZenModelFake getZenModelFake() {
+		return zenModelFake;
+	}
+
+
+	public void setZenModelFake(ZenModelFake zenModelFake) {
+		this.zenModelFake = zenModelFake;
 	}
 	
 }

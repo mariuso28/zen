@@ -34,6 +34,19 @@ public class PunterMgr {
 	{
 	}
 	
+	public static ProfileJson makeProfile(String contact,String email,String phone,String password,
+				String sponsorContactId,boolean systemOwned)
+	{
+		ProfileJson pj = new ProfileJson();
+		pj.setContact(contact);
+		pj.setEmail(email);
+		pj.setPhone(phone);
+		pj.setPassword(password);
+		pj.setSponsorContactId(sponsorContactId);
+		pj.setSystemOwned(systemOwned);
+		return pj;
+	}
+	
 	public List<Punter> getSystemPunters() throws PunterMgrException
 	{
 		try

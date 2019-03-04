@@ -6,14 +6,16 @@ public abstract class ModelEvent {
 	private EventType eventType;
 	protected Punter punter;
 	boolean executed = false;
+	protected ZenSimModel model;
 	
-	public ModelEvent(EventType eventType,Punter punter)
+	public ModelEvent(EventType eventType,Punter punter,ZenSimModel model)
 	{
 		setEventType(eventType);
 		setPunter(punter);
+		setModel(model);
 	}
 
-	public abstract void execute(Model model);
+	public abstract void execute() throws Exception;
 	
 	public EventType getEventType() {
 		return eventType;
@@ -37,6 +39,14 @@ public abstract class ModelEvent {
 
 	public void setExecuted(boolean executed) {
 		this.executed = executed;
+	}
+
+	public ZenSimModel getModel() {
+		return model;
+	}
+
+	public void setModel(ZenSimModel model) {
+		this.model = model;
 	}
 	
 	

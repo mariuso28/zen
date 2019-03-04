@@ -40,13 +40,17 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	}
 	
 	@Override
-	public double getSystemOwnedRevenue()
+	public double getRevenue(char type)
 	{
 		try
 		{
-			final String sql = "select sum(balance) from account as a" + 
-								" join baseuser as bu on a.id = bu.id" + 
-								" where bu.systemowned = true";
+			String sql = "select sum(balance) from account as a" + 
+								" join baseuser as bu on a.id = bu.id";
+			if (type=='S')		// system
+				sql += " where bu.systemowned = true";
+			if (type=='P')		// punter
+				sql += " where bu.systemowned = false";
+			// type 'A' is all no cond
 			Double amt = getJdbcTemplate().queryForObject(sql,Double.class );
 			if (amt==null)
 				return 0.0;
@@ -263,8 +267,9 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	public void deleteAllPunters(boolean systemOwned) {
 		try
 		{
-			final String sql = "DELETE FROM account AS acc WHERE"
-					+ "acc.id IN (SELECT bu.id FROM baseuser AS bu WHERE Role = 'ROLE_PUNTER' AND systemowned='" + systemOwned + "')";
+			final String sql = "DELETE FROM account AS acc WHERE "
+					+ "acc.id IN (SELECT bu.id FROM baseuser AS bu WHERE Role = 'ROLE_PUNTER' "
+					+ "AND systemowned='" + systemOwned + "')";
 			getJdbcTemplate().update(sql);
 			
 			final String sql2 = "DELETE FROM baseuser WHERE Role = 'ROLE_PUNTER' AND systemowned='" + systemOwned + "'";

@@ -2,14 +2,12 @@ package org.zen.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.zen.json.ProfileJson;
-import org.zen.user.faker.FakerUtil;
 import org.zen.user.punter.Punter;
 import org.zen.user.punter.mgr.PunterMgr;
 import org.zen.user.punter.mgr.PunterMgrException;
@@ -29,69 +27,43 @@ public class ZenModelInitialize {
 	public Punter initializeModel() throws Exception
 	{
 		List<List<Punter>> levels = new ArrayList<List<Punter>>();
-		
+		zenModel.getZenModelFake().reset();
 		punterMgr.deleteAllPunters(true);
-		ProfileJson rootProfile = makeProfile("zen","zen@test.com","0123456789","88888888",null);
+		ProfileJson rootProfile = PunterMgr.makeProfile("zen","zen@test.com","0123456789","88888888",null,true);
 		punterMgr.registerPunter(rootProfile);
 		Punter root = punterMgr.getByContact("zen");
 		log.info("Got root : " + root);
-		FakerUtil fu = new FakerUtil();
-		fu.exclude("zen");
 		List<Punter> level = new ArrayList<Punter>();
 		level.add(root);
 		for (int i=0; i<4; i++)
 		{
-			level = recruitLevel(level,fu);
+			level = recruitLevel(level);
 			levels.add(level);					
 		}
 		log.info("Upgrading members");
 		for (int i=1; i<4; i++)
 		{
 			level = levels.get(i);
-			for (Punter p : level)
-				tryUpgrade(p);
+			for (Punter punter : level)
+				zenModel.tryUpgrade(punter);
 		}
 		return root;
 	}
 	
-	private void tryUpgrade(Punter punter) throws PunterMgrException {
-		zenModel.tryUpgrade(punter);
-		List<Punter> children = punterMgr.getChidren(punter);
-		for (Punter child : children)
-			tryUpgrade(child);	
-	}
-
-	private List<Punter> recruitLevel(List<Punter> parents,FakerUtil fu) throws PunterMgrException
+	private List<Punter> recruitLevel(List<Punter> parents) throws PunterMgrException
 	{
-		Random r = new Random();
 		List<Punter> recruits = new ArrayList<Punter>();
 		for (Punter parent : parents)
 		{
 			for (int i=0; i<ZenModel.FULLCHILDREN; i++)
 			{
-				String contact = fu.getExclusiveRandomName();
-				String phone = "012" + r.nextInt(10000000);
-				while (phone.length()<10)
-					phone += '0';
-				ProfileJson childProfile = makeProfile(contact,contact+"@test.com",phone,"88888888",parent.getContact());
-				childProfile.setSystemOwned(true);
+				ProfileJson childProfile = zenModel.getZenModelFake().createProfile(true,parent);
 				Punter child = punterMgr.registerPunter(childProfile);
-				recruits.add(child);
 				zenModel.payJoinFee(child);
+				recruits.add(child);
 			}
 		}
 		return recruits;
-	}
-	
-	private ProfileJson makeProfile(String contact,String email,String phone,String password,String sponsorContactId)
-	{
-		ProfileJson pj = new ProfileJson();
-		pj.setContact(contact);
-		pj.setEmail(email);
-		pj.setPassword(password);
-		pj.setPhone(phone);
-		pj.setSponsorContactId(sponsorContactId);
-		return pj;
 	}
 
 	public PunterMgr getPunterMgr() {

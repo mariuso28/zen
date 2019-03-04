@@ -42,6 +42,10 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 		class="org.zen.model.ZenModelInitialize" >	
 	</bean>
 
+	<bean id="zenSimModel"
+		class="org.zen.simulate.ZenSimModel" >	
+	</bean>
+
 	<bean id="restServices"
 			class="org.zen.rest.services.RestServices" >
 	</bean>

@@ -1,30 +1,29 @@
 package org.zen.simulate;
 
-import java.util.List;
-
 import org.apache.log4j.Logger;
+import org.zen.json.ProfileJson;
+import org.zen.model.ZenModel;
 import org.zen.user.punter.Punter;
 
 public class ModelEventAcquisition extends ModelEvent {
 	private static Logger log = Logger.getLogger(ModelEventAcquisition.class);
 	 
 	
-	public ModelEventAcquisition(Punter punter) {
-		super(EventType.ACQUIRE, punter);
+	public ModelEventAcquisition(Punter punter,ZenSimModel model) {
+		super(EventType.ACQUIRE, punter,model);
 	}
 
 	@Override
-	public void execute(Model model) {
+	public void execute() throws Exception {
 		
-		Punter parent = model.getZenModel().getTrueParent(punter);
-		log.info("Executing acquisition for : " + parent.getEmail());
-		String contact = ModelCodeMaker.makeCode(parent);
-		Punter child = model.getZenModel().addChild(parent,punter,contact+"@test.com", contact,"88888888");
-		List<Punter> upgradables = model.getZenModel().canUpgrade(punter);
-		for (Punter up : upgradables)
-			if (!up.isUpgradeScheduled())
-				model.scheduleUpgrade(up);
+		log.info("Executing acquisition for : " + punter.getContact());
+		ZenModel zenModel = model.getZenModel();
 		
+		ProfileJson childProfile = zenModel.getZenModelFake().createProfile(false,punter);
+		Punter child = zenModel.getPunterMgr().registerPunter(childProfile);
+		zenModel.payJoinFee(child);
+		
+		zenModel.tryUpgrade(punter);
 		model.scheduleAcquisitions(child);
 	}
 

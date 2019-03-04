@@ -46,10 +46,11 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 	{
 		ModelJson mj = new ModelJson();
 		List<PunterJson> punters = getPunters(rootContact,mj);
-		mj.setPunters(punters);//		mj.setPopulation(services.getZenModel().getPopulation());
-		mj.setTopRevenue(punters.get(0).getAccount().getBalance());
-		double systemOwnedRevenue = services.getHome().getPunterDao().getSystemOwnedRevenue();
+		mj.setPunters(punters);
+		double systemOwnedRevenue = services.getHome().getPunterDao().getRevenue('S');
 		mj.setSystemOwnedRevenue(systemOwnedRevenue);
+		double punterOwnedRevenue = services.getHome().getPunterDao().getRevenue('P');
+		mj.setPunterOwnedRevenue(punterOwnedRevenue);
 		return mj;
 	}
 	
@@ -65,6 +66,11 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 
 	private PunterJson addPunter(Punter punter, ModelJson mj) throws PunterMgrException {
 		PunterJson pj = createPunterJson(punter);
+		if (punter.isSystemOwned())
+			mj.setPopulationInside(mj.getPopulationInside()+1);
+		else
+			mj.setPopulationOutside(mj.getPopulationOutside()+1);
+		
 		mj.setPopulation(mj.getPopulation()+1);
 		List<Punter> children = punterMgr.getChidren(punter);
 		for (Punter p : children)

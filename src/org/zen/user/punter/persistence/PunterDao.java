@@ -17,6 +17,6 @@ public interface PunterDao {
 	public void deleteAllPunters(boolean systemOwned);
 	public void updateAccount(Account account);
 	public void updateRating(Punter punter);
-	public double getSystemOwnedRevenue();
+	public double getRevenue(char type);
 	public List<Punter> getSystemPunters();
 }
