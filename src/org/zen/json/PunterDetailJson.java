@@ -7,6 +7,7 @@ public class PunterDetailJson {
 	private RatingJson rating;
 	private AccountJson account = new AccountJson();
 	private boolean upgradeScheduled;
+	private boolean systemOwned;
 	
 	public PunterDetailJson()
 	{
@@ -58,6 +59,14 @@ public class PunterDetailJson {
 
 	public void setUpgradeScheduled(boolean upgradeScheduled) {
 		this.upgradeScheduled = upgradeScheduled;
+	}
+
+	public boolean isSystemOwned() {
+		return systemOwned;
+	}
+
+	public void setSystemOwned(boolean systemOwned) {
+		this.systemOwned = systemOwned;
 	}
 
 }

@@ -18,7 +18,8 @@ public class Punter extends BaseUser {
 	private Punter sponsor;
 	private List<Punter> sponsoredChildren = new ArrayList<Punter>();
 	private Account account = new Account();
-	private boolean upgradeScheduled = false;;
+	private boolean upgradeScheduled = false;
+	private boolean systemOwned;
 	
 	public Punter()
 	{
@@ -32,14 +33,15 @@ public class Punter extends BaseUser {
 		setContact(profile.getContact());
 		setEmail(profile.getEmail());
 		setPhone(profile.getPhone());
+		setSystemOwned(profile.isSystemOwned());
 	}
 	
 	public String toSummaryString()
 	{
-		String msg = "Punter [contact=" + getContact() + " rating=" + rating; 
+		String msg = "Punter contact=" + getContact() + " rating=" + rating; 
 		if (parent == null)
-			return msg + "]";
-		msg+= " sponsor=" + sponsor.getContact() + " parent=" + parent.getContact() + "]";
+			return msg;
+		msg+= " sponsor=" + sponsor.getContact() + " parent=" + parent.getContact();
 		return msg;
 	}
 	
@@ -115,6 +117,14 @@ public class Punter extends BaseUser {
 
 	public void setSponsorId(UUID sponsorId) {
 		this.sponsorId = sponsorId;
+	}
+
+	public boolean isSystemOwned() {
+		return systemOwned;
+	}
+
+	public void setSystemOwned(boolean systemOwned) {
+		this.systemOwned = systemOwned;
 	}
 
 	@Override

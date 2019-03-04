@@ -1,11 +1,13 @@
 package org.zen.simulate;
 
+import java.util.List;
 import java.util.Random;
 
 import org.apache.log4j.Logger;
-import org.zen.model.ZenModelOriginal;
+import org.zen.model.ZenModel;
 import org.zen.simulate.distribution.Normal;
 import org.zen.user.punter.Punter;
+import org.zen.user.punter.mgr.PunterMgrException;
 
 public class Model {
 
@@ -13,10 +15,11 @@ public class Model {
 	private static final int ACQUISITIONVARIANCE = 3;
 	private static final int DURATION = 20;
 	private static Logger log = Logger.getLogger(Model.class); 
-	private ZenModelOriginal zenModel;
+	private ZenModel zenModel;
 	private ModelCalendar modelCalendar = new ModelCalendar(DURATION);
+	private List<Punter> systemPunters;
 	
-	public Model()
+	public Model() throws PunterMgrException
 	{
 		log.info("STARTING MODEL");
 		initialize();
@@ -39,10 +42,12 @@ public class Model {
 		}
 	}
 	
-	private void initialize()
+	private void initialize() throws PunterMgrException
 	{
-		zenModel = new ZenModelOriginal();
-		scheduleAcquisitions(zenModel.getRoot());
+		zenModel.getPunterMgr().deleteAllPunters(false);
+		setSystemPunters(zenModel.getPunterMgr().getSystemPunters());
+		for (Punter punter : systemPunters)
+			scheduleAcquisitions(punter);
 	}
 
 	public void scheduleUpgrade(Punter punter)
@@ -60,15 +65,13 @@ public class Model {
 		
 		Random rand = new Random();
 		int children = 3;
-		if (punter!=zenModel.getRoot())
+		children = rand.nextInt(3) + 1;
+		for (int i=0; i<5; i++)
 		{
-			children = rand.nextInt(3) + 1;
-			for (int i=0; i<5; i++)
-			{
-				if (rand.nextInt(3)==0)
-					children += 1;
-			}
+			if (rand.nextInt(3)==0)
+				children += 1;
 		}
+		log.info("Scheduling + " + children + " acquisitions for punter : " + punter.getContact());
 		for (int i=0; i<children; i++)
 		{
 			int ad = acquisitionDays(punter);
@@ -84,35 +87,22 @@ public class Model {
 
 	private int upgradeDays(Punter punter)
 	{
-		if (punter.getRating()==0)
-			return 0;
 /*	
 		Normal normal = new Normal();
 		
 		return normal.getGaussian(5, 1);
 		*/
-		return 1;
+		if (new Random().nextBoolean())
+			return 1;
+		return 0;
 	}
 	
 	private int acquisitionDays(Punter punter)
 	{
-		if (punter==zenModel.getRoot())
-			return 0;
-		
-		if (punter.getParent()==zenModel.getRoot())
-			return 1;
-		
-		Normal normal = new Normal();
-		
+		Normal normal = new Normal();	
 		return normal.getGaussian(ACQUISITIONMEAN, ACQUISITIONVARIANCE);
 	}
 	
-	@SuppressWarnings("unused")
-	private int getPopulationWeight()
-	{
-		return (int) zenModel.getPopulation() / 13;
-	}
-
 	public ModelCalendar getModelCalendar() {
 		return modelCalendar;
 	}
@@ -121,19 +111,25 @@ public class Model {
 		this.modelCalendar = modelCalendar;
 	}
 
-	public ZenModelOriginal getZenModel() {
-		return zenModel;
+	public List<Punter> getSystemPunters() {
+		return systemPunters;
 	}
 
-	public void setZenModel(ZenModelOriginal zenModel) {
-		this.zenModel = zenModel;
+	public void setSystemPunters(List<Punter> systemPunters) {
+		this.systemPunters = systemPunters;
 	}
 
 	public static void main(String[] args)
 	{
-		Model model = new Model();
-		log.info("Model ran - population : " + model.getZenModel().getPopulation());
-		new ModelPrint(model);
+		Model model;
+		try {
+			model = new Model();
+			new ModelPrint(model);
+		} catch (PunterMgrException e) {
+			e.printStackTrace();
+		}
+		log.info("Model ran");
+	
 	}
 	
 }

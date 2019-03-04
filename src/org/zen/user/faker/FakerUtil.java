@@ -17,7 +17,7 @@ public class FakerUtil {
 		
 	}
 
-	public String getExlusiveRandomName()
+	public String getExclusiveRandomName()
 	{
 		while (true)
 		{
@@ -67,9 +67,18 @@ public class FakerUtil {
 		taken.add(name);
 	}
 	
+	public String getPhone() {
+		Faker faker = new Faker();
+		return faker.phoneNumber().cellPhone();
+	}
+	
 	public static void main(String args[])
 	{
-		Faker faker = new Faker();
+		FakerUtil fu = new FakerUtil();
+		for (int i=0; i<104; i++)
+			System.out.println(fu.getExclusiveRandomName());
+		
+	/*	Faker faker = new Faker();
 
 		String name = faker.name().fullName();
 		String firstName = faker.name().firstName();
@@ -90,5 +99,8 @@ public class FakerUtil {
 		System.out.println(lastName);
 		System.out.println(name);
 		System.out.println(streetAddress);
+		*/
 	}
+
+	
 }

@@ -32,7 +32,19 @@ public class PunterMgr {
 	
 	public PunterMgr()
 	{
-		
+	}
+	
+	public List<Punter> getSystemPunters() throws PunterMgrException
+	{
+		try
+		{
+			return punterDao.getSystemPunters();
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			throw new PunterMgrException("Could not get system punters - contact support.");
+		}
 	}
 	
 	public int getLevel(Punter punter,Punter upstream) throws PunterMgrException
@@ -166,11 +178,11 @@ public class PunterMgr {
 		throw new PunterMgrException("Password must be at least 8 characters and contain at least 1 digit.");
 	}
 
-	public void deleteAllContacts() throws PunterMgrException
+	public void deleteAllPunters(boolean systemOwned) throws PunterMgrException
 	{
 		try
 		{
-			punterDao.deleteAllPunters();
+			punterDao.deleteAllPunters(systemOwned);
 		}
 		catch (Exception e)
 		{

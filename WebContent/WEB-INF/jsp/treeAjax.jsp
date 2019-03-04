@@ -150,6 +150,10 @@ function getModel()
 			rev.innerHtml = "";
 			rev.appendChild(document.createTextNode("Top Revenue: RM" + model.topRevenue));
 
+			rev = document.getElementById("sysRevenue");
+			rev.innerHtml = "";
+			rev.appendChild(document.createTextNode("System Revenue: RM" + model.systemOwnedRevenue));
+
 			var dText = model.punters;
 
 			$('#tree').tree({
@@ -166,9 +170,10 @@ function getModel()
 
 <div class="container-fluid">
 	<div style="float:left;width:1000px;">
-		<div style="float:left;width:300px;" id="population"></div>
-		<div style="float:left;width:300px;"><img src="../../../img/GoldenCircle_02.png" width="100px" height="100px"/></div>
+		<div style="float:left;width:200px;" id="population"></div>
 		<div style="float:left;width:300px;" id="revenue"></div>
+		<div style="float:left;width:300px;" id="sysRevenue"></div>
+		<div style="float:left;width:200px;"><img src="../../../img/GoldenCircle_02.png" width="100px" height="100px"/></div>
 	</div>
 	<div style="float:left;width:1000px;" id="tree"></div>
 </div>

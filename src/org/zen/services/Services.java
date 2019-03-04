@@ -25,6 +25,16 @@ public class Services {
 	{
 	}
 	
+	public synchronized void updateAccountsAndRating(Punter parentToPay, Punter punter) {
+		new TransactionTemplate(getTransactionManager()).execute(new TransactionCallbackWithoutResult() {
+			@Override
+			protected void doInTransactionWithoutResult(TransactionStatus arg0) {
+				doPerformUpdateAccounts(parentToPay,punter);
+				home.getPunterDao().updateRating(punter);
+			}
+		});
+	}
+	
 	public synchronized void updateAccounts(Punter sponsor, Punter punter) {
 	//	log.info("%%%updateAccounts:");
 		new TransactionTemplate(getTransactionManager()).execute(new TransactionCallbackWithoutResult() {
@@ -62,6 +72,7 @@ public class Services {
 		this.transactionManager = transactionManager;
 	}
 
+	
 	
 
 }

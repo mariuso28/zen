@@ -19,6 +19,7 @@ import org.zen.user.punter.Punter;
 public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements PunterDao {
 	private static Logger log = Logger.getLogger(PunterDaoImpl.class);
 
+	@Override
 	public void updateAccount(final Account account)
 	{
 		try
@@ -39,12 +40,71 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	}
 	
 	@Override
+	public double getSystemOwnedRevenue()
+	{
+		try
+		{
+			final String sql = "select sum(balance) from account as a" + 
+								" join baseuser as bu on a.id = bu.id" + 
+								" where bu.systemowned = true";
+			Double amt = getJdbcTemplate().queryForObject(sql,Double.class );
+			if (amt==null)
+				return 0.0;
+			return amt;
+		}
+		catch (DataAccessException e)
+		{
+			log.error("Could not execute : " + e.getMessage(),e);
+			throw new PersistenceRuntimeException("Could not execute getSystemOwnedRevenue : " + e.getMessage());
+		}
+	}
+	
+	@Override
+	public List<Punter> getSystemPunters()
+	{
+		try
+		{
+			final String sql = "SELECT * FROM baseuser WHERE systemowned=true AND rating>0";
+			List<Punter> punters = getJdbcTemplate().query(sql,BeanPropertyRowMapper.newInstance(Punter.class));
+			for (Punter p : punters)
+				populateAccount(p);
+			return punters;
+		}
+		catch (DataAccessException e)
+		{
+			log.error("Could not execute : " + e.getMessage(),e);
+			throw new PersistenceRuntimeException("Could not execute getSystemOwnedRevenue : " + e.getMessage());
+		}
+	}
+	
+	@Override
+	public void updateRating(final Punter punter)
+	{
+		try
+		{
+			getJdbcTemplate().update("UPDATE baseuser SET rating=? WHERE id=?"
+				, new PreparedStatementSetter() {
+					public void setValues(PreparedStatement ps) throws SQLException {
+						ps.setInt(1,punter.getRating());
+						ps.setObject(2,punter.getId());
+					}
+				});
+		}
+		catch (DataAccessException e1)
+		{
+			log.error("Could not execute : " + e1.getMessage(),e1);
+			throw new PersistenceRuntimeException("Could not execute store : " + e1.getMessage());
+		}	
+	}
+	
+	@Override
 	public void store(final Punter punter) {
 		punter.setId(UUID.randomUUID());
 		try
 		{
-			getJdbcTemplate().update("INSERT INTO baseuser (id,contact,email,phone,password,role,enabled,rating,parentId,sponsorId) "
-										+ "VALUES (?,?,?,?,?,?,?,?,?,?)"
+			getJdbcTemplate().update("INSERT INTO baseuser (id,contact,email,phone,password,role,enabled,rating,"
+										+ "parentid,sponsorid,systemowned) "
+										+ "VALUES (?,?,?,?,?,?,?,?,?,?,?)"
 			        , new PreparedStatementSetter() {
 						public void setValues(PreparedStatement ps) throws SQLException {
 			    	  	ps.setObject(1, punter.getId());
@@ -65,6 +125,7 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 							ps.setObject(9, punter.getParent().getId());
 							ps.setObject(10, punter.getSponsor().getId());
 						}
+						ps.setBoolean(11, punter.isSystemOwned());
 			      }
 			    });
 			createPunterAccount(punter.getId());
@@ -199,13 +260,14 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	}
 	
 	@Override
-	public void deleteAllPunters() {
+	public void deleteAllPunters(boolean systemOwned) {
 		try
 		{
-			final String sql = "DELETE FROM account AS acc WHERE acc.id IN (SELECT bu.id FROM baseuser AS bu WHERE Role = 'ROLE_PUNTER')";
+			final String sql = "DELETE FROM account AS acc WHERE"
+					+ "acc.id IN (SELECT bu.id FROM baseuser AS bu WHERE Role = 'ROLE_PUNTER' AND systemowned='" + systemOwned + "')";
 			getJdbcTemplate().update(sql);
 			
-			final String sql2 = "DELETE FROM baseuser WHERE Role = 'ROLE_PUNTER'";
+			final String sql2 = "DELETE FROM baseuser WHERE Role = 'ROLE_PUNTER' AND systemowned='" + systemOwned + "'";
 			getJdbcTemplate().update(sql2);
 		}
 		catch (DataAccessException e)

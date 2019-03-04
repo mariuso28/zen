@@ -3,7 +3,6 @@ package org.zen.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,59 +28,59 @@ public class ZenModelInitialize {
 	
 	public Punter initializeModel() throws Exception
 	{
-		punterMgr.deleteAllContacts();
+		List<List<Punter>> levels = new ArrayList<List<Punter>>();
+		
+		punterMgr.deleteAllPunters(true);
 		ProfileJson rootProfile = makeProfile("zen","zen@test.com","0123456789","88888888",null);
 		punterMgr.registerPunter(rootProfile);
 		Punter root = punterMgr.getByContact("zen");
 		log.info("Got root : " + root);
 		FakerUtil fu = new FakerUtil();
 		fu.exclude("zen");
-		List<UUID> parentIds = new ArrayList<UUID>();
-		recruitLevel(root,4,fu,parentIds);
-		// upgrade from the leaf-1 nodes
-		doUpgrades(root,parentIds);
-		
+		List<Punter> level = new ArrayList<Punter>();
+		level.add(root);
+		for (int i=0; i<4; i++)
+		{
+			level = recruitLevel(level,fu);
+			levels.add(level);					
+		}
+		log.info("Upgrading members");
+		for (int i=1; i<4; i++)
+		{
+			level = levels.get(i);
+			for (Punter p : level)
+				tryUpgrade(p);
+		}
 		return root;
 	}
 	
-	private void doUpgrades(Punter root, List<UUID> parentIds) throws PunterMgrException
-	{
-		log.info("Number to test upgrade : " + parentIds.size());
-		for (UUID pi : parentIds)
-		{
-			Punter parent = punterMgr.getByUUID(pi);
-			int lev = punterMgr.getLevel(parent, root);
-			log.info("Testing : " + parent.getContact() + " #L" + lev);
-			List<Punter> upgradables = zenModel.canUpgrade(parent);
-			for (Punter p : upgradables)
-				zenModel.upgrade(p);
-		}
+	private void tryUpgrade(Punter punter) throws PunterMgrException {
+		zenModel.tryUpgrade(punter);
+		List<Punter> children = punterMgr.getChidren(punter);
+		for (Punter child : children)
+			tryUpgrade(child);	
 	}
-	
-	private void recruitLevel(Punter parent,int levels, FakerUtil fu, List<UUID> parentIds) throws PunterMgrException
+
+	private List<Punter> recruitLevel(List<Punter> parents,FakerUtil fu) throws PunterMgrException
 	{
-		if (levels==0)
-			return;
 		Random r = new Random();
 		List<Punter> recruits = new ArrayList<Punter>();
-		for (int i=0; i<ZenModel.FULLCHILDREN; i++)
+		for (Punter parent : parents)
 		{
-			String contact = fu.getExlusiveRandomName();
-			String phone = "012" + r.nextInt(10000000);
-			ProfileJson childProfile = makeProfile(contact,contact+"@test.com",phone,"88888888",parent.getContact());
-			Punter child = punterMgr.registerPunter(childProfile);
-			recruits.add(child);
-			zenModel.payJoinFee(child);
-//			if (levels==2)
-//				parentIds.add(child.getId());
-			if (i==ZenModel.FULLCHILDREN-1)
+			for (int i=0; i<ZenModel.FULLCHILDREN; i++)
 			{
-				List<Punter> upgradables = zenModel.canUpgrade(parent);
-				for (Punter p : upgradables)
-					zenModel.upgrade(p);
+				String contact = fu.getExclusiveRandomName();
+				String phone = "012" + r.nextInt(10000000);
+				while (phone.length()<10)
+					phone += '0';
+				ProfileJson childProfile = makeProfile(contact,contact+"@test.com",phone,"88888888",parent.getContact());
+				childProfile.setSystemOwned(true);
+				Punter child = punterMgr.registerPunter(childProfile);
+				recruits.add(child);
+				zenModel.payJoinFee(child);
 			}
-			recruitLevel(child,levels-1, fu,parentIds );
 		}
+		return recruits;
 	}
 	
 	private ProfileJson makeProfile(String contact,String email,String phone,String password,String sponsorContactId)
@@ -148,7 +147,7 @@ public class ZenModelInitialize {
 		String line = "";
 		for (int i=0; i<level; i++)
 			line += "-";
-		System.out.println(line+p.toSummaryString() + " level : " + level);
+		System.out.println(line+p.toSummaryString() + " level=" + level);
 	}
 	
 	public static void main(String[] args)

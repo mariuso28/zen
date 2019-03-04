@@ -42,12 +42,14 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		}		
 	}
 	
-	public ModelJson getModel(String rootContact) throws PunterMgrException
+	public ModelJson getModel(String rootContact) throws Exception
 	{
 		ModelJson mj = new ModelJson();
 		List<PunterJson> punters = getPunters(rootContact,mj);
 		mj.setPunters(punters);//		mj.setPopulation(services.getZenModel().getPopulation());
 		mj.setTopRevenue(punters.get(0).getAccount().getBalance());
+		double systemOwnedRevenue = services.getHome().getPunterDao().getSystemOwnedRevenue();
+		mj.setSystemOwnedRevenue(systemOwnedRevenue);
 		return mj;
 	}
 	
@@ -83,9 +85,15 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		NumberFormat formatter = new DecimalFormat("#0.00");
 		String bal = " RM" + formatter.format(punter.getAccount().getBalance());
 		String lev = " #" + punter.getRating() + " ";
+		String line = null;
+		
+		if (!punter.isSystemOwned())
+			line = "<font color='#045023'>"+ text + bal + lev + "</font></a>";
+		else
+			line = "<font color='Red'>"+ text + bal + lev + "</font></a>";
+		
 		String href = "<a href=# onclick=\"return getPunterDetails(" + 
-					punter.getEmail() + ")\"" 
-		+ "<font color='#045023'>"+ text + bal + lev + "</font></a>";
+					punter.getEmail() + ")\"" + line;
 		pj.setText(href);
 		pj.setAccount(createAccountJson(punter.getAccount()));
 		return pj;
@@ -115,6 +123,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		pdj.setPhone(punter.getPhone());
 		RatingJson rating = ratingMgr.getRatings().get(punter.getRating());
 		pdj.setRating(rating);
+		pdj.setSystemOwned(punter.getSystemOwned);
 		return pdj;
 	}
 */

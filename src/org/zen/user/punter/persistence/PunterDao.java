@@ -14,6 +14,9 @@ public interface PunterDao {
 	public void deletePunter(Punter punter);
 	public List<Punter> getChildren(Punter root);
 	public int getChildrenCnt(final Punter parent);
-	public void deleteAllPunters();
+	public void deleteAllPunters(boolean systemOwned);
 	public void updateAccount(Account account);
+	public void updateRating(Punter punter);
+	public double getSystemOwnedRevenue();
+	public List<Punter> getSystemPunters();
 }

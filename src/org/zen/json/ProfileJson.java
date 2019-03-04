@@ -6,6 +6,7 @@ public class ProfileJson {
 	private String phone;
 	private String password;
 	private String sponsorContactId;
+	private boolean systemOwned;
 	
 	public ProfileJson()
 	{
@@ -49,6 +50,14 @@ public class ProfileJson {
 
 	public void setSponsorContactId(String sponsorContactId) {
 		this.sponsorContactId = sponsorContactId;
+	}
+
+	public boolean isSystemOwned() {
+		return systemOwned;
+	}
+
+	public void setSystemOwned(boolean systemOwned) {
+		this.systemOwned = systemOwned;
 	}
 
 	@Override
