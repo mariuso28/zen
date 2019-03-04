@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.zen.model.ZenModel;
 import org.zen.simulate.distribution.Normal;
 import org.zen.user.punter.Punter;
@@ -15,6 +16,7 @@ public class Model {
 	private static final int ACQUISITIONVARIANCE = 3;
 	private static final int DURATION = 20;
 	private static Logger log = Logger.getLogger(Model.class); 
+	@Autowired
 	private ZenModel zenModel;
 	private ModelCalendar modelCalendar = new ModelCalendar(DURATION);
 	private List<Punter> systemPunters;
@@ -117,6 +119,15 @@ public class Model {
 
 	public void setSystemPunters(List<Punter> systemPunters) {
 		this.systemPunters = systemPunters;
+	}
+
+
+	public ZenModel getZenModel() {
+		return zenModel;
+	}
+
+	public void setZenModel(ZenModel zenModel) {
+		this.zenModel = zenModel;
 	}
 
 	public static void main(String[] args)
