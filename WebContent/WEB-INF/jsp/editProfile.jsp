@@ -86,6 +86,54 @@ function populateProfile()
     document.getElementById('gender').value = punter.gender;
 }
 
+function updateProfile() {
+
+  access_token = sessionStorage.getItem("access_token");
+  var bearerHeader = 'Bearer ' + access_token;
+
+	var jsonData = {};
+	  jsonData['email'] = document.getElementById('email').value;
+	  jsonData['phone'] = document.getElementById('phone').value;
+    jsonData['fullName'] = document.getElementById('fullName').value;
+    jsonData['gender'] = document.getElementById('gender').value;
+    jsonData['passportIc'] = document.getElementById('passportIc').value;
+    jsonData['address'] = document.getElementById('address').value;
+    jsonData['state'] = document.getElementById('state').value;
+    jsonData['postcode'] = document.getElementById('postcode').value;
+    jsonData['country'] = document.getElementById('country').value;
+
+
+	$.ajax({
+
+     type: "POST",
+        url : '/zen/zx4/api/punter/updatePunter',
+        headers: { 'Authorization': bearerHeader },
+        cache: false,
+        contentType: 'application/json;',
+        dataType: "json",
+        data:JSON.stringify(jsonData),
+         success: function(data) {
+              var result = $.parseJSON(JSON.stringify(data));
+              if (data == '')
+              {
+   						  alert("could not get punter")
+                return null;
+              }
+
+              var resultJson = $.parseJSON(JSON.stringify(data));
+ 					    if (resultJson.status!='OK')
+ 					    {
+ 						    alert(resultJson.message);
+ 					    }
+   					  getPunter();
+              populateProfile();
+          },
+          error:function (e) {
+ 	  			    alert("updatePunter ERROR : " + e.status + " - " + e.statusText);
+ 	        }
+     });
+ }
+
 </script>
 
 
@@ -122,7 +170,7 @@ function populateProfile()
         <li><a href="#">Payment Sent</a></li>
       </ul>
     </li>
-    <li><a href="#"><i class="icon icon-off"></i> <span>Logout</span></a> </li>
+    <li><a href="/zen/zx4/web/anon/login"><i class="icon icon-off"></i> <span>Logout</span></a> </li>
   </ul>
 </div>
 <!--sidebar-menu-->
@@ -160,7 +208,7 @@ function populateProfile()
               <div class="control-group">
                 <label class="control-label">Username :</label>
                 <div class="controls">
-                  <input type="text" id="contact" class="span11" value=""/>
+                  <input readonly type="text" id="contact" class="span11" value=""/>
                 </div>
               </div><div class="control-group">
                 <label class="control-label">Password :</label>
@@ -189,16 +237,11 @@ function populateProfile()
               <div class="control-group">
                 <label class="control-label">Gender</label>
                 <div class="controls">
-                  <label style="margin-top:4px;">
-                    <input type="radio" id="gender1" style="margin:0;"/>
-                    Male</label>
-                  <label>
-                    <input type="radio" id="gender2" style="margin:0;"/>
-                    Female</label>
-                  <label>
-                    <input type="radio" id="gender3" style="margin:0;"/>
-                    Other</label>
-                </div>
+                  <select id="gender">
+                  	<option value="Male">Male</option>
+                  	<option value="Female">Female</option>
+                  	<option value="Other">Other</option>
+                  </select>
               </div>
               <div class="control-group">
                 <label class="control-label">Address :</label>
@@ -487,7 +530,7 @@ function populateProfile()
                 </div>
               </div>
               <div class="form-actions">
-                <button type="submit" class="btn btn-success">Save</button>
+                <button type="submit" onclick="return updateProfile();" class="btn btn-success">Save</button>
                 <button type="submit" class="btn btn-danger" onclick="return redirectDashboard();">Cancel</button>
               </div>
             </div>

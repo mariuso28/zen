@@ -102,6 +102,38 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	}
 	
 	@Override
+	public void update(final Punter punter) {
+		try
+		{
+			getJdbcTemplate().update("UPDATE baseuser SET email=?,phone=?,"
+										+ "fullname=?,gender=?,passportic=?,address=?,state=?,postcode=?,country=?"
+										+ " WHERE id=?"
+						, new PreparedStatementSetter() {
+						public void setValues(PreparedStatement ps) throws SQLException {
+			    	  	
+						ps.setString(1, punter.getEmail().toLowerCase());
+						ps.setString(2, punter.getPhone());
+						
+						ps.setString(3, punter.getFullName());
+						ps.setString(4, punter.getGender());
+						ps.setString(5, punter.getPassportIc());
+						ps.setString(6, punter.getAddress());
+						ps.setString(7, punter.getState());
+						ps.setString(8, punter.getPostcode());
+						ps.setString(9, punter.getCountry());
+						ps.setObject(10, punter.getId());
+						
+			      }
+			    });
+		}
+		catch (DataAccessException e1)
+		{
+			log.error("Could not execute : " + e1.getMessage(),e1);
+			throw new PersistenceRuntimeException("Could not execute update : " + e1.getMessage());
+		}	
+	}
+	
+	@Override
 	public void store(final Punter punter) {
 		punter.setId(UUID.randomUUID());
 		try

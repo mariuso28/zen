@@ -111,6 +111,41 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		return aj;
 	}
 	
+	public void updatePunterProfile(String contact,ProfileJson profile) throws RestServicesException{
+		Punter punter;
+		try
+		{
+			punter = services.getHome().getPunterDao().getByContact(contact);
+			if (punter == null)
+				throw new RestServicesException("Zen Member : " + contact + " not found - contact support");
+		}
+		catch (Exception e)
+		{
+			log.error("updatePunterProfile",e);
+			throw new RestServicesException("Zen Member : " + contact + " not found - contact support");
+		}
+	
+		try {
+			punterMgr.validateProfileValues(profile);
+		} catch (PunterMgrException e) {
+			log.info(e.getMessage());
+			throw new RestServicesException(e.getMessage());
+		}
+		
+		punter.copyProfileValues(profile);
+		try
+		{
+			services.getHome().getPunterDao().update(punter);
+		}
+		catch (Exception e)
+		{
+			log.error("updatePunterProfile",e);
+			throw new RestServicesException("Zen Member : " + contact + " could not be updated - contact support");
+		}
+		
+	}
+
+	
 	public ProfileJson getPunterProfile(String contact) throws RestServicesException{
 	
 		try
@@ -172,6 +207,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 	public void setServices(Services services) {
 		this.services = services;
 	}
+
 
 	
 	

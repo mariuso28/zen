@@ -116,7 +116,7 @@ public class PunterMgr {
 		}
 	}
 	
-	private void validateProfileValues(ProfileJson profile) throws PunterMgrException
+	public void validateProfileValues(ProfileJson profile) throws PunterMgrException
 	{
 		PhoneValidator pv = new PhoneValidator();
 		if (!pv.validate(profile.getPhone()))

@@ -19,4 +19,5 @@ public interface PunterDao {
 	public void updateRating(Punter punter);
 	public double getRevenue(char type);
 	public List<Punter> getSystemPunters();
+	public void update(Punter punter);
 }

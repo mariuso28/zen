@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.zen.json.ProfileJson;
@@ -17,6 +18,28 @@ public class RestPunterControllerImpl implements RestPunterController
 	private static Logger log = Logger.getLogger(RestPunterControllerImpl.class);
 	@Autowired
 	private RestServices restServices;
+	
+	
+	@RequestMapping(value = "/updatePunter")
+	// ResultJson contains message if success, message if fail
+	public ResultJson updatePunter(OAuth2Authentication auth,@RequestBody ProfileJson profile)
+	{
+		String contact = ((User) auth.getPrincipal()).getUsername();
+		log.info("Received updatePunter for : " + contact);
+		
+		ResultJson result = new ResultJson();
+		
+		try
+		{
+			restServices.updatePunterProfile(contact,profile);
+			result.success("Successfully updated");
+		}
+		catch (Exception e)
+		{
+			result.fail(e.getMessage());
+		}
+		return result;
+	}
 	
 	@RequestMapping(value = "/getPunter")
 	// ResultJson contains punter's profile if success, message if fail
