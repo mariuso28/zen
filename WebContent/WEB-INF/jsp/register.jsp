@@ -184,6 +184,13 @@ function doRegister()
   var email = document.getElementById('email');
   var contact = document.getElementById('contact');
   var phone = document.getElementById('phone');
+  var fullName = document.getElementById('fullName');
+  var gender = document.getElementById('gender');
+  var passportIc = document.getElementById('passportIc');
+  var address = document.getElementById('address');
+  var state = document.getElementById('state');
+  var postcode = document.getElementById('postcode');
+  var country = document.getElementById('country');
   var password = document.getElementById('password');
   var vpassword = document.getElementById('vpassword');
 
@@ -198,6 +205,13 @@ function doRegister()
   jsonData['contact'] = contact.value;
   jsonData['phone'] = phone.value;
   jsonData['password'] = password.value;
+  jsonData['fullName'] = fullName.value;
+  jsonData['gender'] = gender.value;
+  jsonData['passportIc'] = passportIc.value;
+  jsonData['address'] = address.value;
+  jsonData['state'] = state.value;
+  jsonData['postcode'] = postcode.value;
+  jsonData['country'] = country.value;
 
   registerJson(jsonData);
 }
@@ -207,7 +221,7 @@ function registerJson(jsonData) {
      $.ajax({
 
     type: "POST",
-        url : "/zen/api/anon/register",
+        url : "/zen/zx4/api/anon/register",
         cache: false,
         contentType: 'application/json;',
         dataType: "json",
@@ -243,7 +257,7 @@ function registerJson(jsonData) {
               Register to Recruit on Zen
 
             <a style="font-family:inherit;font-size: 18px; color:green; font-weight: bold;"
-                                  href="/zen/web/anon/getAllPlates">Cancel</a>
+                                  href="/zen/web/anon/login">Cancel</a>
             <input id="register" value="Register" onClick="return doRegister();" type="button"
                   style="font-family:inherit;font-size: 18px; color:green; font-weight: bold;" />
       </div>
@@ -301,7 +315,71 @@ function registerJson(jsonData) {
 									maxlength="64" style="width:280px; height:28px; font-family:inherit;" />
 						</div>
 					</div>
+        <div class="regLine">
+          <div class="regLineLeft">
+            Full Name
+          </div>
+          <div class="regLineRight">
+            <input id="fullName" type="text" value=""
+                maxlength="64" style="width:280px; height:28px; font-family:inherit;" />
+          </div>
         </div>
+        <div class="regLine">
+          <div class="regLineLeft">
+            gender
+          </div>
+          <div class="regLineRight">
+            <input id="gender" type="text" value=""
+                maxlength="64" style="width:280px; height:28px; font-family:inherit;" />
+          </div>
+        </div>
+        <div class="regLine">
+          <div class="regLineLeft">
+            Passport/IC
+          </div>
+          <div class="regLineRight">
+            <input id="passportIc" type="text" value=""
+                maxlength="64" style="width:280px; height:28px; font-family:inherit;" />
+          </div>
+        </div>
+        <div class="regLine">
+          <div class="regLineLeft">
+            address
+          </div>
+          <div class="regLineRight">
+            <input id="address" type="text" value=""
+                maxlength="256" style="width:280px; height:28px; font-family:inherit;" />
+          </div>
+        </div>
+        <div class="regLine">
+          <div class="regLineLeft">
+            state
+          </div>
+          <div class="regLineRight">
+            <input id="state" type="text" value=""
+                maxlength="64" style="width:280px; height:28px; font-family:inherit;" />
+          </div>
+        </div>
+        <div class="regLine">
+          <div class="regLineLeft">
+            postcode
+          </div>
+          <div class="regLineRight">
+            <input id="postcode" type="text" value=""
+                maxlength="16" style="width:280px; height:28px; font-family:inherit;" />
+          </div>
+        </div>
+        <div class="regLine">
+          <div class="regLineLeft">
+            country
+          </div>
+          <div class="regLineRight">
+            <input id="country" type="text" value=""
+                maxlength="128" style="width:280px; height:28px; font-family:inherit;" />
+          </div>
+        </div>
+        </div>
+      </div>
     </div>
     <div id="info" class="bottomSaveSectionInfoMessage">
     </div>

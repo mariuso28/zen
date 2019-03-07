@@ -8,7 +8,6 @@ import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.zen.persistence.home.Home;
 import org.zen.user.BaseUser;
-import org.zen.user.agent.DefaultAgent;
 import org.zen.user.punter.Punter;
 import org.zen.user.punter.persistence.PunterDao;
 
@@ -51,9 +50,9 @@ public class Services {
 		pd.updateAccount(punter.getAccount());
 	}
 		
-	public BaseUser getBaseUser(String email)
+	public BaseUser getBaseUser(String contact)
 	{
-		return DefaultAgent.get();
+		return home.getPunterDao().getByContact(contact);
 	}
 
 	public Home getHome() {

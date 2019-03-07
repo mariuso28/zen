@@ -80,9 +80,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		http
 		.authorizeRequests()
 		.antMatchers(
-				"/web/anon/**",
+				"/zx4/web/anon/**",
 				"/css/**/**",
 				"/fonts/**",
+				"/font-awesome/**",
 				"/images/**",
 				"/js/**",
 				"/oauth/token"

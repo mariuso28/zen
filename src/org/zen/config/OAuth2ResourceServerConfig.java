@@ -12,19 +12,19 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
 	@Override
     public void configure(HttpSecurity http) throws Exception {
 		http
-			.antMatcher("/api/**")
+			.antMatcher("/zx4/api/**")
 			.authorizeRequests()
 			.antMatchers(
-					"/api/a/**",
-					"/api/anon/**"
+					"/zx4/api/a/**",
+					"/zx4/api/anon/**"
 					)
 			.permitAll()			
 			.antMatchers(
-					"/api/punter/**"
+					"/zx4/api/punter/**"
 					)
 			.access("hasRole('ROLE_PUNTER')")
 			.antMatchers(
-					"/api/admin/**"
+					"/zx4/api/admin/**"
 					)
 			.access("hasRole('ROLE_ADMIN')")
 		;

@@ -14,12 +14,29 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 public class WebAnonController {
 	private static Logger log = Logger.getLogger(WebAnonController.class);
 	
-	@RequestMapping(value = "/getZenHome", method = RequestMethod.GET)
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String logon() {
+			
+		log.info("Received login");
+			
+		return "login";
+	}
+	
+	@RequestMapping(value = "/goEditProfile", method = RequestMethod.GET)
+	public String goEditProfile() {
+			
+		log.info("Received goEditProfile");
+			
+		return "editProfile";
+	}
+	
+	
+	@RequestMapping(value = "/goDashboard", method = RequestMethod.GET)
 	public String getZenHome() {
 			
-		log.info("Received getZenHome");
+		log.info("Received goDashboard");
 			
-		return "zenHome";
+		return "dashboard";
 	}
 	
 	@RequestMapping(value = "/getSuccess", method = RequestMethod.GET)

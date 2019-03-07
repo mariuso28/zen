@@ -107,11 +107,13 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 		try
 		{
 			getJdbcTemplate().update("INSERT INTO baseuser (id,contact,email,phone,password,role,enabled,rating,"
+										+ "fullname,gender,passportic,address,state,postcode,country"
 										+ "parentid,sponsorid,systemowned) "
 										+ "VALUES (?,?,?,?,?,?,?,?,?,?,?)"
 			        , new PreparedStatementSetter() {
 						public void setValues(PreparedStatement ps) throws SQLException {
-			    	  	ps.setObject(1, punter.getId());
+			    	  	
+							ps.setObject(1, punter.getId());
 			    	  	ps.setString(2, punter.getContact());
 						ps.setString(3, punter.getEmail().toLowerCase());
 						ps.setString(4, punter.getPhone());
@@ -119,17 +121,26 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 						ps.setString(6, punter.getRole());
 						ps.setBoolean(7, punter.isEnabled());
 						ps.setInt(8, punter.getRating());
+						
+						ps.setString(9, punter.getFullName());
+						ps.setString(10, punter.getGender());
+						ps.setString(11, punter.getPassportIc());
+						ps.setString(12, punter.getAddress());
+						ps.setString(13, punter.getState());
+						ps.setString(14, punter.getPostcode());
+						ps.setString(15, punter.getCountry());
+						
 						if (punter.getParent()==null)							// root
 						{
-							ps.setObject(9, null);
-							ps.setObject(10, null);
+							ps.setObject(16, null);
+							ps.setObject(17, null);
 						}
 						else
 						{
-							ps.setObject(9, punter.getParent().getId());
-							ps.setObject(10, punter.getSponsor().getId());
+							ps.setObject(16, punter.getParent().getId());
+							ps.setObject(18, punter.getSponsor().getId());
 						}
-						ps.setBoolean(11, punter.isSystemOwned());
+						ps.setBoolean(19, punter.isSystemOwned());
 			      }
 			    });
 			createPunterAccount(punter.getId());

@@ -24,27 +24,25 @@ public class CustomUserDetailsService implements UserDetailsService{
 	private Services services;
 
 	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		log.info("loadUserByUsername email : " + email);
-		
-		email = email.toLowerCase();
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		log.info("loadUserByUsername username : " + username);
 		
 		BaseUser baseUser = null;
 		try
 		{
-			baseUser = services.getBaseUser(email);
+			baseUser = services.getBaseUser(username);
 		}
 		catch (Exception e)
 		{
-			log.error("Error finding User: " + email + " not found");
-			throw new UsernameNotFoundException("Error finding User: " + email);
+			log.error("Error finding User: " + username + " not found");
+			throw new UsernameNotFoundException("Error finding User: " + username);
 		}
 		
 		log.info("User : " + baseUser.getEmail() + " found with role :" + baseUser.getRole());
 		
 		Collection<GrantedAuthority> authorities = getAuthorities(baseUser);
 		
-		User user = new User(baseUser.getEmail(), baseUser.getPassword(), baseUser.isEnabled(), true, true, true, authorities);
+		User user = new User(baseUser.getContact(), baseUser.getPassword(), baseUser.isEnabled(), true, true, true, authorities);
 		
 		log.info("Using User : " + user.getUsername() + " with authorities :" + authorities);
 		return user;

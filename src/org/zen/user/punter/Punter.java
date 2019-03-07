@@ -34,6 +34,13 @@ public class Punter extends BaseUser {
 		setEmail(profile.getEmail());
 		setPhone(profile.getPhone());
 		setSystemOwned(profile.isSystemOwned());
+		setFullName(profile.getFullName());
+		setGender(profile.getGender());
+		setPassportIc(profile.getPassportIc());
+		setAddress(profile.getAddress());
+		setState(profile.getState());
+		setPostcode(profile.getPostcode());
+		setCountry(profile.getCountry());
 	}
 	
 	public String toSummaryString()
@@ -52,8 +59,6 @@ public class Punter extends BaseUser {
 	public void setChildren(List<Punter> children) {
 		this.children = children;
 	}
-
-	
 
 	public Punter getParent() {
 		return parent;

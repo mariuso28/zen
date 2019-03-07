@@ -110,6 +110,38 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		aj.setBalance(account.getBalance());
 		return aj;
 	}
+	
+	public ProfileJson getPunterProfile(String contact) throws RestServicesException{
+	
+		try
+		{
+			Punter punter = services.getHome().getPunterDao().getByContact(contact);
+			if (punter == null)
+				return null;
+			return populatePunterProfile(punter);
+		}
+		catch (Exception e)
+		{
+			log.error("getPunterProfile",e);
+			throw new RestServicesException(e.getMessage());
+		}
+	}
+
+	private ProfileJson populatePunterProfile(Punter punter) {
+		ProfileJson pj = new ProfileJson();	
+		pj.setContact(punter.getContact());
+		pj.setEmail(punter.getEmail());
+		pj.setPhone(punter.getPhone());
+		pj.setSystemOwned(punter.isSystemOwned());
+		pj.setFullName(punter.getFullName());
+		pj.setGender(punter.getGender());
+		pj.setPassportIc(punter.getPassportIc());
+		pj.setAddress(punter.getAddress());
+		pj.setState(punter.getState());
+		pj.setPostcode(punter.getPostcode());
+		pj.setCountry(punter.getCountry());
+		return pj;
+	}
 
 	/*
 	public PunterDetailJson getPunterDetails(String email) {

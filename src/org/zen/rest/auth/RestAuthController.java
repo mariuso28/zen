@@ -46,9 +46,12 @@ public class RestAuthController {
 	@RequestMapping(value="/authorize1", method=RequestMethod.POST)
 	public ResultJson authorize(@RequestBody() CredentialsJson credentials)
 	{
+		log.info("Got authorize1");
+		
 		ResultJson rj = authorize(credentials.getUsername(),credentials.getPassword());
 		if (!rj.getStatus().equals(StatusJson.OK))
 			return rj;
+		
 		Authorization auth = new Authorization();
 		auth.setBody((LinkedHashMap<String, String>) rj.getResult());
 		try
@@ -76,11 +79,11 @@ public class RestAuthController {
 		
 		ResultJson result = new ResultJson();
 		String path;
-		path = "http://localhost:8080/shell/oauth/token";
+		path = "http://localhost:8080/zen/zx4/oauth/token";
 		try
 		{
 			BaseUser baseUser = services.getHome().getBaseUserDao().getByContact(username);
-			log.info("Got baseuser : " + baseUser.getEmail());
+			log.info("Got baseuser : " + baseUser.getContact());
 		}
 		catch (Exception e)
 		{
@@ -128,7 +131,7 @@ public class RestAuthController {
 			){
 		ResultJson result = new ResultJson();
 		String path;
-		path = "http://localhost:8080/shell/oauth/token";
+		path = "http://localhost:8080/zen/zx4/oauth/token";
 		try {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
