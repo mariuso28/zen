@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.zen.json.ChangePasswordJson;
 import org.zen.json.ProfileJson;
 import org.zen.model.ZenModelOriginal;
 import org.zen.persistence.PersistenceRuntimeException;
@@ -47,6 +48,24 @@ public class PunterMgr {
 		return pj;
 	}
 	
+	public void changePassword(Punter punter, ChangePasswordJson changePassword) throws PunterMgrException{
+
+		PasswordEncoder encoder = new BCryptPasswordEncoder();
+		boolean match = encoder.matches(changePassword.getOldPassword(),punter.getPassword());
+		if (!match)
+			throw new PunterMgrException("Old password not correct, fix or logout to reset.");
+		validatePassword(changePassword.getPassword());
+		punter.setPassword(encoder.encode(changePassword.getPassword()));
+		try
+		{
+			punterDao.updatePassword(punter);
+		}
+		catch (Exception e)
+		{
+			throw new PunterMgrException("Could not change password - contact support.");
+		}
+	}
+
 	public List<Punter> getSystemPunters() throws PunterMgrException
 	{
 		try
@@ -295,7 +314,6 @@ public class PunterMgr {
 	public void setServices(Services services) {
 		this.services = services;
 	}
-
 	
 	
 }

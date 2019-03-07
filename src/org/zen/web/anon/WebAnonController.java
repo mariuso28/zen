@@ -22,6 +22,14 @@ public class WebAnonController {
 		return "login";
 	}
 	
+	@RequestMapping(value = "/goChangePassword", method = RequestMethod.GET)
+	public String goChangePassword() {
+			
+		log.info("Received goChangePassword");
+			
+		return "changePassword";
+	}
+	
 	@RequestMapping(value = "/goEditProfile", method = RequestMethod.GET)
 	public String goEditProfile() {
 			

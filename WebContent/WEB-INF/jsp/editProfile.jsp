@@ -151,8 +151,8 @@ function updateProfile() {
     <li><a href="index.html"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
     <li class="active submenu"> <a href="#"><i class="icon icon-user"></i> <span>My Profile</span><span class="caret" style="margin-left:10px; margin-top:8px;"></span></a>
       <ul>
-        <li><a href="#">Edit Profile</a></li>
-        <li><a href="#">Change Password</a></li>
+        <li><a href="/zen/zx4/web/anon/goEditProfile">Edit Profile</a></li>
+        <li><a href="/zen/zx4/web/anon/goChangePassword">Change Password</a></li>
       </ul>
     </li>
     <li class="submenu"> <a href="#"><i class="icon icon-group"></i> <span>Agents</span><span class="caret" style="margin-left:10px; margin-top:8px; border"></span></a>
@@ -183,7 +183,7 @@ function updateProfile() {
   <div class="container-fluid">
     <div class="quick-actions_homepage">
       <ul class="quick-actions">
-        <li class="bg_lb"> <a href="#"> <i class="icon-lock"></i>Password </a> </li>
+        <li class="bg_lb"> <a href="/zen/zx4/web/anon/goChangePassword"> <i class="icon-lock"></i>Password </a> </li>
         <li class="bg_lg"> <a href="#"> <i class="icon-signout"></i> Payment Sent</a> </li>
         <!-- <li class="bg_ly"> <a href="widgets.html"> <i class="icon-inbox"></i><span class="label label-success">101</span> Payment Received </a> </li> -->
         <li class="bg_ly"> <a href="#"> <i class="icon-signin"></i>Payment Received </a> </li>
@@ -209,17 +209,6 @@ function updateProfile() {
                 <label class="control-label">Username :</label>
                 <div class="controls">
                   <input readonly type="text" id="contact" class="span11" value=""/>
-                </div>
-              </div><div class="control-group">
-                <label class="control-label">Password :</label>
-                <div class="controls">
-                  <input type="password" id="password" class="span11" value=""/>
-                </div>
-              </div>
-              <div class="control-group">
-                <label class="control-label">Confirm Password :</label>
-                <div class="controls">
-                  <input type="password" id="vpassword" class="span11" value=""/>
                 </div>
               </div>
               <div class="control-group">

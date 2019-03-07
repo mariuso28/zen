@@ -80,7 +80,7 @@ function getPunter() {
     <li class="submenu"> <a href="#"><i class="icon icon-user"></i> <span>My Profile</span><span class="caret" style="margin-left:10px; margin-top:8px;"></span></a>
       <ul>
         <li><a href="/zen/zx4/web/anon/goEditProfile">Edit Profile</a></li>
-        <li><a href="#">Change Password</a></li>
+        <li><a href="/zen/zx4/web/anon/goChangePassword">Change Password</a></li>
       </ul>
     </li>
     <li class="submenu"> <a href="#"><i class="icon icon-group"></i> <span>Agents</span><span class="caret" style="margin-left:10px; margin-top:8px; border"></span></a>

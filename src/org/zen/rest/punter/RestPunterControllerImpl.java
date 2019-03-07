@@ -7,6 +7,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.zen.json.ChangePasswordJson;
 import org.zen.json.ProfileJson;
 import org.zen.json.ResultJson;
 import org.zen.rest.services.RestServices;
@@ -19,6 +20,27 @@ public class RestPunterControllerImpl implements RestPunterController
 	@Autowired
 	private RestServices restServices;
 	
+	
+	@RequestMapping(value = "/changePassword")
+	// ResultJson contains message if success, message if fail
+	public ResultJson changePassword(OAuth2Authentication auth,@RequestBody ChangePasswordJson changePassword)
+	{
+		String contact = ((User) auth.getPrincipal()).getUsername();
+		log.info("Received changePassword for : " + contact);
+		
+		ResultJson result = new ResultJson();
+		
+		try
+		{
+			restServices.changePassword(contact,changePassword);
+			result.success("Successfully changed");
+		}
+		catch (Exception e)
+		{
+			result.fail(e.getMessage());
+		}
+		return result;
+	}
 	
 	@RequestMapping(value = "/updatePunter")
 	// ResultJson contains message if success, message if fail

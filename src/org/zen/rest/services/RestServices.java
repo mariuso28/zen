@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.zen.json.AccountJson;
+import org.zen.json.ChangePasswordJson;
 import org.zen.json.ModelJson;
 import org.zen.json.ProfileJson;
 import org.zen.json.PunterJson;
@@ -111,19 +112,18 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		return aj;
 	}
 	
+	public void changePassword(String contact, ChangePasswordJson changePassword) throws RestServicesException{
+		Punter punter = getPunter(contact);
+		try {
+			punterMgr.changePassword(punter,changePassword);
+		} catch (PunterMgrException e) {
+			log.info(e.getMessage());
+			throw new RestServicesException(e.getMessage());
+		}
+	}
+	
 	public void updatePunterProfile(String contact,ProfileJson profile) throws RestServicesException{
-		Punter punter;
-		try
-		{
-			punter = services.getHome().getPunterDao().getByContact(contact);
-			if (punter == null)
-				throw new RestServicesException("Zen Member : " + contact + " not found - contact support");
-		}
-		catch (Exception e)
-		{
-			log.error("updatePunterProfile",e);
-			throw new RestServicesException("Zen Member : " + contact + " not found - contact support");
-		}
+		Punter punter = getPunter(contact);
 	
 		try {
 			punterMgr.validateProfileValues(profile);
@@ -142,26 +142,30 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			log.error("updatePunterProfile",e);
 			throw new RestServicesException("Zen Member : " + contact + " could not be updated - contact support");
 		}
-		
 	}
 
-	
 	public ProfileJson getPunterProfile(String contact) throws RestServicesException{
 	
+		Punter punter = getPunter(contact);
+		return populatePunterProfile(punter);
+	}
+
+	private Punter getPunter(String contact) throws RestServicesException{
+		Punter punter;
 		try
 		{
-			Punter punter = services.getHome().getPunterDao().getByContact(contact);
+			punter = services.getHome().getPunterDao().getByContact(contact);
 			if (punter == null)
-				return null;
-			return populatePunterProfile(punter);
+				throw new RestServicesException("Zen Member : " + contact + " not found - contact support");
 		}
 		catch (Exception e)
 		{
-			log.error("getPunterProfile",e);
-			throw new RestServicesException(e.getMessage());
+			log.error("updatePunterProfile",e);
+			throw new RestServicesException("Zen Member : " + contact + " not found - contact support");
 		}
+		return punter;
 	}
-
+	
 	private ProfileJson populatePunterProfile(Punter punter) {
 		ProfileJson pj = new ProfileJson();	
 		pj.setContact(punter.getContact());
@@ -208,7 +212,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		this.services = services;
 	}
 
-
+	
 	
 	
 }

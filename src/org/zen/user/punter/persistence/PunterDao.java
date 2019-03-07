@@ -20,4 +20,5 @@ public interface PunterDao {
 	public double getRevenue(char type);
 	public List<Punter> getSystemPunters();
 	public void update(Punter punter);
+	public void updatePassword(Punter punter);
 }

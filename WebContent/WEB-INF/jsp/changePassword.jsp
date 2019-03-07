@@ -2,15 +2,20 @@
 <html lang="en">
 <head>
 <title>changePassword</title>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/../../../../../../jsbootstrap.min.js"></script>
+
+
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" href="css/bootstrap.min.css" />
-<link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
-<link rel="stylesheet" href="css/fullcalendar.css" />
-<link rel="stylesheet" href="css/matrix-style.css" />
-<link rel="stylesheet" href="css/matrix-media.css" />
-<link href="font-awesome/css/font-awesome.css" rel="stylesheet" />
-<link rel="stylesheet" href="css/jquery.gritter.css" />
+<link rel="stylesheet" href="../../../cssbootstrap.min.css" />
+<link rel="stylesheet" href="../../../cssbootstrap-responsive.min.css" />
+<link rel="stylesheet" href="../../../cssfullcalendar.css" />
+<link rel="stylesheet" href="../../../cssmatrix-style.css" />
+<link rel="stylesheet" href="../../../cssmatrix-media.css" />
+<link href="font-awesome/../../../cssfont-awesome.css" rel="stylesheet" />
+<link rel="stylesheet" href="../../../cssjquery.gritter.css" />
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
 
 <style>
@@ -23,6 +28,103 @@
     height: 220px;
   }
 </style>
+
+<script>
+
+function redirectDashboard()
+{
+  window.location.replace("/zen/zx4/web/anon/goDashboard");
+}
+
+var punter;
+
+function getPunter() {
+
+	access_token = sessionStorage.getItem("access_token");
+//	alert(access_token);
+
+  var bearerHeader = 'Bearer ' + access_token;
+     $.ajax({
+
+    type: "GET",
+         url : '/zen/zx4/api/punter/getPunter',
+    headers: { 'Authorization': bearerHeader },
+    cache: false,
+    contentType: 'application/json;',
+         dataType: "json",
+       	 success: function(data) {
+  //         alert(JSON.stringify(data));
+     			if (data == '')
+            {
+							alert("could not get punter")
+               return null;
+            }
+
+          var resultJson = $.parseJSON(JSON.stringify(data));
+					if (resultJson.status!='OK')
+					{
+						alert(resultJson.status + " " + resultJson.message);
+					}
+					punter = resultJson.result;
+          populateProfile();
+        },
+				error:function (e) {
+	  			alert("getPunter ERROR : " + e.status + " - " + e.statusText);
+	      }
+     });
+ }
+
+ function changePassword() {
+
+   access_token = sessionStorage.getItem("access_token");
+   var bearerHeader = 'Bearer ' + access_token;
+
+  if (document.getElementById('password').value != document.getElementById('vpassword').value)
+  {
+    alert("Password/verify password must match.");
+    return;
+  }
+
+ 	var jsonData = {};
+ 	  jsonData['oldPassword'] = document.getElementById('oldPassword').value;
+ 	  jsonData['password'] = document.getElementById('password').value;
+
+ 	$.ajax({
+
+      type: "POST",
+         url : '/zen/zx4/api/punter/changePassword',
+         headers: { 'Authorization': bearerHeader },
+         cache: false,
+         contentType: 'application/json;',
+         dataType: "json",
+         data:JSON.stringify(jsonData),
+          success: function(data) {
+               var result = $.parseJSON(JSON.stringify(data));
+               if (data == '')
+               {
+    						  alert("could not get punter")
+                 return null;
+               }
+
+               var resultJson = $.parseJSON(JSON.stringify(data));
+  					    if (resultJson.status!='OK')
+  					    {
+  						    alert(resultJson.message);
+  					    }
+                else {
+                  alert("Password successfully changed.");
+                }
+           },
+           error:function (e) {
+  	  			    alert("updatePunter ERROR : " + e.status + " - " + e.statusText);
+  	        }
+      });
+  }
+
+
+</script>
+
+
 </head>
 <body>
 
@@ -36,8 +138,8 @@
     <li><a href="index.html"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
     <li class="active submenu"> <a href="#"><i class="icon icon-user"></i> <span>My Profile</span><span class="caret" style="margin-left:10px; margin-top:8px;"></span></a>
       <ul>
-        <li><a href="#">Edit Profile</a></li>
-        <li><a href="#">Change Password</a></li>
+        <li><a href="/zen/zx4/web/anon/goEditProfile">Edit Profile</a></li>
+        <li><a href="/zen/zx4/web/anon/goChangePassword">Change Password</a></li>
       </ul>
     </li>
     <li class="submenu"> <a href="#"><i class="icon icon-group"></i> <span>Agents</span><span class="caret" style="margin-left:10px; margin-top:8px; border"></span></a>
@@ -108,8 +210,8 @@
                 </div>
               </div>
               <div class="form-actions">
-                <button type="submit" class="btn btn-success">Save</button>
-                <button type="submit" class="btn btn-danger">Cancel</button>
+                <button type="submit" onclick="return changePassword();" class="btn btn-success">Save</button>
+                <button type="submit" onclick="return redirectDashboard();" class="btn btn-danger">Cancel</button>
               </div>
             </div>
           </div>
@@ -129,27 +231,27 @@
 
 <!--end-Footer-part-->
 
-<script src="js/excanvas.min.js"></script>
-<script src="js/jquery.min.js"></script>
-<script src="js/jquery.ui.custom.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/jquery.flot.min.js"></script>
-<script src="js/jquery.flot.resize.min.js"></script>
-<script src="js/jquery.peity.min.js"></script>
-<script src="js/fullcalendar.min.js"></script>
-<script src="js/matrix.js"></script>
-<script src="js/matrix.dashboard.js"></script>
-<script src="js/jquery.gritter.min.js"></script>
-<script src="js/matrix.interface.js"></script>
-<script src="js/matrix.chat.js"></script>
-<script src="js/jquery.validate.js"></script>
-<script src="js/matrix.form_validation.js"></script>
-<script src="js/jquery.wizard.js"></script>
-<script src="js/jquery.uniform.js"></script>
-<script src="js/select2.min.js"></script>
-<script src="js/matrix.popover.js"></script>
-<script src="js/jquery.dataTables.min.js"></script>
-<script src="js/matrix.tables.js"></script>
+<script src="../../../jsexcanvas.min.js"></script>
+<script src="../../../jsjquery.min.js"></script>
+<script src="../../../jsjquery.ui.custom.js"></script>
+<script src="../../../jsbootstrap.min.js"></script>
+<script src="../../../jsjquery.flot.min.js"></script>
+<script src="../../../jsjquery.flot.resize.min.js"></script>
+<script src="../../../jsjquery.peity.min.js"></script>
+<script src="../../../jsfullcalendar.min.js"></script>
+<script src="../../../jsmatrix.js"></script>
+<script src="../../../jsmatrix.dashboard.js"></script>
+<script src="../../../jsjquery.gritter.min.js"></script>
+<script src="../../../jsmatrix.interface.js"></script>
+<script src="../../../jsmatrix.chat.js"></script>
+<script src="../../../jsjquery.validate.js"></script>
+<script src="../../../jsmatrix.form_validation.js"></script>
+<script src="../../../jsjquery.wizard.js"></script>
+<script src="../../../jsjquery.uniform.js"></script>
+<script src="../../../jsselect2.min.js"></script>
+<script src="../../../jsmatrix.popover.js"></script>
+<script src="../../../jsjquery.dataTables.min.js"></script>
+<script src="../../../jsmatrix.tables.js"></script>
 
 <script type="text/javascript">
   // This function is called from the pop-up menus to transfer to

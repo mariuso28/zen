@@ -20,6 +20,26 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	private static Logger log = Logger.getLogger(PunterDaoImpl.class);
 
 	@Override
+	public void updatePassword(final Punter punter)
+	{
+		try
+		{
+			getJdbcTemplate().update("UPDATE baseuser SET password=? WHERE id=?"
+				, new PreparedStatementSetter() {
+					public void setValues(PreparedStatement ps) throws SQLException {
+						ps.setString(1, punter.getPassword());
+						ps.setObject(2, punter.getId());
+					}
+				});
+		}
+		catch (DataAccessException e1)
+		{
+			log.error("Could not execute : " + e1.getMessage(),e1);
+			throw new PersistenceRuntimeException("Could not execute update password : " + e1.getMessage());
+		}	
+	}
+	
+	@Override
 	public void updateAccount(final Account account)
 	{
 		try
