@@ -1783,3 +1783,707 @@ org.zen.persistence.PersistenceRuntimeException: Could not execute update : Prep
 13:00:13,353  INFO http-bio-8080-exec-11 CustomUserDetailsService:47 - Using User : gold with authorities :[ROLE_PUNTER]
 13:00:13,531  INFO http-bio-8080-exec-10 WebAnonController:37 - Received goDashboard
 13:00:13,667  INFO http-bio-8080-exec-2 RestPunterControllerImpl:49 - Received getPunter for : gold
+11:05:14,048  INFO http-bio-8080-exec-3 WebAnonController:20 - Received login
+11:05:17,611  INFO http-bio-8080-exec-4 RestAuthController:49 - Got authorize1
+11:05:17,613  INFO http-bio-8080-exec-4 RestAuthController:78 - Attempting to authorize : gold
+11:05:18,368  INFO http-bio-8080-exec-4 RestAuthController:86 - Got baseuser : gold
+11:05:18,616  INFO http-bio-8080-exec-7 CustomUserDetailsService:28 - loadUserByUsername username : gold
+11:05:18,711  INFO http-bio-8080-exec-7 CustomUserDetailsService:41 - User : gold@test.com found with role :ROLE_PUNTER
+11:05:18,712  INFO http-bio-8080-exec-7 CustomUserDetailsService:47 - Using User : gold with authorities :[ROLE_PUNTER]
+11:05:19,071  INFO http-bio-8080-exec-4 WebAnonController:45 - Received goDashboard
+11:05:19,831  INFO http-bio-8080-exec-9 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:05:23,842  INFO http-bio-8080-exec-9 WebAnonController:28 - Received goChangePassword
+11:10:01,746  INFO http-bio-8080-exec-6 WebAnonController:28 - Received goChangePassword
+11:10:21,409  INFO http-bio-8080-exec-2 WebAnonController:28 - Received goChangePassword
+11:19:32,997  INFO http-bio-8080-exec-15 WebAnonController:28 - Received goChangePassword
+11:19:33,900  INFO http-bio-8080-exec-5 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:27:38,994  INFO http-bio-8080-exec-9 WebAnonController:28 - Received goChangePassword
+11:27:39,670  INFO http-bio-8080-exec-14 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:28:03,024  INFO http-bio-8080-exec-4 WebAnonController:28 - Received goChangePassword
+11:28:03,195  INFO http-bio-8080-exec-20 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:29:27,007  INFO http-bio-8080-exec-2 WebAnonController:28 - Received goChangePassword
+11:29:27,627  INFO http-bio-8080-exec-15 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:30:50,528  INFO http-bio-8080-exec-14 WebAnonController:28 - Received goChangePassword
+11:30:51,187  INFO http-bio-8080-exec-5 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:30:52,929  INFO http-bio-8080-exec-4 WebAnonController:45 - Received goDashboard
+11:30:53,061  INFO http-bio-8080-exec-2 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:30:56,668  INFO http-bio-8080-exec-2 WebAnonController:28 - Received goChangePassword
+11:30:56,805  INFO http-bio-8080-exec-9 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:35:25,254  INFO http-bio-8080-exec-19 WebAnonController:28 - Received goChangePassword
+11:35:26,080  INFO http-bio-8080-exec-20 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:35:40,784  INFO http-bio-8080-exec-18 WebAnonController:28 - Received goChangePassword
+11:35:41,198  INFO http-bio-8080-exec-19 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:36:49,616  INFO http-bio-8080-exec-20 WebAnonController:28 - Received goChangePassword
+11:36:50,333  INFO http-bio-8080-exec-4 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:38:15,081  INFO http-bio-8080-exec-18 WebAnonController:28 - Received goChangePassword
+11:38:15,706  INFO http-bio-8080-exec-7 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:41:05,623  INFO http-bio-8080-exec-14 WebAnonController:28 - Received goChangePassword
+11:41:06,336  INFO http-bio-8080-exec-25 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:41:21,024  INFO http-bio-8080-exec-25 WebAnonController:28 - Received goChangePassword
+11:41:21,343  INFO http-bio-8080-exec-24 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:41:54,923  INFO http-bio-8080-exec-22 WebAnonController:28 - Received goChangePassword
+11:41:55,102  INFO http-bio-8080-exec-20 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:48:13,322  INFO http-bio-8080-exec-22 WebAnonController:20 - Received login
+11:48:17,131  INFO http-bio-8080-exec-22 RestAuthController:49 - Got authorize1
+11:48:17,132  INFO http-bio-8080-exec-22 RestAuthController:78 - Attempting to authorize : gold
+11:48:17,135  INFO http-bio-8080-exec-22 RestAuthController:86 - Got baseuser : gold
+11:48:17,144  INFO http-bio-8080-exec-24 CustomUserDetailsService:28 - loadUserByUsername username : gold
+11:48:17,147  INFO http-bio-8080-exec-24 CustomUserDetailsService:41 - User : gold@test.com found with role :ROLE_PUNTER
+11:48:17,148  INFO http-bio-8080-exec-24 CustomUserDetailsService:47 - Using User : gold with authorities :[ROLE_PUNTER]
+11:48:17,291  INFO http-bio-8080-exec-22 WebAnonController:45 - Received goDashboard
+11:48:17,436  INFO http-bio-8080-exec-20 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:48:21,867  INFO http-bio-8080-exec-20 WebAnonController:28 - Received goChangePassword
+11:48:22,528  INFO http-bio-8080-exec-2 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:48:29,392  INFO http-bio-8080-exec-18 WebAnonController:45 - Received goDashboard
+11:48:29,537  INFO http-bio-8080-exec-26 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:48:30,826  INFO http-bio-8080-exec-9 WebAnonController:20 - Received login
+11:49:16,196  INFO http-bio-8080-exec-24 WebAnonController:45 - Received goDashboard
+11:49:22,024  INFO http-bio-8080-exec-20 WebAnonController:20 - Received login
+11:49:42,433  INFO http-bio-8080-exec-4 RestAuthController:49 - Got authorize1
+11:49:42,434  INFO http-bio-8080-exec-4 RestAuthController:78 - Attempting to authorize : gold
+11:49:42,436  INFO http-bio-8080-exec-4 RestAuthController:86 - Got baseuser : gold
+11:49:42,445  INFO http-bio-8080-exec-24 CustomUserDetailsService:28 - loadUserByUsername username : gold
+11:49:42,447  INFO http-bio-8080-exec-24 CustomUserDetailsService:41 - User : gold@test.com found with role :ROLE_PUNTER
+11:49:42,448  INFO http-bio-8080-exec-24 CustomUserDetailsService:47 - Using User : gold with authorities :[ROLE_PUNTER]
+11:49:42,599  INFO http-bio-8080-exec-9 WebAnonController:45 - Received goDashboard
+11:49:42,706  INFO http-bio-8080-exec-26 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:49:53,193  INFO http-bio-8080-exec-26 WebAnonController:36 - Received goEditProfile
+11:49:53,842  INFO http-bio-8080-exec-7 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:50:05,052  INFO http-bio-8080-exec-7 WebAnonController:28 - Received goChangePassword
+11:50:05,267  INFO http-bio-8080-exec-26 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:51:35,968  INFO http-bio-8080-exec-4 WebAnonController:28 - Received goChangePassword
+11:51:36,762  INFO http-bio-8080-exec-28 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:52:07,645  INFO http-bio-8080-exec-4 RestAuthController:49 - Got authorize1
+11:52:07,646  INFO http-bio-8080-exec-4 RestAuthController:78 - Attempting to authorize : gold
+11:52:07,648  INFO http-bio-8080-exec-4 RestAuthController:86 - Got baseuser : gold
+11:52:07,659  INFO http-bio-8080-exec-5 CustomUserDetailsService:28 - loadUserByUsername username : gold
+11:52:07,662  INFO http-bio-8080-exec-5 CustomUserDetailsService:41 - User : gold@test.com found with role :ROLE_PUNTER
+11:52:07,663  INFO http-bio-8080-exec-5 CustomUserDetailsService:47 - Using User : gold with authorities :[ROLE_PUNTER]
+11:52:07,801  INFO http-bio-8080-exec-4 WebAnonController:45 - Received goDashboard
+11:52:07,931  INFO http-bio-8080-exec-9 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:52:11,327  INFO http-bio-8080-exec-4 WebAnonController:28 - Received goChangePassword
+11:52:11,506  INFO http-bio-8080-exec-27 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:53:01,110  INFO http-bio-8080-exec-23 RestPunterControllerImpl:29 - Received changePassword for : gold
+11:53:01,215  INFO http-bio-8080-exec-23 RestServices:120 - Old password not correct, fix or logout to reset.
+11:53:14,376  INFO http-bio-8080-exec-23 RestPunterControllerImpl:29 - Received changePassword for : gold
+11:53:18,930  INFO http-bio-8080-exec-23 WebAnonController:45 - Received goDashboard
+11:53:19,062  INFO http-bio-8080-exec-27 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:53:26,486  INFO http-bio-8080-exec-27 WebAnonController:28 - Received goChangePassword
+11:53:27,075  INFO http-bio-8080-exec-7 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:53:29,588  INFO http-bio-8080-exec-7 WebAnonController:45 - Received goDashboard
+11:53:29,747  INFO http-bio-8080-exec-23 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:59:22,601  INFO http-bio-8080-exec-27 WebAnonController:45 - Received goDashboard
+11:59:22,743  INFO http-bio-8080-exec-7 RestPunterControllerImpl:71 - Received getPunter for : gold
+11:59:29,712  INFO http-bio-8080-exec-7 WebAnonController:28 - Received goChangePassword
+11:59:30,355  INFO http-bio-8080-exec-28 RestPunterControllerImpl:71 - Received getPunter for : gold
+12:01:14,736  INFO http-bio-8080-exec-5 WebAnonController:28 - Received goChangePassword
+12:01:15,286  INFO http-bio-8080-exec-28 RestPunterControllerImpl:71 - Received getPunter for : gold
+12:01:18,862  INFO http-bio-8080-exec-28 WebAnonController:20 - Received login
+12:01:21,976  INFO http-bio-8080-exec-7 RestAuthController:49 - Got authorize1
+12:01:21,976  INFO http-bio-8080-exec-7 RestAuthController:78 - Attempting to authorize : gold
+12:01:21,977  INFO http-bio-8080-exec-7 RestAuthController:86 - Got baseuser : gold
+12:01:21,981  INFO http-bio-8080-exec-27 CustomUserDetailsService:28 - loadUserByUsername username : gold
+12:01:21,982  INFO http-bio-8080-exec-27 CustomUserDetailsService:41 - User : gold@test.com found with role :ROLE_PUNTER
+12:01:21,983  INFO http-bio-8080-exec-27 CustomUserDetailsService:47 - Using User : gold with authorities :[ROLE_PUNTER]
+12:01:22,155  INFO http-bio-8080-exec-7 WebAnonController:45 - Received goDashboard
+12:01:22,291  INFO http-bio-8080-exec-5 RestPunterControllerImpl:71 - Received getPunter for : gold
+12:01:25,978  INFO http-bio-8080-exec-5 WebAnonController:28 - Received goChangePassword
+12:01:26,116  INFO http-bio-8080-exec-9 RestPunterControllerImpl:71 - Received getPunter for : gold
+12:02:42,575  INFO http-bio-8080-exec-33 WebAnonController:45 - Received goDashboard
+12:02:42,722  INFO http-bio-8080-exec-18 RestPunterControllerImpl:71 - Received getPunter for : gold
+12:02:46,763  INFO http-bio-8080-exec-18 WebAnonController:28 - Received goChangePassword
+12:02:47,407  INFO http-bio-8080-exec-33 RestPunterControllerImpl:71 - Received getPunter for : gold
+12:02:51,668  INFO http-bio-8080-exec-4 WebAnonController:20 - Received login
+12:02:53,875  INFO http-bio-8080-exec-33 RestAuthController:49 - Got authorize1
+12:02:53,876  INFO http-bio-8080-exec-33 RestAuthController:78 - Attempting to authorize : gold
+12:02:53,877  INFO http-bio-8080-exec-33 RestAuthController:86 - Got baseuser : gold
+12:02:53,881  INFO http-bio-8080-exec-23 CustomUserDetailsService:28 - loadUserByUsername username : gold
+12:02:53,883  INFO http-bio-8080-exec-23 CustomUserDetailsService:41 - User : gold@test.com found with role :ROLE_PUNTER
+12:02:53,883  INFO http-bio-8080-exec-23 CustomUserDetailsService:47 - Using User : gold with authorities :[ROLE_PUNTER]
+12:02:54,134  INFO http-bio-8080-exec-27 WebAnonController:45 - Received goDashboard
+12:02:54,249  INFO http-bio-8080-exec-36 RestPunterControllerImpl:71 - Received getPunter for : gold
+12:12:03,896 ERROR ContainerBackgroundProcessor[StandardEngine[Catalina]] RatingImageImport:29 - 
+java.nio.channels.ClosedByInterruptException
+	at java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202)
+	at sun.nio.ch.FileChannelImpl.size(FileChannelImpl.java:315)
+	at java.nio.file.Files.readAllBytes(Files.java:3154)
+	at org.zen.rating.image.RatingImageImport.loadImageBytes(RatingImageImport.java:19)
+	at org.zen.rating.image.RatingImageImport.loadImage(RatingImageImport.java:25)
+	at org.zen.rating.RatingMgr.createRatings(RatingMgr.java:24)
+	at org.zen.rating.RatingMgr.<init>(RatingMgr.java:20)
+	at org.zen.model.ZenModel.<init>(ZenModel.java:29)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:147)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:89)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1098)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1050)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:772)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:839)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:538)
+	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:444)
+	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:326)
+	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:107)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4939)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5434)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+	at org.apache.catalina.core.StandardContext.reload(StandardContext.java:3954)
+	at org.apache.catalina.loader.WebappLoader.backgroundProcess(WebappLoader.java:426)
+	at org.apache.catalina.core.ContainerBase.backgroundProcess(ContainerBase.java:1345)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1530)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.run(ContainerBase.java:1519)
+	at java.lang.Thread.run(Thread.java:745)
+12:12:03,899 ERROR ContainerBackgroundProcessor[StandardEngine[Catalina]] RatingImageImport:29 - 
+java.nio.channels.ClosedByInterruptException
+	at java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202)
+	at sun.nio.ch.FileChannelImpl.size(FileChannelImpl.java:315)
+	at java.nio.file.Files.readAllBytes(Files.java:3154)
+	at org.zen.rating.image.RatingImageImport.loadImageBytes(RatingImageImport.java:19)
+	at org.zen.rating.image.RatingImageImport.loadImage(RatingImageImport.java:25)
+	at org.zen.rating.RatingMgr.createRatings(RatingMgr.java:25)
+	at org.zen.rating.RatingMgr.<init>(RatingMgr.java:20)
+	at org.zen.model.ZenModel.<init>(ZenModel.java:29)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:147)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:89)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1098)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1050)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:772)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:839)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:538)
+	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:444)
+	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:326)
+	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:107)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4939)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5434)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+	at org.apache.catalina.core.StandardContext.reload(StandardContext.java:3954)
+	at org.apache.catalina.loader.WebappLoader.backgroundProcess(WebappLoader.java:426)
+	at org.apache.catalina.core.ContainerBase.backgroundProcess(ContainerBase.java:1345)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1530)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.run(ContainerBase.java:1519)
+	at java.lang.Thread.run(Thread.java:745)
+12:12:03,899 ERROR ContainerBackgroundProcessor[StandardEngine[Catalina]] RatingImageImport:29 - 
+java.nio.channels.ClosedByInterruptException
+	at java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202)
+	at sun.nio.ch.FileChannelImpl.size(FileChannelImpl.java:315)
+	at java.nio.file.Files.readAllBytes(Files.java:3154)
+	at org.zen.rating.image.RatingImageImport.loadImageBytes(RatingImageImport.java:19)
+	at org.zen.rating.image.RatingImageImport.loadImage(RatingImageImport.java:25)
+	at org.zen.rating.RatingMgr.createRatings(RatingMgr.java:26)
+	at org.zen.rating.RatingMgr.<init>(RatingMgr.java:20)
+	at org.zen.model.ZenModel.<init>(ZenModel.java:29)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:147)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:89)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1098)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1050)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:772)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:839)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:538)
+	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:444)
+	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:326)
+	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:107)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4939)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5434)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+	at org.apache.catalina.core.StandardContext.reload(StandardContext.java:3954)
+	at org.apache.catalina.loader.WebappLoader.backgroundProcess(WebappLoader.java:426)
+	at org.apache.catalina.core.ContainerBase.backgroundProcess(ContainerBase.java:1345)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1530)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.run(ContainerBase.java:1519)
+	at java.lang.Thread.run(Thread.java:745)
+12:12:03,900 ERROR ContainerBackgroundProcessor[StandardEngine[Catalina]] RatingImageImport:29 - 
+java.nio.channels.ClosedByInterruptException
+	at java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202)
+	at sun.nio.ch.FileChannelImpl.size(FileChannelImpl.java:315)
+	at java.nio.file.Files.readAllBytes(Files.java:3154)
+	at org.zen.rating.image.RatingImageImport.loadImageBytes(RatingImageImport.java:19)
+	at org.zen.rating.image.RatingImageImport.loadImage(RatingImageImport.java:25)
+	at org.zen.rating.RatingMgr.createRatings(RatingMgr.java:27)
+	at org.zen.rating.RatingMgr.<init>(RatingMgr.java:20)
+	at org.zen.model.ZenModel.<init>(ZenModel.java:29)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:147)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:89)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1098)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1050)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:772)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:839)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:538)
+	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:444)
+	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:326)
+	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:107)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4939)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5434)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+	at org.apache.catalina.core.StandardContext.reload(StandardContext.java:3954)
+	at org.apache.catalina.loader.WebappLoader.backgroundProcess(WebappLoader.java:426)
+	at org.apache.catalina.core.ContainerBase.backgroundProcess(ContainerBase.java:1345)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1530)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.run(ContainerBase.java:1519)
+	at java.lang.Thread.run(Thread.java:745)
+12:12:03,900 ERROR ContainerBackgroundProcessor[StandardEngine[Catalina]] RatingImageImport:29 - 
+java.nio.channels.ClosedByInterruptException
+	at java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202)
+	at sun.nio.ch.FileChannelImpl.size(FileChannelImpl.java:315)
+	at java.nio.file.Files.readAllBytes(Files.java:3154)
+	at org.zen.rating.image.RatingImageImport.loadImageBytes(RatingImageImport.java:19)
+	at org.zen.rating.image.RatingImageImport.loadImage(RatingImageImport.java:25)
+	at org.zen.rating.RatingMgr.createRatings(RatingMgr.java:28)
+	at org.zen.rating.RatingMgr.<init>(RatingMgr.java:20)
+	at org.zen.model.ZenModel.<init>(ZenModel.java:29)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:147)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:89)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1098)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1050)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:772)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:839)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:538)
+	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:444)
+	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:326)
+	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:107)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4939)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5434)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+	at org.apache.catalina.core.StandardContext.reload(StandardContext.java:3954)
+	at org.apache.catalina.loader.WebappLoader.backgroundProcess(WebappLoader.java:426)
+	at org.apache.catalina.core.ContainerBase.backgroundProcess(ContainerBase.java:1345)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1530)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.run(ContainerBase.java:1519)
+	at java.lang.Thread.run(Thread.java:745)
+12:12:03,901 ERROR ContainerBackgroundProcessor[StandardEngine[Catalina]] RatingImageImport:29 - 
+java.nio.channels.ClosedByInterruptException
+	at java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202)
+	at sun.nio.ch.FileChannelImpl.size(FileChannelImpl.java:315)
+	at java.nio.file.Files.readAllBytes(Files.java:3154)
+	at org.zen.rating.image.RatingImageImport.loadImageBytes(RatingImageImport.java:19)
+	at org.zen.rating.image.RatingImageImport.loadImage(RatingImageImport.java:25)
+	at org.zen.rating.RatingMgr.createRatings(RatingMgr.java:29)
+	at org.zen.rating.RatingMgr.<init>(RatingMgr.java:20)
+	at org.zen.model.ZenModel.<init>(ZenModel.java:29)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:147)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:89)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1098)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1050)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:772)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:839)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:538)
+	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:444)
+	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:326)
+	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:107)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4939)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5434)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+	at org.apache.catalina.core.StandardContext.reload(StandardContext.java:3954)
+	at org.apache.catalina.loader.WebappLoader.backgroundProcess(WebappLoader.java:426)
+	at org.apache.catalina.core.ContainerBase.backgroundProcess(ContainerBase.java:1345)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1530)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.run(ContainerBase.java:1519)
+	at java.lang.Thread.run(Thread.java:745)
+12:12:03,901 ERROR ContainerBackgroundProcessor[StandardEngine[Catalina]] RatingImageImport:29 - 
+java.nio.channels.ClosedByInterruptException
+	at java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202)
+	at sun.nio.ch.FileChannelImpl.size(FileChannelImpl.java:315)
+	at java.nio.file.Files.readAllBytes(Files.java:3154)
+	at org.zen.rating.image.RatingImageImport.loadImageBytes(RatingImageImport.java:19)
+	at org.zen.rating.image.RatingImageImport.loadImage(RatingImageImport.java:25)
+	at org.zen.rating.RatingMgr.createRatings(RatingMgr.java:30)
+	at org.zen.rating.RatingMgr.<init>(RatingMgr.java:20)
+	at org.zen.model.ZenModel.<init>(ZenModel.java:29)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:147)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:89)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1098)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1050)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:772)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:839)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:538)
+	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:444)
+	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:326)
+	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:107)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4939)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5434)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+	at org.apache.catalina.core.StandardContext.reload(StandardContext.java:3954)
+	at org.apache.catalina.loader.WebappLoader.backgroundProcess(WebappLoader.java:426)
+	at org.apache.catalina.core.ContainerBase.backgroundProcess(ContainerBase.java:1345)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1530)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.run(ContainerBase.java:1519)
+	at java.lang.Thread.run(Thread.java:745)
+12:12:03,901 ERROR ContainerBackgroundProcessor[StandardEngine[Catalina]] RatingImageImport:29 - 
+java.nio.channels.ClosedByInterruptException
+	at java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202)
+	at sun.nio.ch.FileChannelImpl.size(FileChannelImpl.java:315)
+	at java.nio.file.Files.readAllBytes(Files.java:3154)
+	at org.zen.rating.image.RatingImageImport.loadImageBytes(RatingImageImport.java:19)
+	at org.zen.rating.image.RatingImageImport.loadImage(RatingImageImport.java:25)
+	at org.zen.rating.RatingMgr.createRatings(RatingMgr.java:31)
+	at org.zen.rating.RatingMgr.<init>(RatingMgr.java:20)
+	at org.zen.model.ZenModel.<init>(ZenModel.java:29)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:147)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:89)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1098)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1050)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:772)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:839)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:538)
+	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:444)
+	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:326)
+	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:107)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4939)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5434)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+	at org.apache.catalina.core.StandardContext.reload(StandardContext.java:3954)
+	at org.apache.catalina.loader.WebappLoader.backgroundProcess(WebappLoader.java:426)
+	at org.apache.catalina.core.ContainerBase.backgroundProcess(ContainerBase.java:1345)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1530)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.run(ContainerBase.java:1519)
+	at java.lang.Thread.run(Thread.java:745)
+12:12:03,902 ERROR ContainerBackgroundProcessor[StandardEngine[Catalina]] RatingImageImport:29 - 
+java.nio.channels.ClosedByInterruptException
+	at java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202)
+	at sun.nio.ch.FileChannelImpl.size(FileChannelImpl.java:315)
+	at java.nio.file.Files.readAllBytes(Files.java:3154)
+	at org.zen.rating.image.RatingImageImport.loadImageBytes(RatingImageImport.java:19)
+	at org.zen.rating.image.RatingImageImport.loadImage(RatingImageImport.java:25)
+	at org.zen.rating.RatingMgr.createRatings(RatingMgr.java:32)
+	at org.zen.rating.RatingMgr.<init>(RatingMgr.java:20)
+	at org.zen.model.ZenModel.<init>(ZenModel.java:29)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:147)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:89)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1098)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1050)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:772)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:839)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:538)
+	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:444)
+	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:326)
+	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:107)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4939)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5434)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+	at org.apache.catalina.core.StandardContext.reload(StandardContext.java:3954)
+	at org.apache.catalina.loader.WebappLoader.backgroundProcess(WebappLoader.java:426)
+	at org.apache.catalina.core.ContainerBase.backgroundProcess(ContainerBase.java:1345)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1530)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.run(ContainerBase.java:1519)
+	at java.lang.Thread.run(Thread.java:745)
+12:12:03,902 ERROR ContainerBackgroundProcessor[StandardEngine[Catalina]] RatingImageImport:29 - 
+java.nio.channels.ClosedByInterruptException
+	at java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202)
+	at sun.nio.ch.FileChannelImpl.size(FileChannelImpl.java:315)
+	at java.nio.file.Files.readAllBytes(Files.java:3154)
+	at org.zen.rating.image.RatingImageImport.loadImageBytes(RatingImageImport.java:19)
+	at org.zen.rating.image.RatingImageImport.loadImage(RatingImageImport.java:25)
+	at org.zen.rating.RatingMgr.createRatings(RatingMgr.java:33)
+	at org.zen.rating.RatingMgr.<init>(RatingMgr.java:20)
+	at org.zen.model.ZenModel.<init>(ZenModel.java:29)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:147)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:89)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1098)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1050)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:772)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:839)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:538)
+	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:444)
+	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:326)
+	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:107)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4939)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5434)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+	at org.apache.catalina.core.StandardContext.reload(StandardContext.java:3954)
+	at org.apache.catalina.loader.WebappLoader.backgroundProcess(WebappLoader.java:426)
+	at org.apache.catalina.core.ContainerBase.backgroundProcess(ContainerBase.java:1345)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1530)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.run(ContainerBase.java:1519)
+	at java.lang.Thread.run(Thread.java:745)
+12:12:03,902 ERROR ContainerBackgroundProcessor[StandardEngine[Catalina]] RatingImageImport:29 - 
+java.nio.channels.ClosedByInterruptException
+	at java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202)
+	at sun.nio.ch.FileChannelImpl.size(FileChannelImpl.java:315)
+	at java.nio.file.Files.readAllBytes(Files.java:3154)
+	at org.zen.rating.image.RatingImageImport.loadImageBytes(RatingImageImport.java:19)
+	at org.zen.rating.image.RatingImageImport.loadImage(RatingImageImport.java:25)
+	at org.zen.rating.RatingMgr.createRatings(RatingMgr.java:34)
+	at org.zen.rating.RatingMgr.<init>(RatingMgr.java:20)
+	at org.zen.model.ZenModel.<init>(ZenModel.java:29)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:147)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:89)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1098)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1050)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:772)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:839)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:538)
+	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:444)
+	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:326)
+	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:107)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4939)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5434)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+	at org.apache.catalina.core.StandardContext.reload(StandardContext.java:3954)
+	at org.apache.catalina.loader.WebappLoader.backgroundProcess(WebappLoader.java:426)
+	at org.apache.catalina.core.ContainerBase.backgroundProcess(ContainerBase.java:1345)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1530)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.run(ContainerBase.java:1519)
+	at java.lang.Thread.run(Thread.java:745)
+12:12:03,903 ERROR ContainerBackgroundProcessor[StandardEngine[Catalina]] RatingImageImport:29 - 
+java.nio.channels.ClosedByInterruptException
+	at java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202)
+	at sun.nio.ch.FileChannelImpl.size(FileChannelImpl.java:315)
+	at java.nio.file.Files.readAllBytes(Files.java:3154)
+	at org.zen.rating.image.RatingImageImport.loadImageBytes(RatingImageImport.java:19)
+	at org.zen.rating.image.RatingImageImport.loadImage(RatingImageImport.java:25)
+	at org.zen.rating.RatingMgr.createRatings(RatingMgr.java:35)
+	at org.zen.rating.RatingMgr.<init>(RatingMgr.java:20)
+	at org.zen.model.ZenModel.<init>(ZenModel.java:29)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:147)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:89)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1098)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1050)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:772)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:839)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:538)
+	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:444)
+	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:326)
+	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:107)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4939)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5434)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+	at org.apache.catalina.core.StandardContext.reload(StandardContext.java:3954)
+	at org.apache.catalina.loader.WebappLoader.backgroundProcess(WebappLoader.java:426)
+	at org.apache.catalina.core.ContainerBase.backgroundProcess(ContainerBase.java:1345)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1530)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.run(ContainerBase.java:1519)
+	at java.lang.Thread.run(Thread.java:745)
+12:12:03,903 ERROR ContainerBackgroundProcessor[StandardEngine[Catalina]] RatingImageImport:29 - 
+java.nio.channels.ClosedByInterruptException
+	at java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:202)
+	at sun.nio.ch.FileChannelImpl.size(FileChannelImpl.java:315)
+	at java.nio.file.Files.readAllBytes(Files.java:3154)
+	at org.zen.rating.image.RatingImageImport.loadImageBytes(RatingImageImport.java:19)
+	at org.zen.rating.image.RatingImageImport.loadImage(RatingImageImport.java:25)
+	at org.zen.rating.RatingMgr.createRatings(RatingMgr.java:36)
+	at org.zen.rating.RatingMgr.<init>(RatingMgr.java:20)
+	at org.zen.model.ZenModel.<init>(ZenModel.java:29)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:62)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:423)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:147)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:89)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1098)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1050)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:510)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:482)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:306)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:302)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:197)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:772)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:839)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:538)
+	at org.springframework.web.context.ContextLoader.configureAndRefreshWebApplicationContext(ContextLoader.java:444)
+	at org.springframework.web.context.ContextLoader.initWebApplicationContext(ContextLoader.java:326)
+	at org.springframework.web.context.ContextLoaderListener.contextInitialized(ContextLoaderListener.java:107)
+	at org.apache.catalina.core.StandardContext.listenerStart(StandardContext.java:4939)
+	at org.apache.catalina.core.StandardContext.startInternal(StandardContext.java:5434)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+	at org.apache.catalina.core.StandardContext.reload(StandardContext.java:3954)
+	at org.apache.catalina.loader.WebappLoader.backgroundProcess(WebappLoader.java:426)
+	at org.apache.catalina.core.ContainerBase.backgroundProcess(ContainerBase.java:1345)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1530)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.processChildren(ContainerBase.java:1540)
+	at org.apache.catalina.core.ContainerBase$ContainerBackgroundProcessor.run(ContainerBase.java:1519)
+	at java.lang.Thread.run(Thread.java:745)
+15:07:15,251  INFO http-bio-8080-exec-7 WebAnonController:45 - Received goDashboard
+15:07:16,305  INFO http-bio-8080-exec-2 RestPunterControllerImpl:116 - Received getPunter for : gold
+15:07:17,492  INFO http-bio-8080-exec-2 WebAnonController:20 - Received login
+15:07:19,819  INFO http-bio-8080-exec-8 RestAuthController:49 - Got authorize1
+15:07:19,820  INFO http-bio-8080-exec-8 RestAuthController:78 - Attempting to authorize : gold
+15:07:19,827  INFO http-bio-8080-exec-8 RestAuthController:86 - Got baseuser : gold
+15:07:20,108  INFO http-bio-8080-exec-1 CustomUserDetailsService:28 - loadUserByUsername username : gold
+15:07:20,110  INFO http-bio-8080-exec-1 CustomUserDetailsService:41 - User : gold@test.com found with role :ROLE_PUNTER
+15:07:20,110  INFO http-bio-8080-exec-1 CustomUserDetailsService:47 - Using User : gold with authorities :[ROLE_PUNTER]
+15:07:20,256  INFO http-bio-8080-exec-8 WebAnonController:45 - Received goDashboard
+15:07:20,378  INFO http-bio-8080-exec-2 RestPunterControllerImpl:116 - Received getPunter for : gold
+15:10:25,333  INFO http-bio-8080-exec-3 WebAnonController:20 - Received login
+15:10:27,575  INFO http-bio-8080-exec-3 RestAuthController:49 - Got authorize1
+15:10:27,576  INFO http-bio-8080-exec-3 RestAuthController:78 - Attempting to authorize : gold
+15:10:27,900  INFO http-bio-8080-exec-3 RestAuthController:86 - Got baseuser : gold
+15:10:28,056  INFO http-bio-8080-exec-4 CustomUserDetailsService:28 - loadUserByUsername username : gold
+15:10:28,070  INFO http-bio-8080-exec-4 CustomUserDetailsService:41 - User : gold@test.com found with role :ROLE_PUNTER
+15:10:28,071  INFO http-bio-8080-exec-4 CustomUserDetailsService:47 - Using User : gold with authorities :[ROLE_PUNTER]
+15:10:28,317  INFO http-bio-8080-exec-3 WebAnonController:53 - Received goDashboard
+15:10:28,450  INFO http-bio-8080-exec-13 RestPunterControllerImpl:116 - Received getPunter for : gold
+15:10:29,842  INFO http-bio-8080-exec-3 WebAnonController:28 - Received goNewRegistration
+15:14:13,829  INFO http-bio-8080-exec-2 WebAnonController:28 - Received goNewRegistration
+15:14:24,400  INFO http-bio-8080-exec-3 WebAnonController:53 - Received goDashboard
+15:14:24,532  INFO http-bio-8080-exec-6 RestPunterControllerImpl:116 - Received getPunter for : gold
+15:14:25,948  INFO http-bio-8080-exec-4 WebAnonController:28 - Received goNewRegistration
+15:16:49,100  INFO http-bio-8080-exec-9 WebAnonController:28 - Received goNewRegistration
+15:16:55,299  INFO http-bio-8080-exec-1 WebAnonController:28 - Received goNewRegistration
+15:18:38,474  INFO http-bio-8080-exec-12 WebAnonController:28 - Received goNewRegistration
+15:18:41,491  INFO http-bio-8080-exec-4 WebAnonController:28 - Received goNewRegistration
+15:18:45,165  INFO http-bio-8080-exec-10 WebAnonController:53 - Received goDashboard
+15:18:45,321  INFO http-bio-8080-exec-9 RestPunterControllerImpl:116 - Received getPunter for : gold
+15:18:48,968  INFO http-bio-8080-exec-6 WebAnonController:28 - Received goNewRegistration
+15:18:56,613  INFO http-bio-8080-exec-10 WebAnonController:28 - Received goNewRegistration
+15:20:23,516  INFO http-bio-8080-exec-2 WebAnonController:28 - Received goNewRegistration
+15:20:31,547  INFO http-bio-8080-exec-6 WebAnonController:28 - Received goNewRegistration
+15:20:33,557  INFO http-bio-8080-exec-15 WebAnonController:28 - Received goNewRegistration
+15:21:41,195  INFO http-bio-8080-exec-9 WebAnonController:28 - Received goNewRegistration
+15:24:29,333  INFO http-bio-8080-exec-6 WebAnonController:28 - Received goNewRegistration
+15:26:27,954  INFO http-bio-8080-exec-3 WebAnonController:28 - Received goNewRegistration
+15:27:34,120  INFO http-bio-8080-exec-1 WebAnonController:28 - Received goNewRegistration
+15:29:08,338  INFO http-bio-8080-exec-3 WebAnonController:20 - Received login
+15:29:10,374  INFO http-bio-8080-exec-4 RestAuthController:49 - Got authorize1
+15:29:10,375  INFO http-bio-8080-exec-4 RestAuthController:78 - Attempting to authorize : gold
+15:29:10,750  INFO http-bio-8080-exec-4 RestAuthController:86 - Got baseuser : gold
+15:29:10,980  INFO http-bio-8080-exec-1 CustomUserDetailsService:28 - loadUserByUsername username : gold
+15:29:10,996  INFO http-bio-8080-exec-1 CustomUserDetailsService:41 - User : gold@test.com found with role :ROLE_PUNTER
+15:29:10,996  INFO http-bio-8080-exec-1 CustomUserDetailsService:47 - Using User : gold with authorities :[ROLE_PUNTER]
+15:29:11,312  INFO http-bio-8080-exec-4 WebAnonController:53 - Received goDashboard
+15:29:11,556  INFO http-bio-8080-exec-11 RestPunterControllerImpl:118 - Received getPunter for : gold
+15:29:12,884  INFO http-bio-8080-exec-11 WebAnonController:28 - Received goNewRegistration
+15:29:13,522  INFO http-bio-8080-exec-11 RestPunterControllerImpl:30 - Received initializeRegistration for : gold
+15:29:39,049  INFO http-bio-8080-exec-5 RestPunterControllerImpl:53 - Received storeRegistration for : gold

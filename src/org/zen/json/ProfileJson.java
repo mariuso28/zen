@@ -12,7 +12,7 @@ public class ProfileJson {
 	private String state;
 	private String postcode;
 	private String country;
-	private String sponsorContactId;
+	private String sponsorContact;
 	private boolean systemOwned;
 	
 	public ProfileJson()
@@ -51,12 +51,13 @@ public class ProfileJson {
 		this.password = password;
 	}
 
-	public String getSponsorContactId() {
-		return sponsorContactId;
+	
+	public String getSponsorContact() {
+		return sponsorContact;
 	}
 
-	public void setSponsorContactId(String sponsorContactId) {
-		this.sponsorContactId = sponsorContactId;
+	public void setSponsorContact(String sponsorContact) {
+		this.sponsorContact = sponsorContact;
 	}
 
 	public boolean isSystemOwned() {
@@ -123,11 +124,6 @@ public class ProfileJson {
 		this.country = country;
 	}
 
-	@Override
-	public String toString() {
-		return "ProfileJson [contact=" + contact + ", email=" + email + ", phone=" + phone + ", password=" + password
-				+ ", sponsorContactId=" + sponsorContactId + "]";
-	}
 	
 	
 }

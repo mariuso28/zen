@@ -115,7 +115,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
 	
 		.and().sessionManagement()
-		.invalidSessionUrl("/web/anon/invalidSession")
+		.invalidSessionUrl("/web/anon/login")
 		.and().exceptionHandling()
 		.accessDeniedPage("/web/anon/accessDenied")
 		.and().csrf().disable()

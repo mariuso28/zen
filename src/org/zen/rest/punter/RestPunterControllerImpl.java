@@ -21,6 +21,53 @@ public class RestPunterControllerImpl implements RestPunterController
 	private RestServices restServices;
 	
 	
+	@Override
+	@RequestMapping(value = "/initializeRegistration")
+	// ResultJson contains new ProfileJson if success, message if fail
+	public ResultJson initializeRegistration(OAuth2Authentication auth)
+	{
+		String contact = ((User) auth.getPrincipal()).getUsername();
+		log.info("Received initializeRegistration for : " + contact);
+		
+		ResultJson result = new ResultJson();
+		
+		try
+		{
+			ProfileJson pj = new ProfileJson();
+			pj.setSponsorContact(contact);				// all other fields are empty
+			result.success(pj);
+		}
+		catch (Exception e)
+		{
+			result.fail(e.getMessage());
+		}
+		return result;
+	}
+	
+	@Override
+	@RequestMapping(value = "/storeRegistration")
+	// ResultJson contains nothing if success, message and profile in progress ProfileJson if fail
+	public ResultJson storeRegistration(OAuth2Authentication auth,@RequestBody ProfileJson profile)
+	{
+		String contact = ((User) auth.getPrincipal()).getUsername();
+		log.info("Received storeRegistration for : " + contact);
+		
+		ResultJson result = new ResultJson();
+		
+		try
+		{
+			restServices.register(contact,profile);
+			result.success("Successfully registered");
+		}
+		catch (Exception e)
+		{
+			result.setResult(profile);
+			result.fail(e.getMessage());
+		}
+		return result;
+	}
+	
+	
 	@RequestMapping(value = "/changePassword")
 	// ResultJson contains message if success, message if fail
 	public ResultJson changePassword(OAuth2Authentication auth,@RequestBody ChangePasswordJson changePassword)

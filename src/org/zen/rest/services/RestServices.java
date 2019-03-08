@@ -122,6 +122,18 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		}
 	}
 	
+	public void register(String contact, ProfileJson profile) throws RestServicesException{
+		try
+		{
+			profile.setSponsorContact(contact);
+			punterMgr.registerPunter(profile);
+		}
+		catch (PunterMgrException e)
+		{
+			throw new RestServicesException(e.getMessage());
+		}
+	}
+
 	public void updatePunterProfile(String contact,ProfileJson profile) throws RestServicesException{
 		Punter punter = getPunter(contact);
 	
@@ -182,28 +194,6 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		return pj;
 	}
 
-	/*
-	public PunterDetailJson getPunterDetails(String email) {
-		
-		Punter punter = services.getZenModel().getMap().get(email);
-		if (punter==null)
-			throw new RestServicesException("Punter : " + email + " Not found.");
-		
-		return createPunterDetailsJson(punter);
-	}
-
-	private PunterDetailJson createPunterDetailsJson(Punter punter) {
-		PunterDetailJson pdj = new PunterDetailJson();
-		pdj.setAccount(createAccountJson(punter.getAccount()));
-		pdj.setContact(punter.getContact());
-		pdj.setEmail(punter.getEmail());
-		pdj.setPhone(punter.getPhone());
-		RatingJson rating = ratingMgr.getRatings().get(punter.getRating());
-		pdj.setRating(rating);
-		pdj.setSystemOwned(punter.getSystemOwned);
-		return pdj;
-	}
-*/
 	public Services getServices() {
 		return services;
 	}

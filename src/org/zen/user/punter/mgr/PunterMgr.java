@@ -36,14 +36,14 @@ public class PunterMgr {
 	}
 	
 	public static ProfileJson makeProfile(String contact,String email,String phone,String password,
-				String sponsorContactId,boolean systemOwned)
+				String sponsorContact,boolean systemOwned)
 	{
 		ProfileJson pj = new ProfileJson();
 		pj.setContact(contact);
 		pj.setEmail(email);
 		pj.setPhone(phone);
 		pj.setPassword(password);
-		pj.setSponsorContactId(sponsorContactId);
+		pj.setSponsorContact(sponsorContact);
 		pj.setSystemOwned(systemOwned);
 		return pj;
 	}
@@ -115,9 +115,9 @@ public class PunterMgr {
 			log.error(e.getMessage(),e);
 			throw new PunterMgrException("Could not register member with contact name - contact support.");
 		}
-		validateProfileValues(profile);
 		validatePassword(profile.getPassword());
-		Punter sponsor = validateSponsor(profile.getSponsorContactId());
+		validateProfileValues(profile);
+		Punter sponsor = validateSponsor(profile.getSponsorContact());
 		Punter parent = null;
 		if (sponsor!=null)
 			parent = getParent(sponsor);
@@ -170,15 +170,15 @@ public class PunterMgr {
 		return getParent(parent);
 	}
 
-	private Punter validateSponsor(String sponsorContactId) throws PunterMgrException {
-		if (sponsorContactId==null)				// root;
+	private Punter validateSponsor(String sponsorContact) throws PunterMgrException {
+		if (sponsorContact==null)				// root;
 			return null;
 		try
 		{
-			Punter sponsor = punterDao.getByContact(sponsorContactId);
+			Punter sponsor = punterDao.getByContact(sponsorContact);
 			if (sponsor==null)
 			{
-				String msg = "Zen sponsor id : " + sponsorContactId + " does not exist. Please check.";
+				String msg = "Zen sponsor : " + sponsorContact + " does not exist. Please check.";
 				log.error(msg);
 				throw new PunterMgrException(msg);
 			}

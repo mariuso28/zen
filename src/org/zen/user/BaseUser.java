@@ -21,6 +21,7 @@ public class BaseUser {
 	public static String ROLE_AGENT = "ROLE_AGENT";
 	private String role;
 	
+	
 	public BaseUser()
 	{
 		id = UUID.randomUUID();
