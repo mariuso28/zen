@@ -35,7 +35,7 @@ public class BaseUserDaoImpl extends NamedParameterJdbcDaoSupport implements Bas
 		catch (DataAccessException e)
 		{
 			log.error("Could not execute : " + e.getMessage(),e);
-			throw new PersistenceRuntimeException("Could not execute getByEmail : " + e.getMessage());
+			throw new PersistenceRuntimeException("Could not execute getByContact : " + e.getMessage());
 		}
 	}
 	

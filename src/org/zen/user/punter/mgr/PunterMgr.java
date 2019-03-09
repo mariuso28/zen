@@ -193,15 +193,15 @@ public class PunterMgr {
 
 	private void validateContact(String contact) throws PunterMgrException{
 		EmailValidator ev = new EmailValidator();
-		if (!ev.validate(contact+"@test.com"))
+		if (contact== null || !ev.validate(contact+"@test.com"))
 		{
 			log.info(contact);
-			throw new PunterMgrException("Please make contact from alpha and digit and period characters only.");
+			throw new PunterMgrException("Please complete contact from alpha and digit and period characters only.");
 		}
 	}
 
 	private void validatePassword(String password) throws PunterMgrException{
-		if (password.length()>=8)
+		if (password != null && password.length()>=8)
 		{
 			for (int i=0; i<password.length(); i++)
 				if (Character.isDigit(password.charAt(i)))

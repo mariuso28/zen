@@ -82,5 +82,23 @@ public class RestAnonControllerImpl implements RestAnonController{
 		}
 		return result;
 	}
+
+	@Override
+	@RequestMapping(value = "/getCountries")
+	// ResultJson contains List<CountryJson> if success, message if fail
+	public ResultJson getCountries() {
+		log.info("Received getCountries");
+		ResultJson result = new ResultJson();
+		try
+		{
+			result.success(restServices.getServices().getHome().getCountryDao().getCountries());
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			result.fail(e.getMessage());
+		}
+		return result;
+	}
 	
 }

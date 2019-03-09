@@ -61,6 +61,7 @@ public class RestPunterControllerImpl implements RestPunterController
 		}
 		catch (Exception e)
 		{
+			log.error(e.getMessage(),e);
 			result.setResult(profile);
 			result.fail(e.getMessage());
 		}

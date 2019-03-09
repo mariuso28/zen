@@ -159,9 +159,9 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 		try
 		{
 			getJdbcTemplate().update("INSERT INTO baseuser (id,contact,email,phone,password,role,enabled,rating,"
-										+ "fullname,gender,passportic,address,state,postcode,country"
+										+ "fullname,gender,passportic,address,state,postcode,country,"
 										+ "parentid,sponsorid,systemowned) "
-										+ "VALUES (?,?,?,?,?,?,?,?,?,?,?)"
+										+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
 			        , new PreparedStatementSetter() {
 						public void setValues(PreparedStatement ps) throws SQLException {
 			    	  	
@@ -190,9 +190,9 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 						else
 						{
 							ps.setObject(16, punter.getParent().getId());
-							ps.setObject(18, punter.getSponsor().getId());
+							ps.setObject(17, punter.getSponsor().getId());
 						}
-						ps.setBoolean(19, punter.isSystemOwned());
+						ps.setBoolean(18, punter.isSystemOwned());
 			      }
 			    });
 			createPunterAccount(punter.getId());

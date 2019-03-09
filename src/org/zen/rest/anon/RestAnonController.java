@@ -23,6 +23,10 @@ public interface RestAnonController
 	// ResultJson contains punterDetails if success, message if fail
 	public ResultJson getPunterDetails(@RequestParam("email") String email);
 		
+	@RequestMapping(value = "/getCountries")
+	// ResultJson contains List<CountryJson> if success, message if fail
+	public ResultJson getCountries();	
+	
 	@RequestMapping(value = "/getModel")
 	// ResultJson contains model if success, message if fail
 	public ResultJson getModel(@RequestParam("contact") String contact);	

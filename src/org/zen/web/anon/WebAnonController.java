@@ -70,4 +70,12 @@ public class WebAnonController {
 			
 		return "treeAjax";
 	}
+	
+	@RequestMapping(value = "/accessDenied", method = RequestMethod.GET)
+	public String accessDenied() {
+			
+		log.info("Received accessDenied");
+			
+		return "accessDenied";
+	}
 }
