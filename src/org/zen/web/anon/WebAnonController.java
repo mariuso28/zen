@@ -22,6 +22,15 @@ public class WebAnonController {
 		return "login";
 	}
 	
+	
+	@RequestMapping(value = "/goGeneology", method = RequestMethod.GET)
+	public String goGeneology() {
+			
+		log.info("Received goGeneology");
+			
+		return "geneology";
+	}
+	
 	@RequestMapping(value = "/goNewRegistration", method = RequestMethod.GET)
 	public String goNewRegistration() {
 			

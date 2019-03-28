@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>dashboard</title>
-
+<title>geneology</title>
 
 
 <meta charset="UTF-8" />
@@ -16,17 +15,35 @@
 <link rel="stylesheet" href="../../../css/jquery.gritter.css" />
 <link href='http:/fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
 
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+<link href="../../../css/core.css" rel="stylesheet" type="text/css">
+<link href="../../../css/tree.css" rel="stylesheet" type="text/css">
+<script src="../../../js/core.js" type="text/javascript"></script>
+<script src="../../../js/tree.js" type="text/javascript">></script>
+
 <style>
   body {
     font-size: 16px;
+  }
+
+  .toplogo {
+    width: 220px;
+    height: 220px;
   }
 </style>
 
 <script>
 
+function redirectDashboard()
+{
+  window.location.replace("/zen/zx4/web/anon/goDashboard");
+}
+
+
 var punter;
 
-function getPunter() {
+function getPunterTree() {
 
 	access_token = sessionStorage.getItem("access_token");
 //	alert(access_token);
@@ -53,9 +70,10 @@ function getPunter() {
 					{
 						alert(resultJson.status + " " + resultJson.message);
 					}
+    //      alert(JSON.stringify(resultJson.result));
 					punter = resultJson.result;
-//          alert("got punter : " + punter.contact);
-//					displayPunterProfile();
+
+          getModel();
         },
 				error:function (e) {
 	  			alert("getPunter ERROR : " + e.status + " - " + e.statusText);
@@ -63,7 +81,39 @@ function getPunter() {
      });
  }
 
+
+function getModel()
+{
+	$.ajax({
+	type: "POST",
+	 url : "/zen/zx4/api/anon/getModel?contact="+punter.contact,
+	 cache: false,
+	 contentType: 'application/json;',
+	 dataType: "json",
+		success: function(data) {
+			var result = $.parseJSON(JSON.stringify(data));
+			if (result.status != 'OK')
+			{
+				alert('Error : ' + result.message);
+				return;
+			}
+		//	alert('Ok : + ' + JSON.stringify(result.result));
+
+			var model = result.result;
+
+			var dText = model.punters;
+
+			$('#tree').tree({
+						dataSource: dText,
+						imageUrlField: 'imageUrl',
+						primaryKey: 'id'
+				});
+		}
+	});
+}
+
 </script>
+
 
 
 </head>
@@ -71,24 +121,24 @@ function getPunter() {
 
 <!--sidebar-menu-->
 
-<div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
-  <div class="">
-    <img script src="../../../img/GoldenCircle_02.png" width="220" height="220"/>
+<div id="sidebar"><a href="/zen/zx4/web/anon/goDashboard" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
+  <div class="toplogo">
+    <img src="../../../img/GoldenCircle_02a.png" width="220" height="220"/>
   </div>
   <ul>
-    <li class="active"><a href="index.html"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
-    <li class="submenu"> <a href="#"><i class="icon icon-user"></i> <span>My Profile</span><span class="caret" style="margin-left:10px; margin-top:8px;"></span></a>
+    <li><a href="/zen/zx4/web/anon/goDashboard"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
+    <li class="active submenu"> <a href="#"><i class="icon icon-user"></i> <span>My Profile</span><span class="caret" style="margin-left:10px; margin-top:8px;"></span></a>
       <ul>
         <li><a href="/zen/zx4/web/anon/goEditProfile">Edit Profile</a></li>
-          <li><a href="/zen/zx4/web/anon/goChangePassword">Change Password</a></li>
+        <li><a href="/zen/zx4/web/anon/goChangePassword">Change Password</a></li>
       </ul>
     </li>
     <li class="submenu"> <a href="#"><i class="icon icon-group"></i> <span>Agents</span><span class="caret" style="margin-left:10px; margin-top:8px; border"></span></a>
       <ul>
         <li><a href="#">Agent List</a></li>
         <li><a href="#">Upgrade<span class="label label-important" style="margin-left:5px;">1</span></a></li>
-        <li><a href="/zen/zx4/web/anon/goNewRegistration">New Registration</a></li>
-        <li><a href="/zen/zx4/web/anon/goGeneology">Geneology</a></li>
+        <li><a href="#">New Registration</a></li>
+        <li><a href="#">Geneology</a></li>
         <li><a href="#">Grade Summary</a></li>
       </ul>
     </li>
@@ -105,11 +155,7 @@ function getPunter() {
 
 <!--main-container-part-->
 <div id="content">
-<!--breadcrumbs-->
-  <div id="content-header">
-    <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></div>
-  </div>
-<!--End-breadcrumbs-->
+
 
 <!--Action boxes-->
   <div class="container-fluid">
@@ -125,42 +171,14 @@ function getPunter() {
       </ul>
     </div>
 <!--End-Action boxes-->
-
+    <div id="content-header">
+      <h2>My Downline</h2>
+    </div>
 
     <div class="row-fluid">
-      <div class="span12">
-        <div class="widget-box">
-          <div class="widget-title bg_ly" data-toggle="collapse" href="#collapseG2"><span class="icon"><i class="icon-chevron-down"></i></span>
-            <h5>Latest Announcement</h5>
-          </div>
-          <div class="widget-content nopadding collapse in" id="collapseG2">
-            <ul class="recent-posts">
-              <li>
-                <div class="user-thumb"> <img width="40" height="40" alt="User" script src="../../../img/demo/av1.jpg"> </div>
-                <div class="article-post"> <span class="user-info"> By: john Deo / Date: 2 Aug 2012 / Time:09:27 AM </span>
-                  <p><a href="#">This is a much longer one that will go on for a few lines.It has multiple paragraphs and is full of waffle to pad out the comment.</a> </p>
-                </div>
-              </li>
-              <li>
-                <div class="user-thumb"> <img width="40" height="40" alt="User" script src="../../../img/demo/av2.jpg"> </div>
-                <div class="article-post"> <span class="user-info"> By: john Deo / Date: 2 Aug 2012 / Time:09:27 AM </span>
-                  <p><a href="#">This is a much longer one that will go on for a few lines.It has multiple paragraphs and is full of waffle to pad out the comment.</a> </p>
-                </div>
-              </li>
-              <li>
-                <div class="user-thumb"> <img width="40" height="40" alt="User" script src="../../../img/demo/av4.jpg"> </div>
-                <div class="article-post"> <span class="user-info"> By: john Deo / Date: 2 Aug 2012 / Time:09:27 AM </span>
-                  <p><a href="#">This is a much longer one that will go on for a few lines.Itaffle to pad out the comment.</a> </p>
-                </div>
-              <li>
-                <button class="btn btn-warning btn-mini">View All</button>
-              </li>
-            </ul>
-          </div>
-        </div>
+      <div class="span12" id="tree">
       </div>
     </div>
-  </div>
 </div>
 
 <!--end-main-container-part-->
@@ -197,11 +215,7 @@ function getPunter() {
 
 <script type="text/javascript">
 
-function resetMenu() {
-   document.gomenu.selector.selectedIndex = 2;
-}
-
-getPunter();
+getPunterTree();
 
 </script>
 </body>
