@@ -9,12 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.zen.json.ChangePasswordJson;
-import org.zen.json.ProfileJson;
+import org.zen.json.PunterProfileJson;
 import org.zen.model.ZenModelOriginal;
 import org.zen.persistence.PersistenceRuntimeException;
 import org.zen.rating.RatingMgr;
 import org.zen.services.Services;
 import org.zen.user.account.Account;
+import org.zen.user.faker.FakerUtil;
 import org.zen.user.persistence.BaseUserDao;
 import org.zen.user.punter.Punter;
 import org.zen.user.punter.persistence.PunterDao;
@@ -35,10 +36,10 @@ public class PunterMgr {
 	{
 	}
 	
-	public static ProfileJson makeProfile(String contact,String email,String phone,String password,
+	public static PunterProfileJson makeProfile(String contact,String email,String phone,String password,
 				String sponsorContact,boolean systemOwned)
 	{
-		ProfileJson pj = new ProfileJson();
+		PunterProfileJson pj = new PunterProfileJson();
 		pj.setContact(contact);
 		pj.setEmail(email);
 		pj.setPhone(phone);
@@ -96,7 +97,31 @@ public class PunterMgr {
 		}
 	}
 	
-	public Punter registerPunter(ProfileJson profile) throws PunterMgrException{
+	public void setPunterEnabled(Punter punter,boolean enabled) throws PunterMgrException {
+		punter.setEnabled(enabled);
+		try
+		{
+			punterDao.setPunterEnabled(punter);
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			throw new PunterMgrException("could not setPunterEnabled - contact support.");
+		}
+	}
+	
+	public String getRandomUsername() {
+		FakerUtil fu = new FakerUtil();
+		BaseUserDao bud = services.getHome().getBaseUserDao();
+		while (true)
+		{
+			String un = fu.getRandomName();
+			if (bud.getByContact(un)==null)
+				return un;
+		}
+	}
+
+	public Punter registerPunter(PunterProfileJson profile) throws PunterMgrException{
 		BaseUserDao bud = services.getHome().getBaseUserDao();
 		try
 		{
@@ -135,7 +160,7 @@ public class PunterMgr {
 		}
 	}
 	
-	public void validateProfileValues(ProfileJson profile) throws PunterMgrException
+	public void validateProfileValues(PunterProfileJson profile) throws PunterMgrException
 	{
 		PhoneValidator pv = new PhoneValidator();
 		if (!pv.validate(profile.getPhone()))
@@ -145,7 +170,7 @@ public class PunterMgr {
 			throw new PunterMgrException("Invalid email : " + profile.getEmail() + " - please fix.");
 	}
 	
-	private Punter createPunter(ProfileJson profile, Punter sponsor, Punter parent) {
+	private Punter createPunter(PunterProfileJson profile, Punter sponsor, Punter parent) {
 		Punter punter = new Punter();
 		punter.copyProfileValues(profile);
 		punter.setSponsor(sponsor);
@@ -223,6 +248,18 @@ public class PunterMgr {
 		}
 	}
 	
+	public void deleteAllPunters() throws PunterMgrException
+	{
+		try
+		{
+			punterDao.deleteAllPunters();
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			throw new PunterMgrException("Could not delete all contacts - contact support.");
+		}
+	}
 	
 	public void deleteByContact(final Punter punter) throws PunterMgrException
 	{
@@ -314,6 +351,7 @@ public class PunterMgr {
 	public void setServices(Services services) {
 		this.services = services;
 	}
+
 	
 	
 }

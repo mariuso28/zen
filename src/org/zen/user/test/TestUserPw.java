@@ -17,7 +17,7 @@ public class TestUserPw {
 		try
 		{
 			Home home = (Home) context.getBean("home");
-			Punter p = home.getPunterDao().getByContact("gold");
+			Punter p = home.getPunterDao().getByContact("zen");
 			System.out.println("Enabled is : " + p.isEnabled());
 			PasswordEncoder encoder = new BCryptPasswordEncoder();
 			boolean m = encoder.matches("88888888",p.getPassword());

@@ -2,7 +2,7 @@ package org.zen.model;
 
 import java.util.Random;
 
-import org.zen.json.ProfileJson;
+import org.zen.json.PunterProfileJson;
 import org.zen.user.faker.FakerUtil;
 import org.zen.user.punter.Punter;
 import org.zen.user.punter.mgr.PunterMgr;
@@ -23,7 +23,7 @@ public class ZenModelFake {
 		fu.exclude("zen");
 	}
 	
-	public ProfileJson createProfile(boolean systemOwned,Punter parent)
+	public PunterProfileJson createProfile(boolean systemOwned,Punter parent)
 	{
 		Random r = new Random();
 		
@@ -34,7 +34,7 @@ public class ZenModelFake {
 		String phone = "012" + r.nextInt(10000000);
 		while (phone.length()<10)
 			phone += '0';
-		ProfileJson childProfile = PunterMgr.makeProfile(contact,contact+"@test.com",phone,"88888888",
+		PunterProfileJson childProfile = PunterMgr.makeProfile(contact,contact+"@test.com",phone,"88888888",
 										parent.getContact(),systemOwned);
 		return childProfile;
 	}

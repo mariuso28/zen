@@ -1,6 +1,9 @@
 package org.zen.json;
 
-public class ProfileJson {
+import java.util.UUID;
+
+public class PunterProfileJson {
+	private UUID id;
 	private String contact;
 	private String email;
 	private String phone;
@@ -12,10 +15,11 @@ public class ProfileJson {
 	private String state;
 	private String postcode;
 	private String country;
+	private String upstreamContact;
 	private String sponsorContact;
 	private boolean systemOwned;
 	
-	public ProfileJson()
+	public PunterProfileJson()
 	{
 	}
 
@@ -122,6 +126,22 @@ public class ProfileJson {
 
 	public void setCountry(String country) {
 		this.country = country;
+	}
+
+	public String getUpstreamContact() {
+		return upstreamContact;
+	}
+
+	public void setUpstreamContact(String upstreamContact) {
+		this.upstreamContact = upstreamContact;
+	}
+
+	public UUID getId() {
+		return id;
+	}
+
+	public void setId(UUID id) {
+		this.id = id;
 	}
 
 	

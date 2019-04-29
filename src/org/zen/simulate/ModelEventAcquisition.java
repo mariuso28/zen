@@ -1,7 +1,7 @@
 package org.zen.simulate;
 
 import org.apache.log4j.Logger;
-import org.zen.json.ProfileJson;
+import org.zen.json.PunterProfileJson;
 import org.zen.model.ZenModel;
 import org.zen.user.punter.Punter;
 
@@ -19,7 +19,7 @@ public class ModelEventAcquisition extends ModelEvent {
 		log.info("Executing acquisition for : " + punter.getContact());
 		ZenModel zenModel = model.getZenModel();
 		
-		ProfileJson childProfile = zenModel.getZenModelFake().createProfile(false,punter);
+		PunterProfileJson childProfile = zenModel.getZenModelFake().createProfile(false,punter);
 		Punter child = zenModel.getPunterMgr().registerPunter(childProfile);
 		zenModel.payJoinFee(child);
 		

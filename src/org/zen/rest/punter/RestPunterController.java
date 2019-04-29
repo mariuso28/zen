@@ -5,20 +5,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.zen.json.ChangePasswordJson;
-import org.zen.json.ProfileJson;
+import org.zen.json.PunterProfileJson;
 import org.zen.json.ResultJson;
 
 @RestController
 @RequestMapping("/api/punter")
 public interface RestPunterController
 {
+	
+	@RequestMapping(value = "/getRandomUsername")
+	// ResultJson contains String username if success, message if fail
+	public ResultJson getRandomUsername();
+	
 	@RequestMapping(value = "/initializeRegistration")
 	// ResultJson contains new ProfileJson if success, message if fail
 	public ResultJson initializeRegistration(OAuth2Authentication auth);
 	
 	@RequestMapping(value = "/storeRegistration")
 	// ResultJson contains message if success, message and profile in progress ProfileJson if fail
-	public ResultJson storeRegistration(OAuth2Authentication auth,@RequestBody ProfileJson profile);
+	public ResultJson storeRegistration(OAuth2Authentication auth,@RequestBody PunterProfileJson profile);
 	
 	@RequestMapping(value = "/changePassword")
 	// ResultJson contains message if success, message if fail
@@ -30,5 +35,9 @@ public interface RestPunterController
 	
 	@RequestMapping(value = "/updatePunter")
 	// ResultJson contains message if success, message if fail
-	public ResultJson updatePunter(OAuth2Authentication auth,@RequestBody ProfileJson profile);
+	public ResultJson updatePunter(OAuth2Authentication auth,@RequestBody PunterProfileJson profile);
+	
+	@RequestMapping(value = "/getDownstreamPunters")
+	// ResultJson contains downstream punter profiles if success, message if fail
+	public ResultJson getDownstreamPunters(OAuth2Authentication auth);
 }

@@ -6,21 +6,20 @@
 
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" href="../../../css/bootstrap.min.css" />
-<link rel="stylesheet" href="../../../css/bootstrap-responsive.min.css" />
-<link rel="stylesheet" href="../../../css/fullcalendar.css" />
-<link rel="stylesheet" href="../../../css/matrix-style.css" />
-<link rel="stylesheet" href="../../../css/matrix-media.css" />
-<link href="../../font-awesome/css/font-awesome.css" rel="stylesheet" />
-<link rel="stylesheet" href="../../../css/jquery.gritter.css" />
-<link href='http:/fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 <link href="../../../css/core.css" rel="stylesheet" type="text/css">
 <link href="../../../css/tree.css" rel="stylesheet" type="text/css">
-<script src="../../../js/core.js" type="text/javascript"></script>
-<script src="../../../js/tree.js" type="text/javascript">></script>
+
+<link rel="stylesheet" href="../../../css/bootstrap.min.css" />
+<link rel="stylesheet" href="../../../css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" href="../../../css/fullcalendar.css" />
+<link rel="stylesheet" href="../../../css/matrix-style.css" />
+<link rel="stylesheet" href="../../../css/matrix-media.css" />
+<link rel="stylesheet" href="../../../css/jquery.gritter.css" />
+<link href='http:/fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
+
 
 <style>
   body {
@@ -103,7 +102,7 @@ function getModel()
 
 			var dText = model.punters;
 
-			$('#tree').tree({
+			$('#treeD').tree({
 						dataSource: dText,
 						imageUrlField: 'imageUrl',
 						primaryKey: 'id'
@@ -176,7 +175,8 @@ function getModel()
     </div>
 
     <div class="row-fluid">
-      <div class="span12" id="tree">
+      <div class="span12">
+        <div style="float:left;width:1000px;" id="treeD"></div>
       </div>
     </div>
 </div>
@@ -212,6 +212,10 @@ function getModel()
 <script src="../../../js/matrix.popover.js"></script>
 <script src="../../../js/jquery.dataTables.min.js"></script>
 <script src="../../../js/matrix.tables.js"></script>
+
+<script src="../../../js/core.js" type="text/javascript"></script>
+<script src="../../../js/tree.js" type="text/javascript">></script>
+
 
 <script type="text/javascript">
 

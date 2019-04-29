@@ -20,6 +20,26 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	private static Logger log = Logger.getLogger(PunterDaoImpl.class);
 
 	@Override
+	public void setPunterEnabled(Punter punter)
+	{
+		try
+		{
+			getJdbcTemplate().update("UPDATE baseuser SET enabled=? WHERE id=?"
+				, new PreparedStatementSetter() {
+					public void setValues(PreparedStatement ps) throws SQLException {
+						ps.setBoolean(1, punter.isEnabled());
+						ps.setObject(2, punter.getId());
+					}
+				});
+		}
+		catch (DataAccessException e1)
+		{
+			log.error("Could not execute : " + e1.getMessage(),e1);
+			throw new PersistenceRuntimeException("Could not execute update enabled : " + e1.getMessage());
+		}	
+	}
+	
+	@Override
 	public void updatePassword(final Punter punter)
 	{
 		try
@@ -217,16 +237,32 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 
 	@Override
 	public Punter getByContact(final String contact) {
+		
+		final String sql = "SELECT bu.*,s.contact as sponsorcontact,p.contact as parentcontact FROM baseuser as bu " +
+							"INNER JOIN baseuser AS s ON s.id = bu.sponsorid " + 
+							"INNER JOIN baseuser AS p ON p.id = bu.parentid " +
+							"WHERE bu.contact=?";
 		try
 		{
-			final String sql = "SELECT * FROM baseuser WHERE contact=?";
 			List<Punter> punters = getJdbcTemplate().query(sql,new PreparedStatementSetter() {
 				        public void setValues(PreparedStatement preparedStatement) throws SQLException {
 				          preparedStatement.setString(1, contact);
 				        }
 				      }, BeanPropertyRowMapper.newInstance(Punter.class));
+			if (punters.isEmpty())						// for zen
+			{
+				final String sql2 = "SELECT bu.* FROM baseuser as bu " +
+						"WHERE bu.contact=? AND bu.sponsorid is NULL AND bu.parentid is NULL";
+				punters = getJdbcTemplate().query(sql2,new PreparedStatementSetter() {
+			        public void setValues(PreparedStatement preparedStatement) throws SQLException {
+			          preparedStatement.setString(1, contact);
+			        }
+			      }, BeanPropertyRowMapper.newInstance(Punter.class));
+			}
 			if (punters.isEmpty())
+			{
 				return null;
+			}
 			populateAccount(punters.get(0));
 			return punters.get(0);
 		}
@@ -254,9 +290,36 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 
 	@Override
 	public List<Punter> getChildren(final Punter parent) {
+		final String sql = "SELECT bu.*,s.contact as sponsorcontact,p.contact as parentcontact FROM baseuser as bu " +
+				"INNER JOIN baseuser AS s ON s.id = bu.sponsorid " + 
+				"INNER JOIN baseuser AS p ON p.id = bu.parentid " +
+				"WHERE parentid=?";
 		try
 		{
-			final String sql = "SELECT * FROM baseUser WHERE parentid=?";
+			List<Punter> punters = getJdbcTemplate().query(sql,new PreparedStatementSetter() {
+				        public void setValues(PreparedStatement preparedStatement) throws SQLException {
+				          preparedStatement.setObject(1, parent.getId());
+				        }
+				      }, BeanPropertyRowMapper.newInstance(Punter.class));
+			for (Punter p : punters)
+				populateAccount(p);
+			return punters;
+		}
+		catch (DataAccessException e)
+		{
+			log.error("Could not execute : " + e.getMessage(),e);
+			throw new PersistenceRuntimeException("Could not execute getChildren : " + e.getMessage());
+		}
+	}
+	
+	@Override
+	public List<Punter> getSponsoredChildren(final Punter parent) {
+		final String sql = "SELECT bu.*,s.contact as sponsorcontact,p.contact as parentcontact FROM baseuser as bu " +
+			"INNER JOIN baseuser AS s ON s.id = bu.sponsorid " + 
+			"INNER JOIN baseuser AS p ON p.id = bu.parentid " +
+			"WHERE parentid=?";
+		try
+		{
 			List<Punter> punters = getJdbcTemplate().query(sql,new PreparedStatementSetter() {
 				        public void setValues(PreparedStatement preparedStatement) throws SQLException {
 				          preparedStatement.setObject(1, parent.getId());
@@ -289,14 +352,27 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 
 	@Override
 	public Punter getById(final UUID id) {
+		final String sql = "SELECT bu.*,s.contact as sponsorcontact,p.contact as parentcontact FROM baseuser as bu " +
+				"INNER JOIN baseuser AS s ON s.id = bu.sponsorid " + 
+				"INNER JOIN baseuser AS p ON p.id = bu.parentid " +
+				"WHERE bu.id=?";
 		try
 		{
-			final String sql = "SELECT * FROM baseUser WHERE id=?";
 			List<Punter> punters = getJdbcTemplate().query(sql,new PreparedStatementSetter() {
 				        public void setValues(PreparedStatement preparedStatement) throws SQLException {
 				          preparedStatement.setObject(1, id);
 				        }
 				      }, BeanPropertyRowMapper.newInstance(Punter.class));
+			if (punters.isEmpty())						// for zen
+			{
+				final String sql2 = "SELECT bu.* FROM baseuser as bu " +
+						"WHERE bu.id=? AND bu.sponsorid is NULL AND bu.parentid is NULL";
+				punters = getJdbcTemplate().query(sql2,new PreparedStatementSetter() {
+			        public void setValues(PreparedStatement preparedStatement) throws SQLException {
+			          preparedStatement.setObject(1, id);
+			        }
+			      }, BeanPropertyRowMapper.newInstance(Punter.class));
+			}
 			if (punters.isEmpty())
 				return null;
 			populateAccount(punters.get(0));
@@ -345,5 +421,21 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 		}
 	}
 
-	
+	@Override
+	public void deleteAllPunters() {
+		try
+		{
+			final String sql = "DELETE FROM account AS acc WHERE "
+					+ "acc.id IN (SELECT bu.id FROM baseuser AS bu WHERE Role = 'ROLE_PUNTER')";
+			getJdbcTemplate().update(sql);
+			
+			final String sql2 = "DELETE FROM baseuser WHERE Role = 'ROLE_PUNTER'";
+			getJdbcTemplate().update(sql2);
+		}
+		catch (DataAccessException e)
+		{
+			log.error("Could not execute : " + e.getMessage(),e);
+			throw new PersistenceRuntimeException("Could not execute deleteAllPunters : " + e.getMessage());
+		}
+	}
 }

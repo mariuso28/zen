@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.zen.json.ProfileJson;
+import org.zen.json.PunterProfileJson;
 import org.zen.json.ResultJson;
 import org.zen.rest.services.RestServices;
 
@@ -19,7 +19,7 @@ public class RestAnonControllerImpl implements RestAnonController{
 	
 	@RequestMapping(value = "/register")
 	// ResultJson contains message if success, message if fail
-	public ResultJson register(@RequestBody ProfileJson profile)
+	public ResultJson register(@RequestBody PunterProfileJson profile)
 	{
 		log.info("Received register with profile : " + profile);
 		
@@ -46,6 +46,7 @@ public class RestAnonControllerImpl implements RestAnonController{
 		result.success("SUCCESS");
 		return result;
 	}
+	
 	
 	@RequestMapping(value = "/getPunterDetails")
 	// ResultJson contains punterDetails if success, message if fail

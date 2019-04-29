@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.zen.json.ProfileJson;
+import org.zen.json.PunterProfileJson;
 import org.zen.user.BaseUser;
 import org.zen.user.account.Account;
 
@@ -13,8 +13,10 @@ public class Punter extends BaseUser {
 	private int rating;
 	private List<Punter> children = new ArrayList<Punter>();
 	private UUID parentId;
+	private String parentContact;
 	private Punter parent;
 	private UUID sponsorId;
+	private String sponsorContact;
 	private Punter sponsor;
 	private List<Punter> sponsoredChildren = new ArrayList<Punter>();
 	private Account account = new Account();
@@ -28,7 +30,7 @@ public class Punter extends BaseUser {
 		setEnabled(false);
 	}
 	
-	public void copyProfileValues(ProfileJson profile)
+	public void copyProfileValues(PunterProfileJson profile)
 	{
 		setContact(profile.getContact());
 		setEmail(profile.getEmail());
@@ -130,6 +132,22 @@ public class Punter extends BaseUser {
 
 	public void setSystemOwned(boolean systemOwned) {
 		this.systemOwned = systemOwned;
+	}
+	
+	public String getParentContact() {
+		return parentContact;
+	}
+
+	public void setParentContact(String parentContact) {
+		this.parentContact = parentContact;
+	}
+
+	public String getSponsorContact() {
+		return sponsorContact;
+	}
+
+	public void setSponsorContact(String sponsorContact) {
+		this.sponsorContact = sponsorContact;
 	}
 
 	@Override

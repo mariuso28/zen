@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.zen.json.ProfileJson;
+import org.zen.json.PunterProfileJson;
 import org.zen.user.punter.Punter;
 import org.zen.user.punter.mgr.PunterMgr;
 import org.zen.user.punter.mgr.PunterMgrException;
@@ -26,13 +26,15 @@ public class ZenModelInitialize {
 	
 	public Punter initializeModel() throws Exception
 	{
-		List<List<Punter>> levels = new ArrayList<List<Punter>>();
+	//	List<List<Punter>> levels = new ArrayList<List<Punter>>();
 		zenModel.getZenModelFake().reset();
-		punterMgr.deleteAllPunters(true);
-		ProfileJson rootProfile = PunterMgr.makeProfile("zen","zen@test.com","0123456789","88888888",null,true);
+		punterMgr.deleteAllPunters();
+		PunterProfileJson rootProfile = PunterMgr.makeProfile("zen","zen@test.com","0123456789","88888888",null,true);
 		punterMgr.registerPunter(rootProfile);
 		Punter root = punterMgr.getByContact("zen");
+		punterMgr.setPunterEnabled(root,true);
 		log.info("Got root : " + root);
+		/*
 		List<Punter> level = new ArrayList<Punter>();
 		level.add(root);
 		for (int i=0; i<4; i++)
@@ -47,9 +49,11 @@ public class ZenModelInitialize {
 			for (Punter punter : level)
 				zenModel.tryUpgrade(punter);
 		}
+		*/
 		return root;
 	}
 	
+	@SuppressWarnings("unused")
 	private List<Punter> recruitLevel(List<Punter> parents) throws PunterMgrException
 	{
 		List<Punter> recruits = new ArrayList<Punter>();
@@ -57,7 +61,7 @@ public class ZenModelInitialize {
 		{
 			for (int i=0; i<ZenModel.FULLCHILDREN; i++)
 			{
-				ProfileJson childProfile = zenModel.getZenModelFake().createProfile(true,parent);
+				PunterProfileJson childProfile = zenModel.getZenModelFake().createProfile(true,parent);
 				Punter child = punterMgr.registerPunter(childProfile);
 				zenModel.payJoinFee(child);
 				recruits.add(child);

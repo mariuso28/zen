@@ -36,6 +36,44 @@ function redirectDashboard()
   window.location.replace("/zen/zx4/web/anon/goDashboard");
 }
 
+function generateRandom()
+{
+  access_token = sessionStorage.getItem("access_token");
+//	alert(access_token);
+
+  var bearerHeader = 'Bearer ' + access_token;
+     $.ajax({
+
+    type: "GET",
+         url : '/zen/zx4/api/punter/getRandomUsername',
+    headers: { 'Authorization': bearerHeader },
+  cache: false,
+ contentType: 'application/json;',
+      dataType: "json",
+      success: function(data) {
+        if (data == '')
+         {
+           alert("could not getRandomUsername")
+            return null;
+         }
+
+       var resultJson = $.parseJSON(JSON.stringify(data));
+       if (resultJson.status=='OK')
+       {
+         username = resultJson.result;
+         document.getElementById('contact').value=username;
+       }
+       else
+       {
+         alert(resultJson.message);
+       }
+     },
+     error:function (e) {
+       alert("generateRandom ERROR : " + e.status + " - " + e.statusText);
+     }
+  });
+}
+
 var countries;
 
 function getCountries()
@@ -214,7 +252,7 @@ function populateNewProfile()
         <li><a href="#">Agent List</a></li>
         <li><a href="#">Upgrade<span class="label label-important" style="margin-left:5px;">1</span></a></li>
         <li><a href="/zen/zx4/web/anon/goNewRegistration">New Registration</a></li>
-        <li><a href="#">Geneology</a></li>
+        <li><a href="/zen/zx4/web/anon/goGeneology">Geneology</a></li>
         <li><a href="#">Grade Summary</a></li>
       </ul>
     </li>
@@ -277,7 +315,7 @@ function populateNewProfile()
               <div class="control-group">
                 <label class="control-label">Zen Username :</label>
                 <div class="controls">
-                  <input type="text" id="contact" class="span11"/>
+                  <input type="text" id="contact" class="span11"/><a href="#" onClick="return generateRandom()"> Generate</a>
                 </div>
               </div><div class="control-group">
                 <label class="control-label">Password :</label>

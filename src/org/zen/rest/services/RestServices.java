@@ -3,14 +3,17 @@ package org.zen.rest.services;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.zen.json.AccountJson;
 import org.zen.json.ChangePasswordJson;
 import org.zen.json.ModelJson;
-import org.zen.json.ProfileJson;
+import org.zen.json.PunterProfileJson;
 import org.zen.json.PunterJson;
 import org.zen.rating.RatingMgr;
 import org.zen.services.Services;
@@ -33,7 +36,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 	{
 	}
 	
-	public void registerPunter(ProfileJson profile) throws RestServicesException
+	public void registerPunter(PunterProfileJson profile) throws RestServicesException
 	{
 		try {
 			punterMgr.registerPunter(profile);
@@ -42,6 +45,16 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			throw new RestServicesException(e.getMessage());
 		}		
 	}
+	
+	public String getRandomUsername() {
+		try {
+			return punterMgr.getRandomUsername();
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw new RestServicesException(e.getMessage());
+		}		
+	}
+	
 	
 	public ModelJson getModel(String rootContact) throws Exception
 	{
@@ -122,7 +135,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		}
 	}
 	
-	public void register(String contact, ProfileJson profile) throws RestServicesException{
+	public void register(String contact, PunterProfileJson profile) throws RestServicesException{
 		try
 		{
 			profile.setSponsorContact(contact);
@@ -134,7 +147,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		}
 	}
 
-	public void updatePunterProfile(String contact,ProfileJson profile) throws RestServicesException{
+	public void updatePunterProfile(String contact,PunterProfileJson profile) throws RestServicesException{
 		Punter punter = getPunter(contact);
 	
 		try {
@@ -156,10 +169,10 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		}
 	}
 
-	public ProfileJson getPunterProfile(String contact) throws RestServicesException{
+	public PunterProfileJson getPunterProfile(String contact) throws RestServicesException{
 	
 		Punter punter = getPunter(contact);
-		return populatePunterProfile(punter);
+		return createPunterProfileJson(punter);
 	}
 
 	private Punter getPunter(String contact) throws RestServicesException{
@@ -178,8 +191,40 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		return punter;
 	}
 	
-	private ProfileJson populatePunterProfile(Punter punter) {
-		ProfileJson pj = new ProfileJson();	
+	public List<PunterProfileJson> getDownstreamPunters(String contact) {
+		List<PunterProfileJson> dsp = new ArrayList<PunterProfileJson>();
+		Set<UUID> got = new HashSet<UUID>();
+		Punter punter;
+		try
+		{
+			punter = services.getHome().getPunterDao().getByContact(contact);
+			if (punter == null)
+				throw new RestServicesException("Zen Member : " + contact + " not found - contact support");
+			List<Punter> punters = services.getHome().getPunterDao().getChildren(punter);
+			for (Punter p : punters)
+			{
+				dsp.add(createPunterProfileJson(p));
+				got.add(p.getId());
+			}
+			punters = services.getHome().getPunterDao().getSponsoredChildren(punter);
+			for (Punter p : punters)
+			{
+				if (got.contains(p.getId()))
+					continue;
+				dsp.add(createPunterProfileJson(p));
+			}
+			return dsp;
+		}
+		catch (Exception e)
+		{
+			log.error("getDownstreamPunters",e);
+			throw new RestServicesException("Zen downstream members for : " + contact + " not found - contact support");
+		}
+	}
+	
+	private PunterProfileJson createPunterProfileJson(Punter punter) {
+		PunterProfileJson pj = new PunterProfileJson();	
+		pj.setId(punter.getId());
 		pj.setContact(punter.getContact());
 		pj.setEmail(punter.getEmail());
 		pj.setPhone(punter.getPhone());
@@ -191,6 +236,8 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		pj.setState(punter.getState());
 		pj.setPostcode(punter.getPostcode());
 		pj.setCountry(punter.getCountry());
+		pj.setUpstreamContact(punter.getParentContact());
+		pj.setSponsorContact(pj.getSponsorContact());
 		return pj;
 	}
 
@@ -201,6 +248,8 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 	public void setServices(Services services) {
 		this.services = services;
 	}
+
+	
 
 	
 	
