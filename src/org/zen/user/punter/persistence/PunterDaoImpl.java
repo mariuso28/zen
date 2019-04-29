@@ -288,6 +288,7 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 		punter.setAccount(accounts.get(0));
 	}
 
+
 	@Override
 	public List<Punter> getChildren(final Punter parent) {
 		final String sql = "SELECT bu.*,s.contact as sponsorcontact,p.contact as parentcontact FROM baseuser as bu " +
