@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
+import org.zen.payment.PunterPaymentMethod;
 import org.zen.persistence.PersistenceRuntimeException;
 import org.zen.user.account.Account;
 import org.zen.user.punter.Punter;
@@ -286,6 +287,13 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 			return;
 		}
 		punter.setAccount(accounts.get(0));
+		final String sql2 = "SELECT * FROM punterpaymentmethod WHERE punterid=?";
+		List<PunterPaymentMethod> ppms = getJdbcTemplate().query(sql2,new PreparedStatementSetter() {
+			        public void setValues(PreparedStatement preparedStatement) throws SQLException {
+			          preparedStatement.setObject(1, punter.getId());
+			        }
+			      }, BeanPropertyRowMapper.newInstance(PunterPaymentMethod.class));
+		punter.getAccount().setPunterPaymentMethod(ppms);
 	}
 
 
@@ -294,7 +302,7 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 		final String sql = "SELECT bu.*,s.contact as sponsorcontact,p.contact as parentcontact FROM baseuser as bu " +
 				"INNER JOIN baseuser AS s ON s.id = bu.sponsorid " + 
 				"INNER JOIN baseuser AS p ON p.id = bu.parentid " +
-				"WHERE parentid=?";
+				"WHERE bu.parentid=?";
 		try
 		{
 			List<Punter> punters = getJdbcTemplate().query(sql,new PreparedStatementSetter() {
@@ -318,7 +326,7 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 		final String sql = "SELECT bu.*,s.contact as sponsorcontact,p.contact as parentcontact FROM baseuser as bu " +
 			"INNER JOIN baseuser AS s ON s.id = bu.sponsorid " + 
 			"INNER JOIN baseuser AS p ON p.id = bu.parentid " +
-			"WHERE parentid=?";
+			"WHERE bu.parentid=?";
 		try
 		{
 			List<Punter> punters = getJdbcTemplate().query(sql,new PreparedStatementSetter() {
@@ -390,8 +398,11 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	public void deletePunter(final Punter punter) {
 		try
 		{
-			final String sql = "DELETE FROM account WHERE id=?";
+			final String sql = "DELETE FROM punterpaymentmethod WHERE id=?";
 			getJdbcTemplate().update(sql,new Object[] { punter.getId() });
+			
+			final String sql1 = "DELETE FROM account WHERE id=?";
+			getJdbcTemplate().update(sql1,new Object[] { punter.getId() });
 			
 			final String sql2 = "DELETE FROM baseuser WHERE id=?";
 			getJdbcTemplate().update(sql2,new Object[] { punter.getId() });
@@ -407,10 +418,15 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	public void deleteAllPunters(boolean systemOwned) {
 		try
 		{
-			final String sql = "DELETE FROM account AS acc WHERE "
-					+ "acc.id IN (SELECT bu.id FROM baseuser AS bu WHERE Role = 'ROLE_PUNTER' "
+			final String sql = "DELETE FROM punterpaymentmethod AS pmm WHERE "
+					+ "pmm.punterid IN (SELECT bu.id FROM baseuser AS bu WHERE Role = 'ROLE_PUNTER' "
 					+ "AND systemowned='" + systemOwned + "')";
 			getJdbcTemplate().update(sql);
+			
+			final String sql1 = "DELETE FROM account AS acc WHERE "
+					+ "acc.id IN (SELECT bu.id FROM baseuser AS bu WHERE Role = 'ROLE_PUNTER' "
+					+ "AND systemowned='" + systemOwned + "')";
+			getJdbcTemplate().update(sql1);
 			
 			final String sql2 = "DELETE FROM baseuser WHERE Role = 'ROLE_PUNTER' AND systemowned='" + systemOwned + "'";
 			getJdbcTemplate().update(sql2);
@@ -426,9 +442,13 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	public void deleteAllPunters() {
 		try
 		{
-			final String sql = "DELETE FROM account AS acc WHERE "
-					+ "acc.id IN (SELECT bu.id FROM baseuser AS bu WHERE Role = 'ROLE_PUNTER')";
+			final String sql = "DELETE FROM punterpaymentmethod AS pmm WHERE "
+					+ "pmm.punterid IN (SELECT bu.id FROM baseuser AS bu WHERE Role = 'ROLE_PUNTER')";
 			getJdbcTemplate().update(sql);
+			
+			final String sql1 = "DELETE FROM account AS acc WHERE "
+					+ "acc.id IN (SELECT bu.id FROM baseuser AS bu WHERE Role = 'ROLE_PUNTER')";
+			getJdbcTemplate().update(sql1);
 			
 			final String sql2 = "DELETE FROM baseuser WHERE Role = 'ROLE_PUNTER'";
 			getJdbcTemplate().update(sql2);

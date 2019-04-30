@@ -1,12 +1,14 @@
 package org.zen.user.punter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 import org.zen.json.PunterProfileJson;
 import org.zen.user.BaseUser;
 import org.zen.user.account.Account;
+import org.zen.user.punter.upgrade.UpgradeStatus;
 
 public class Punter extends BaseUser {
 
@@ -22,6 +24,8 @@ public class Punter extends BaseUser {
 	private Account account = new Account();
 	private boolean upgradeScheduled = false;
 	private boolean systemOwned;
+	private Date activated;
+	private UpgradeStatus upgradeStatus;
 	
 	public Punter()
 	{
@@ -155,6 +159,14 @@ public class Punter extends BaseUser {
 		return "Punter [rating=" + rating + ", upgradeScheduled=" + upgradeScheduled + ", getId()=" + getId()
 				+ ", getContact()=" + getContact() + ", getEmail()=" + getEmail() + ", getPhone()=" + getPhone()
 				+ ", isEnabled()=" + isEnabled() + "]";
+	}
+
+	public Date getActivated() {
+		return activated;
+	}
+
+	public void setActivated(Date activated) {
+		this.activated = activated;
 	}
 
 	

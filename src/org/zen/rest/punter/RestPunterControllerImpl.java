@@ -163,7 +163,7 @@ public class RestPunterControllerImpl implements RestPunterController
 	public ResultJson getDownstreamPunters(OAuth2Authentication auth)
 	{
 		String contact = ((User) auth.getPrincipal()).getUsername();
-		log.info("Received getPunter for : " + contact);
+		log.info("Received getDownstreamPunters for : " + contact);
 		
 		ResultJson result = new ResultJson();
 		

@@ -71,12 +71,14 @@ function getPunter() {
 
 <!--sidebar-menu-->
 
+<jsp:include page="sidebar.jsp"/>
+<!--
 <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
   <div class="">
     <img script src="../../../img/GoldenCircle_02.png" width="220" height="220"/>
   </div>
   <ul>
-    <li class="active"><a href="index.html"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
+    <li class="active"><a href="/zen/zx4/web/anon/goDashboard"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
     <li class="submenu"> <a href="#"><i class="icon icon-user"></i> <span>My Profile</span><span class="caret" style="margin-left:10px; margin-top:8px;"></span></a>
       <ul>
         <li><a href="/zen/zx4/web/anon/goEditProfile">Edit Profile</a></li>
@@ -85,7 +87,7 @@ function getPunter() {
     </li>
     <li class="submenu"> <a href="#"><i class="icon icon-group"></i> <span>Agents</span><span class="caret" style="margin-left:10px; margin-top:8px; border"></span></a>
       <ul>
-        <li><a href="#">Agent List</a></li>
+        <li><a href="#">/zen/zx4/web/anon/goAgentList</a></li>
         <li><a href="#">Upgrade<span class="label label-important" style="margin-left:5px;">1</span></a></li>
         <li><a href="/zen/zx4/web/anon/goNewRegistration">New Registration</a></li>
         <li><a href="/zen/zx4/web/anon/goGeneology">Geneology</a></li>
@@ -101,6 +103,7 @@ function getPunter() {
     <li><a href="/zen/zx4/web/anon/login"><i class="icon icon-off"></i> <span>Logout</span></a> </li>
   </ul>
 </div>
+-->
 <!--sidebar-menu-->
 
 <!--main-container-part-->
@@ -111,19 +114,21 @@ function getPunter() {
   </div>
 <!--End-breadcrumbs-->
 
-<!--Action boxes-->
   <div class="container-fluid">
+    <jsp:include page="actions.jsp"/>
+    <!--Action boxes-->
+    <!--
     <div class="quick-actions_homepage">
       <ul class="quick-actions">
         <li class="bg_lb"> <a href="/zen/zx4/web/anon/goChangePassword"> <i class="icon-lock"></i>Password </a> </li>
         <li class="bg_lg"> <a href="#"> <i class="icon-signout"></i> Payment Sent</a> </li>
-        <!-- <li class="bg_ly"> <a href="widgets.html"> <i class="icon-inbox"></i><span class="label label-success">101</span> Payment Received </a> </li> -->
         <li class="bg_ly"> <a href="#"> <i class="icon-signin"></i>Payment Received </a> </li>
         <li class="bg_lo"> <a href="#"> <i class="icon-upload"></i> Upgrade</a> </li>
-        <li class="bg_ls"> <a href="#"> <i class="icon-user"></i> Agent List</a> </li>
+        <li class="bg_ls"> <a href="/zen/zx4/web/anon/goAgentList"> <i class="icon-user"></i> Agent List</a> </li>
         <li class="bg_lo"> <a href="/zen/zx4/web/anon/goNewRegistration"> <i class="icon-star"></i> New Registration</a> </li>
       </ul>
     </div>
+  -->
 <!--End-Action boxes-->
 
 

@@ -8,10 +8,9 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.zen.json.CountryJson;
 import org.zen.persistence.PersistenceRuntimeException;
-import org.zen.user.punter.persistence.PunterDaoImpl;
 
 public class CountryDaoImpl extends NamedParameterJdbcDaoSupport implements CountryDao {
-	private static Logger log = Logger.getLogger(PunterDaoImpl.class);
+	private static Logger log = Logger.getLogger(CountryDaoImpl.class);
 	
 	@Override
 	public List<CountryJson> getCountries() {

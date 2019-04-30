@@ -39,6 +39,30 @@ public class WebAnonController {
 		return "registration";
 	}
 	
+	@RequestMapping(value = "/goUpgrade", method = RequestMethod.GET)
+	public String goUpgrade() {
+			
+		log.info("Received goUpgrade");
+			
+		return "upgrade";
+	}
+	
+	@RequestMapping(value = "/goPaymentReceived", method = RequestMethod.GET)
+	public String goPaymentReceived() {
+			
+		log.info("Received goPaymentReceived");
+			
+		return "paymentReceived";
+	}
+	
+	@RequestMapping(value = "/goAgentList", method = RequestMethod.GET)
+	public String goAgentList() {
+			
+		log.info("Received goAgentList");
+			
+		return "agentList";
+	}
+	
 	@RequestMapping(value = "/goChangePassword", method = RequestMethod.GET)
 	public String goChangePassword() {
 			

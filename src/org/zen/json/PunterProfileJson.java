@@ -1,5 +1,6 @@
 package org.zen.json;
 
+import java.util.Date;
 import java.util.UUID;
 
 public class PunterProfileJson {
@@ -18,6 +19,8 @@ public class PunterProfileJson {
 	private String upstreamContact;
 	private String sponsorContact;
 	private boolean systemOwned;
+	private int rating;
+	private Date activated;
 	
 	public PunterProfileJson()
 	{
@@ -144,6 +147,23 @@ public class PunterProfileJson {
 		this.id = id;
 	}
 
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
+	public Date getActivated() {
+		return activated;
+	}
+
+	public void setActivated(Date activated) {
+		this.activated = activated;
+	}
+
+	
 	
 	
 }

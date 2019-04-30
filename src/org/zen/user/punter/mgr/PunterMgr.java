@@ -11,6 +11,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.zen.json.ChangePasswordJson;
 import org.zen.json.PunterProfileJson;
 import org.zen.model.ZenModelOriginal;
+import org.zen.payment.PaymentMethod;
+import org.zen.payment.PunterPaymentMethod;
+import org.zen.payment.persistence.PaymentDao;
 import org.zen.persistence.PersistenceRuntimeException;
 import org.zen.rating.RatingMgr;
 import org.zen.services.Services;
@@ -151,6 +154,7 @@ public class PunterMgr {
 		try
 		{
 			punterDao.store(punter);
+			storeDefaultPaymentMethods(punter);					// TEMPORARY WHILE WORK OUT WHERE PUT
 			return punterDao.getByContact(punter.getContact());
 		}
 		catch (Exception e)
@@ -160,6 +164,29 @@ public class PunterMgr {
 		}
 	}
 	
+	private void storeDefaultPaymentMethods(Punter punter) {
+		PaymentDao pd = services.getHome().getPaymentDao();
+		List<PaymentMethod> pms = pd.getAvailablePaymentMethods();
+		for (PaymentMethod pm : pms)
+		{
+			PunterPaymentMethod ppm = new PunterPaymentMethod(pm);
+			ppm.setPunterId(punter.getId());
+			String accountNum = createRandomAccNum(punter.getId().toString());
+			ppm.setAccountNum(accountNum);
+			pd.storePunterPaymentMethod(ppm);
+		}
+	}
+
+	private String createRandomAccNum(String source) {
+		String acc = "";
+		for (int i=0; i<source.length(); i++)
+			if (Character.isDigit(source.charAt(i)))
+				acc += source.charAt(i);
+		if (acc.length()>16)
+			return acc.substring(0,16);
+		return acc;
+	}
+
 	public void validateProfileValues(PunterProfileJson profile) throws PunterMgrException
 	{
 		PhoneValidator pv = new PhoneValidator();

@@ -39,11 +39,17 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
 
+	<bean id="paymentDao"
+		class="org.zen.payment.persistence.PaymentDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+
 	<bean id="home"
 		class="org.zen.persistence.home.HomeImpl"> 
 		<property name="baseUserDao" ref="baseUserDao" />
 		<property name="punterDao" ref="punterDao" />
 		<property name="countryDao" ref="countryDao" />
+		<property name="paymentDao" ref="paymentDao" />
 	</bean>
 
 

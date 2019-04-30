@@ -3,18 +3,15 @@ package org.zen.rest.services;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.zen.json.AccountJson;
 import org.zen.json.ChangePasswordJson;
 import org.zen.json.ModelJson;
-import org.zen.json.PunterProfileJson;
 import org.zen.json.PunterJson;
+import org.zen.json.PunterProfileJson;
 import org.zen.rating.RatingMgr;
 import org.zen.services.Services;
 import org.zen.user.account.Account;
@@ -193,24 +190,13 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 	
 	public List<PunterProfileJson> getDownstreamPunters(String contact) {
 		List<PunterProfileJson> dsp = new ArrayList<PunterProfileJson>();
-		Set<UUID> got = new HashSet<UUID>();
 		Punter punter;
 		try
 		{
 			punter = services.getHome().getPunterDao().getByContact(contact);
-			if (punter == null)
-				throw new RestServicesException("Zen Member : " + contact + " not found - contact support");
-			List<Punter> punters = services.getHome().getPunterDao().getChildren(punter);
+			List<Punter> punters = services.getHome().getPunterDao().getSponsoredChildren(punter);
 			for (Punter p : punters)
 			{
-				dsp.add(createPunterProfileJson(p));
-				got.add(p.getId());
-			}
-			punters = services.getHome().getPunterDao().getSponsoredChildren(punter);
-			for (Punter p : punters)
-			{
-				if (got.contains(p.getId()))
-					continue;
 				dsp.add(createPunterProfileJson(p));
 			}
 			return dsp;
@@ -238,6 +224,8 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		pj.setCountry(punter.getCountry());
 		pj.setUpstreamContact(punter.getParentContact());
 		pj.setSponsorContact(pj.getSponsorContact());
+		pj.setRating(punter.getRating());
+		pj.setActivated(punter.getActivated());
 		return pj;
 	}
 

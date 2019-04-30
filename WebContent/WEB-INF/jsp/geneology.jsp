@@ -120,55 +120,16 @@ function getModel()
 
 <!--sidebar-menu-->
 
-<div id="sidebar"><a href="/zen/zx4/web/anon/goDashboard" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
-  <div class="toplogo">
-    <img src="../../../img/GoldenCircle_02a.png" width="220" height="220"/>
-  </div>
-  <ul>
-    <li><a href="/zen/zx4/web/anon/goDashboard"><i class="icon icon-home"></i> <span>Dashboard</span></a> </li>
-    <li class="active submenu"> <a href="#"><i class="icon icon-user"></i> <span>My Profile</span><span class="caret" style="margin-left:10px; margin-top:8px;"></span></a>
-      <ul>
-        <li><a href="/zen/zx4/web/anon/goEditProfile">Edit Profile</a></li>
-        <li><a href="/zen/zx4/web/anon/goChangePassword">Change Password</a></li>
-      </ul>
-    </li>
-    <li class="submenu"> <a href="#"><i class="icon icon-group"></i> <span>Agents</span><span class="caret" style="margin-left:10px; margin-top:8px; border"></span></a>
-      <ul>
-        <li><a href="#">Agent List</a></li>
-        <li><a href="#">Upgrade<span class="label label-important" style="margin-left:5px;">1</span></a></li>
-        <li><a href="#">New Registration</a></li>
-        <li><a href="#">Geneology</a></li>
-        <li><a href="#">Grade Summary</a></li>
-      </ul>
-    </li>
-    <li class="submenu"> <a href="#"><i class="icon icon-money"></i> <span>Payment</span><span class="caret" style="margin-left:10px; margin-top:8px;"></span></a>
-      <ul>
-        <li><a href="#">Payment Received<span class="label label-important" style="margin-left:5px;">2</span></a></li>
-        <li><a href="#">Payment Sent</a></li>
-      </ul>
-    </li>
-    <li><a href="/zen/zx4/web/anon/login"><i class="icon icon-off"></i> <span>Logout</span></a> </li>
-  </ul>
-</div>
+<jsp:include page="sidebar.jsp"/>
 <!--sidebar-menu-->
 
 <!--main-container-part-->
 <div id="content">
 
 
-<!--Action boxes-->
   <div class="container-fluid">
-    <div class="quick-actions_homepage">
-      <ul class="quick-actions">
-        <li class="bg_lb"> <a href="/zen/zx4/web/anon/goChangePassword"> <i class="icon-lock"></i>Password </a> </li>
-        <li class="bg_lg"> <a href="#"> <i class="icon-signout"></i> Payment Sent</a> </li>
-        <!-- <li class="bg_ly"> <a href="widgets.html"> <i class="icon-inbox"></i><span class="label label-success">101</span> Payment Received </a> </li> -->
-        <li class="bg_ly"> <a href="#"> <i class="icon-signin"></i>Payment Received </a> </li>
-        <li class="bg_lo"> <a href="#"> <i class="icon-upload"></i> Upgrade</a> </li>
-        <li class="bg_ls"> <a href="#"> <i class="icon-user"></i> Agent List</a> </li>
-        <li class="bg_lo"> <a href="/zen/zx4/web/anon/goNewRegistration"> <i class="icon-star"></i> New Registration</a> </li>
-      </ul>
-    </div>
+    <!--Action boxes-->
+    <jsp:include page="actions.jsp"/>
 <!--End-Action boxes-->
     <div id="content-header">
       <h2>My Downline</h2>
