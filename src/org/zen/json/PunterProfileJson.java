@@ -1,6 +1,7 @@
 package org.zen.json;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class PunterProfileJson {
@@ -21,6 +22,7 @@ public class PunterProfileJson {
 	private boolean systemOwned;
 	private int rating;
 	private Date activated;
+	private List<PunterPaymentMethodJson> paymentMethods;
 	
 	public PunterProfileJson()
 	{
@@ -161,6 +163,14 @@ public class PunterProfileJson {
 
 	public void setActivated(Date activated) {
 		this.activated = activated;
+	}
+
+	public List<PunterPaymentMethodJson> getPaymentMethods() {
+		return paymentMethods;
+	}
+
+	public void setPaymentMethods(List<PunterPaymentMethodJson> paymentMethods) {
+		this.paymentMethods = paymentMethods;
 	}
 
 	

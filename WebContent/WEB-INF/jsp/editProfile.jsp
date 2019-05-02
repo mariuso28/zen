@@ -57,6 +57,7 @@ function getCountries()
        if (resultJson.status=='OK')
        {
          countries = resultJson.result;
+         $('#country').empty();
          $.each(countries, function(i, option) {
             $('#country').append($('<option/>').attr("value", option.code).text(option.country));
          });
@@ -94,6 +95,7 @@ function getAvailablePaymentMethods()
        if (resultJson.status=='OK')
        {
          paymentMethods = resultJson.result;
+        $('#availablePaymentMethods').empty();
          $('#availablePaymentMethods').append($('<option/>').attr("value", -1).text("Method - Country"));
          $.each(paymentMethods, function(i, option) {
             $('#availablePaymentMethods').append($('<option/>').attr("value", i).text(option.method + " - " + option.country));
@@ -108,6 +110,43 @@ function getAvailablePaymentMethods()
        alert("getAvailablePaymentMethods ERROR : " + e.status + " - " + e.statusText);
      }
   });
+}
+
+function deletePaymentMethod(id)
+{
+  confirm('Will delete this payment method - are you sure?')
+  access_token = sessionStorage.getItem("access_token");
+  //	alert(access_token);
+
+  var bearerHeader = 'Bearer ' + access_token;
+     $.ajax({
+       type: "GET",
+       url : '/zen/zx4/api/punter/deletePaymentMethod?id='+id,
+       headers: { 'Authorization': bearerHeader },
+       cache: false,
+       contentType: 'application/json;',
+       dataType: "json",
+       success: function(data) {
+       if (data == '')
+       {
+          alert("could not deletePaymentMethod")
+          return null;
+       }
+
+     var resultJson = $.parseJSON(JSON.stringify(data));
+     if (resultJson.status=='OK')
+     {
+       refreshProfile();
+     }
+     else
+     {
+       alert(resultJson.message);
+     }
+   },
+   error:function (e) {
+     alert("deletePaymentMethod ERROR : " + e.status + " - " + e.statusText);
+   }
+ });
 }
 
 function addPaymentMethod(value)
@@ -185,7 +224,7 @@ function getPunter() {
     contentType: 'application/json;',
          dataType: "json",
        	 success: function(data) {
-  //         alert(JSON.stringify(data));
+    //       alert(JSON.stringify(data));
      			if (data == '')
             {
 							alert("could not get punter")
@@ -219,7 +258,46 @@ function populatePunter()
     document.getElementById('country').value = punter.country;
     document.getElementById('state').value = punter.state;
     document.getElementById('gender').value = punter.gender;
+    displayPaymentMethods();
 }
+
+function displayPaymentMethods()
+{
+    var pl = document.getElementById('paymentMethodList');
+    pl.innerHTML="";
+
+    punter.paymentMethods.forEach((pm, i) => {
+        tr = document.createElement('tr');
+        tr.className = 'gradeA';
+        td = document.createElement('td');
+        td.appendChild(document.createTextNode(i));
+        tr.appendChild(td);
+        td = document.createElement('td');
+        td.appendChild(document.createTextNode(pm.method));
+        tr.appendChild(td);
+        td = document.createElement('td');
+        td.appendChild(document.createTextNode(pm.country));
+        tr.appendChild(td);
+        td = document.createElement('td');
+        td.appendChild(document.createTextNode(pm.accountNum));
+        tr.appendChild(td);
+        td = document.createElement('td');
+
+        var t = document.createElement('IMG');
+        t.setAttribute('src',"../../../img/delete.jpeg");
+        t.setAttribute('border', 0);
+        t.setAttribute('width',"20px");
+        t.setAttribute('height',"20px");
+        t.addEventListener('click',function (e) {
+            deletePaymentMethod(pm.id);
+          });
+        td.appendChild(t);
+
+        tr.appendChild(td);
+        pl.appendChild(tr);
+      })
+}
+
 
 function updateProfile() {
 
@@ -369,6 +447,24 @@ function updateProfile() {
                 <div class="controls">
                   <input type="text" id="email" class="span11" value=""/>
                 </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label">Your Payment Methods :</label>
+                <div class="controls">
+                <table class="table table-bordered data-table">
+                  <thead>
+                    <tr>
+                      <th>No.</th>
+                      <th>Method</th>
+                      <th>Country</th>
+                      <th>Account Number</th>
+                      <th>Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody id='paymentMethodList'>
+                  </tbody>
+                </table>
+                <div>
               </div>
               <div class="control-group">
                 <label class="control-label">Add Payment Method :</label>

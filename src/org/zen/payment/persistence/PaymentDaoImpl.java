@@ -49,6 +49,26 @@ public class PaymentDaoImpl extends NamedParameterJdbcDaoSupport implements Paym
 	}
 	
 	@Override
+	public void deletePunterPaymentMethodById(long id)
+	{
+		try
+		{
+			getJdbcTemplate().update("DELETE FROM punterpaymentmethod WHERE id=?"
+					, new PreparedStatementSetter() {
+						public void setValues(PreparedStatement ps) throws SQLException {
+							ps.setLong(1,id);
+						}
+					});
+		}
+		catch (DataAccessException e)
+		{
+			log.error("Could not execute : " + e.getMessage(),e);
+			throw new PersistenceRuntimeException("Could not execute deletePaymentMethodById : " + e.getMessage());
+		}
+	}
+	
+	
+	@Override
 	public void storePaymentMethod(PaymentMethodJson pm)
 	{
 		try

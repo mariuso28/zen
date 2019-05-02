@@ -190,6 +190,19 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		}
 	}
 		
+	public void deletePunterPaymentMethod(String id) {
+		try
+		{
+			int index = Integer.parseInt(id);
+			services.getHome().getPaymentDao().deletePunterPaymentMethodById(index);
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			throw new RestServicesException("Could not delete payment method - contact support");
+		}
+	}
+	
 	public PunterProfileJson getPunterProfile(String contact) throws RestServicesException{
 	
 		Punter punter = getPunter(contact);
@@ -250,6 +263,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		pj.setSponsorContact(pj.getSponsorContact());
 		pj.setRating(punter.getRating());
 		pj.setActivated(punter.getActivated());
+		pj.setPaymentMethods(punter.getPaymentMethods());
 		return pj;
 	}
 
@@ -265,6 +279,8 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 	public void setServices(Services services) {
 		this.services = services;
 	}
+
+	
 
 	
 	

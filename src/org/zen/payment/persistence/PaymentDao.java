@@ -11,5 +11,6 @@ public interface PaymentDao {
 	public void storePaymentMethod(PaymentMethodJson pm);
 	public void storePunterPaymentMethod(PunterPaymentMethodJson ppm);
 	public PaymentMethodJson getPaymentMethodById(int id);
+	public void deletePunterPaymentMethodById(long id);
 
 }

@@ -3,6 +3,7 @@ package org.zen.rest.punter;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.zen.json.ChangePasswordJson;
 import org.zen.json.PunterProfileJson;
@@ -44,4 +45,10 @@ public interface RestPunterController
 	@RequestMapping(value = "/getPaymentMethods")
 	// ResultJson contains List<PaymentMethodJson> if success, message if fail
 	public ResultJson getPaymentMethods(OAuth2Authentication auth);
+	
+	@RequestMapping(value = "/addPaymentMethod")
+	// ResultJson contains nothing if success, message if fail
+	public ResultJson addPaymentMethod(OAuth2Authentication auth,@RequestParam("id") String id,@RequestParam("accountNumber") String accountNumber);
+	
+	
 }

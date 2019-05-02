@@ -200,10 +200,10 @@ public class RestPunterControllerImpl implements RestPunterController
 		return result;
 	}
 	
-	@RequestMapping(value = "/addPunterPaymentMethod")
+	@RequestMapping(value = "/addPaymentMethod")
 	// ResultJson contains nothing if success, message if fail
-	public ResultJson addPunterPaymentMethod(OAuth2Authentication auth,@RequestParam("id") String id,@RequestParam("accountNumber") String accountNumber) {
-		log.info("Received addPunterPaymentMethod with id : " + id + " accNum : " + accountNumber);
+	public ResultJson addPaymentMethod(OAuth2Authentication auth,@RequestParam("id") String id,@RequestParam("accountNumber") String accountNumber) {
+		log.info("Received addPaymentMethod with id : " + id + " accNum : " + accountNumber);
 		String contact = ((User) auth.getPrincipal()).getUsername();
 		
 		ResultJson result = new ResultJson();
@@ -220,4 +220,25 @@ public class RestPunterControllerImpl implements RestPunterController
 		return result;
 	}
 	
+	
+	@RequestMapping(value = "/deletePaymentMethod")
+	// ResultJson contains nothing if success, message if fail
+	public ResultJson deletePaymentMethod(OAuth2Authentication auth,@RequestParam("id") String id) {
+		log.info("Received deletePaymentMethod with id : " + id );
+		@SuppressWarnings("unused")
+		String contact = ((User) auth.getPrincipal()).getUsername();
+		
+		ResultJson result = new ResultJson();
+		try
+		{
+			restServices.deletePunterPaymentMethod(id);
+			result.success();
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			result.fail(e.getMessage());
+		}
+		return result;
+	}
 }

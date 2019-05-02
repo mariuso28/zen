@@ -337,7 +337,7 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 			          preparedStatement.setObject(1, punter.getId());
 			        }
 			      }, BeanPropertyRowMapper.newInstance(PunterPaymentMethodJson.class));
-		punter.getAccount().setPunterPaymentMethod(ppms);
+		punter.setPaymentMethods(ppms);
 		final String sql3 = "SELECT * FROM upgradestatus WHERE id=?";
 		List<UpgradeStatus> uss = getJdbcTemplate().query(sql3,new PreparedStatementSetter() {
 			        public void setValues(PreparedStatement preparedStatement) throws SQLException {
