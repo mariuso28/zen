@@ -40,4 +40,8 @@ public interface RestPunterController
 	@RequestMapping(value = "/getDownstreamPunters")
 	// ResultJson contains downstream punter profiles if success, message if fail
 	public ResultJson getDownstreamPunters(OAuth2Authentication auth);
+	
+	@RequestMapping(value = "/getPaymentMethods")
+	// ResultJson contains List<PaymentMethodJson> if success, message if fail
+	public ResultJson getPaymentMethods(OAuth2Authentication auth);
 }

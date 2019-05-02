@@ -102,4 +102,23 @@ public class RestAnonControllerImpl implements RestAnonController{
 		return result;
 	}
 	
+	@Override
+	@RequestMapping(value = "/getAvailablePaymentMethods")
+	// ResultJson contains List<PunterPaymentMethodJson> if success, message if fail
+	public ResultJson getAvailablePaymentMethods() {
+		log.info("Received getAvailablePaymentMethods");
+		
+		ResultJson result = new ResultJson();
+		try
+		{
+			result.success(restServices.getServices().getHome().getPaymentDao().getAvailablePaymentMethods());
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			result.fail(e.getMessage());
+		}
+		return result;
+	}
+	
 }

@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.zen.json.ChangePasswordJson;
 import org.zen.json.PunterProfileJson;
@@ -178,5 +179,45 @@ public class RestPunterControllerImpl implements RestPunterController
 		}
 		return result;
 	}
-
+	 
+	@Override
+	@RequestMapping(value = "/getPaymentMethods")
+	// ResultJson contains List<PunterPaymentMethodJson> if success, message if fail
+	public ResultJson getPaymentMethods(OAuth2Authentication auth) {
+		log.info("Received getPaymentMethods");
+		String contact = ((User) auth.getPrincipal()).getUsername();
+		
+		ResultJson result = new ResultJson();
+		try
+		{
+			result.success(restServices.getPunterPaymentMethods(contact));
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			result.fail(e.getMessage());
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/addPunterPaymentMethod")
+	// ResultJson contains nothing if success, message if fail
+	public ResultJson addPunterPaymentMethod(OAuth2Authentication auth,@RequestParam("id") String id,@RequestParam("accountNumber") String accountNumber) {
+		log.info("Received addPunterPaymentMethod with id : " + id + " accNum : " + accountNumber);
+		String contact = ((User) auth.getPrincipal()).getUsername();
+		
+		ResultJson result = new ResultJson();
+		try
+		{
+			restServices.addPunterPaymentMethod(contact,id,accountNumber);
+			result.success();
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			result.fail(e.getMessage());
+		}
+		return result;
+	}
+	
 }

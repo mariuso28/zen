@@ -14,7 +14,10 @@ public class RatingImageImport {
 	
 	private static byte[] loadImageBytes(String number) throws IOException
 	{
-		Path path = Paths.get("/home/pmk/workspace/zen/WebContent/img/" + number + ".jpeg");
+		String suffix = ".jpeg";
+		if (number.equals("0"))
+			suffix = ".png";
+		Path path = Paths.get("/home/pmk/workspace/zen/WebContent/img/" + number + suffix);
 	//	log.info("Loading : " + path);
 	    return Files.readAllBytes(path);
 	}

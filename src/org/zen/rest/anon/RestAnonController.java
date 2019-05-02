@@ -27,6 +27,10 @@ public interface RestAnonController
 	// ResultJson contains List<CountryJson> if success, message if fail
 	public ResultJson getCountries();	
 	
+	@RequestMapping(value = "/getAvailablePaymentMethods")
+	// ResultJson contains List<PunterPaymentMethodJson> if success, message if fail
+	public ResultJson getAvailablePaymentMethods();
+	
 	@RequestMapping(value = "/getModel")
 	// ResultJson contains model if success, message if fail
 	public ResultJson getModel(@RequestParam("contact") String contact);	

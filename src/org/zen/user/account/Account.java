@@ -3,13 +3,13 @@ package org.zen.user.account;
 import java.util.List;
 import java.util.UUID;
 
-import org.zen.payment.PunterPaymentMethod;
+import org.zen.json.PunterPaymentMethodJson;
 
 public class Account {
 
 	private UUID id;			// 1-1 matches baseuser (punter etc.) id
 	private double balance;
-	private List<PunterPaymentMethod> punterPaymentMethod;
+	private List<PunterPaymentMethodJson> punterPaymentMethod;
 	
 	
 	public Account()
@@ -37,11 +37,11 @@ public class Account {
 		this.id = id;
 	}
 
-	public List<PunterPaymentMethod> getPunterPaymentMethod() {
+	public List<PunterPaymentMethodJson> getPunterPaymentMethod() {
 		return punterPaymentMethod;
 	}
 
-	public void setPunterPaymentMethod(List<PunterPaymentMethod> punterPaymentMethod) {
+	public void setPunterPaymentMethod(List<PunterPaymentMethodJson> punterPaymentMethod) {
 		this.punterPaymentMethod = punterPaymentMethod;
 	}
 }

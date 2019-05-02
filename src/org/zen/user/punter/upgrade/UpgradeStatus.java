@@ -5,7 +5,7 @@ import java.util.Date;
 public class UpgradeStatus {
 	private UpgradePaymentStatus paymentStatus;
 	private int newRating;
-	private String uplineContact;
+	private String sponsorContact;
 	private Date changed;
 	
 	public UpgradeStatus()
@@ -28,12 +28,12 @@ public class UpgradeStatus {
 		this.newRating = newRating;
 	}
 
-	public String getUplineContact() {
-		return uplineContact;
+	public String getSponsorContact() {
+		return sponsorContact;
 	}
 
-	public void setUplineContact(String uplineContact) {
-		this.uplineContact = uplineContact;
+	public void setSponsorContact(String sponsorContact) {
+		this.sponsorContact = sponsorContact;
 	}
 
 	public Date getChanged() {

@@ -1,5 +1,6 @@
 package org.zen.user.punter.mgr;
 
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -9,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.zen.json.ChangePasswordJson;
+import org.zen.json.PaymentMethodJson;
+import org.zen.json.PunterPaymentMethodJson;
 import org.zen.json.PunterProfileJson;
 import org.zen.model.ZenModelOriginal;
-import org.zen.payment.PaymentMethod;
-import org.zen.payment.PunterPaymentMethod;
 import org.zen.payment.persistence.PaymentDao;
 import org.zen.persistence.PersistenceRuntimeException;
 import org.zen.rating.RatingMgr;
@@ -22,6 +23,8 @@ import org.zen.user.faker.FakerUtil;
 import org.zen.user.persistence.BaseUserDao;
 import org.zen.user.punter.Punter;
 import org.zen.user.punter.persistence.PunterDao;
+import org.zen.user.punter.upgrade.UpgradePaymentStatus;
+import org.zen.user.punter.upgrade.UpgradeStatus;
 import org.zen.util.EmailValidator;
 import org.zen.util.PhoneValidator;
 
@@ -166,13 +169,14 @@ public class PunterMgr {
 	
 	private void storeDefaultPaymentMethods(Punter punter) {
 		PaymentDao pd = services.getHome().getPaymentDao();
-		List<PaymentMethod> pms = pd.getAvailablePaymentMethods();
-		for (PaymentMethod pm : pms)
+		List<PaymentMethodJson> pms = pd.getAvailablePaymentMethods();
+		for (PaymentMethodJson pm : pms)
 		{
-			PunterPaymentMethod ppm = new PunterPaymentMethod(pm);
+			PunterPaymentMethodJson ppm = new PunterPaymentMethodJson(pm);
 			ppm.setPunterId(punter.getId());
 			String accountNum = createRandomAccNum(punter.getId().toString());
 			ppm.setAccountNum(accountNum);
+			ppm.setActivated(true);
 			pd.storePunterPaymentMethod(ppm);
 		}
 	}
@@ -203,10 +207,22 @@ public class PunterMgr {
 		punter.setSponsor(sponsor);
 		punter.setParent(parent);
 		punter.setAccount(new Account());
-		if (sponsor==null)			// root
-			punter.setRating(0);
+		UpgradeStatus us = new UpgradeStatus();
+		us.setChanged((new GregorianCalendar()).getTime());
+		if (sponsor==null)			// zen
+		{
+			punter.setRating(-1);
+			us.setPaymentStatus(UpgradePaymentStatus.NONE);
+			us.setSponsorContact("");
+		}
 		else
-			punter.setRating(1);
+		{
+			punter.setRating(0);
+			us.setPaymentStatus(UpgradePaymentStatus.PAYMENTDUE);
+			us.setSponsorContact(sponsor.getSponsorContact());
+			us.setNewRating(1);
+		}
+		punter.setUpgradeStatus(us);
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		punter.setPassword(encoder.encode(profile.getPassword()));			
 		return punter;

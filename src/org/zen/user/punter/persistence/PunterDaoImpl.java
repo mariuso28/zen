@@ -2,6 +2,8 @@ package org.zen.user.punter.persistence;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.UUID;
 
@@ -11,10 +13,11 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
-import org.zen.payment.PunterPaymentMethod;
+import org.zen.json.PunterPaymentMethodJson;
 import org.zen.persistence.PersistenceRuntimeException;
 import org.zen.user.account.Account;
 import org.zen.user.punter.Punter;
+import org.zen.user.punter.upgrade.UpgradeStatus;
 
 @Transactional
 public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements PunterDao {
@@ -112,7 +115,7 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 			final String sql = "SELECT * FROM baseuser WHERE systemowned=true AND rating>0";
 			List<Punter> punters = getJdbcTemplate().query(sql,BeanPropertyRowMapper.newInstance(Punter.class));
 			for (Punter p : punters)
-				populateAccount(p);
+				populateObjects(p);
 			return punters;
 		}
 		catch (DataAccessException e)
@@ -216,7 +219,7 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 						ps.setBoolean(18, punter.isSystemOwned());
 			      }
 			    });
-			createPunterAccount(punter.getId());
+			createPunterObjects(punter);
 		}
 		catch (DataAccessException e1)
 		{
@@ -225,15 +228,56 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 		}	
 	}
 	
-	private void createPunterAccount(final UUID id) throws DataAccessException
+	private void createPunterObjects(final Punter punter) throws DataAccessException
 	{
 		getJdbcTemplate().update("INSERT INTO account (id,balance) "
 				+ "VALUES (?,0.0)"
 				, new PreparedStatementSetter() {
 					public void setValues(PreparedStatement ps) throws SQLException {
-						ps.setObject(1, id);
+						ps.setObject(1, punter.getId());
 					}
 				});
+		
+		UpgradeStatus us = punter.getUpgradeStatus();
+		Timestamp ts = new Timestamp(us.getChanged().getTime());
+		getJdbcTemplate().update("INSERT INTO upgradestatus (id,sponsorcontact,changed,paymentstatus,newrating) "
+						+ "VALUES (?,?,?,?,?)"
+						, new PreparedStatementSetter() {
+							public void setValues(PreparedStatement ps) throws SQLException {
+								ps.setObject(1, punter.getId());
+								ps.setString(2,us.getSponsorContact());
+								ps.setTimestamp(3, ts);
+								ps.setString(4, us.getPaymentStatus().name());
+								ps.setInt(5,us.getNewRating());
+							}
+						});
+		
+	}
+	
+	public void updateUpgradeStatus(final Punter punter)
+	{
+		try
+		{
+			UpgradeStatus us = punter.getUpgradeStatus();
+			us.setChanged((new GregorianCalendar()).getTime());
+			Timestamp ts = new Timestamp(us.getChanged().getTime());
+			getJdbcTemplate().update("UPDATE upgradestatus SET sponsorcontact=?,changed=?,paymentstatus=?,newrating=? "
+							+ "WHERE id=?"
+							, new PreparedStatementSetter() {
+								public void setValues(PreparedStatement ps) throws SQLException {
+									ps.setString(1,us.getSponsorContact());
+									ps.setTimestamp(2, ts);
+									ps.setString(3, us.getPaymentStatus().name());
+									ps.setInt(4,us.getNewRating());
+									ps.setObject(5, punter.getId());
+								}
+							});
+		}
+		catch (DataAccessException e)
+		{
+			log.error("Could not execute : " + e.getMessage(),e);
+			throw new PersistenceRuntimeException("Could not execute updateUpgradeStatus : " + e.getMessage());
+		}
 	}
 
 	@Override
@@ -264,7 +308,7 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 			{
 				return null;
 			}
-			populateAccount(punters.get(0));
+			populateObjects(punters.get(0));
 			return punters.get(0);
 		}
 		catch (DataAccessException e)
@@ -274,7 +318,7 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 		}
 	}
 
-	private void populateAccount(final Punter punter) throws DataAccessException{
+	private void populateObjects(final Punter punter) throws DataAccessException{
 		final String sql = "SELECT * FROM account WHERE id=?";
 		List<Account> accounts = getJdbcTemplate().query(sql,new PreparedStatementSetter() {
 			        public void setValues(PreparedStatement preparedStatement) throws SQLException {
@@ -288,12 +332,24 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 		}
 		punter.setAccount(accounts.get(0));
 		final String sql2 = "SELECT * FROM punterpaymentmethod WHERE punterid=?";
-		List<PunterPaymentMethod> ppms = getJdbcTemplate().query(sql2,new PreparedStatementSetter() {
+		List<PunterPaymentMethodJson> ppms = getJdbcTemplate().query(sql2,new PreparedStatementSetter() {
 			        public void setValues(PreparedStatement preparedStatement) throws SQLException {
 			          preparedStatement.setObject(1, punter.getId());
 			        }
-			      }, BeanPropertyRowMapper.newInstance(PunterPaymentMethod.class));
+			      }, BeanPropertyRowMapper.newInstance(PunterPaymentMethodJson.class));
 		punter.getAccount().setPunterPaymentMethod(ppms);
+		final String sql3 = "SELECT * FROM upgradestatus WHERE id=?";
+		List<UpgradeStatus> uss = getJdbcTemplate().query(sql3,new PreparedStatementSetter() {
+			        public void setValues(PreparedStatement preparedStatement) throws SQLException {
+			          preparedStatement.setObject(1, punter.getId());
+			        }
+			      }, BeanPropertyRowMapper.newInstance(UpgradeStatus.class));
+		if (uss.isEmpty())
+		{
+			log.error("UpgradeStatus doesn't exist for punter : " + punter.getId());
+			return;
+		}
+		punter.setUpgradeStatus(uss.get(0));
 	}
 
 
@@ -311,7 +367,7 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 				        }
 				      }, BeanPropertyRowMapper.newInstance(Punter.class));
 			for (Punter p : punters)
-				populateAccount(p);
+				populateObjects(p);
 			return punters;
 		}
 		catch (DataAccessException e)
@@ -335,7 +391,7 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 				        }
 				      }, BeanPropertyRowMapper.newInstance(Punter.class));
 			for (Punter p : punters)
-				populateAccount(p);
+				populateObjects(p);
 			return punters;
 		}
 		catch (DataAccessException e)
@@ -384,7 +440,7 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 			}
 			if (punters.isEmpty())
 				return null;
-			populateAccount(punters.get(0));
+			populateObjects(punters.get(0));
 			return punters.get(0);
 		}
 		catch (DataAccessException e)
@@ -398,7 +454,10 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	public void deletePunter(final Punter punter) {
 		try
 		{
-			final String sql = "DELETE FROM punterpaymentmethod WHERE id=?";
+			final String sql0 = "DELETE FROM upgradestatus WHERE id=?";
+			getJdbcTemplate().update(sql0,new Object[] { punter.getId() });
+			
+			final String sql = "DELETE FROM punterpaymentmethod WHERE punterid=?";
 			getJdbcTemplate().update(sql,new Object[] { punter.getId() });
 			
 			final String sql1 = "DELETE FROM account WHERE id=?";
@@ -418,6 +477,11 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	public void deleteAllPunters(boolean systemOwned) {
 		try
 		{
+			final String sql0 = "DELETE FROM upgradestatus AS pus WHERE "
+					+ "pus.id IN (SELECT bu.id FROM baseuser AS bu WHERE Role = 'ROLE_PUNTER' "
+					+ "AND systemowned='" + systemOwned + "')";
+			getJdbcTemplate().update(sql0);
+			
 			final String sql = "DELETE FROM punterpaymentmethod AS pmm WHERE "
 					+ "pmm.punterid IN (SELECT bu.id FROM baseuser AS bu WHERE Role = 'ROLE_PUNTER' "
 					+ "AND systemowned='" + systemOwned + "')";
@@ -442,6 +506,10 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	public void deleteAllPunters() {
 		try
 		{
+			final String sql0 = "DELETE FROM upgradestatus AS pus WHERE "
+					+ "pus.id IN (SELECT bu.id FROM baseuser AS bu WHERE Role = 'ROLE_PUNTER')";
+			getJdbcTemplate().update(sql0);
+			
 			final String sql = "DELETE FROM punterpaymentmethod AS pmm WHERE "
 					+ "pmm.punterid IN (SELECT bu.id FROM baseuser AS bu WHERE Role = 'ROLE_PUNTER')";
 			getJdbcTemplate().update(sql);

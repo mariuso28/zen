@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import org.zen.json.PunterPaymentMethodJson;
 import org.zen.json.PunterProfileJson;
 import org.zen.user.BaseUser;
 import org.zen.user.account.Account;
@@ -26,6 +27,7 @@ public class Punter extends BaseUser {
 	private boolean systemOwned;
 	private Date activated;
 	private UpgradeStatus upgradeStatus;
+	private List<PunterPaymentMethodJson> paymentMethods = new ArrayList<PunterPaymentMethodJson>();
 	
 	public Punter()
 	{
@@ -154,13 +156,6 @@ public class Punter extends BaseUser {
 		this.sponsorContact = sponsorContact;
 	}
 
-	@Override
-	public String toString() {
-		return "Punter [rating=" + rating + ", upgradeScheduled=" + upgradeScheduled + ", getId()=" + getId()
-				+ ", getContact()=" + getContact() + ", getEmail()=" + getEmail() + ", getPhone()=" + getPhone()
-				+ ", isEnabled()=" + isEnabled() + "]";
-	}
-
 	public Date getActivated() {
 		return activated;
 	}
@@ -169,6 +164,28 @@ public class Punter extends BaseUser {
 		this.activated = activated;
 	}
 
-	
+	public UpgradeStatus getUpgradeStatus() {
+		return upgradeStatus;
+	}
+
+	public void setUpgradeStatus(UpgradeStatus upgradeStatus) {
+		this.upgradeStatus = upgradeStatus;
+	}
+
+	public List<PunterPaymentMethodJson> getPaymentMethods() {
+		return paymentMethods;
+	}
+
+	public void setPaymentMethods(List<PunterPaymentMethodJson> paymentMethods) {
+		this.paymentMethods = paymentMethods;
+	}
+
+	@Override
+	public String toString() {
+		return "Punter [rating=" + rating + ", upgradeScheduled=" + upgradeScheduled + ", getId()=" + getId()
+				+ ", getContact()=" + getContact() + ", getEmail()=" + getEmail() + ", getPhone()=" + getPhone()
+				+ ", isEnabled()=" + isEnabled() + "]";
+	}
+
 	
 }

@@ -9,19 +9,19 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
-import org.zen.payment.PaymentMethod;
-import org.zen.payment.PunterPaymentMethod;
+import org.zen.json.PaymentMethodJson;
+import org.zen.json.PunterPaymentMethodJson;
 import org.zen.persistence.PersistenceRuntimeException;
 
 public class PaymentDaoImpl extends NamedParameterJdbcDaoSupport implements PaymentDao {
 	private static Logger log = Logger.getLogger(PaymentDaoImpl.class);
 	
 	@Override
-	public List<PaymentMethod> getAvailablePaymentMethods() {
+	public List<PaymentMethodJson> getAvailablePaymentMethods() {
 		try
 		{
 			final String sql = "SELECT * FROM paymentmethod ORDER BY country,method";
-			List<PaymentMethod> pms = getJdbcTemplate().query(sql,BeanPropertyRowMapper.newInstance(PaymentMethod.class));
+			List<PaymentMethodJson> pms = getJdbcTemplate().query(sql,BeanPropertyRowMapper.newInstance(PaymentMethodJson.class));
 			return pms;
 		}
 		catch (DataAccessException e)
@@ -32,7 +32,24 @@ public class PaymentDaoImpl extends NamedParameterJdbcDaoSupport implements Paym
 	}
 
 	@Override
-	public void storePaymentMethod(PaymentMethod pm)
+	public PaymentMethodJson getPaymentMethodById(int id) {
+		try
+		{
+			final String sql = "SELECT * FROM paymentmethod WHERE id=?";
+			List<PaymentMethodJson> pms = getJdbcTemplate().query(sql,new Object[]{ id },BeanPropertyRowMapper.newInstance(PaymentMethodJson.class));
+			if (pms.isEmpty())
+				return null;
+			return pms.get(0);
+		}
+		catch (DataAccessException e)
+		{
+			log.error("Could not execute : " + e.getMessage(),e);
+			throw new PersistenceRuntimeException("Could not execute getAvailablePaymentMethods : " + e.getMessage());
+		}
+	}
+	
+	@Override
+	public void storePaymentMethod(PaymentMethodJson pm)
 	{
 		try
 		{
@@ -60,17 +77,18 @@ public class PaymentDaoImpl extends NamedParameterJdbcDaoSupport implements Paym
 	}
 
 	@Override
-	public void storePunterPaymentMethod(PunterPaymentMethod ppm) {
+	public void storePunterPaymentMethod(PunterPaymentMethodJson ppm) {
 		try
 		{
-			getJdbcTemplate().update("INSERT INTO punterpaymentmethod (punterId,method,country,accountNum) "
-				+ "VALUES (?,?,?,?)"
+			getJdbcTemplate().update("INSERT INTO punterpaymentmethod (punterId,method,country,accountNum,activated) "
+				+ "VALUES (?,?,?,?,?)"
 				, new PreparedStatementSetter() {
 					public void setValues(PreparedStatement ps) throws SQLException {
 						ps.setObject(1, ppm.getPunterId());
 						ps.setString(2, ppm.getMethod());
 						ps.setString(3, ppm.getCountry());
 						ps.setString(4, ppm.getAccountNum());
+						ps.setBoolean(5, ppm.isActivated());
 					}
 				});
 		}

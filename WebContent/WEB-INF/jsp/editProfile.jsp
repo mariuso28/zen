@@ -72,6 +72,102 @@ function getCountries()
   });
 }
 
+var paymentMethods;
+
+function getAvailablePaymentMethods()
+{
+     $.ajax({
+
+    type: "GET",
+         url : '/zen/zx4/api/anon/getAvailablePaymentMethods',
+         cache: false,
+         contentType: 'application/json;',
+         dataType: "json",
+         success: function(data) {
+         if (data == '')
+         {
+           alert("could not getPaymentMethods")
+            return null;
+         }
+         // alert(JSON.stringify(data));
+       var resultJson = $.parseJSON(JSON.stringify(data));
+       if (resultJson.status=='OK')
+       {
+         paymentMethods = resultJson.result;
+         $('#availablePaymentMethods').append($('<option/>').attr("value", -1).text("Method - Country"));
+         $.each(paymentMethods, function(i, option) {
+            $('#availablePaymentMethods').append($('<option/>').attr("value", i).text(option.method + " - " + option.country));
+         });
+       }
+       else
+       {
+         alert(resultJson.message);
+       }
+     },
+     error:function (e) {
+       alert("getAvailablePaymentMethods ERROR : " + e.status + " - " + e.statusText);
+     }
+  });
+}
+
+function addPaymentMethod(value)
+{
+    if (value==-1)
+      return;
+    method = paymentMethods[value];
+//    alert(method.method + " - " + method.country);
+    var accountNumber = prompt("Please enter your account number for payment method : "+method.method + " - " + method.country, "88888888");
+    if (accountNumber == null)
+      return;
+
+    addPunterPaymentMethod(method.id,accountNumber);
+}
+
+
+function addPunterPaymentMethod(id,accountNumber)
+{
+  access_token = sessionStorage.getItem("access_token");
+  //	alert(access_token);
+
+  var bearerHeader = 'Bearer ' + access_token;
+     $.ajax({
+
+    type: "GET",
+         url : '/zen/zx4/api/punter/addPaymentMethod?id='+id+'&accountNumber='+accountNumber,
+         headers: { 'Authorization': bearerHeader },
+         cache: false,
+         contentType: 'application/json;',
+         dataType: "json",
+         success: function(data) {
+         if (data == '')
+         {
+            alert("could not addPaymentMethod")
+            return null;
+         }
+
+       var resultJson = $.parseJSON(JSON.stringify(data));
+       if (resultJson.status=='OK')
+       {
+         refreshProfile();
+       }
+       else
+       {
+         alert(resultJson.message);
+       }
+     },
+     error:function (e) {
+       alert("addPunterPaymentMethod ERROR : " + e.status + " - " + e.statusText);
+     }
+  });
+}
+
+function refreshProfile()
+{
+  getCountries();
+  getPunter();
+  getAvailablePaymentMethods();
+}
+
 var punter;
 
 function getPunter() {
@@ -274,6 +370,13 @@ function updateProfile() {
                   <input type="text" id="email" class="span11" value=""/>
                 </div>
               </div>
+              <div class="control-group">
+                <label class="control-label">Add Payment Method :</label>
+                <div class="controls">
+                  <select id="availablePaymentMethods" onchange="addPaymentMethod(value)">
+                  </select>
+                </div>
+              </div>
               <div class="form-actions">
                 <button type="submit" onclick="return updateProfile();" class="btn btn-success">Save</button>
                 <button type="submit" class="btn btn-danger" onclick="return redirectDashboard();">Cancel</button>
@@ -318,10 +421,11 @@ function updateProfile() {
 <script src="../../../js/jquery.dataTables.min.js"></script>
 <script src="../../../js/matrix.tables.js"></script>
 
+
+
 <script type="text/javascript">
 
-getCountries();
-getPunter();
+refreshProfile();
 
 </script>
 </body>

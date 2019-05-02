@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.zen.payment.PaymentMethod;
+import org.zen.json.PaymentMethodJson;
 import org.zen.persistence.home.Home;
 
 public class CreatePaymentMethods {
@@ -17,14 +17,14 @@ public class CreatePaymentMethods {
 		try
 		{
 			Home home = (Home) context.getBean("home");
-			PaymentMethod pm = new PaymentMethod();
+			PaymentMethodJson pm = new PaymentMethodJson();
 			pm.setMethod("Test1");
 			pm.setCountry("Cambodia");
 			home.getPaymentDao().storePaymentMethod(pm);
 			pm.setMethod("Test2");
 			pm.setCountry("Cambodia");
 			home.getPaymentDao().storePaymentMethod(pm);
-			List<PaymentMethod> pms = home.getPaymentDao().getAvailablePaymentMethods();
+			List<PaymentMethodJson> pms = home.getPaymentDao().getAvailablePaymentMethods();
 			System.out.println(pms);
 		
 		} catch (Exception e) {

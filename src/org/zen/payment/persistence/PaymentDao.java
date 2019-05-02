@@ -2,14 +2,14 @@ package org.zen.payment.persistence;
 
 import java.util.List;
 
-import org.zen.payment.PaymentMethod;
-import org.zen.payment.PunterPaymentMethod;
+import org.zen.json.PaymentMethodJson;
+import org.zen.json.PunterPaymentMethodJson;
 
 public interface PaymentDao {
 	
-	public List<PaymentMethod> getAvailablePaymentMethods();
-	public void storePaymentMethod(PaymentMethod pm);
-	public void storePunterPaymentMethod(PunterPaymentMethod ppm);
-	
+	public List<PaymentMethodJson> getAvailablePaymentMethods();
+	public void storePaymentMethod(PaymentMethodJson pm);
+	public void storePunterPaymentMethod(PunterPaymentMethodJson ppm);
+	public PaymentMethodJson getPaymentMethodById(int id);
 
 }

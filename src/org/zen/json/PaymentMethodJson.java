@@ -1,11 +1,12 @@
-package org.zen.payment;
+package org.zen.json;
 
-public class PaymentMethod {
+public class PaymentMethodJson {
+	private int id;
 	private String method;
 	private String country;
 	
 	
-	public PaymentMethod()
+	public PaymentMethodJson()
 	{
 	}
 
@@ -28,6 +29,14 @@ public class PaymentMethod {
 	@Override
 	public String toString() {
 		return "PaymentMethod [method=" + method + ", country=" + country + "]";
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	

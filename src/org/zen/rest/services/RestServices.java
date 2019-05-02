@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.zen.json.AccountJson;
 import org.zen.json.ChangePasswordJson;
 import org.zen.json.ModelJson;
+import org.zen.json.PaymentMethodJson;
 import org.zen.json.PunterJson;
+import org.zen.json.PunterPaymentMethodJson;
 import org.zen.json.PunterProfileJson;
 import org.zen.rating.RatingMgr;
 import org.zen.services.Services;
@@ -166,6 +168,28 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		}
 	}
 
+	public void addPunterPaymentMethod(String contact, String id, String accountNumber) throws RestServicesException{
+		Punter punter = getPunter(contact);
+		
+		try
+		{
+			int index = Integer.parseInt(id);
+			PaymentMethodJson pm = services.getHome().getPaymentDao().getPaymentMethodById(index);
+			PunterPaymentMethodJson ppm = new PunterPaymentMethodJson();
+			ppm.setAccountNum(accountNumber);
+			ppm.setPunterId(punter.getId());
+			ppm.setActivated(true);
+			ppm.setCountry(pm.getCountry());
+			ppm.setMethod(pm.getMethod());
+			services.getHome().getPaymentDao().storePunterPaymentMethod(ppm);
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			throw new RestServicesException("Could not add payment method - contact support");
+		}
+	}
+		
 	public PunterProfileJson getPunterProfile(String contact) throws RestServicesException{
 	
 		Punter punter = getPunter(contact);
@@ -229,6 +253,11 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		return pj;
 	}
 
+	public List<PunterPaymentMethodJson> getPunterPaymentMethods(String contact) {
+		Punter punter = getPunter(contact);
+		return punter.getPaymentMethods();
+	}
+
 	public Services getServices() {
 		return services;
 	}
@@ -237,6 +266,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		this.services = services;
 	}
 
+	
 	
 
 	
