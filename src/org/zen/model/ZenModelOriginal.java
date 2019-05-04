@@ -39,7 +39,7 @@ public class ZenModelOriginal {
 		
 		parent.getChildren().add(child);
 		child.setParent(parent);
-		double buyIn = ratingMgr.getBuyIn();
+		double buyIn = RatingMgr.ZENBUYIN;
 		child.getAccount().xfer(-1*buyIn);
 		finder.getAccount().xfer(buyIn);
 		log.info("Created punter : " + child.getEmail() + " rating : " + child.getRating() 

@@ -12,8 +12,8 @@ public class RatingMgr {
 	
 	@SuppressWarnings("unused")
 	private static Logger log = Logger.getLogger(RatingMgr.class);
+	public static double ZENBUYIN = 10;
 	private List<RatingJson> ratings = new ArrayList<RatingJson>();
-	private double buyIn = 10;
 	
 	public RatingMgr()
 	{
@@ -22,8 +22,8 @@ public class RatingMgr {
 
 	private void createRatings() {
 		ratings.add(new RatingJson(Integer.MAX_VALUE,0,RatingImageImport.loadImage("12")));
-		ratings.add(new RatingJson(0,50,RatingImageImport.loadImage("0")));
-		ratings.add(new RatingJson(1,50,RatingImageImport.loadImage("1")));
+		ratings.add(new RatingJson(0,0,RatingImageImport.loadImage("0")));
+		ratings.add(new RatingJson(1,ZENBUYIN,RatingImageImport.loadImage("1")));
 		ratings.add(new RatingJson(2,100,RatingImageImport.loadImage("2")));
 		ratings.add(new RatingJson(3,200,RatingImageImport.loadImage("3")));
 		ratings.add(new RatingJson(4,400,RatingImageImport.loadImage("4")));
@@ -41,6 +41,11 @@ public class RatingMgr {
 //			log.info("Rating : " + i + " Threshold : " + ratings.get(i).getUpgradeThreshold());
 		}
 	}
+	
+	public double getUpgradeFeeForRating(int rating)
+	{
+		return ratings.get(rating+1).getUpgrade();
+	}
 
 	public List<RatingJson> getRatings() {
 		return ratings;
@@ -48,14 +53,6 @@ public class RatingMgr {
 
 	public void setRatings(List<RatingJson> ratings) {
 		this.ratings = ratings;
-	}
-
-	public double getBuyIn() {
-		return buyIn;
-	}
-
-	public void setBuyIn(double buyIn) {
-		this.buyIn = buyIn;
 	}
 
 	public static void main(String[] args)

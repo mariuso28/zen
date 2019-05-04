@@ -32,7 +32,7 @@ public class ZenModel {
 
 	public void payJoinFee(Punter punter) throws PunterMgrException
 	{
-		double buyIn = ratingMgr.getBuyIn();
+		double buyIn = RatingMgr.ZENBUYIN;
 		Punter sponsor = punterMgr.getByUUID(punter.getSponsorId());
 		log.info("Punter : " + punter.getContact() + " paying join fee : " + buyIn + " to : " + sponsor.getContact());
 		

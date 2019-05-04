@@ -26,6 +26,13 @@
     width: 220px;
     height: 220px;
   }
+
+  .required-field::before {
+  content: "*";
+  color: red;
+  float: right;
+}
+
 </style>
 
 <script>
@@ -35,7 +42,10 @@ function redirectDashboard()
   window.location.replace("/zen/zx4/web/anon/goDashboard");
 }
 
+var punter;
 var countries;
+var paymentMethods;
+
 
 function getCountries()
 {
@@ -46,6 +56,7 @@ function getCountries()
   cache: false,
  contentType: 'application/json;',
       dataType: "json",
+       async: false,
       success: function(data) {
         if (data == '')
          {
@@ -57,10 +68,7 @@ function getCountries()
        if (resultJson.status=='OK')
        {
          countries = resultJson.result;
-         $('#country').empty();
-         $.each(countries, function(i, option) {
-            $('#country').append($('<option/>').attr("value", option.code).text(option.country));
-         });
+         displayCountries();
        }
        else
        {
@@ -73,7 +81,17 @@ function getCountries()
   });
 }
 
-var paymentMethods;
+function displayCountries()
+{
+  $('#country').empty();
+  $.each(countries, function(i, option) {
+    if (punter.country==option.country)
+     $('#country').append($('<option selected/>').attr("value", option.country).text(option.country));
+    else {
+      $('#country').append($('<option/>').attr("value", option.country).text(option.country));
+    }
+  });
+}
 
 function getAvailablePaymentMethods()
 {
@@ -84,6 +102,7 @@ function getAvailablePaymentMethods()
          cache: false,
          contentType: 'application/json;',
          dataType: "json",
+         async: false,
          success: function(data) {
          if (data == '')
          {
@@ -202,12 +221,10 @@ function addPunterPaymentMethod(id,accountNumber)
 
 function refreshProfile()
 {
-  getCountries();
   getPunter();
+  getCountries();
   getAvailablePaymentMethods();
 }
-
-var punter;
 
 function getPunter() {
 
@@ -223,18 +240,20 @@ function getPunter() {
     cache: false,
     contentType: 'application/json;',
          dataType: "json",
+         async: false,
        	 success: function(data) {
-    //       alert(JSON.stringify(data));
+    //      alert(JSON.stringify(data));
      			if (data == '')
             {
 							alert("could not get punter")
-               return null;
+               return;
             }
 
           var resultJson = $.parseJSON(JSON.stringify(data));
 					if (resultJson.status!='OK')
 					{
 						alert(resultJson.status + " " + resultJson.message);
+            return;
 					}
     //      alert(JSON.stringify(resultJson.result));
 					punter = resultJson.result;
@@ -255,7 +274,7 @@ function populatePunter()
     document.getElementById('fullName').value = punter.fullName;
     document.getElementById('passportIc').value = punter.passportIc;
     document.getElementById('address').value = punter.address;
-    document.getElementById('country').value = punter.country;
+//    document.getElementById('country').value = punter.country;
     document.getElementById('state').value = punter.state;
     document.getElementById('gender').value = punter.gender;
     displayPaymentMethods();
@@ -329,17 +348,18 @@ function updateProfile() {
               var result = $.parseJSON(JSON.stringify(data));
               if (data == '')
               {
-   						  alert("could not get punter")
-                return null;
+   						  alert("could update punter")
+                return;
               }
 
               var resultJson = $.parseJSON(JSON.stringify(data));
  					    if (resultJson.status!='OK')
  					    {
  						    alert(resultJson.message);
+                return;
  					    }
    					  alert('Profile successfully updated');
-              redirectDashboard();
+              refreshProfile();
           },
           error:function (e) {
  	  			    alert("updatePunter ERROR : " + e.status + " - " + e.statusText);
@@ -385,25 +405,25 @@ function updateProfile() {
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">Zen Sponser :</label>
+                <label class="control-label">Zen Sponser&nbsp</label>
                 <div class="controls">
                   <input readonly type="text" id="sponsorContact" class="span11" value=""/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">Full Name :</label>
+                <label class="control-label required-field">Full Name&nbsp</label>
                 <div class="controls">
                   <input type="text" id="fullName" class="span11" value=""/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">Passport/ID No. :</label>
+                <label class="control-label">Passport/ID No.&nbsp</label>
                 <div class="controls">
                   <input type="text" id="passportIc" class="span11" value=""/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">Gender</label>
+                <label class="control-label required-field">Gender&nbsp</label>
                 <div class="controls">
                   <select id="gender">
                   	<option value="Male">Male</option>
@@ -412,38 +432,38 @@ function updateProfile() {
                   </select>
               </div>
               <div class="control-group">
-                <label class="control-label">Address :</label>
+                <label class="control-label">Address&nbsp</label>
                 <div class="controls">
                   <input type="text" id="address" class="span11" value=""/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">Postcode :</label>
+                <label class="control-label">Postcode&nbsp</label>
                 <div class="controls">
                   <input type="text" id="postcode" class="span11" value=""/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">State :</label>
+                <label class="control-label">State&nbsp</label>
                 <div class="controls">
                   <input type="text" id="state" class="span11" value=""/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">Country :</label>
+                <label class="control-label required-field">Country&nbsp</label>
                 <div class="controls">
                   <select id="country">
                   </select>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">Phone No. :</label>
+                <label class="control-label required-field">Phone No.&nbsp</label>
                 <div class="controls">
                   <input type="text" id="phone" class="span11" value="+855 "/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">Email :</label>
+                <label class="control-label required-field">Email&nbsp</label>
                 <div class="controls">
                   <input type="text" id="email" class="span11" value=""/>
                 </div>

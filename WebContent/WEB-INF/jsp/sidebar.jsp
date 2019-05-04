@@ -1,3 +1,16 @@
+<script>
+
+function testAllowed()
+{
+  if (punter.rating!=0)
+    return true;
+  alert("Feature not available until payment to join complete.");
+  return false;
+}
+
+</script>
+
+
 <div id="sidebar"><a href="#" class="visible-phone"><i class="icon icon-home"></i> Dashboard</a>
   <div class="">
     <img script src="../../../img/GoldenCircle_02.png" width="220" height="220"/>
@@ -12,11 +25,11 @@
     </li>
     <li class="submenu"> <a href="#"><i class="icon icon-group"></i> <span>Agents</span><span class="caret" style="margin-left:10px; margin-top:8px; border"></span></a>
       <ul>
-        <li><a href="/zen/zx4/web/anon/goAgentList">Agent List</a></li>
-        <li><a href="/zen/zx4/web/anon/goUpgrade">>Upgrade<span class="label label-important" style="margin-left:5px;">1</span></a></li>
-        <li><a href="/zen/zx4/web/anon/goNewRegistration">New Registration</a></li>
+        <li><a href="/zen/zx4/web/anon/goAgentList" onclick="return testAllowed()">Agent List</a></li>
+        <li><a href="/zen/zx4/web/anon/goUpgrade">Upgrade<span class="label label-important" style="margin-left:5px;">1</span></a></li>
+        <li><a href="/zen/zx4/web/anon/goNewRegistration" onclick="return testAllowed()">New Registration</a></li>
         <li><a href="/zen/zx4/web/anon/goGeneology">Geneology</a></li>
-        <li><a href="#">Grade Summary</a></li>
+        <li><a href="#" onclick="return testAllowed()">Grade Summary</a></li>
       </ul>
     </li>
     <li class="submenu"> <a href="#"><i class="icon icon-money"></i> <span>Payment</span><span class="caret" style="margin-left:10px; margin-top:8px;"></span></a>

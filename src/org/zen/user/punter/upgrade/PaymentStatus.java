@@ -1,5 +1,5 @@
 package org.zen.user.punter.upgrade;
 
-public enum UpgradePaymentStatus {
+public enum PaymentStatus {
 	NONE,PAYMENTDUE,PAYMENTMADE,PAYMENTSUCCESS,PAYMENTFAIL;
 }

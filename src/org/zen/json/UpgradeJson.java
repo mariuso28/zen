@@ -1,13 +1,11 @@
 package org.zen.json;
 
-import java.util.List;
-
 public class UpgradeJson {
 	private int currentRank;
 	private int upgradeRank;
 	private PunterProfileJson upline;
-	private List<PunterPaymentMethodJson> ppms;
-	private UpgradeFormJson form;
+	private double fee;
+	
 	
 	public UpgradeJson()
 	{
@@ -19,22 +17,6 @@ public class UpgradeJson {
 
 	public void setUpline(PunterProfileJson upline) {
 		this.upline = upline;
-	}
-
-	public List<PunterPaymentMethodJson> getPpms() {
-		return ppms;
-	}
-
-	public void setPpms(List<PunterPaymentMethodJson> ppms) {
-		this.ppms = ppms;
-	}
-
-	public UpgradeFormJson getForm() {
-		return form;
-	}
-
-	public void setForm(UpgradeFormJson form) {
-		this.form = form;
 	}
 
 	public int getCurrentRank() {
@@ -52,7 +34,13 @@ public class UpgradeJson {
 	public void setUpgradeRank(int upgradeRank) {
 		this.upgradeRank = upgradeRank;
 	}
-	
-	
+
+	public double getFee() {
+		return fee;
+	}
+
+	public void setFee(double fee) {
+		this.fee = fee;
+	}
 	
 }

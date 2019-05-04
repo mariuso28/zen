@@ -16,7 +16,7 @@ public class CountryDaoImpl extends NamedParameterJdbcDaoSupport implements Coun
 	public List<CountryJson> getCountries() {
 		try
 		{
-			final String sql = "SELECT * FROM country ORDER BY country";
+			final String sql = "SELECT * FROM country ORDER BY displayorder,country";
 			List<CountryJson> countries = getJdbcTemplate().query(sql,BeanPropertyRowMapper.newInstance(CountryJson.class));
 			return countries;
 		}

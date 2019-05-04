@@ -254,6 +254,7 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 		
 	}
 	
+	@Override
 	public void updateUpgradeStatus(final Punter punter)
 	{
 		try

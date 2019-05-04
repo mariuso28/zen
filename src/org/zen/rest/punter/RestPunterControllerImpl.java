@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.zen.json.ChangePasswordJson;
 import org.zen.json.PunterProfileJson;
 import org.zen.json.ResultJson;
+import org.zen.json.UpgradeJson;
+import org.zen.json.XactionJson;
 import org.zen.rest.services.RestServices;
 
 @RestController
@@ -200,6 +203,7 @@ public class RestPunterControllerImpl implements RestPunterController
 		return result;
 	}
 	
+	@Override
 	@RequestMapping(value = "/addPaymentMethod")
 	// ResultJson contains nothing if success, message if fail
 	public ResultJson addPaymentMethod(OAuth2Authentication auth,@RequestParam("id") String id,@RequestParam("accountNumber") String accountNumber) {
@@ -220,7 +224,7 @@ public class RestPunterControllerImpl implements RestPunterController
 		return result;
 	}
 	
-	
+	@Override
 	@RequestMapping(value = "/deletePaymentMethod")
 	// ResultJson contains nothing if success, message if fail
 	public ResultJson deletePaymentMethod(OAuth2Authentication auth,@RequestParam("id") String id) {
@@ -233,6 +237,98 @@ public class RestPunterControllerImpl implements RestPunterController
 		{
 			restServices.deletePunterPaymentMethod(id);
 			result.success();
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			result.fail(e.getMessage());
+		}
+		return result;
+	}
+	
+	@Override
+	@RequestMapping(value = "/getUpgradeRequest")
+	// ResultJson contains UpgradeJson if success, message if fail
+	public ResultJson getUpgradeRequest(OAuth2Authentication auth)
+	{
+		log.info("Received getUpgradeRequest");
+		String contact = ((User) auth.getPrincipal()).getUsername();
+		
+		ResultJson result = new ResultJson();
+		try
+		{
+			UpgradeJson uj = restServices.getUpgradeRequest(contact);
+			result.success(uj);
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			result.fail(e.getMessage());
+		}
+		return result;
+	}
+	
+	@Override
+	@RequestMapping(value = "/submitTransactionDetails")
+	// PkfzResultJson contains nothing if success, message if fail
+	public ResultJson submitTransactionDetails(OAuth2Authentication auth,@RequestParam("uploadfile") MultipartFile uploadfile,
+			@RequestParam("transactionDate") String transactionDate,@RequestParam("transactionDetails") String transactionDetails)
+	{
+		log.info("Received submitTransactionDetails");
+		log.info("Upload File : " + uploadfile.getName() + " date : " + transactionDate + " details : " + transactionDetails);
+		String contact = ((User) auth.getPrincipal()).getUsername();		
+		ResultJson result = new ResultJson();
+		
+		try
+		{
+			restServices.submitTransactionDetails(contact,uploadfile,transactionDate,transactionDetails);
+			result.success();
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			result.fail(e.getMessage());
+		}
+		return result;
+	}
+	
+	@Override
+	@RequestMapping(value = "/getPaymentsReceived")
+	// PkfzResultJson contains List<XactionJson> if success, message if fail
+	public ResultJson getPaymentsReceived(OAuth2Authentication auth,@RequestParam("paymentStatus") String paymentStatus,
+									@RequestParam("offset") long offset, @RequestParam("limit") long limit)
+	{
+		log.info("Received getPaymentsReceived");
+		String contact = ((User) auth.getPrincipal()).getUsername();		
+		ResultJson result = new ResultJson();
+		
+		try
+		{
+			List<XactionJson> xjs = restServices.getXtransactionsForMember("payee",contact,paymentStatus,offset,limit);
+			result.success(xjs);
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			result.fail(e.getMessage());
+		}
+		return result;
+	}
+	
+	@Override
+	@RequestMapping(value = "/getPaymentsSent")
+	// PkfzResultJson contains List<XactionJson> if success, message if fail
+	public ResultJson getPaymentsSent(OAuth2Authentication auth,@RequestParam("paymentStatus") String paymentStatus,
+									@RequestParam("offset") long offset, @RequestParam("limit") long limit)
+	{
+		log.info("Received getPaymentsSent");
+		String contact = ((User) auth.getPrincipal()).getUsername();		
+		ResultJson result = new ResultJson();
+		
+		try
+		{
+			List<XactionJson> xjs = restServices.getXtransactionsForMember("payer",contact,paymentStatus,offset,limit);
+			result.success(xjs);
 		}
 		catch (Exception e)
 		{

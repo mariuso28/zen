@@ -1,12 +1,18 @@
 package org.zen.rest.services;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 import org.zen.json.AccountJson;
 import org.zen.json.ChangePasswordJson;
 import org.zen.json.ModelJson;
@@ -14,12 +20,19 @@ import org.zen.json.PaymentMethodJson;
 import org.zen.json.PunterJson;
 import org.zen.json.PunterPaymentMethodJson;
 import org.zen.json.PunterProfileJson;
+import org.zen.json.UpgradeJson;
+import org.zen.json.XactionJson;
+import org.zen.payment.PaymentInfo;
+import org.zen.payment.Xtransaction;
 import org.zen.rating.RatingMgr;
 import org.zen.services.Services;
 import org.zen.user.account.Account;
 import org.zen.user.punter.Punter;
 import org.zen.user.punter.mgr.PunterMgr;
 import org.zen.user.punter.mgr.PunterMgrException;
+import org.zen.user.punter.mgr.PunterMgrValidationException;
+import org.zen.user.punter.upgrade.PaymentStatus;
+import org.zen.user.punter.upgrade.UpgradeStatus;
 
 public class RestServices {
 private static final Logger log = Logger.getLogger(RestServices.class);
@@ -28,11 +41,140 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 	private Services services;
 	@Autowired
 	private PunterMgr punterMgr;
-	@SuppressWarnings("unused")
 	private RatingMgr ratingMgr;
 	
 	public RestServices()
 	{
+		ratingMgr = new RatingMgr();
+	}
+	
+	public void submitTransactionDetails(String contact, MultipartFile uploadfile, String transactionDate,
+			String transactionDetails) {
+		
+			SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+			Date td = null;
+			try
+			{
+				td = sdf.parse(transactionDate);
+			}
+			catch (ParseException e)
+			{
+				String msg = "Invalid transaction date : " + transactionDate + " should be mm-dd-yyyy format.";
+				log.info(msg);
+				throw new RestServicesException(msg);
+			}
+			Punter punter = getPunter(contact);
+			PaymentInfo pi = new PaymentInfo();
+			pi.setTransactionDate(td);
+			if (uploadfile.isEmpty())
+			{
+				log.info("Upload file is empty using transaction details");
+				if (transactionDetails.isEmpty())
+				{
+					String msg = "Invalid transaction - details or upload file must be submitted.";
+					log.info(msg);
+					throw new RestServicesException(msg);
+				}
+				pi.setTransactionDetails(transactionDetails);
+			}
+			else
+			{
+				pi.setTransactionDetails("");
+				try {
+					pi.setUploadFileBytes(uploadfile.getBytes());
+				} catch (IOException e) {
+					log.error(e.getMessage(),e);
+					String msg = "Invalid upload file - please try another.";
+					log.info(msg);
+					throw new RestServicesException(msg);
+				}
+			}
+			Xtransaction xt = new Xtransaction();
+			try {
+				UpgradeStatus us = punter.getUpgradeStatus();
+				xt.setPayerId(punter.getId());
+				Punter sponsor = punterMgr.getPunterDao().getByContact(us.getSponsorContact());
+				xt.setPayeeId(sponsor.getId());
+				xt.setDate((new GregorianCalendar().getTime()));
+				xt.setAmount(ratingMgr.getUpgradeFeeForRating(us.getNewRating()));
+				if (us.getNewRating()==1)
+					xt.setDescription("Zen Activate Member At Rank 1");
+				else
+					xt.setDescription("Zen Upgrade Member To Rank " + us.getNewRating());
+				us.setPaymentStatus(PaymentStatus.PAYMENTMADE);
+				xt.setPaymentStatus(us.getPaymentStatus());
+				xt.setPaymentInfo(pi);
+				
+				services.getHome().getPaymentDao().storeXtransaction(xt);						// THESE NEED TO BE IN A TRANSACTION
+				services.getHome().getPunterDao().updateUpgradeStatus(punter);
+				
+			} catch (Exception e) {
+				log.info(e.getMessage());
+				throw new RestServicesException("Could not submit transaction details - contact support.");
+			}
+	}
+	
+	public List<XactionJson> getXtransactionsForMember(String memberType, String contact, String paymentStatus,
+			long offset, long limit)
+	{
+		List<XactionJson> xjs = new ArrayList<XactionJson>();
+		PaymentStatus ps = PaymentStatus.valueOf(paymentStatus);
+		try {
+			List<Xtransaction> xts = services.getHome().getPaymentDao().getXtransactionsForMember(memberType, contact, ps, offset, limit);
+			for (Xtransaction  xt : xts)
+				xjs.add(createXactionJson(xt,memberType));
+		} catch (Exception e) {
+			log.info(e.getMessage());
+			throw new RestServicesException("Could not get transactions for member - contact support.");
+		}
+		return xjs;
+	}
+	
+	
+	private XactionJson createXactionJson(Xtransaction xt, String memberType) {
+		XactionJson xj = new XactionJson();
+		xj.setAmount(xt.getAmount());
+		if (memberType.equals("payer"))
+		{
+			xj.setContact(xt.getPayeeContact());
+			xj.setFullName(xt.getPayeeFullName());
+			xj.setPhone(xt.getPayeePhone());
+		}
+		else
+		{
+			xj.setContact(xt.getPayerContact());
+			xj.setFullName(xt.getPayerFullName());
+			xj.setPhone(xt.getPayerPhone());
+		}
+		xj.setDate(xt.getDate());
+		xj.setDescription(xt.getDescription());
+		return xj;
+	}
+
+	public UpgradeJson getUpgradeRequest(String contact) {
+		Punter punter = getPunter(contact);
+		UpgradeStatus us = punter.getUpgradeStatus();
+		if (!us.getPaymentStatus().equals(PaymentStatus.PAYMENTDUE) && !us.getPaymentStatus().equals(PaymentStatus.PAYMENTFAIL))
+			throw new RestServicesException("Member not eligible for upgrade at this time.");
+			
+		try {
+			UpgradeJson uj = getUpgradeRequest(punter);
+			return uj;	
+		} catch (Exception e) {
+			log.info(e.getMessage());
+			throw new RestServicesException("Could not get upgrade request - contact support.");
+		}
+	}
+
+	private UpgradeJson getUpgradeRequest(Punter punter) {
+		UpgradeStatus us = punter.getUpgradeStatus();
+		UpgradeJson uj = new UpgradeJson();
+		uj.setCurrentRank(punter.getRating());
+		uj.setUpgradeRank(us.getNewRating());
+		Punter sponsor = punterMgr.getPunterDao().getByContact(punter.getSponsorContact());
+		uj.setUpline(createPunterProfileJson(sponsor));
+		uj.setFee(ratingMgr.getUpgradeFeeForRating(us.getNewRating()));
+		return uj;
 	}
 	
 	public void registerPunter(PunterProfileJson profile) throws RestServicesException
@@ -140,8 +282,17 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			profile.setSponsorContact(contact);
 			punterMgr.registerPunter(profile);
 		}
+		catch (PunterMgrValidationException e)
+		{
+			throw new RestServicesException(e.getMessage());
+		}
 		catch (PunterMgrException e)
 		{
+			throw new RestServicesException(e.getMessage());
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
 			throw new RestServicesException(e.getMessage());
 		}
 	}
@@ -282,10 +433,4 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 
 	
 
-	
-	
-
-	
-	
-	
 }

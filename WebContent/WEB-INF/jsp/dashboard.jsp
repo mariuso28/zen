@@ -54,6 +54,9 @@ function getPunter() {
 						alert(resultJson.status + " " + resultJson.message);
 					}
 					punter = resultJson.result;
+
+//        if (punter.rating==0)
+//            disableLinks();
 //          alert("got punter : " + punter.contact);
 //					displayPunterProfile();
         },
@@ -62,6 +65,12 @@ function getPunter() {
 	      }
      });
  }
+
+function disableLinks()
+{
+  link = document.getElementById('paymentRecieved')
+  link.style.visibility = "hidden";
+}
 
 </script>
 

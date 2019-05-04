@@ -27,6 +27,14 @@
     width: 220px;
     height: 220px;
   }
+
+  .required-field::before {
+  content: "*";
+  color: red;
+  float: right;
+}
+
+
 </style>
 
 <script>
@@ -35,6 +43,52 @@ function redirectDashboard()
 {
   window.location.replace("/zen/zx4/web/anon/goDashboard");
 }
+
+var punter;
+
+function getPunter() {
+
+	access_token = sessionStorage.getItem("access_token");
+//	alert(access_token);
+
+  var bearerHeader = 'Bearer ' + access_token;
+     $.ajax({
+
+    type: "GET",
+         url : '/zen/zx4/api/punter/getPunter',
+    headers: { 'Authorization': bearerHeader },
+    cache: false,
+    contentType: 'application/json;',
+         dataType: "json",
+         async: false,
+       	 success: function(data) {
+    //      alert(JSON.stringify(data));
+     			if (data == '')
+            {
+							alert("could not get punter")
+               return;
+            }
+
+          var resultJson = $.parseJSON(JSON.stringify(data));
+					if (resultJson.status!='OK')
+					{
+						alert(resultJson.status + " " + resultJson.message);
+            return;
+					}
+    //      alert(JSON.stringify(resultJson.result));
+					punter = resultJson.result;
+          if (punter.paymentMethods.length==0)
+          {
+            alert('You have no payment methods set up.\nPlease go to edit profile to set up at least one.');
+            redirectDashboard();
+            return;
+          }
+        },
+				error:function (e) {
+	  			alert("getPunter ERROR : " + e.status + " - " + e.statusText);
+	      }
+     });
+ }
 
 function generateRandom()
 {
@@ -259,7 +313,7 @@ function populateNewProfile()
           <div class="widget-content nopadding">
             <div class="form-horizontal">
               <div class="control-group">
-                <label class="control-label">Username :</label>
+                <label class="control-label">Zen Username :</label>
                 <div class="controls">
                   <input type="text" readonly id="sponsorContact" class="span11"/>
                 </div>
@@ -274,36 +328,36 @@ function populateNewProfile()
           <div class="widget-content nopadding">
             <div class="form-horizontal">
               <div class="control-group">
-                <label class="control-label">Zen Username :</label>
+                <label class="control-label required-field">Zen Username&nbsp</label>
                 <div class="controls">
                   <input type="text" id="contact" class="span11"/><a href="#" onClick="return generateRandom()"> Generate</a>
                 </div>
               </div><div class="control-group">
-                <label class="control-label">Password :</label>
+                <label class="control-label required-field">Password&nbsp</label>
                 <div class="controls">
                   <input type="password" id="password" class="span11"/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">Confirm Password :</label>
+                <label class="control-label required-field">Confirm Password&nbsp</label>
                 <div class="controls">
                   <input type="password" id="vpassword" class="span11"/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">Full Name :</label>
+                <label class="control-label required-field">Full Name&nbsp</label>
                 <div class="controls">
                   <input type="text" id="fullName" class="span11"/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">Passport/ID No. :</label>
+                <label class="control-label">Passport/ID No.&nbsp</label>
                 <div class="controls">
                   <input type="text" id="passportIc" class="span11"/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">Gender</label>
+                <label class="control-label required-field">Gender&nbsp</label>
                 <div class="controls">
                   <label style="margin-top:4px;">
                     <select id="gender">
@@ -314,38 +368,38 @@ function populateNewProfile()
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">Address :</label>
+                <label class="control-label">Address&nbsp</label>
                 <div class="controls">
                   <input type="text" id="address" class="span11"/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">Postcode :</label>
+                <label class="control-label">Postcode&nbsp</label>
                 <div class="controls">
                   <input type="text" id="postcode" class="span11"/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">State :</label>
+                <label class="control-label">State&nbsp</label>
                 <div class="controls">
                   <input type="text" id="state" class="span11"/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">Country :</label>
+                <label class="control-label required-field">Country&nbsp</label>
                 <div class="controls">
                   <select id="country">
                   </select>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">Phone No. :</label>
+                <label class="control-label required-field">Phone No.&nbsp</label>
                 <div class="controls">
                   <input type="text" id="phone" class="span11" />
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">Email :</label>
+                <label class="control-label required-field">Email&nbsp</label>
                 <div class="controls">
                   <input type="text" id="email" class="span11"/>
                 </div>
@@ -399,9 +453,11 @@ function populateNewProfile()
 $.ajaxSetup({
    async: false
 });
+
+
 getCountries();
 initializeRegistration();
-
+getPunter();
 
 </script>
 </body>

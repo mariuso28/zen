@@ -23,7 +23,7 @@ import org.zen.user.faker.FakerUtil;
 import org.zen.user.persistence.BaseUserDao;
 import org.zen.user.punter.Punter;
 import org.zen.user.punter.persistence.PunterDao;
-import org.zen.user.punter.upgrade.UpgradePaymentStatus;
+import org.zen.user.punter.upgrade.PaymentStatus;
 import org.zen.user.punter.upgrade.UpgradeStatus;
 import org.zen.util.EmailValidator;
 import org.zen.util.PhoneValidator;
@@ -122,6 +122,8 @@ public class PunterMgr {
 		while (true)
 		{
 			String un = fu.getRandomName();
+			un = un.replace(" ","");
+			un = un.replace("'","");
 			if (bud.getByContact(un)==null)
 				return un;
 		}
@@ -157,7 +159,6 @@ public class PunterMgr {
 		try
 		{
 			punterDao.store(punter);
-			storeDefaultPaymentMethods(punter);					// TEMPORARY WHILE WORK OUT WHERE PUT
 			return punterDao.getByContact(punter.getContact());
 		}
 		catch (Exception e)
@@ -167,6 +168,7 @@ public class PunterMgr {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private void storeDefaultPaymentMethods(Punter punter) {
 		PaymentDao pd = services.getHome().getPaymentDao();
 		List<PaymentMethodJson> pms = pd.getAvailablePaymentMethods();
@@ -191,35 +193,42 @@ public class PunterMgr {
 		return acc;
 	}
 
-	public void validateProfileValues(PunterProfileJson profile) throws PunterMgrException
+	public void validateProfileValues(PunterProfileJson profile) throws PunterMgrValidationException
 	{
+		validateField("Full Name",profile.getFullName());
 		PhoneValidator pv = new PhoneValidator();
 		if (!pv.validate(profile.getPhone()))
-			throw new PunterMgrException("Invalid phone number : " + profile.getPhone() + " - please fix.");
+			throw new PunterMgrValidationException("Invalid phone number : " + profile.getPhone() + " - please fix.");
 		EmailValidator ev = new EmailValidator();
 		if (!ev.validate(profile.getEmail()))
-			throw new PunterMgrException("Invalid email : " + profile.getEmail() + " - please fix.");
+			throw new PunterMgrValidationException("Invalid email : " + profile.getEmail() + " - please fix.");
 	}
 	
+	private void validateField(String fieldName, String field) throws PunterMgrValidationException{
+		if (field == null || field.isEmpty())
+			throw new PunterMgrValidationException("Please supply a valid " + fieldName);
+	}
+
 	private Punter createPunter(PunterProfileJson profile, Punter sponsor, Punter parent) {
 		Punter punter = new Punter();
 		punter.copyProfileValues(profile);
 		punter.setSponsor(sponsor);
 		punter.setParent(parent);
 		punter.setAccount(new Account());
+		punter.setEnabled(true);
 		UpgradeStatus us = new UpgradeStatus();
 		us.setChanged((new GregorianCalendar()).getTime());
 		if (sponsor==null)			// zen
 		{
 			punter.setRating(-1);
-			us.setPaymentStatus(UpgradePaymentStatus.NONE);
+			us.setPaymentStatus(PaymentStatus.NONE);
 			us.setSponsorContact("");
 		}
 		else
 		{
 			punter.setRating(0);
-			us.setPaymentStatus(UpgradePaymentStatus.PAYMENTDUE);
-			us.setSponsorContact(sponsor.getSponsorContact());
+			us.setPaymentStatus(PaymentStatus.PAYMENTDUE);
+			us.setSponsorContact(sponsor.getContact());
 			us.setNewRating(1);
 		}
 		punter.setUpgradeStatus(us);
@@ -259,23 +268,23 @@ public class PunterMgr {
 		}
 	}
 
-	private void validateContact(String contact) throws PunterMgrException{
+	private void validateContact(String contact) throws PunterMgrValidationException{
 		EmailValidator ev = new EmailValidator();
 		if (contact== null || !ev.validate(contact+"@test.com"))
 		{
 			log.info(contact);
-			throw new PunterMgrException("Please complete contact from alpha and digit and period characters only.");
+			throw new PunterMgrValidationException("Please complete contact from alpha and digit and period characters only.");
 		}
 	}
 
-	private void validatePassword(String password) throws PunterMgrException{
+	private void validatePassword(String password) throws PunterMgrValidationException{
 		if (password != null && password.length()>=8)
 		{
 			for (int i=0; i<password.length(); i++)
 				if (Character.isDigit(password.charAt(i)))
 					return;
 		}
-		throw new PunterMgrException("Password must be at least 8 characters and contain at least 1 digit.");
+		throw new PunterMgrValidationException("Password must be at least 8 characters and contain at least 1 digit.");
 	}
 
 	public void deleteAllPunters(boolean systemOwned) throws PunterMgrException
@@ -395,6 +404,13 @@ public class PunterMgr {
 		this.services = services;
 	}
 
-	
-	
+	public PunterDao getPunterDao() {
+		return punterDao;
+	}
+
+	public void setPunterDao(PunterDao punterDao) {
+		this.punterDao = punterDao;
+	}
+
+
 }

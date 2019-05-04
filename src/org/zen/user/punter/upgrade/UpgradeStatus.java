@@ -3,7 +3,7 @@ package org.zen.user.punter.upgrade;
 import java.util.Date;
 
 public class UpgradeStatus {
-	private UpgradePaymentStatus paymentStatus;
+	private PaymentStatus paymentStatus;
 	private int newRating;
 	private String sponsorContact;
 	private Date changed;
@@ -12,11 +12,11 @@ public class UpgradeStatus {
 	{
 	}
 
-	public UpgradePaymentStatus getPaymentStatus() {
+	public PaymentStatus getPaymentStatus() {
 		return paymentStatus;
 	}
 
-	public void setPaymentStatus(UpgradePaymentStatus paymentStatus) {
+	public void setPaymentStatus(PaymentStatus paymentStatus) {
 		this.paymentStatus = paymentStatus;
 	}
 

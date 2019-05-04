@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.zen.json.ChangePasswordJson;
 import org.zen.json.PunterProfileJson;
 import org.zen.json.ResultJson;
@@ -50,5 +51,25 @@ public interface RestPunterController
 	// ResultJson contains nothing if success, message if fail
 	public ResultJson addPaymentMethod(OAuth2Authentication auth,@RequestParam("id") String id,@RequestParam("accountNumber") String accountNumber);
 	
+	@RequestMapping(value = "/deletePaymentMethod")
+	// ResultJson contains nothing if success, message if fail
+	public ResultJson deletePaymentMethod(OAuth2Authentication auth,@RequestParam("id") String id);
+	
+	@RequestMapping(value = "/getUpgradeRequest")
+	// ResultJson contains UpgradeJson if success, message if fail
+	public ResultJson getUpgradeRequest(OAuth2Authentication auth);
+	
+	@RequestMapping(value = "/submitTransactionDetails")
+	// PkfzResultJson contains nothing if success, message if fail
+	public ResultJson submitTransactionDetails(OAuth2Authentication auth,@RequestParam("uploadfile") MultipartFile uploadfile,
+			@RequestParam("transactionDate") String transactionDate,@RequestParam("transactionDetails") String transactionDetails);
+
+	@RequestMapping(value = "/getPaymentsReceived")
+	// PkfzResultJson contains List<XactionJson> if success, message if fail
+	public ResultJson getPaymentsReceived(OAuth2Authentication auth, String paymentStatus, long offset, long limit);
+	
+	@RequestMapping(value = "/getPaymentsSent")
+	// PkfzResultJson contains List<XactionJson> if success, message if fail
+	public ResultJson getPaymentsSent(OAuth2Authentication auth, String paymentStatus, long offset, long limit);
 	
 }
