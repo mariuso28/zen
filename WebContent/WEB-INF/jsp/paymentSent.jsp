@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>paymentReceived</title>
+<title>paymentSent</title>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="../../../css/bootstrap.min.css" />
@@ -42,7 +42,7 @@ function getPendingPayments() {
 
  $.ajax({
     type: "GET",
-         url : '/zen/zx4/api/punter/getPaymentsReceived?paymentStatus=PAYMENTMADE&offset=0&limit=10',
+         url : '/zen/zx4/api/punter/getPaymentsSent?paymentStatus=PAYMENTMADE&offset=0&limit=10',
     headers: { 'Authorization': bearerHeader },
     cache: false,
     contentType: 'application/json;',
@@ -51,7 +51,7 @@ function getPendingPayments() {
   //         alert(JSON.stringify(data));
      			if (data == '')
             {
-							alert("could not getPaymentsReceived")
+							alert("could not getPaymentsSent")
               return;
             }
           var resultJson = $.parseJSON(JSON.stringify(data));
@@ -64,7 +64,7 @@ function getPendingPayments() {
           displayPaymentsPending();
         },
 				error:function (e) {
-	  			alert("getPaymentsReceived ERROR : " + e.status + " - " + e.statusText);
+	  			alert("getPaymentsSent ERROR : " + e.status + " - " + e.statusText);
 	      }
      });
  }
@@ -75,7 +75,7 @@ function getPendingPayments() {
 
   $.ajax({
      type: "GET",
-          url : '/zen/zx4/api/punter/getPaymentsReceived?paymentStatus=PAYMENTSUCCESS&offset=0&limit=10',
+          url : '/zen/zx4/api/punter/getPaymentsSent?paymentStatus=PAYMENTSUCCESS&offset=0&limit=10',
      headers: { 'Authorization': bearerHeader },
      cache: false,
      contentType: 'application/json;',
@@ -84,7 +84,7 @@ function getPendingPayments() {
    //         alert(JSON.stringify(data));
       			if (data == '')
              {
- 							alert("could not getPaymentsReceived")
+ 							alert("could not getPaymentsSent")
                return;
              }
            var resultJson = $.parseJSON(JSON.stringify(data));
@@ -97,7 +97,7 @@ function getPendingPayments() {
           displayPaymentsSuccess();
          },
  				error:function (e) {
- 	  			alert("getPaymentsReceived ERROR : " + e.status + " - " + e.statusText);
+ 	  			alert("getPaymentsSent ERROR : " + e.status + " - " + e.statusText);
  	      }
       });
   }
@@ -108,7 +108,7 @@ function getPendingPayments() {
 
   $.ajax({
      type: "GET",
-          url : '/zen/zx4/api/punter/getPaymentsReceived?paymentStatus=PAYMENTFAIL&offset=0&limit=10',
+          url : '/zen/zx4/api/punter/getPaymentsSent?paymentStatus=PAYMENTFAIL&offset=0&limit=10',
      headers: { 'Authorization': bearerHeader },
      cache: false,
      contentType: 'application/json;',
@@ -117,7 +117,7 @@ function getPendingPayments() {
    //         alert(JSON.stringify(data));
       			if (data == '')
              {
- 							alert("could not getPaymentsReceived")
+ 							alert("could not getPaymentsSent")
                return;
              }
            var resultJson = $.parseJSON(JSON.stringify(data));
@@ -130,7 +130,7 @@ function getPendingPayments() {
           displayPaymentsFailed();
          },
  				error:function (e) {
- 	  			alert("getPaymentsReceived ERROR : " + e.status + " - " + e.statusText);
+ 	  			alert("getPaymentsSent ERROR : " + e.status + " - " + e.statusText);
  	      }
       });
   }
@@ -220,7 +220,7 @@ function createPaymentTr(payment)
           <jsp:include page="actions.jsp"/>
     <!--End-Action boxes-->
     <div id="content-header">
-      <h2>Payment Received</h2>
+      <h2>Payment Sent</h2>
     </div>
 
     <div class="row-fluid">

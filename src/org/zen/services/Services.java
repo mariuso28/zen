@@ -6,6 +6,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
+import org.zen.payment.Xtransaction;
 import org.zen.persistence.home.Home;
 import org.zen.user.BaseUser;
 import org.zen.user.punter.Punter;
@@ -49,7 +50,25 @@ public class Services {
 		pd.updateAccount(sponsor.getAccount());
 		pd.updateAccount(punter.getAccount());
 	}
+	
+	public synchronized void updatePayment(Xtransaction xt,final Punter punter) {
+		new TransactionTemplate(getTransactionManager()).execute(new TransactionCallbackWithoutResult() {
+			@Override
+			protected void doInTransactionWithoutResult(TransactionStatus arg0) {
+				doUpdatePayment(xt,punter);
+			}
+		});
+	}
 		
+	public void doUpdatePayment(Xtransaction xt,Punter punter) {
+		// update the paymentstatus xtransaction, upgradestatus, rating of punter, email the punter
+		home.getPunterDao().updateRating(punter);
+		home.getPunterDao().updateUpgradeStatus(punter);
+		home.getPaymentDao().updateXtransaction(xt.getId(), xt.getPaymentStatus());
+		
+		// EMAIL PUNTER
+	}
+
 	public BaseUser getBaseUser(String contact)
 	{
 		return home.getPunterDao().getByContact(contact);

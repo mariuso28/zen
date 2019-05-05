@@ -68,6 +68,18 @@ public interface RestPunterController
 	// PkfzResultJson contains List<XactionJson> if success, message if fail
 	public ResultJson getPaymentsReceived(OAuth2Authentication auth, String paymentStatus, long offset, long limit);
 	
+	@RequestMapping(value = "/getPaymentDetails")
+	// PkfzResultJson contains XactionJson if success, message if fail
+	public ResultJson getPaymentDetails(OAuth2Authentication auth,@RequestParam("paymentId") String paymentId,@RequestParam("memberType") String memberType);
+	
+	@RequestMapping(value = "/approvePayment")
+	// PkfzResultJson contains nothing if success, message if fail
+	public ResultJson approvePayment(OAuth2Authentication auth,@RequestParam("paymentId") String paymentId);
+	
+	@RequestMapping(value = "/rejectPayment")
+	// PkfzResultJson contains nothing if success, message if fail
+	public ResultJson rejectPayment(OAuth2Authentication auth,@RequestParam("paymentId") String paymentId);
+	
 	@RequestMapping(value = "/getPaymentsSent")
 	// PkfzResultJson contains List<XactionJson> if success, message if fail
 	public ResultJson getPaymentsSent(OAuth2Authentication auth, String paymentStatus, long offset, long limit);

@@ -55,13 +55,14 @@ function getDownstreamPunters() {
      			if (data == '')
             {
 							alert("could not getDownstreamPunters")
-              return null;
+              return;
             }
 
           var resultJson = $.parseJSON(JSON.stringify(data));
 					if (resultJson.status!='OK')
 					{
 						alert(resultJson.status + " " + resultJson.message);
+            return;
 					}
 					punterList = resultJson.result;
           displayPunterList();

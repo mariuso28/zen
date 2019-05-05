@@ -1,7 +1,5 @@
 package org.zen.json;
 
-import java.util.Date;
-
 public class XactionJson {
 	private long id;
 	private String contact;
@@ -10,7 +8,8 @@ public class XactionJson {
 	private String description;
 	private double amount;
 	private String status;
-	private Date date;
+	private String date;
+	private PaymentInfoJson paymentInfo;
 	
 	public XactionJson()
 	{
@@ -72,13 +71,22 @@ public class XactionJson {
 		this.status = status;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
+
+	public PaymentInfoJson getPaymentInfo() {
+		return paymentInfo;
+	}
+
+	public void setPaymentInfo(PaymentInfoJson paymentInfo) {
+		this.paymentInfo = paymentInfo;
+	}
+
 	
 	
 

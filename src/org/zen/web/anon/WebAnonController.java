@@ -1,10 +1,14 @@
 package org.zen.web.anon;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/web/anon")
@@ -55,6 +59,14 @@ public class WebAnonController {
 		return "paymentReceived";
 	}
 	
+	@RequestMapping(value = "/goPaymentSent", method = RequestMethod.GET)
+	public String goPaymentSent() {
+			
+		log.info("Received goPaymentSent");
+			
+		return "paymentSent";
+	}
+	
 	@RequestMapping(value = "/goAgentList", method = RequestMethod.GET)
 	public String goAgentList() {
 			
@@ -63,6 +75,7 @@ public class WebAnonController {
 		return "agentList";
 	}
 	
+   
 	@RequestMapping(value = "/goChangePassword", method = RequestMethod.GET)
 	public String goChangePassword() {
 			
@@ -86,6 +99,17 @@ public class WebAnonController {
 		log.info("Received goDashboard");
 			
 		return "dashboard";
+	}
+	
+	@RequestMapping(value = "/goPaymentDetails", method = RequestMethod.GET)
+	public ModelAndView goPaymentDetails(String paymentId,String memberType) {
+			
+		log.info("Received goPaymentDetails with " + paymentId + " : " + memberType);
+			
+		Map<String,String> info = new HashMap<String,String>();
+		info.put("paymentId",paymentId);
+		info.put("memberType",memberType);
+		return new ModelAndView("paymentDetails","info",info);
 	}
 	
 	@RequestMapping(value = "/getSuccess", method = RequestMethod.GET)

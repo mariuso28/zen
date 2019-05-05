@@ -26,7 +26,7 @@ function testAllowed()
     <li class="submenu"> <a href="#"><i class="icon icon-group"></i> <span>Agents</span><span class="caret" style="margin-left:10px; margin-top:8px; border"></span></a>
       <ul>
         <li><a href="/zen/zx4/web/anon/goAgentList" onclick="return testAllowed()">Agent List</a></li>
-        <li><a href="/zen/zx4/web/anon/goUpgrade">Upgrade<span class="label label-important" style="margin-left:5px;">1</span></a></li>
+        <li><a href="/zen/zx4/web/anon/goUpgrade">Upgrade<span class="label label-important" style="margin-left:5px;" id='canUpgrade'></span></a></li>
         <li><a href="/zen/zx4/web/anon/goNewRegistration" onclick="return testAllowed()">New Registration</a></li>
         <li><a href="/zen/zx4/web/anon/goGeneology">Geneology</a></li>
         <li><a href="#" onclick="return testAllowed()">Grade Summary</a></li>
@@ -34,8 +34,8 @@ function testAllowed()
     </li>
     <li class="submenu"> <a href="#"><i class="icon icon-money"></i> <span>Payment</span><span class="caret" style="margin-left:10px; margin-top:8px;"></span></a>
       <ul>
-        <li><a href="/zen/zx4/web/anon/goPaymentReceived">Payment Received<span class="label label-important" style="margin-left:5px;">2</span></a></li>
-        <li><a href="#">Payment Sent</a></li>
+        <li><a href="/zen/zx4/web/anon/goPaymentReceived">Payment Received<span class="label label-important" style="margin-left:5px;" id='paymentsPending'></span></a></li>
+        <li><a href="/zen/zx4/web/anon/goPaymentSent">Payment Sent</a></li>
       </ul>
     </li>
     <li><a href="/zen/zx4/web/anon/login"><i class="icon icon-off"></i> <span>Logout</span></a> </li>

@@ -1,6 +1,7 @@
 package org.zen.rest.services;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -12,10 +13,12 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.codec.Base64;
 import org.springframework.web.multipart.MultipartFile;
 import org.zen.json.AccountJson;
 import org.zen.json.ChangePasswordJson;
 import org.zen.json.ModelJson;
+import org.zen.json.PaymentInfoJson;
 import org.zen.json.PaymentMethodJson;
 import org.zen.json.PunterJson;
 import org.zen.json.PunterPaymentMethodJson;
@@ -46,6 +49,47 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 	public RestServices()
 	{
 		ratingMgr = new RatingMgr();
+	}
+	
+	public void approvePayment(String contact,String paymentId) {
+		Punter punter = getPunter(contact);
+		try {
+			long idL = Long.parseLong(paymentId);
+			Xtransaction xt = services.getHome().getPaymentDao().getXtransactionById(idL);
+			UpgradeStatus us = punter.getUpgradeStatus();
+			us.setChanged((new GregorianCalendar()).getTime());
+			us.setPaymentStatus(PaymentStatus.PAYMENTSUCCESS);
+			punter.setRating(us.getNewRating());
+			xt.setPaymentStatus(PaymentStatus.PAYMENTSUCCESS);
+			services.updatePayment(xt, punter);
+			
+			log.info("Payment approved for : " + contact);
+			// SET NEW UPGRADESTATUS for upstream
+			
+		} catch (Exception e) {
+			log.error(e.getMessage(),e);
+			throw new RestServicesException("Could not approve payment for id - contact support.");
+		}
+	}
+
+	public void rejectPayment(String contact,String paymentId) {
+		Punter punter = getPunter(contact);
+		try {
+			long idL = Long.parseLong(paymentId);
+			Xtransaction xt = services.getHome().getPaymentDao().getXtransactionById(idL);
+			UpgradeStatus us = punter.getUpgradeStatus();
+			us.setChanged((new GregorianCalendar()).getTime());
+			us.setPaymentStatus(PaymentStatus.PAYMENTFAIL);
+			xt.setPaymentStatus(PaymentStatus.PAYMENTFAIL);
+			
+			services.updatePayment(xt, punter);
+			log.info("Payment approved for : " + contact);
+			// SET NEW UPGRADESTATUS for upstream
+			
+		} catch (Exception e) {
+			log.error(e.getMessage(),e);
+			throw new RestServicesException("Could not approve payment for id - contact support.");
+		}
 	}
 	
 	public void submitTransactionDetails(String contact, MultipartFile uploadfile, String transactionDate,
@@ -117,22 +161,53 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 	public List<XactionJson> getXtransactionsForMember(String memberType, String contact, String paymentStatus,
 			long offset, long limit)
 	{
+		Punter punter = getPunter(contact);
 		List<XactionJson> xjs = new ArrayList<XactionJson>();
 		PaymentStatus ps = PaymentStatus.valueOf(paymentStatus);
 		try {
-			List<Xtransaction> xts = services.getHome().getPaymentDao().getXtransactionsForMember(memberType, contact, ps, offset, limit);
+			List<Xtransaction> xts = services.getHome().getPaymentDao().getXtransactionsForMember(memberType, punter.getId(), ps, offset, limit);
 			for (Xtransaction  xt : xts)
 				xjs.add(createXactionJson(xt,memberType));
 		} catch (Exception e) {
-			log.info(e.getMessage());
+			log.error(e.getMessage(),e);
 			throw new RestServicesException("Could not get transactions for member - contact support.");
 		}
 		return xjs;
 	}
 	
+	public XactionJson getXtransactionById(String paymentId, String memberType) {
+		try {
+			long idL = Long.parseLong(paymentId);
+			Xtransaction xt = services.getHome().getPaymentDao().getXtransactionById(idL);
+			XactionJson xj = createXactionJson(xt,memberType);
+			PaymentInfoJson pi = createPaymentInfoJson(xt.getPaymentInfo());
+			xj.setPaymentInfo(pi);
+			return xj;
+		} catch (Exception e) {
+			log.error(e.getMessage(),e);
+			throw new RestServicesException("Could not get transaction for id - contact support.");
+		}
+	}
 	
+	private PaymentInfoJson createPaymentInfoJson(PaymentInfo paymentInfo) {
+		PaymentInfoJson pi = new PaymentInfoJson();
+		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+		pi.setTransactionDate(sdf.format(paymentInfo.getTransactionDate()));
+		pi.setTransactionDetails(paymentInfo.getTransactionDetails());
+		if (paymentInfo.getUploadFileBytes() == null)
+			return pi;
+		byte[] img =  Base64.encode(paymentInfo.getUploadFileBytes());
+		try {
+			pi.setUploadFileImage(new String(img,"UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			log.error(e.getMessage());
+		}
+		return pi;
+	}
+
 	private XactionJson createXactionJson(Xtransaction xt, String memberType) {
 		XactionJson xj = new XactionJson();
+		xj.setId(xt.getId());
 		xj.setAmount(xt.getAmount());
 		if (memberType.equals("payer"))
 		{
@@ -146,7 +221,9 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			xj.setFullName(xt.getPayerFullName());
 			xj.setPhone(xt.getPayerPhone());
 		}
-		xj.setDate(xt.getDate());
+		xj.setStatus(xt.getPaymentStatus().getDisplayStatus());
+		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy hh:mm");
+		xj.setDate(sdf.format(xt.getDate()));
 		xj.setDescription(xt.getDescription());
 		return xj;
 	}
@@ -161,7 +238,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			UpgradeJson uj = getUpgradeRequest(punter);
 			return uj;	
 		} catch (Exception e) {
-			log.info(e.getMessage());
+			log.error(e.getMessage(),e);
 			throw new RestServicesException("Could not get upgrade request - contact support.");
 		}
 	}
@@ -431,6 +508,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		this.services = services;
 	}
 
+	
 	
 
 }

@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
@@ -27,7 +29,49 @@ public class PaymentDaoImpl extends NamedParameterJdbcDaoSupport implements Paym
 	private static Logger log = Logger.getLogger(PaymentDaoImpl.class);
 	
 	@Override
-	public List<Xtransaction> getXtransactionsForMember(String memberType,String contact,PaymentStatus paymentStatus,long offset,long limit)
+	public void updateXtransaction(long id,PaymentStatus paymentStatus)
+	{
+		Timestamp ts = new Timestamp((new GregorianCalendar().getTime().getTime()));
+		String sql = "UPDATE xtransaction SET paymentstatus=?,date=? WHERE id=?";
+		try
+		{
+			 getJdbcTemplate().update(sql, new Object[] { paymentStatus.name(), ts, new Long(id) });
+		}
+		catch (DataAccessException e)
+		{
+			log.error("Could not execute : " + e.getMessage(),e);
+			throw new PersistenceRuntimeException("Could not execute updateXtransaction : " + e.getMessage());
+		}
+	}
+	
+	@Override
+	public Xtransaction getXtransactionById(long id)
+	{
+		String sql = "SELECT xt.*," +
+				 "payer.contact AS payercontact,payer.fullname AS payerfullname,payer.phone AS payerphone," +
+				 "payee.contact AS payeecontact,payee.fullname AS payeefullname,payee.phone AS payeephone " +
+				 "FROM xtransaction AS xt "+
+				 "JOIN baseuser AS payer ON xt.payerid = payer.id " +
+				 "JOIN baseuser AS payee ON xt.payeeid = payee.id " +
+				 "WHERE xt.id=?";
+		try
+		{
+			Xtransaction xt = getJdbcTemplate().queryForObject(sql, new Object[] { new Long(id) }, 
+					BeanPropertyRowMapper.newInstance(Xtransaction.class));
+			PaymentInfo pi = getJdbcTemplate().queryForObject("SELECT * FROM paymentinfo WHERE xtransactionid = ?", new Object[] { new Long(id) }, 
+					BeanPropertyRowMapper.newInstance(PaymentInfo.class));
+			xt.setPaymentInfo(pi);
+			return xt;
+		}
+		catch (DataAccessException e)
+		{
+			log.error("Could not execute : " + e.getMessage(),e);
+			throw new PersistenceRuntimeException("Could not execute getXtransactionById : " + e.getMessage());
+		}
+	}
+	
+	@Override
+	public List<Xtransaction> getXtransactionsForMember(String memberType,UUID memberId,PaymentStatus paymentStatus,long offset,long limit)
 	{
 		String sql = "SELECT xt.*," +
 					 "payer.contact AS payercontact,payer.fullname AS payerfullname,payer.phone AS payerphone," +
@@ -35,11 +79,11 @@ public class PaymentDaoImpl extends NamedParameterJdbcDaoSupport implements Paym
 					 "FROM xtransaction AS xt "+
 					 "JOIN baseuser AS payer ON xt.payerid = payer.id " +
 					 "JOIN baseuser AS payee ON xt.payeeid = payee.id " +
-					 "WHERE " + memberType + "id=?" +
+					 "WHERE " + memberType + "id=? " +
 					 "AND paymentstatus = ? ORDER BY date DESC offset ? limit ?"; 
 		try
 		{
-			List<Xtransaction> xts = getJdbcTemplate().query(sql, new Object[] { contact, paymentStatus.name(), offset, limit }, 
+			List<Xtransaction> xts = getJdbcTemplate().query(sql, new Object[] { memberId, paymentStatus.name(), offset, limit }, 
 					BeanPropertyRowMapper.newInstance(Xtransaction.class));
 			return xts;
 		}

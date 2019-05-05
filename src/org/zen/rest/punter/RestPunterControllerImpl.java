@@ -262,7 +262,6 @@ public class RestPunterControllerImpl implements RestPunterController
 		}
 		catch (Exception e)
 		{
-			log.error(e.getMessage(),e);
 			result.fail(e.getMessage());
 		}
 		return result;
@@ -306,6 +305,73 @@ public class RestPunterControllerImpl implements RestPunterController
 		{
 			List<XactionJson> xjs = restServices.getXtransactionsForMember("payee",contact,paymentStatus,offset,limit);
 			result.success(xjs);
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			result.fail(e.getMessage());
+		}
+		return result;
+	}
+	
+	@Override
+	@RequestMapping(value = "/getPaymentDetails")
+	// PkfzResultJson contains XactionJson if success, message if fail
+	public ResultJson getPaymentDetails(OAuth2Authentication auth,@RequestParam("paymentId") String paymentId
+										,@RequestParam("memberType") String memberType)
+	{
+		log.info("Received getPaymentDetails with " + paymentId + " : " + memberType);
+	//	String contact = ((User) auth.getPrincipal()).getUsername();		
+		ResultJson result = new ResultJson();
+		
+		try
+		{
+			XactionJson xj = restServices.getXtransactionById(paymentId,memberType);
+			result.success(xj);
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			result.fail(e.getMessage());
+		}
+		return result;
+	}
+	
+	@Override
+	@RequestMapping(value = "/approvePayment")
+	// PkfzResultJson contains nothing if success, message if fail
+	public ResultJson approvePayment(OAuth2Authentication auth,@RequestParam("paymentId") String paymentId)
+	{
+		log.info("Received approvePayment with " + paymentId);
+		String contact = ((User) auth.getPrincipal()).getUsername();		
+		ResultJson result = new ResultJson();
+		
+		try
+		{
+			restServices.approvePayment(contact,paymentId);
+			result.success();
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			result.fail(e.getMessage());
+		}
+		return result;
+	}
+	
+	@Override
+	@RequestMapping(value = "/rejectPayment")
+	// PkfzResultJson contains nothing if success, message if fail
+	public ResultJson rejectPayment(OAuth2Authentication auth,@RequestParam("paymentId") String paymentId)
+	{
+		log.info("Received rejectPayment with " + paymentId);
+		String contact = ((User) auth.getPrincipal()).getUsername();		
+		ResultJson result = new ResultJson();
+		
+		try
+		{
+			restServices.rejectPayment(contact,paymentId);
+			result.success();
 		}
 		catch (Exception e)
 		{
