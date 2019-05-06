@@ -51,20 +51,23 @@ public class Services {
 		pd.updateAccount(punter.getAccount());
 	}
 	
-	public synchronized void updatePayment(Xtransaction xt,final Punter punter) {
+	public synchronized void updatePayment(Xtransaction xt,final Punter sponsor,final Punter punter) {
 		new TransactionTemplate(getTransactionManager()).execute(new TransactionCallbackWithoutResult() {
 			@Override
 			protected void doInTransactionWithoutResult(TransactionStatus arg0) {
-				doUpdatePayment(xt,punter);
+				doUpdatePayment(xt,sponsor,punter);
 			}
 		});
 	}
 		
-	public void doUpdatePayment(Xtransaction xt,Punter punter) {
+	public void doUpdatePayment(Xtransaction xt,Punter sponsor,Punter punter) {
 		// update the paymentstatus xtransaction, upgradestatus, rating of punter, email the punter
 		home.getPunterDao().updateRating(punter);
 		home.getPunterDao().updateUpgradeStatus(punter);
 		home.getPaymentDao().updateXtransaction(xt.getId(), xt.getPaymentStatus());
+		sponsor.getAccount().setBalance(sponsor.getAccount().getBalance()+xt.getAmount());
+		punter.getAccount().setBalance(punter.getAccount().getBalance()-xt.getAmount());
+		doPerformUpdateAccounts(sponsor,punter);
 		
 		// EMAIL PUNTER
 	}
@@ -89,8 +92,6 @@ public class Services {
 	public void setTransactionManager(PlatformTransactionManager transactionManager) {
 		this.transactionManager = transactionManager;
 	}
-
-	
 	
 
 }

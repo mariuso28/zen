@@ -28,6 +28,7 @@ public class Punter extends BaseUser {
 	private Date activated;
 	private UpgradeStatus upgradeStatus;
 	private List<PunterPaymentMethodJson> paymentMethods = new ArrayList<PunterPaymentMethodJson>();
+	private int level;
 	
 	public Punter()
 	{
@@ -41,7 +42,6 @@ public class Punter extends BaseUser {
 		setContact(profile.getContact());
 		setEmail(profile.getEmail());
 		setPhone(profile.getPhone());
-		setSystemOwned(profile.isSystemOwned());
 		setFullName(profile.getFullName());
 		setGender(profile.getGender());
 		setPassportIc(profile.getPassportIc());
@@ -185,6 +185,14 @@ public class Punter extends BaseUser {
 		return "Punter [rating=" + rating + ", upgradeScheduled=" + upgradeScheduled + ", getId()=" + getId()
 				+ ", getContact()=" + getContact() + ", getEmail()=" + getEmail() + ", getPhone()=" + getPhone()
 				+ ", isEnabled()=" + isEnabled() + "]";
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
 	}
 
 	

@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.codec.Base64;
 import org.springframework.web.multipart.MultipartFile;
 import org.zen.json.AccountJson;
+import org.zen.json.ActionJson;
 import org.zen.json.ChangePasswordJson;
 import org.zen.json.ModelJson;
 import org.zen.json.PaymentInfoJson;
@@ -52,16 +53,18 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 	}
 	
 	public void approvePayment(String contact,String paymentId) {
-		Punter punter = getPunter(contact);
+		
+		Punter sponsor = getPunter(contact);
 		try {
 			long idL = Long.parseLong(paymentId);
 			Xtransaction xt = services.getHome().getPaymentDao().getXtransactionById(idL);
+			Punter punter = getPunter(xt.getPayerContact());
 			UpgradeStatus us = punter.getUpgradeStatus();
 			us.setChanged((new GregorianCalendar()).getTime());
 			us.setPaymentStatus(PaymentStatus.PAYMENTSUCCESS);
 			punter.setRating(us.getNewRating());
 			xt.setPaymentStatus(PaymentStatus.PAYMENTSUCCESS);
-			services.updatePayment(xt, punter);
+			services.updatePayment(xt,sponsor, punter);
 			
 			log.info("Payment approved for : " + contact);
 			// SET NEW UPGRADESTATUS for upstream
@@ -81,10 +84,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			us.setChanged((new GregorianCalendar()).getTime());
 			us.setPaymentStatus(PaymentStatus.PAYMENTFAIL);
 			xt.setPaymentStatus(PaymentStatus.PAYMENTFAIL);
-			
-			services.updatePayment(xt, punter);
-			log.info("Payment approved for : " + contact);
-			// SET NEW UPGRADESTATUS for upstream
+			log.info("Payment rejected for : " + contact);
 			
 		} catch (Exception e) {
 			log.error(e.getMessage(),e);
@@ -434,7 +434,15 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 	public PunterProfileJson getPunterProfile(String contact) throws RestServicesException{
 	
 		Punter punter = getPunter(contact);
-		return createPunterProfileJson(punter);
+		PunterProfileJson ppj = createPunterProfileJson(punter);
+		List<Xtransaction> xts = services.getHome().getPaymentDao().getXtransactionsForMember("payee",punter.getId(), PaymentStatus.PAYMENTMADE, 0, Integer.MAX_VALUE); 
+		ActionJson aj = new ActionJson();
+		if (!xts.isEmpty())
+			aj.setPaymentsPending(Integer.toString(xts.size()));
+		if (punter.getUpgradeStatus().getPaymentStatus().equals(PaymentStatus.PAYMENTDUE))
+			aj.setUpgradable("&#10004");
+		ppj.setActions(aj);
+		return ppj;
 	}
 
 	private Punter getPunter(String contact) throws RestServicesException{

@@ -35,6 +35,47 @@ var access_token;
 var pendingPayments;
 var successfulPayments;
 var failedPayments;
+var punter;
+
+function getPunter() {
+
+	access_token = sessionStorage.getItem("access_token");
+//	alert(access_token);
+
+  var bearerHeader = 'Bearer ' + access_token;
+     $.ajax({
+
+    type: "GET",
+         url : '/zen/zx4/api/punter/getPunter',
+    headers: { 'Authorization': bearerHeader },
+    cache: false,
+    contentType: 'application/json;',
+         dataType: "json",
+         async: false,
+       	 success: function(data) {
+    //      alert(JSON.stringify(data));
+     			if (data == '')
+            {
+							alert("could not get punter")
+               return;
+            }
+
+          var resultJson = $.parseJSON(JSON.stringify(data));
+					if (resultJson.status!='OK')
+					{
+						alert(resultJson.status + " " + resultJson.message);
+            return;
+					}
+    //      alert(JSON.stringify(resultJson.result));
+					punter = resultJson.result;
+
+        },
+				error:function (e) {
+	  			alert("getPunter ERROR : " + e.status + " - " + e.statusText);
+	      }
+     });
+ }
+
 
 function getPendingPayments() {
 
@@ -137,7 +178,7 @@ function getPendingPayments() {
 
  function displayPaymentsPending()
  {
-     var pl = document.getElementById('paymentsPending');
+     var pl = document.getElementById('paymentsPendingTbody');
      pl.innerHTML="";
 
      pendingPayments.forEach((payment, i) => {
@@ -243,7 +284,7 @@ function createPaymentTr(payment)
                   <th>Date/Time</th>
                 </tr>
               </thead>
-              <tbody id="paymentsPending">
+              <tbody id="paymentsPendingTbody">
               </tbody>
             </table>
           </div>  <!-- widget-content nopadding -->
@@ -321,6 +362,16 @@ function createPaymentTr(payment)
 <script>
 
 access_token = sessionStorage.getItem("access_token");
+
+$.ajaxSetup({
+   async: false
+});
+
+getPunter();
+//set Important Lables
+document.getElementById('paymentsPending').innerHTML = punter.actions.paymentsPending;
+document.getElementById('upgradable').innerHTML = punter.actions.upgradable;
+
 //	alert(access_token);
 getPendingPayments();
 getSuccessfulPayments();

@@ -180,6 +180,11 @@ function getDownstreamPunters() {
 
 
 <script>
+
+$.ajaxSetup({
+   async: false
+});
+
 getDownstreamPunters();
 </script>
 

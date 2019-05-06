@@ -221,6 +221,9 @@ function resetMenu() {
 
 }
 getPunter();
+//set Important Lables
+document.getElementById('paymentsPending').innerHTML = punter.actions.paymentsPending;
+document.getElementById('upgradable').innerHTML = punter.actions.upgradable;
 
 </script>
 </body>

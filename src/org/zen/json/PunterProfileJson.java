@@ -21,6 +21,7 @@ public class PunterProfileJson {
 	private String sponsorContact;
 	private boolean systemOwned;
 	private int rating;
+	private ActionJson actions;
 	private Date activated;
 	private List<PunterPaymentMethodJson> paymentMethods;
 	
@@ -171,6 +172,14 @@ public class PunterProfileJson {
 
 	public void setPaymentMethods(List<PunterPaymentMethodJson> paymentMethods) {
 		this.paymentMethods = paymentMethods;
+	}
+
+	public ActionJson getActions() {
+		return actions;
+	}
+
+	public void setActions(ActionJson actions) {
+		this.actions = actions;
 	}
 
 	

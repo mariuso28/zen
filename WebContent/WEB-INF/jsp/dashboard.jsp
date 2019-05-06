@@ -55,6 +55,7 @@ function getPunter() {
 					}
 					punter = resultJson.result;
 
+
 //        if (punter.rating==0)
 //            disableLinks();
 //          alert("got punter : " + punter.contact);
@@ -211,11 +212,14 @@ function disableLinks()
 
 <script type="text/javascript">
 
-function resetMenu() {
-   document.gomenu.selector.selectedIndex = 2;
-}
+$.ajaxSetup({
+   async: false
+});
 
 getPunter();
+// set Important Lables
+document.getElementById('paymentsPending').innerHTML = punter.actions.paymentsPending;
+document.getElementById('upgradable').innerHTML = punter.actions.upgradable;
 
 </script>
 </body>

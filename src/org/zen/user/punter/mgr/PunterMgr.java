@@ -221,16 +221,20 @@ public class PunterMgr {
 		if (sponsor==null)			// zen
 		{
 			punter.setRating(-1);
+			punter.setLevel(0);
 			us.setPaymentStatus(PaymentStatus.NONE);
 			us.setSponsorContact("");
 		}
 		else
 		{
 			punter.setRating(0);
+			punter.setLevel(parent.getLevel()+1);
 			us.setPaymentStatus(PaymentStatus.PAYMENTDUE);
 			us.setSponsorContact(sponsor.getContact());
 			us.setNewRating(1);
 		}
+		punter.setSystemOwned(punter.getLevel()<=ZenModelOriginal.SYSTEMLEVELS);
+		
 		punter.setUpgradeStatus(us);
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		punter.setPassword(encoder.encode(profile.getPassword()));			

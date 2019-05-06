@@ -14,6 +14,7 @@ public class ZenModelOriginal {
 	private static Logger log = Logger.getLogger(ZenModelOriginal.class);
 	
 	public final static int FULLCHILDREN = 3;
+	public final static int SYSTEMLEVELS = 4;
 	private Punter root;
 	private ConcurrentHashMap<String,Punter> map = new ConcurrentHashMap<String,Punter>();
 	private RatingMgr ratingMgr = new RatingMgr();

@@ -293,6 +293,11 @@ function getPaymentDetails(paymentId,memberType) {
 <script src="../../../js/matrix.tables.js"></script>
 
 <script>
+
+$.ajaxSetup({
+   async: false
+});
+
 access_token = sessionStorage.getItem("access_token");
 getPaymentDetails(${info['paymentId']},"${info['memberType']}");
 </script>

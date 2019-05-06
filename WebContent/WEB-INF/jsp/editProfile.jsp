@@ -222,6 +222,10 @@ function addPunterPaymentMethod(id,accountNumber)
 function refreshProfile()
 {
   getPunter();
+//set Important Lables
+  document.getElementById('paymentsPending').innerHTML = punter.actions.paymentsPending;
+  document.getElementById('upgradable').innerHTML = punter.actions.upgradable;
+
   getCountries();
   getAvailablePaymentMethods();
 }

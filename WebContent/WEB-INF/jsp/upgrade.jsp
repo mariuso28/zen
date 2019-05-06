@@ -405,7 +405,16 @@ function displayUpgradeRequest()
 <script src="../../../js/matrix.tables.js"></script>
 
 <script>
+
+$.ajaxSetup({
+   async: false
+});
+
   getPunter();
+//set Important Lables
+  document.getElementById('paymentsPending').innerHTML = punter.actions.paymentsPending;
+  document.getElementById('upgradable').innerHTML = punter.actions.upgradable;
+
   getUpgradeRequest();
 </script>
 
