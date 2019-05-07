@@ -106,7 +106,7 @@ public class RestAuthController {
 			result.success(responseEntity.getBody());
 		}
 		catch(HttpClientErrorException e){
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 			result.fail("username or password incorrect");
 			/*
 			if (e.getStatusCode().equals(HttpStatus.UNAUTHORIZED)){
@@ -117,7 +117,7 @@ public class RestAuthController {
 				*/
 		}
 		catch(Exception e){
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 			result.fail("Unexpected error on authorize - contact support");
 		}
 		

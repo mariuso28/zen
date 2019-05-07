@@ -19,6 +19,39 @@
 
 <script>
 
+function lostPassword() {
+
+
+ 	var username = document.getElementById('username').value;
+
+  if (username=="")
+  {
+    alert("Please supply your Zen username so we can reset your password.");
+    return;
+  }
+
+  if (!confirm("A new password for zen member : " + username + " will be sent to your email"))
+    return;
+
+  $.ajax({
+
+     type: "GET",
+        url : "/zen/zx4/api/anon/resetPassword?username=" + username,
+        cache: false,
+        contentType: 'application/json;',
+        dataType: "json",
+           success: function(data) {
+           var result = $.parseJSON(JSON.stringify(data));
+           if (result.status != 'OK')
+           {
+             alert(result.message);
+             return;
+           }
+           alert(result.result);
+         }
+     });
+ }
+
 function login() {
 
 
@@ -85,7 +118,7 @@ function login() {
           </div>
           </div>
           <div class="form-actions">
-            <span class="pull-left"><a href="#" class="flip-link btn btn-info" id="to-recover">Lost password?</a></span>
+            <span class="pull-left"><a href="#" onclick="return lostPassword()" class="flip-link btn btn-info" id="to-recover">Lost password?</a></span>
             <span class="pull-right">
               <a type="submit" onclick="return login()" class="btn btn-success" />Login</a></span>
           </div>

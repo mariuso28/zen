@@ -36,6 +36,24 @@ public class RestAnonControllerImpl implements RestAnonController{
 		return result;
 	}
 	
+	@RequestMapping(value = "/resetPassword")
+	// ResultJson contains message if success, message if fail
+	public ResultJson resetPassword(@RequestParam("username") String username)
+	{
+		log.info("Received resetPassword for : " + username);
+		ResultJson result = new ResultJson();
+		try
+		{
+			result.success(restServices.resetPassword(username));
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			result.fail(e.getMessage());
+		}
+		return result;
+	}
+	
 	@RequestMapping(value = "/getSuccess")
 	// ResultJson contains message if success, message if fail
 	public ResultJson getSuccess()

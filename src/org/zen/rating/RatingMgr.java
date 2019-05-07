@@ -24,10 +24,10 @@ public class RatingMgr {
 		ratings.add(new RatingJson(Integer.MAX_VALUE,0,RatingImageImport.loadImage("12")));
 		ratings.add(new RatingJson(0,0,RatingImageImport.loadImage("0")));
 		ratings.add(new RatingJson(1,ZENBUYIN,RatingImageImport.loadImage("1")));
-		ratings.add(new RatingJson(2,100,RatingImageImport.loadImage("2")));
-		ratings.add(new RatingJson(3,200,RatingImageImport.loadImage("3")));
-		ratings.add(new RatingJson(4,400,RatingImageImport.loadImage("4")));
-		ratings.add(new RatingJson(5,700,RatingImageImport.loadImage("5")));
+		ratings.add(new RatingJson(2,40,RatingImageImport.loadImage("2")));
+		ratings.add(new RatingJson(3,120,RatingImageImport.loadImage("3")));
+		ratings.add(new RatingJson(4,300,RatingImageImport.loadImage("4")));
+		ratings.add(new RatingJson(5,500,RatingImageImport.loadImage("5")));
 		ratings.add(new RatingJson(6,1000,RatingImageImport.loadImage("6")));
 		ratings.add(new RatingJson(7,1000,RatingImageImport.loadImage("7")));
 		ratings.add(new RatingJson(8,1000,RatingImageImport.loadImage("8")));

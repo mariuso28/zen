@@ -1,5 +1,9 @@
 package org.zen.services;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -10,6 +14,7 @@ import org.zen.payment.Xtransaction;
 import org.zen.persistence.home.Home;
 import org.zen.user.BaseUser;
 import org.zen.user.punter.Punter;
+import org.zen.user.punter.mgr.PunterMgr;
 import org.zen.user.punter.persistence.PunterDao;
 
 public class Services {
@@ -19,11 +24,31 @@ public class Services {
 	
 	@Autowired
 	private PlatformTransactionManager transactionManager;
+	@Autowired
+	private PunterMgr punterMgr;
+	
 	private Home home;
+	private Mail mail;
+	private String propertiesPath;
+	private Properties prop;
+	private MailNotifier mailNotifier;
 	
 	public void initServices()
-	{
+	{	
+		prop = new Properties();
+		try {
+			prop.load(new FileInputStream(propertiesPath));
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(5);
+		} 
+		mail.setMailCcNotifications(prop.getProperty("mailCcNotifications"));
+		mail.setMailSendFilter(prop.getProperty("mailSendFilter"));
+		mail.setMailDisabled(prop.getProperty("mailDisabled"));
+	
+		setMailNotifier(new MailNotifier(this));
 	}
+	
 	
 	public synchronized void updateAccountsAndRating(Punter parentToPay, Punter punter) {
 		new TransactionTemplate(getTransactionManager()).execute(new TransactionCallbackWithoutResult() {
@@ -65,8 +90,8 @@ public class Services {
 		home.getPunterDao().updateRating(punter);
 		home.getPunterDao().updateUpgradeStatus(punter);
 		home.getPaymentDao().updateXtransaction(xt.getId(), xt.getPaymentStatus());
-		sponsor.getAccount().setBalance(sponsor.getAccount().getBalance()+xt.getAmount());
-		punter.getAccount().setBalance(punter.getAccount().getBalance()-xt.getAmount());
+		sponsor.getAccount().xfer(xt.getAmount());
+		punter.getAccount().xfer(-1*xt.getAmount());
 		doPerformUpdateAccounts(sponsor,punter);
 		
 		// EMAIL PUNTER
@@ -92,6 +117,42 @@ public class Services {
 	public void setTransactionManager(PlatformTransactionManager transactionManager) {
 		this.transactionManager = transactionManager;
 	}
+	
+	public PunterMgr getPunterMgr() {
+		return punterMgr;
+	}
+
+
+	public String getPropertiesPath() {
+		return propertiesPath;
+	}
+	
+	public void setPropertiesPath(String propertiesPath) {
+		this.propertiesPath = propertiesPath;
+	}
+	
+	public Properties getProp() {
+		return prop;
+	}
+	
+	public void setProp(Properties prop) {
+		this.prop = prop;
+	}
+	
+	public Mail getMail() {
+		return mail;
+	}
+	
+	public void setMail(Mail mail) {
+		this.mail = mail;
+	}
+	public MailNotifier getMailNotifier() {
+		return mailNotifier;
+	}
+	public void setMailNotifier(MailNotifier mailNotifier) {
+		this.mailNotifier = mailNotifier;
+	}
+	
 	
 
 }

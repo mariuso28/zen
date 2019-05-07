@@ -31,6 +31,10 @@ public interface RestAnonController
 	// ResultJson contains List<PunterPaymentMethodJson> if success, message if fail
 	public ResultJson getAvailablePaymentMethods();
 	
+	@RequestMapping(value = "/resetPassword")
+	// ResultJson contains message if success, message if fail
+	public ResultJson resetPassword(@RequestParam("username") String username);
+	
 	@RequestMapping(value = "/getModel")
 	// ResultJson contains model if success, message if fail
 	public ResultJson getModel(@RequestParam("contact") String contact);	

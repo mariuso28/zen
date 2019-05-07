@@ -1,10 +1,14 @@
 package org.zen.user.punter.mgr;
 
+import static org.apache.commons.text.CharacterPredicates.DIGITS;
+import static org.apache.commons.text.CharacterPredicates.LETTERS;
+
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+import org.apache.commons.text.RandomStringGenerator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,6 +17,7 @@ import org.zen.json.ChangePasswordJson;
 import org.zen.json.PaymentMethodJson;
 import org.zen.json.PunterPaymentMethodJson;
 import org.zen.json.PunterProfileJson;
+import org.zen.model.ZenModel;
 import org.zen.model.ZenModelOriginal;
 import org.zen.payment.persistence.PaymentDao;
 import org.zen.persistence.PersistenceRuntimeException;
@@ -40,6 +45,48 @@ public class PunterMgr {
 	
 	public PunterMgr()
 	{
+	}
+	
+	public String resetPassword(Punter punter) throws PunterMgrException
+	{
+		String pw="";
+		boolean ok=false;
+		while (!ok)
+		{
+			pw = createRandomPassword();
+			try
+			{
+				validatePassword(pw);
+				ok=true;
+			}
+			catch (Exception e)
+			{
+			}
+		}
+		PasswordEncoder encoder = new BCryptPasswordEncoder();
+		punter.setPassword(encoder.encode(pw));
+		try
+		{
+			punterDao.updatePassword(punter);
+			services.getMailNotifier().notifyPasswordReset(punter,pw);
+			String msg = "A reset password has been sent to your email : " + punter.getEmail() + ". Please logon and change at your convenience.";
+			log.info(msg);
+			return msg;
+		}
+		catch (Exception e)
+		{
+			throw new PunterMgrException("Could not reset password - contact support.");
+		}
+	}
+	
+	private String createRandomPassword()
+	{
+		RandomStringGenerator generator = new RandomStringGenerator.Builder()
+		        .withinRange('0', 'z')
+		        .filteredBy(LETTERS, DIGITS)
+		        .build();
+		String random = generator.generate(8);
+		return random;
 	}
 	
 	public static PunterProfileJson makeProfile(String contact,String email,String phone,String password,
@@ -241,6 +288,62 @@ public class PunterMgr {
 		return punter;
 	}
 
+	public void tryUpgrade(Punter punter) throws PunterMgrException
+	{
+		int newRating = canUpgrade2(punter);
+		if (newRating<=0)
+			return;
+		
+		scheduleUpgrade(punter,newRating);
+		while (true)
+		{
+			Punter parent = getByUUID(punter.getParentId());
+			newRating = canUpgrade2(parent);
+			if (newRating<=0)
+				return;
+			scheduleUpgrade(parent,newRating);
+			punter = parent;
+		}
+	}
+	
+	private void scheduleUpgrade(Punter punter, int newRating) throws PunterMgrException {
+		UpgradeStatus us = punter.getUpgradeStatus();
+		us.setPaymentStatus(PaymentStatus.PAYMENTDUE);
+		us.setNewRating(newRating);
+		Punter parentToPay = getByUUID(punter.getParentId());
+		if (parentToPay.getRating()!=-1)					// jump a generation
+		{
+			parentToPay = getByUUID(parentToPay.getParentId());
+		}
+		// find the parent above rating
+		while (parentToPay.getRating() != -1 && parentToPay.getRating()<punter.getRating())
+		{
+			parentToPay = getByUUID(parentToPay.getParentId());
+		}
+		us.setSponsorContact(parentToPay.getContact());
+	}
+
+	private int canUpgrade2(Punter punter) throws PunterMgrException
+	{
+		if (punter.getRating()==0)
+			return -1;
+		List<Punter> children = getChidren(punter);
+		if (children.size()<ZenModel.FULLCHILDREN)
+			return -1;
+		for (Punter c : children)
+		{
+			if (c.getRating()<punter.getRating())
+				return -1;
+		}
+		int newRating = Integer.MAX_VALUE;
+		for (Punter c : children)
+		{
+			if (c.getRating()<newRating)
+				newRating = c.getRating();
+		}
+		return newRating+1;
+	}
+	
 	private Punter getParent(Punter root)
 	{
 		List<Punter> children = punterDao.getChildren(root);

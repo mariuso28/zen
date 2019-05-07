@@ -19,19 +19,23 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 	<bean class="org.zen.config.service.CustomAuthenticationSuccessHandler" />
 	<bean class="org.zen.config.service.CustomAuthenticationFailureHandler" />
 	
+	<import resource="zen-mail.xml"/>
 	<import resource="zen-persistence.xml"/>
 
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 
+	<bean id="punterMgr"
+		class="org.zen.user.punter.mgr.PunterMgr" >
+
+	</bean>
+
 	<bean id="services"
 		class="org.zen.services.Services" init-method="initServices">
 		<property name="home" ref="home" />		
-	</bean>
-
-	<bean id="punterMgr"
-		class="org.zen.user.punter.mgr.PunterMgr" >
+		<property name="mail" ref="mail" />
+		<property name="propertiesPath" value="/home/pmk/zen-properties/zen.properties"/>
 	</bean>
 
 	<bean id="zenModel"

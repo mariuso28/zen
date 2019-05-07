@@ -52,6 +52,24 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		ratingMgr = new RatingMgr();
 	}
 	
+
+	public String resetPassword(String username) {
+		Punter punter;
+		try
+		{
+			punter = services.getHome().getPunterDao().getByContact(username);
+			if (punter == null)
+				throw new RestServicesException("Zen Member : " + username + " not found - please check");
+			return punterMgr.resetPassword(punter);
+		}
+		catch (Exception e)
+		{
+			log.error("resetPassword",e);
+			throw new RestServicesException("Zen Member : " + username + " not found - please check");
+		}
+	}
+
+	
 	public void approvePayment(String contact,String paymentId) {
 		
 		Punter sponsor = getPunter(contact);
@@ -67,7 +85,10 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			services.updatePayment(xt,sponsor, punter);
 			
 			log.info("Payment approved for : " + contact);
+			services.getMailNotifier().notifyUpgradeSuccessful(punter);
+			
 			// SET NEW UPGRADESTATUS for upstream
+			punterMgr.tryUpgrade(sponsor);
 			
 		} catch (Exception e) {
 			log.error(e.getMessage(),e);
@@ -76,16 +97,19 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 	}
 
 	public void rejectPayment(String contact,String paymentId) {
-		Punter punter = getPunter(contact);
+		Punter sponsor = getPunter(contact);
 		try {
 			long idL = Long.parseLong(paymentId);
 			Xtransaction xt = services.getHome().getPaymentDao().getXtransactionById(idL);
+			Punter punter = getPunter(xt.getPayerContact());
 			UpgradeStatus us = punter.getUpgradeStatus();
 			us.setChanged((new GregorianCalendar()).getTime());
 			us.setPaymentStatus(PaymentStatus.PAYMENTFAIL);
+			punter.setRating(us.getNewRating());
 			xt.setPaymentStatus(PaymentStatus.PAYMENTFAIL);
+			services.updatePayment(xt,sponsor, punter);
 			log.info("Payment rejected for : " + contact);
-			
+			services.getMailNotifier().notifyUpgradeFailed(punter,sponsor);
 		} catch (Exception e) {
 			log.error(e.getMessage(),e);
 			throw new RestServicesException("Could not approve payment for id - contact support.");
@@ -257,7 +281,8 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 	public void registerPunter(PunterProfileJson profile) throws RestServicesException
 	{
 		try {
-			punterMgr.registerPunter(profile);
+			Punter punter = punterMgr.registerPunter(profile);
+			services.getMailNotifier().notifyFirstUpgradeRequired(punter);
 		} catch (PunterMgrException e) {
 			log.error(e.getMessage());
 			throw new RestServicesException(e.getMessage());
@@ -330,8 +355,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		else
 			line = "<font color='Red'>"+ text + bal + lev + "</font></a>";
 		
-		String href = "<a href=# onclick=\"return getPunterDetails(" + 
-					punter.getEmail() + ")\"" + line;
+		String href = "<a href='#' onclick='return getPunterDetails(' + punter.getContact() + ')'" + line;
 		pj.setText(href);
 		pj.setAccount(createAccountJson(punter.getAccount()));
 		return pj;
@@ -455,7 +479,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		}
 		catch (Exception e)
 		{
-			log.error("updatePunterProfile",e);
+			log.error("getPunter",e);
 			throw new RestServicesException("Zen Member : " + contact + " not found - contact support");
 		}
 		return punter;

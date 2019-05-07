@@ -17,6 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class WebAnonController {
 	private static Logger log = Logger.getLogger(WebAnonController.class);
+//	@Autowired
+//	private Services services;
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String logon() {
@@ -111,6 +113,7 @@ public class WebAnonController {
 		info.put("memberType",memberType);
 		return new ModelAndView("paymentDetails","info",info);
 	}
+	
 	
 	@RequestMapping(value = "/getSuccess", method = RequestMethod.GET)
 	public String getSuccess() {

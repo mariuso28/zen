@@ -38,7 +38,7 @@ public class CustomUserDetailsService implements UserDetailsService{
 			throw new UsernameNotFoundException("Error finding User: " + username);
 		}
 		
-		log.info("User : " + baseUser.getEmail() + " found with role :" + baseUser.getRole());
+		log.info("User : " + baseUser.getContact() + " found with role :" + baseUser.getRole() + " enabled : " + baseUser.isEnabled());
 		
 		Collection<GrantedAuthority> authorities = getAuthorities(baseUser);
 		

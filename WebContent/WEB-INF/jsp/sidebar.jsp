@@ -36,11 +36,11 @@ function testAllowed()
     </li>
     <li class="submenu"> <a href="#"><i class="icon icon-group"></i> <span>Agents</span><span class="caret" style="margin-left:10px; margin-top:8px; border"></span></a>
       <ul>
-        <li><a href="/zen/zx4/web/anon/goAgentList" onclick="return testAllowed()">Agent List</a></li>
+        <li><a href="/zen/zx4/web/anon/goGeneology" onclick="return testAllowed()">Agent List</a></li>
         <li><a href="/zen/zx4/web/anon/goUpgrade" onclick="return testZen()">Upgrade
                 <span class="label label-important" style="margin-left:5px;" id='upgradable'></span></a></li>
         <li><a href="/zen/zx4/web/anon/goNewRegistration" onclick="return testAllowed()">New Registration</a></li>
-        <li><a href="/zen/zx4/web/anon/goGeneology">Geneology</a></li>
+    <!--    <li><a href="/zen/zx4/web/anon/goGeneology">Geneology</a></li>  -->
 <!--        <li><a href="#">Grade Summary</a></li>  -->
       </ul>
     </li>
