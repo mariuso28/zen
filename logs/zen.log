@@ -21755,3 +21755,122 @@ org.springframework.web.client.HttpServerErrorException: 500 Internal Server Err
 14:42:21,575  INFO http-bio-8080-exec-13 WebAnonController:35 - Received goGeneology
 14:42:21,747  INFO http-bio-8080-exec-11 RestPunterControllerImpl:145 - Received getPunter for : zen
 14:42:21,789  INFO http-bio-8080-exec-14 RestAnonControllerImpl:91 - Received getModel with : zen
+12:39:49,161  INFO http-bio-8080-exec-9 WebAnonController:26 - Received login
+12:39:53,908  INFO http-bio-8080-exec-1 RestAuthController:49 - Got authorize1
+12:39:53,910  INFO http-bio-8080-exec-1 RestAuthController:78 - Attempting to authorize : zen
+12:39:54,436  INFO http-bio-8080-exec-1 RestAuthController:86 - Got baseuser : zen
+12:39:54,681  INFO http-bio-8080-exec-6 CustomUserDetailsService:28 - loadUserByUsername username : zen
+12:39:54,722  INFO http-bio-8080-exec-6 CustomUserDetailsService:41 - User : zen found with role :ROLE_PUNTER enabled : true
+12:39:54,723  INFO http-bio-8080-exec-6 CustomUserDetailsService:47 - Using User : zen with authorities :[ROLE_PUNTER]
+12:39:55,045  INFO http-bio-8080-exec-15 WebAnonController:101 - Received goDashboard
+12:39:55,276  INFO http-bio-8080-exec-8 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:39:57,795  INFO http-bio-8080-exec-5 WebAnonController:35 - Received goGeneology
+12:39:58,002  INFO http-bio-8080-exec-4 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:39:58,051  INFO http-bio-8080-exec-5 RestAnonControllerImpl:91 - Received getModel with : zen
+12:44:26,567  INFO http-bio-8080-exec-4 WebAnonController:101 - Received goDashboard
+12:44:27,406  INFO http-bio-8080-exec-10 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:44:32,153  INFO http-bio-8080-exec-10 WebAnonController:35 - Received goGeneology
+12:44:32,521  INFO http-bio-8080-exec-21 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:44:32,602  INFO http-bio-8080-exec-16 RestAnonControllerImpl:91 - Received getModel with : zen
+12:45:20,655  INFO http-bio-8080-exec-9 WebAnonController:101 - Received goDashboard
+12:45:21,779  INFO http-bio-8080-exec-13 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:45:24,551  INFO http-bio-8080-exec-13 WebAnonController:35 - Received goGeneology
+12:45:24,905  INFO http-bio-8080-exec-3 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:45:25,010  INFO http-bio-8080-exec-3 RestAnonControllerImpl:91 - Received getModel with : zen
+12:52:08,190  INFO http-bio-8080-exec-1 WebAnonController:26 - Received login
+12:52:15,539  INFO http-bio-8080-exec-7 WebAnonController:26 - Received login
+12:52:24,815  INFO http-bio-8080-exec-4 RestAuthController:49 - Got authorize1
+12:52:24,815  INFO http-bio-8080-exec-4 RestAuthController:78 - Attempting to authorize : zen
+12:52:25,236  INFO http-bio-8080-exec-4 RestAuthController:86 - Got baseuser : zen
+12:52:25,450  INFO http-bio-8080-exec-14 CustomUserDetailsService:28 - loadUserByUsername username : zen
+12:52:25,495  INFO http-bio-8080-exec-14 CustomUserDetailsService:41 - User : zen found with role :ROLE_PUNTER enabled : true
+12:52:25,495  INFO http-bio-8080-exec-14 CustomUserDetailsService:47 - Using User : zen with authorities :[ROLE_PUNTER]
+12:52:25,810  INFO http-bio-8080-exec-4 WebAnonController:101 - Received goDashboard
+12:52:26,302  INFO http-bio-8080-exec-12 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:52:28,810  INFO http-bio-8080-exec-10 WebAnonController:35 - Received goGeneology
+12:52:29,155  INFO http-bio-8080-exec-1 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:52:29,219  INFO http-bio-8080-exec-1 RestAnonControllerImpl:91 - Received getModel with : zen
+12:53:16,805  INFO http-bio-8080-exec-16 WebAnonController:43 - Received goNewRegistration
+12:53:17,511  INFO http-bio-8080-exec-9 RestAnonControllerImpl:109 - Received getCountries
+12:53:17,630  INFO http-bio-8080-exec-9 RestPunterControllerImpl:54 - Received initializeRegistration for : zen
+12:53:17,650  INFO http-bio-8080-exec-9 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:53:18,988  INFO http-bio-8080-exec-9 WebAnonController:35 - Received goGeneology
+12:53:19,287  INFO http-bio-8080-exec-11 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:53:19,330  INFO http-bio-8080-exec-14 RestAnonControllerImpl:91 - Received getModel with : zen
+12:55:54,365  INFO http-bio-8080-exec-9 WebAnonController:35 - Received goGeneology
+12:55:55,997  INFO http-bio-8080-exec-11 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:55:56,180  INFO http-bio-8080-exec-14 RestAnonControllerImpl:91 - Received getModel with : zen
+12:56:20,844  INFO http-bio-8080-exec-13 WebAnonController:26 - Received login
+12:56:26,493  INFO http-bio-8080-exec-17 RestAuthController:49 - Got authorize1
+12:56:26,494  INFO http-bio-8080-exec-17 RestAuthController:78 - Attempting to authorize : zen
+12:56:26,502  INFO http-bio-8080-exec-17 RestAuthController:86 - Got baseuser : zen
+12:56:26,790  INFO http-bio-8080-exec-4 CustomUserDetailsService:28 - loadUserByUsername username : zen
+12:56:26,802  INFO http-bio-8080-exec-4 CustomUserDetailsService:41 - User : zen found with role :ROLE_PUNTER enabled : true
+12:56:26,803  INFO http-bio-8080-exec-4 CustomUserDetailsService:47 - Using User : zen with authorities :[ROLE_PUNTER]
+12:56:27,012  INFO http-bio-8080-exec-17 WebAnonController:101 - Received goDashboard
+12:56:27,451  INFO http-bio-8080-exec-9 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:56:29,570  INFO http-bio-8080-exec-9 WebAnonController:35 - Received goGeneology
+12:56:29,873  INFO http-bio-8080-exec-18 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:56:29,935  INFO http-bio-8080-exec-3 RestAnonControllerImpl:91 - Received getModel with : zen
+12:59:25,659  INFO http-bio-8080-exec-8 WebAnonController:101 - Received goDashboard
+12:59:27,160  INFO http-bio-8080-exec-18 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:59:29,212  INFO http-bio-8080-exec-10 WebAnonController:35 - Received goGeneology
+12:59:29,562  INFO http-bio-8080-exec-16 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:59:29,634  INFO http-bio-8080-exec-18 RestAnonControllerImpl:91 - Received getModel with : zen
+13:07:42,595  INFO http-bio-8080-exec-9 WebAnonController:26 - Received login
+13:07:47,607  INFO http-bio-8080-exec-9 WebAnonController:26 - Received login
+13:07:58,659  INFO http-bio-8080-exec-6 RestAuthController:49 - Got authorize1
+13:08:14,151  INFO http-bio-8080-exec-6 RestAuthController:78 - Attempting to authorize : zen
+13:08:14,763  INFO http-bio-8080-exec-6 RestAuthController:86 - Got baseuser : zen
+13:08:25,905  INFO http-bio-8080-exec-9 CustomUserDetailsService:28 - loadUserByUsername username : zen
+13:08:25,968  INFO http-bio-8080-exec-9 CustomUserDetailsService:41 - User : zen found with role :ROLE_PUNTER enabled : true
+13:08:25,969  INFO http-bio-8080-exec-9 CustomUserDetailsService:47 - Using User : zen with authorities :[ROLE_PUNTER]
+13:08:26,344  INFO http-bio-8080-exec-4 WebAnonController:101 - Received goDashboard
+13:08:26,809  INFO http-bio-8080-exec-6 RestPunterControllerImpl:145 - Received getPunter for : zen
+13:08:30,734  INFO http-bio-8080-exec-11 WebAnonController:35 - Received goGeneology
+13:08:31,051  INFO http-bio-8080-exec-10 RestPunterControllerImpl:145 - Received getPunter for : zen
+13:08:31,096  INFO http-bio-8080-exec-9 RestAnonControllerImpl:91 - Received getModel with : zen
+13:12:01,492  INFO http-bio-8080-exec-7 WebAnonController:26 - Received login
+13:12:48,686  INFO http-bio-8080-exec-6 WebAnonController:26 - Received login
+13:12:54,276  INFO http-bio-8080-exec-6 RestAuthController:49 - Got authorize1
+13:12:54,277  INFO http-bio-8080-exec-6 RestAuthController:78 - Attempting to authorize : zen
+13:12:54,727  INFO http-bio-8080-exec-6 RestAuthController:86 - Got baseuser : zen
+13:12:54,924  INFO http-bio-8080-exec-10 CustomUserDetailsService:28 - loadUserByUsername username : zen
+13:12:54,969  INFO http-bio-8080-exec-10 CustomUserDetailsService:41 - User : zen found with role :ROLE_PUNTER enabled : true
+13:12:54,969  INFO http-bio-8080-exec-10 CustomUserDetailsService:47 - Using User : zen with authorities :[ROLE_PUNTER]
+13:12:55,298  INFO http-bio-8080-exec-4 WebAnonController:101 - Received goDashboard
+13:12:55,743  INFO http-bio-8080-exec-13 RestPunterControllerImpl:145 - Received getPunter for : zen
+13:12:58,425  INFO http-bio-8080-exec-13 WebAnonController:35 - Received goGeneology
+13:12:58,746  INFO http-bio-8080-exec-3 RestPunterControllerImpl:145 - Received getPunter for : zen
+13:12:58,811  INFO http-bio-8080-exec-2 RestAnonControllerImpl:91 - Received getModel with : zen
+13:14:26,841  INFO http-bio-8080-exec-9 WebAnonController:26 - Received login
+13:14:33,459  INFO http-bio-8080-exec-5 RestAuthController:49 - Got authorize1
+13:14:33,460  INFO http-bio-8080-exec-5 RestAuthController:78 - Attempting to authorize : zen
+13:14:33,878  INFO http-bio-8080-exec-5 RestAuthController:86 - Got baseuser : zen
+13:14:34,064  INFO http-bio-8080-exec-15 CustomUserDetailsService:28 - loadUserByUsername username : zen
+13:14:34,119  INFO http-bio-8080-exec-15 CustomUserDetailsService:41 - User : zen found with role :ROLE_PUNTER enabled : true
+13:14:34,120  INFO http-bio-8080-exec-15 CustomUserDetailsService:47 - Using User : zen with authorities :[ROLE_PUNTER]
+13:14:34,457  INFO http-bio-8080-exec-5 WebAnonController:101 - Received goDashboard
+13:14:34,818  INFO http-bio-8080-exec-7 RestPunterControllerImpl:145 - Received getPunter for : zen
+13:14:36,165  INFO http-bio-8080-exec-7 WebAnonController:35 - Received goGeneology
+13:14:36,489  INFO http-bio-8080-exec-5 RestPunterControllerImpl:145 - Received getPunter for : zen
+13:14:36,537  INFO http-bio-8080-exec-15 RestAnonControllerImpl:91 - Received getModel with : zen
+13:15:53,758  INFO http-bio-8080-exec-9 WebAnonController:101 - Received goDashboard
+13:15:55,248  INFO http-bio-8080-exec-9 RestPunterControllerImpl:145 - Received getPunter for : zen
+13:15:57,247  INFO http-bio-8080-exec-14 WebAnonController:35 - Received goGeneology
+13:15:57,643  INFO http-bio-8080-exec-14 RestPunterControllerImpl:145 - Received getPunter for : zen
+13:15:57,736  INFO http-bio-8080-exec-10 RestAnonControllerImpl:91 - Received getModel with : zen
+13:19:07,241  INFO http-bio-8080-exec-9 WebAnonController:26 - Received login
+13:20:56,073  INFO http-bio-8080-exec-6 WebAnonController:26 - Received login
+13:21:00,920  INFO http-bio-8080-exec-15 WebAnonController:26 - Received login
+13:21:07,803  INFO http-bio-8080-exec-5 RestAuthController:49 - Got authorize1
+13:21:07,804  INFO http-bio-8080-exec-5 RestAuthController:78 - Attempting to authorize : zen
+13:21:08,253  INFO http-bio-8080-exec-5 RestAuthController:86 - Got baseuser : zen
+13:21:08,487  INFO http-bio-8080-exec-4 CustomUserDetailsService:28 - loadUserByUsername username : zen
+13:21:08,543  INFO http-bio-8080-exec-4 CustomUserDetailsService:41 - User : zen found with role :ROLE_PUNTER enabled : true
+13:21:08,544  INFO http-bio-8080-exec-4 CustomUserDetailsService:47 - Using User : zen with authorities :[ROLE_PUNTER]
+13:21:08,963  INFO http-bio-8080-exec-6 WebAnonController:101 - Received goDashboard
+13:21:09,448  INFO http-bio-8080-exec-16 RestPunterControllerImpl:145 - Received getPunter for : zen
+13:21:11,757  INFO http-bio-8080-exec-3 WebAnonController:35 - Received goGeneology
+13:21:12,061  INFO http-bio-8080-exec-11 RestPunterControllerImpl:145 - Received getPunter for : zen
+13:21:12,135  INFO http-bio-8080-exec-11 RestAnonControllerImpl:91 - Received getModel with : zen

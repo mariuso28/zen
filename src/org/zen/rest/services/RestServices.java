@@ -355,12 +355,17 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		else
 			line = "<font color='Red'>"+ text + bal + lev + "</font></a>";
 		
-		String href = "<a href='#' onclick='return getPunterDetails(' + punter.getContact() + ')'" + line;
+		log.info("JJYYY");
+		String method = "return getPunterDetails('" + punter.getContact() + "')";
+		log.info("Method : " + method);
+		String href = "<a href=\"#\" onclick=\"" + method +"\">" + line;
+		log.info("href : " + href);
 		pj.setText(href);
-		pj.setAccount(createAccountJson(punter.getAccount()));
+//		pj.setAccount(createAccountJson(punter.getAccount()));
 		return pj;
 	}
 
+	@SuppressWarnings("unused")
 	private AccountJson createAccountJson(Account account) {
 		AccountJson aj = new AccountJson();
 		aj.setBalance(account.getBalance());
