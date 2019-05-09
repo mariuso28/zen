@@ -508,6 +508,9 @@ function updateProfile() {
     </div>
   </div>
 </div>
+</div>
+</div>
+</div>
 
 <!--end-main-container-part-->
 

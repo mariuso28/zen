@@ -237,7 +237,7 @@ public class Mail
 
 	public void notifyPasswordReset(final BaseUser baseUser,String password) throws Exception {
 		
-		final String subject = "Palma-Homeland Password Reset";
+		final String subject = "Zen Password Reset";
 		final String msg = "Hi " + baseUser.getFullName() + "\nYour password has been reset to\n" +
 				password + "\n - please logon with your email and change at your convenience.\nKind regards - " 
 					+  SITEHTMLLINK +".";
@@ -287,7 +287,7 @@ public class Mail
 		final String msg = "Hi " + baseUser.getFullName() + "\nYour Urban Paradigm Registration is set to your email : " + baseUser.getEmail() 
 				+ ".\nPlease click on the link below to activate your registration.\n\n"
 				+ link
-				+"\n\nKind regards - palma-homeland.my.";
+				+"\n\nKind regards - Zen support team.";
 		
 		final List<String> attactments = new  ArrayList<String>();
 		

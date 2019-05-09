@@ -161,6 +161,29 @@ public class RestPunterControllerImpl implements RestPunterController
 		return result;
 	}
 	
+	@RequestMapping(value = "/getPunterByContact")
+	// ResultJson contains punter's profile if success, message if fail
+	public ResultJson getPunterByContact(OAuth2Authentication auth,@RequestParam("contact") String contact)
+	{
+		log.info("Received getPunterByContact for : " + contact);
+		
+		ResultJson result = new ResultJson();
+		
+		try
+		{
+			PunterProfileJson punter = restServices.getPunterProfile(contact);
+			if (punter!=null)
+				result.success(punter);
+			else
+				result.fail("Error getting Zen member : " + contact + " - contact support.");
+		}
+		catch (Exception e)
+		{
+			result.fail("Error getting Zen member : " + contact + " - contact support.");
+		}
+		return result;
+	}
+	
 	@Override
 	@RequestMapping(value = "/getDownstreamPunters")
 	// ResultJson contains downstream punter profiles if success, message if fail

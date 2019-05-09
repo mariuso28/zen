@@ -21874,3 +21874,335 @@ org.springframework.web.client.HttpServerErrorException: 500 Internal Server Err
 13:21:11,757  INFO http-bio-8080-exec-3 WebAnonController:35 - Received goGeneology
 13:21:12,061  INFO http-bio-8080-exec-11 RestPunterControllerImpl:145 - Received getPunter for : zen
 13:21:12,135  INFO http-bio-8080-exec-11 RestAnonControllerImpl:91 - Received getModel with : zen
+11:40:14,157  INFO http-bio-8080-exec-21 WebAnonController:26 - Received login
+11:40:20,233  INFO http-bio-8080-exec-14 RestAuthController:49 - Got authorize1
+11:40:20,234  INFO http-bio-8080-exec-14 RestAuthController:78 - Attempting to authorize : zen
+11:40:20,693  INFO http-bio-8080-exec-14 RestAuthController:86 - Got baseuser : zen
+11:40:21,005  INFO http-bio-8080-exec-17 CustomUserDetailsService:28 - loadUserByUsername username : zen
+11:40:21,052  INFO http-bio-8080-exec-17 CustomUserDetailsService:41 - User : zen found with role :ROLE_PUNTER enabled : true
+11:40:21,053  INFO http-bio-8080-exec-17 CustomUserDetailsService:47 - Using User : zen with authorities :[ROLE_PUNTER]
+11:40:21,356  INFO http-bio-8080-exec-8 WebAnonController:101 - Received goDashboard
+11:40:21,664  INFO http-bio-8080-exec-8 RestPunterControllerImpl:145 - Received getPunter for : zen
+11:40:25,731  INFO http-bio-8080-exec-26 WebAnonController:35 - Received goGeneology
+11:40:25,963  INFO http-bio-8080-exec-9 RestPunterControllerImpl:145 - Received getPunter for : zen
+11:40:26,005  INFO http-bio-8080-exec-1 RestAnonControllerImpl:91 - Received getModel with : zen
+11:40:26,036  INFO http-bio-8080-exec-1 RestServices:358 - JJYYY
+11:40:26,036  INFO http-bio-8080-exec-1 RestServices:360 - Method : return getPunterDetails('zen')
+11:40:26,037  INFO http-bio-8080-exec-1 RestServices:362 - href : <a href="#" onclick="return getPunterDetails('zen')"><font color='Red'>zen RM10.00 #-1 </font></a>
+11:40:26,052  INFO http-bio-8080-exec-1 RestServices:358 - JJYYY
+11:40:26,054  INFO http-bio-8080-exec-1 RestServices:360 - Method : return getPunterDetails('Max')
+11:40:26,054  INFO http-bio-8080-exec-1 RestServices:362 - href : <a href="#" onclick="return getPunterDetails('Max')"><font color='Red'>Max RM0.00 #0 </font></a>
+11:40:26,056  INFO http-bio-8080-exec-1 RestServices:358 - JJYYY
+11:40:26,056  INFO http-bio-8080-exec-1 RestServices:360 - Method : return getPunterDetails('Orion')
+11:40:26,057  INFO http-bio-8080-exec-1 RestServices:362 - href : <a href="#" onclick="return getPunterDetails('Orion')"><font color='Red'>Orion RM-10.00 #1 </font></a>
+11:40:26,063  INFO http-bio-8080-exec-1 RestServices:358 - JJYYY
+11:40:26,064  INFO http-bio-8080-exec-1 RestServices:360 - Method : return getPunterDetails('Tamia')
+11:40:26,069  INFO http-bio-8080-exec-1 RestServices:362 - href : <a href="#" onclick="return getPunterDetails('Tamia')"><font color='Red'>Tamia RM0.00 #0 </font></a>
+11:43:59,989  INFO http-bio-8080-exec-24 WebAnonController:35 - Received goGeneology
+11:44:01,152  INFO http-bio-8080-exec-19 RestPunterControllerImpl:145 - Received getPunter for : zen
+11:44:01,225  INFO http-bio-8080-exec-19 RestAnonControllerImpl:91 - Received getModel with : zen
+11:44:01,240  INFO http-bio-8080-exec-19 RestServices:358 - JJYYY
+11:44:01,241  INFO http-bio-8080-exec-19 RestServices:360 - Method : return getPunterDetails('zen')
+11:44:01,241  INFO http-bio-8080-exec-19 RestServices:362 - href : <a href="#" onclick="return getPunterDetails('zen')"><font color='Red'>zen RM10.00 #-1 </font></a>
+11:44:01,255  INFO http-bio-8080-exec-19 RestServices:358 - JJYYY
+11:44:01,255  INFO http-bio-8080-exec-19 RestServices:360 - Method : return getPunterDetails('Max')
+11:44:01,256  INFO http-bio-8080-exec-19 RestServices:362 - href : <a href="#" onclick="return getPunterDetails('Max')"><font color='Red'>Max RM0.00 #0 </font></a>
+11:44:01,257  INFO http-bio-8080-exec-19 RestServices:358 - JJYYY
+11:44:01,258  INFO http-bio-8080-exec-19 RestServices:360 - Method : return getPunterDetails('Orion')
+11:44:01,258  INFO http-bio-8080-exec-19 RestServices:362 - href : <a href="#" onclick="return getPunterDetails('Orion')"><font color='Red'>Orion RM-10.00 #1 </font></a>
+11:44:01,263  INFO http-bio-8080-exec-19 RestServices:358 - JJYYY
+11:44:01,264  INFO http-bio-8080-exec-19 RestServices:360 - Method : return getPunterDetails('Tamia')
+11:44:01,264  INFO http-bio-8080-exec-19 RestServices:362 - href : <a href="#" onclick="return getPunterDetails('Tamia')"><font color='Red'>Tamia RM0.00 #0 </font></a>
+11:45:53,499  INFO http-bio-8080-exec-20 WebAnonController:43 - Received goNewRegistration
+11:45:54,332  INFO http-bio-8080-exec-7 RestAnonControllerImpl:109 - Received getCountries
+11:45:55,029  INFO http-bio-8080-exec-7 RestPunterControllerImpl:54 - Received initializeRegistration for : zen
+11:45:55,052  INFO http-bio-8080-exec-7 RestPunterControllerImpl:145 - Received getPunter for : zen
+11:47:56,290  INFO http-bio-8080-exec-14 WebAnonController:92 - Received goEditProfile
+11:47:56,946  INFO http-bio-8080-exec-6 RestPunterControllerImpl:145 - Received getPunter for : zen
+11:47:56,989  INFO http-bio-8080-exec-8 RestAnonControllerImpl:109 - Received getCountries
+11:47:57,067  INFO http-bio-8080-exec-17 RestAnonControllerImpl:127 - Received getAvailablePaymentMethods
+12:02:37,330  INFO http-bio-8080-exec-9 WebAnonController:26 - Received login
+12:02:42,754  INFO http-bio-8080-exec-14 RestAuthController:49 - Got authorize1
+12:02:42,754  INFO http-bio-8080-exec-14 RestAuthController:78 - Attempting to authorize : zen
+12:02:42,758  INFO http-bio-8080-exec-14 RestAuthController:86 - Got baseuser : zen
+12:02:42,961  INFO http-bio-8080-exec-8 CustomUserDetailsService:28 - loadUserByUsername username : zen
+12:02:42,969  INFO http-bio-8080-exec-8 CustomUserDetailsService:41 - User : zen found with role :ROLE_PUNTER enabled : true
+12:02:42,973  INFO http-bio-8080-exec-8 CustomUserDetailsService:47 - Using User : zen with authorities :[ROLE_PUNTER]
+12:02:43,159  INFO http-bio-8080-exec-14 WebAnonController:101 - Received goDashboard
+12:02:43,484  INFO http-bio-8080-exec-21 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:02:45,353  INFO http-bio-8080-exec-21 WebAnonController:35 - Received goGeneology
+12:02:46,259  INFO http-bio-8080-exec-21 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:02:46,305  INFO http-bio-8080-exec-22 RestAnonControllerImpl:91 - Received getModel with : zen
+12:02:46,330  INFO http-bio-8080-exec-22 RestServices:358 - JJYYY
+12:02:46,330  INFO http-bio-8080-exec-22 RestServices:360 - Method : return getPunterDetails('zen')
+12:02:46,330  INFO http-bio-8080-exec-22 RestServices:362 - href : <a href="#" onclick="return getPunterDetails('zen')"><font color='Red'>zen RM10.00 #-1 </font></a>
+12:02:46,338  INFO http-bio-8080-exec-22 RestServices:358 - JJYYY
+12:02:46,338  INFO http-bio-8080-exec-22 RestServices:360 - Method : return getPunterDetails('Max')
+12:02:46,339  INFO http-bio-8080-exec-22 RestServices:362 - href : <a href="#" onclick="return getPunterDetails('Max')"><font color='Red'>Max RM0.00 #0 </font></a>
+12:02:46,342  INFO http-bio-8080-exec-22 RestServices:358 - JJYYY
+12:02:46,342  INFO http-bio-8080-exec-22 RestServices:360 - Method : return getPunterDetails('Orion')
+12:02:46,343  INFO http-bio-8080-exec-22 RestServices:362 - href : <a href="#" onclick="return getPunterDetails('Orion')"><font color='Red'>Orion RM-10.00 #1 </font></a>
+12:02:46,345  INFO http-bio-8080-exec-22 RestServices:358 - JJYYY
+12:02:46,345  INFO http-bio-8080-exec-22 RestServices:360 - Method : return getPunterDetails('Tamia')
+12:02:46,346  INFO http-bio-8080-exec-22 RestServices:362 - href : <a href="#" onclick="return getPunterDetails('Tamia')"><font color='Red'>Tamia RM0.00 #0 </font></a>
+12:03:26,873  INFO http-bio-8080-exec-21 WebAnonController:26 - Received login
+12:03:32,452  INFO http-bio-8080-exec-26 RestAuthController:49 - Got authorize1
+12:03:32,453  INFO http-bio-8080-exec-26 RestAuthController:78 - Attempting to authorize : zen
+12:03:32,851  INFO http-bio-8080-exec-26 RestAuthController:86 - Got baseuser : zen
+12:03:33,026  INFO http-bio-8080-exec-33 CustomUserDetailsService:28 - loadUserByUsername username : zen
+12:03:33,059  INFO http-bio-8080-exec-33 CustomUserDetailsService:41 - User : zen found with role :ROLE_PUNTER enabled : true
+12:03:33,059  INFO http-bio-8080-exec-33 CustomUserDetailsService:47 - Using User : zen with authorities :[ROLE_PUNTER]
+12:03:33,318  INFO http-bio-8080-exec-21 WebAnonController:101 - Received goDashboard
+12:03:33,600  INFO http-bio-8080-exec-29 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:03:35,678  INFO http-bio-8080-exec-9 WebAnonController:35 - Received goGeneology
+12:03:35,872  INFO http-bio-8080-exec-14 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:03:35,930  INFO http-bio-8080-exec-29 RestAnonControllerImpl:91 - Received getModel with : zen
+12:03:35,951  INFO http-bio-8080-exec-29 RestServices:359 - Method : return getPunterDetails('zen')
+12:03:35,952  INFO http-bio-8080-exec-29 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('zen')"><font color='Red'>zen RM10.00 #-1 </font></a>
+12:03:35,966  INFO http-bio-8080-exec-29 RestServices:359 - Method : return getPunterDetails('Max')
+12:03:35,967  INFO http-bio-8080-exec-29 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Max')"><font color='Red'>Max RM0.00 #0 </font></a>
+12:03:35,968  INFO http-bio-8080-exec-29 RestServices:359 - Method : return getPunterDetails('Orion')
+12:03:35,969  INFO http-bio-8080-exec-29 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Orion')"><font color='Red'>Orion RM-10.00 #1 </font></a>
+12:03:35,973  INFO http-bio-8080-exec-29 RestServices:359 - Method : return getPunterDetails('Tamia')
+12:03:35,973  INFO http-bio-8080-exec-29 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Tamia')"><font color='Red'>Tamia RM0.00 #0 </font></a>
+12:05:31,310  INFO http-bio-8080-exec-32 WebAnonController:35 - Received goGeneology
+12:05:32,206  INFO http-bio-8080-exec-33 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:05:32,250  INFO http-bio-8080-exec-33 RestAnonControllerImpl:91 - Received getModel with : zen
+12:05:32,267  INFO http-bio-8080-exec-33 RestServices:359 - Method : return getPunterDetails('zen')
+12:05:32,268  INFO http-bio-8080-exec-33 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('zen')"><font color='Red'>zen RM10.00 #-1 </font></a>
+12:05:32,284  INFO http-bio-8080-exec-33 RestServices:359 - Method : return getPunterDetails('Max')
+12:05:32,285  INFO http-bio-8080-exec-33 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Max')"><font color='Red'>Max RM0.00 #0 </font></a>
+12:05:32,287  INFO http-bio-8080-exec-33 RestServices:359 - Method : return getPunterDetails('Orion')
+12:05:32,287  INFO http-bio-8080-exec-33 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Orion')"><font color='Red'>Orion RM-10.00 #1 </font></a>
+12:05:32,295  INFO http-bio-8080-exec-33 RestServices:359 - Method : return getPunterDetails('Tamia')
+12:05:32,295  INFO http-bio-8080-exec-33 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Tamia')"><font color='Red'>Tamia RM0.00 #0 </font></a>
+12:05:33,601  INFO http-bio-8080-exec-34 WebAnonController:35 - Received goGeneology
+12:05:33,800  INFO http-bio-8080-exec-33 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:05:33,861  INFO http-bio-8080-exec-33 RestAnonControllerImpl:91 - Received getModel with : zen
+12:05:33,878  INFO http-bio-8080-exec-33 RestServices:359 - Method : return getPunterDetails('zen')
+12:05:33,878  INFO http-bio-8080-exec-33 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('zen')"><font color='Red'>zen RM10.00 #-1 </font></a>
+12:05:33,889  INFO http-bio-8080-exec-33 RestServices:359 - Method : return getPunterDetails('Max')
+12:05:33,889  INFO http-bio-8080-exec-33 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Max')"><font color='Red'>Max RM0.00 #0 </font></a>
+12:05:33,890  INFO http-bio-8080-exec-33 RestServices:359 - Method : return getPunterDetails('Orion')
+12:05:33,891  INFO http-bio-8080-exec-33 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Orion')"><font color='Red'>Orion RM-10.00 #1 </font></a>
+12:05:33,894  INFO http-bio-8080-exec-33 RestServices:359 - Method : return getPunterDetails('Tamia')
+12:05:33,894  INFO http-bio-8080-exec-33 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Tamia')"><font color='Red'>Tamia RM0.00 #0 </font></a>
+12:05:46,421  INFO http-bio-8080-exec-34 WebAnonController:35 - Received goGeneology
+12:05:47,399  INFO http-bio-8080-exec-34 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:05:47,456  INFO http-bio-8080-exec-34 RestAnonControllerImpl:91 - Received getModel with : zen
+12:05:47,473  INFO http-bio-8080-exec-34 RestServices:359 - Method : return getPunterDetails('zen')
+12:05:47,474  INFO http-bio-8080-exec-34 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('zen')"><font color='Red'>zen RM10.00 #-1 </font></a>
+12:05:47,484  INFO http-bio-8080-exec-34 RestServices:359 - Method : return getPunterDetails('Max')
+12:05:47,484  INFO http-bio-8080-exec-34 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Max')"><font color='Red'>Max RM0.00 #0 </font></a>
+12:05:47,485  INFO http-bio-8080-exec-34 RestServices:359 - Method : return getPunterDetails('Orion')
+12:05:47,486  INFO http-bio-8080-exec-34 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Orion')"><font color='Red'>Orion RM-10.00 #1 </font></a>
+12:05:47,490  INFO http-bio-8080-exec-34 RestServices:359 - Method : return getPunterDetails('Tamia')
+12:05:47,491  INFO http-bio-8080-exec-34 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Tamia')"><font color='Red'>Tamia RM0.00 #0 </font></a>
+12:05:48,002  INFO http-bio-8080-exec-34 WebAnonController:35 - Received goGeneology
+12:05:48,258  INFO http-bio-8080-exec-26 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:05:48,288  INFO http-bio-8080-exec-40 RestAnonControllerImpl:91 - Received getModel with : zen
+12:05:48,296  INFO http-bio-8080-exec-40 RestServices:359 - Method : return getPunterDetails('zen')
+12:05:48,296  INFO http-bio-8080-exec-40 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('zen')"><font color='Red'>zen RM10.00 #-1 </font></a>
+12:05:48,307  INFO http-bio-8080-exec-40 RestServices:359 - Method : return getPunterDetails('Max')
+12:05:48,307  INFO http-bio-8080-exec-40 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Max')"><font color='Red'>Max RM0.00 #0 </font></a>
+12:05:48,309  INFO http-bio-8080-exec-40 RestServices:359 - Method : return getPunterDetails('Orion')
+12:05:48,310  INFO http-bio-8080-exec-40 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Orion')"><font color='Red'>Orion RM-10.00 #1 </font></a>
+12:05:48,318  INFO http-bio-8080-exec-40 RestServices:359 - Method : return getPunterDetails('Tamia')
+12:05:48,318  INFO http-bio-8080-exec-40 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Tamia')"><font color='Red'>Tamia RM0.00 #0 </font></a>
+12:07:06,455  INFO http-bio-8080-exec-38 WebAnonController:35 - Received goGeneology
+12:07:06,838  INFO http-bio-8080-exec-28 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:07:06,955  INFO http-bio-8080-exec-28 RestAnonControllerImpl:91 - Received getModel with : zen
+12:07:06,964  INFO http-bio-8080-exec-28 RestServices:359 - Method : return getPunterDetails('zen')
+12:07:06,964  INFO http-bio-8080-exec-28 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('zen')"><font color='Red'>zen RM10.00 #-1 </font></a>
+12:07:06,971  INFO http-bio-8080-exec-28 RestServices:359 - Method : return getPunterDetails('Max')
+12:07:06,971  INFO http-bio-8080-exec-28 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Max')"><font color='Red'>Max RM0.00 #0 </font></a>
+12:07:06,972  INFO http-bio-8080-exec-28 RestServices:359 - Method : return getPunterDetails('Orion')
+12:07:06,972  INFO http-bio-8080-exec-28 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Orion')"><font color='Red'>Orion RM-10.00 #1 </font></a>
+12:07:06,974  INFO http-bio-8080-exec-28 RestServices:359 - Method : return getPunterDetails('Tamia')
+12:07:06,974  INFO http-bio-8080-exec-28 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Tamia')"><font color='Red'>Tamia RM0.00 #0 </font></a>
+12:10:03,759  INFO http-bio-8080-exec-29 WebAnonController:35 - Received goGeneology
+12:10:04,847  INFO http-bio-8080-exec-33 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:10:04,920  INFO http-bio-8080-exec-33 RestAnonControllerImpl:91 - Received getModel with : zen
+12:10:04,935  INFO http-bio-8080-exec-33 RestServices:359 - Method : return getPunterDetails('zen')
+12:10:04,935  INFO http-bio-8080-exec-33 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('zen')"><font color='Red'>zen RM10.00 #-1 </font></a>
+12:10:04,939  INFO http-bio-8080-exec-33 RestServices:359 - Method : return getPunterDetails('Max')
+12:10:04,939  INFO http-bio-8080-exec-33 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Max')"><font color='Red'>Max RM0.00 #0 </font></a>
+12:10:04,940  INFO http-bio-8080-exec-33 RestServices:359 - Method : return getPunterDetails('Orion')
+12:10:04,940  INFO http-bio-8080-exec-33 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Orion')"><font color='Red'>Orion RM-10.00 #1 </font></a>
+12:10:04,946  INFO http-bio-8080-exec-33 RestServices:359 - Method : return getPunterDetails('Tamia')
+12:10:04,946  INFO http-bio-8080-exec-33 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Tamia')"><font color='Red'>Tamia RM0.00 #0 </font></a>
+12:11:39,975  INFO http-bio-8080-exec-32 WebAnonController:35 - Received goGeneology
+12:11:40,789  INFO http-bio-8080-exec-41 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:11:40,829  INFO http-bio-8080-exec-37 RestAnonControllerImpl:91 - Received getModel with : zen
+12:11:40,834  INFO http-bio-8080-exec-37 RestServices:359 - Method : return getPunterDetails('zen')
+12:11:40,834  INFO http-bio-8080-exec-37 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('zen')"><font color='Red'>zen RM10.00 #-1 </font></a>
+12:11:40,844  INFO http-bio-8080-exec-37 RestServices:359 - Method : return getPunterDetails('Max')
+12:11:40,844  INFO http-bio-8080-exec-37 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Max')"><font color='Red'>Max RM0.00 #0 </font></a>
+12:11:40,845  INFO http-bio-8080-exec-37 RestServices:359 - Method : return getPunterDetails('Orion')
+12:11:40,845  INFO http-bio-8080-exec-37 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Orion')"><font color='Red'>Orion RM-10.00 #1 </font></a>
+12:11:40,849  INFO http-bio-8080-exec-37 RestServices:359 - Method : return getPunterDetails('Tamia')
+12:11:40,850  INFO http-bio-8080-exec-37 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Tamia')"><font color='Red'>Tamia RM0.00 #0 </font></a>
+12:12:00,254  INFO http-bio-8080-exec-37 WebAnonController:35 - Received goGeneology
+12:12:01,063  INFO http-bio-8080-exec-29 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:12:01,128  INFO http-bio-8080-exec-38 RestAnonControllerImpl:91 - Received getModel with : zen
+12:12:01,133  INFO http-bio-8080-exec-38 RestServices:359 - Method : return getPunterDetails('zen')
+12:12:01,133  INFO http-bio-8080-exec-38 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('zen')"><font color='Red'>zen RM10.00 #-1 </font></a>
+12:12:01,139  INFO http-bio-8080-exec-38 RestServices:359 - Method : return getPunterDetails('Max')
+12:12:01,139  INFO http-bio-8080-exec-38 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Max')"><font color='Red'>Max RM0.00 #0 </font></a>
+12:12:01,140  INFO http-bio-8080-exec-38 RestServices:359 - Method : return getPunterDetails('Orion')
+12:12:01,141  INFO http-bio-8080-exec-38 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Orion')"><font color='Red'>Orion RM-10.00 #1 </font></a>
+12:12:01,143  INFO http-bio-8080-exec-38 RestServices:359 - Method : return getPunterDetails('Tamia')
+12:12:01,143  INFO http-bio-8080-exec-38 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Tamia')"><font color='Red'>Tamia RM0.00 #0 </font></a>
+12:19:51,888  INFO http-bio-8080-exec-29 WebAnonController:35 - Received goGeneology
+12:19:52,776  INFO http-bio-8080-exec-34 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:19:52,823  INFO http-bio-8080-exec-29 RestAnonControllerImpl:91 - Received getModel with : zen
+12:19:52,830  INFO http-bio-8080-exec-29 RestServices:359 - Method : return getPunterDetails('zen')
+12:19:52,830  INFO http-bio-8080-exec-29 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('zen')"><font color='Red'>zen RM10.00 #-1 </font></a>
+12:19:52,837  INFO http-bio-8080-exec-29 RestServices:359 - Method : return getPunterDetails('Max')
+12:19:52,837  INFO http-bio-8080-exec-29 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Max')"><font color='Red'>Max RM0.00 #0 </font></a>
+12:19:52,838  INFO http-bio-8080-exec-29 RestServices:359 - Method : return getPunterDetails('Orion')
+12:19:52,838  INFO http-bio-8080-exec-29 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Orion')"><font color='Red'>Orion RM-10.00 #1 </font></a>
+12:19:52,840  INFO http-bio-8080-exec-29 RestServices:359 - Method : return getPunterDetails('Tamia')
+12:19:52,840  INFO http-bio-8080-exec-29 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Tamia')"><font color='Red'>Tamia RM0.00 #0 </font></a>
+12:21:45,736  INFO http-bio-8080-exec-28 WebAnonController:35 - Received goGeneology
+12:21:46,771  INFO http-bio-8080-exec-34 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:21:46,820  INFO http-bio-8080-exec-34 RestAnonControllerImpl:91 - Received getModel with : zen
+12:21:46,827  INFO http-bio-8080-exec-34 RestServices:359 - Method : return getPunterDetails('zen')
+12:21:46,828  INFO http-bio-8080-exec-34 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('zen')"><font color='Red'>zen RM10.00 #-1 </font></a>
+12:21:46,835  INFO http-bio-8080-exec-34 RestServices:359 - Method : return getPunterDetails('Max')
+12:21:46,836  INFO http-bio-8080-exec-34 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Max')"><font color='Red'>Max RM0.00 #0 </font></a>
+12:21:46,837  INFO http-bio-8080-exec-34 RestServices:359 - Method : return getPunterDetails('Orion')
+12:21:46,837  INFO http-bio-8080-exec-34 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Orion')"><font color='Red'>Orion RM-10.00 #1 </font></a>
+12:21:46,840  INFO http-bio-8080-exec-34 RestServices:359 - Method : return getPunterDetails('Tamia')
+12:21:46,841  INFO http-bio-8080-exec-34 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Tamia')"><font color='Red'>Tamia RM0.00 #0 </font></a>
+12:24:38,488  INFO http-bio-8080-exec-33 WebAnonController:35 - Received goGeneology
+12:24:39,290  INFO http-bio-8080-exec-26 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:24:39,334  INFO http-bio-8080-exec-34 RestAnonControllerImpl:91 - Received getModel with : zen
+12:24:39,340  INFO http-bio-8080-exec-34 RestServices:359 - Method : return getPunterDetails('zen')
+12:24:39,340  INFO http-bio-8080-exec-34 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('zen')"><font color='Red'>zen RM10.00 #-1 </font></a>
+12:24:39,346  INFO http-bio-8080-exec-34 RestServices:359 - Method : return getPunterDetails('Max')
+12:24:39,347  INFO http-bio-8080-exec-34 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Max')"><font color='Red'>Max RM0.00 #0 </font></a>
+12:24:39,348  INFO http-bio-8080-exec-34 RestServices:359 - Method : return getPunterDetails('Orion')
+12:24:39,348  INFO http-bio-8080-exec-34 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Orion')"><font color='Red'>Orion RM-10.00 #1 </font></a>
+12:24:39,355  INFO http-bio-8080-exec-34 RestServices:359 - Method : return getPunterDetails('Tamia')
+12:24:39,356  INFO http-bio-8080-exec-34 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Tamia')"><font color='Red'>Tamia RM0.00 #0 </font></a>
+12:25:48,312  INFO http-bio-8080-exec-32 WebAnonController:35 - Received goGeneology
+12:25:48,998  INFO http-bio-8080-exec-33 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:25:49,073  INFO http-bio-8080-exec-32 RestAnonControllerImpl:91 - Received getModel with : zen
+12:25:49,077  INFO http-bio-8080-exec-32 RestServices:359 - Method : return getPunterDetails('zen')
+12:25:49,077  INFO http-bio-8080-exec-32 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('zen')"><font color='Red'>zen RM10.00 #-1 </font></a>
+12:25:49,081  INFO http-bio-8080-exec-32 RestServices:359 - Method : return getPunterDetails('Max')
+12:25:49,081  INFO http-bio-8080-exec-32 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Max')"><font color='Red'>Max RM0.00 #0 </font></a>
+12:25:49,081  INFO http-bio-8080-exec-32 RestServices:359 - Method : return getPunterDetails('Orion')
+12:25:49,082  INFO http-bio-8080-exec-32 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Orion')"><font color='Red'>Orion RM-10.00 #1 </font></a>
+12:25:49,086  INFO http-bio-8080-exec-32 RestServices:359 - Method : return getPunterDetails('Tamia')
+12:25:49,087  INFO http-bio-8080-exec-32 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Tamia')"><font color='Red'>Tamia RM0.00 #0 </font></a>
+12:26:10,515  INFO http-bio-8080-exec-33 WebAnonController:35 - Received goGeneology
+12:26:11,346  INFO http-bio-8080-exec-40 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:26:11,439  INFO http-bio-8080-exec-40 RestAnonControllerImpl:91 - Received getModel with : zen
+12:26:11,442  INFO http-bio-8080-exec-40 RestServices:359 - Method : return getPunterDetails('zen')
+12:26:11,443  INFO http-bio-8080-exec-40 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('zen')"><font color='Red'>zen RM10.00 #-1 </font></a>
+12:26:11,449  INFO http-bio-8080-exec-40 RestServices:359 - Method : return getPunterDetails('Max')
+12:26:11,449  INFO http-bio-8080-exec-40 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Max')"><font color='Red'>Max RM0.00 #0 </font></a>
+12:26:11,451  INFO http-bio-8080-exec-40 RestServices:359 - Method : return getPunterDetails('Orion')
+12:26:11,452  INFO http-bio-8080-exec-40 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Orion')"><font color='Red'>Orion RM-10.00 #1 </font></a>
+12:26:11,459  INFO http-bio-8080-exec-40 RestServices:359 - Method : return getPunterDetails('Tamia')
+12:26:11,460  INFO http-bio-8080-exec-40 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Tamia')"><font color='Red'>Tamia RM0.00 #0 </font></a>
+12:28:37,238  INFO http-bio-8080-exec-26 WebAnonController:35 - Received goGeneology
+12:28:38,226  INFO http-bio-8080-exec-40 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:28:38,271  INFO http-bio-8080-exec-40 RestAnonControllerImpl:91 - Received getModel with : zen
+12:28:38,276  INFO http-bio-8080-exec-40 RestServices:359 - Method : return getPunterDetails('zen')
+12:28:38,276  INFO http-bio-8080-exec-40 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('zen')"><font color='Red'>zen RM10.00 #-1 </font></a>
+12:28:38,283  INFO http-bio-8080-exec-40 RestServices:359 - Method : return getPunterDetails('Max')
+12:28:38,285  INFO http-bio-8080-exec-40 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Max')"><font color='Red'>Max RM0.00 #0 </font></a>
+12:28:38,286  INFO http-bio-8080-exec-40 RestServices:359 - Method : return getPunterDetails('Orion')
+12:28:38,287  INFO http-bio-8080-exec-40 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Orion')"><font color='Red'>Orion RM-10.00 #1 </font></a>
+12:28:38,290  INFO http-bio-8080-exec-40 RestServices:359 - Method : return getPunterDetails('Tamia')
+12:28:38,291  INFO http-bio-8080-exec-40 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Tamia')"><font color='Red'>Tamia RM0.00 #0 </font></a>
+12:53:24,818  INFO http-bio-8080-exec-44 WebAnonController:35 - Received goGeneology
+12:53:26,219  INFO http-bio-8080-exec-45 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:53:26,386  INFO http-bio-8080-exec-45 RestAnonControllerImpl:91 - Received getModel with : zen
+12:53:26,397  INFO http-bio-8080-exec-45 RestServices:359 - Method : return getPunterDetails('zen')
+12:53:26,398  INFO http-bio-8080-exec-45 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('zen')"><font color='Red'>zen RM10.00 #-1 </font></a>
+12:53:26,411  INFO http-bio-8080-exec-45 RestServices:359 - Method : return getPunterDetails('Max')
+12:53:26,412  INFO http-bio-8080-exec-45 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Max')"><font color='Red'>Max RM0.00 #0 </font></a>
+12:53:26,413  INFO http-bio-8080-exec-45 RestServices:359 - Method : return getPunterDetails('Orion')
+12:53:26,414  INFO http-bio-8080-exec-45 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Orion')"><font color='Red'>Orion RM-10.00 #1 </font></a>
+12:53:26,419  INFO http-bio-8080-exec-45 RestServices:359 - Method : return getPunterDetails('Tamia')
+12:53:26,419  INFO http-bio-8080-exec-45 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Tamia')"><font color='Red'>Tamia RM0.00 #0 </font></a>
+12:53:38,860  INFO http-bio-8080-exec-46 RestPunterControllerImpl:168 - Received getPunterByContact for : zen
+12:54:04,252  INFO http-bio-8080-exec-48 RestPunterControllerImpl:168 - Received getPunterByContact for : zen
+12:54:08,089  INFO http-bio-8080-exec-48 RestPunterControllerImpl:168 - Received getPunterByContact for : Max
+12:54:10,146  INFO http-bio-8080-exec-47 RestPunterControllerImpl:168 - Received getPunterByContact for : Orion
+12:54:22,514  INFO http-bio-8080-exec-47 RestPunterControllerImpl:168 - Received getPunterByContact for : Orion
+12:58:31,233  INFO http-bio-8080-exec-52 WebAnonController:35 - Received goGeneology
+12:58:32,121  INFO http-bio-8080-exec-49 RestPunterControllerImpl:145 - Received getPunter for : zen
+12:58:32,198  INFO http-bio-8080-exec-45 RestAnonControllerImpl:91 - Received getModel with : zen
+12:58:32,206  INFO http-bio-8080-exec-45 RestServices:359 - Method : return getPunterDetails('zen')
+12:58:32,206  INFO http-bio-8080-exec-45 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('zen')"><font color='Red'>zen RM10.00 #-1 </font></a>
+12:58:32,214  INFO http-bio-8080-exec-45 RestServices:359 - Method : return getPunterDetails('Max')
+12:58:32,215  INFO http-bio-8080-exec-45 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Max')"><font color='Red'>Max RM0.00 #0 </font></a>
+12:58:32,217  INFO http-bio-8080-exec-45 RestServices:359 - Method : return getPunterDetails('Orion')
+12:58:32,218  INFO http-bio-8080-exec-45 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Orion')"><font color='Red'>Orion RM-10.00 #1 </font></a>
+12:58:32,221  INFO http-bio-8080-exec-45 RestServices:359 - Method : return getPunterDetails('Tamia')
+12:58:32,221  INFO http-bio-8080-exec-45 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Tamia')"><font color='Red'>Tamia RM0.00 #0 </font></a>
+13:05:12,206  INFO http-bio-8080-exec-45 WebAnonController:35 - Received goGeneology
+13:05:12,903  INFO http-bio-8080-exec-49 RestPunterControllerImpl:145 - Received getPunter for : zen
+13:05:12,966  INFO http-bio-8080-exec-49 RestAnonControllerImpl:91 - Received getModel with : zen
+13:05:12,994  INFO http-bio-8080-exec-49 RestServices:359 - Method : return getPunterDetails('zen')
+13:05:12,996  INFO http-bio-8080-exec-49 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('zen')"><font color='Red'>zen RM10.00 #-1 </font></a>
+13:05:13,011  INFO http-bio-8080-exec-49 RestServices:359 - Method : return getPunterDetails('Max')
+13:05:13,012  INFO http-bio-8080-exec-49 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Max')"><font color='Red'>Max RM0.00 #0 </font></a>
+13:05:13,014  INFO http-bio-8080-exec-49 RestServices:359 - Method : return getPunterDetails('Orion')
+13:05:13,015  INFO http-bio-8080-exec-49 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Orion')"><font color='Red'>Orion RM-10.00 #1 </font></a>
+13:05:13,030  INFO http-bio-8080-exec-49 RestServices:359 - Method : return getPunterDetails('Tamia')
+13:05:13,030  INFO http-bio-8080-exec-49 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Tamia')"><font color='Red'>Tamia RM0.00 #0 </font></a>
+13:05:20,693  INFO http-bio-8080-exec-46 RestPunterControllerImpl:168 - Received getPunterByContact for : Max
+13:05:24,987  INFO http-bio-8080-exec-46 RestPunterControllerImpl:168 - Received getPunterByContact for : Orion
+13:05:27,003  INFO http-bio-8080-exec-46 RestPunterControllerImpl:168 - Received getPunterByContact for : Max
+13:05:31,610  INFO http-bio-8080-exec-45 RestPunterControllerImpl:168 - Received getPunterByContact for : Tamia
+13:05:39,241  INFO http-bio-8080-exec-45 RestPunterControllerImpl:168 - Received getPunterByContact for : Orion
+13:05:41,381  INFO http-bio-8080-exec-45 RestPunterControllerImpl:168 - Received getPunterByContact for : Max
+13:05:42,944  INFO http-bio-8080-exec-45 RestPunterControllerImpl:168 - Received getPunterByContact for : zen
+13:05:44,894  INFO http-bio-8080-exec-45 RestPunterControllerImpl:168 - Received getPunterByContact for : Max
+13:05:45,599  INFO http-bio-8080-exec-45 RestPunterControllerImpl:168 - Received getPunterByContact for : Orion
+13:05:46,905  INFO http-bio-8080-exec-45 RestPunterControllerImpl:168 - Received getPunterByContact for : Tamia
+13:10:24,505  INFO http-bio-8080-exec-7 WebAnonController:26 - Received login
+13:10:29,624  INFO http-bio-8080-exec-1 RestAuthController:49 - Got authorize1
+13:10:29,625  INFO http-bio-8080-exec-1 RestAuthController:78 - Attempting to authorize : zen
+13:10:30,059  INFO http-bio-8080-exec-1 RestAuthController:86 - Got baseuser : zen
+13:10:30,237  INFO http-bio-8080-exec-2 CustomUserDetailsService:28 - loadUserByUsername username : zen
+13:10:30,288  INFO http-bio-8080-exec-2 CustomUserDetailsService:41 - User : zen found with role :ROLE_PUNTER enabled : true
+13:10:30,289  INFO http-bio-8080-exec-2 CustomUserDetailsService:47 - Using User : zen with authorities :[ROLE_PUNTER]
+13:10:30,597  INFO http-bio-8080-exec-1 WebAnonController:101 - Received goDashboard
+13:10:30,842  INFO http-bio-8080-exec-4 RestPunterControllerImpl:145 - Received getPunter for : zen
+13:10:33,569  INFO http-bio-8080-exec-4 WebAnonController:35 - Received goGeneology
+13:10:33,784  INFO http-bio-8080-exec-7 RestPunterControllerImpl:145 - Received getPunter for : zen
+13:10:33,854  INFO http-bio-8080-exec-3 RestAnonControllerImpl:91 - Received getModel with : zen
+13:10:33,872  INFO http-bio-8080-exec-3 RestServices:359 - Method : return getPunterDetails('zen')
+13:10:33,873  INFO http-bio-8080-exec-3 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('zen')"><font color='Red'>zen RM10.00 #-1 </font></a>
+13:10:33,889  INFO http-bio-8080-exec-3 RestServices:359 - Method : return getPunterDetails('Max')
+13:10:33,889  INFO http-bio-8080-exec-3 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Max')"><font color='Red'>Max RM0.00 #0 </font></a>
+13:10:33,892  INFO http-bio-8080-exec-3 RestServices:359 - Method : return getPunterDetails('Orion')
+13:10:33,892  INFO http-bio-8080-exec-3 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Orion')"><font color='Red'>Orion RM-10.00 #1 </font></a>
+13:10:33,897  INFO http-bio-8080-exec-3 RestServices:359 - Method : return getPunterDetails('Tamia')
+13:10:33,897  INFO http-bio-8080-exec-3 RestServices:361 - href : <a href="#" onclick="return getPunterDetails('Tamia')"><font color='Red'>Tamia RM0.00 #0 </font></a>
+13:10:41,213  INFO http-bio-8080-exec-3 RestPunterControllerImpl:168 - Received getPunterByContact for : Max
+13:10:44,375  INFO http-bio-8080-exec-7 RestPunterControllerImpl:168 - Received getPunterByContact for : Orion
+13:10:47,490  INFO http-bio-8080-exec-3 RestPunterControllerImpl:168 - Received getPunterByContact for : Tamia
+13:12:02,466  INFO http-bio-8080-exec-2 WebAnonController:26 - Received login
+13:12:07,369  INFO http-bio-8080-exec-9 RestAuthController:49 - Got authorize1
+13:12:07,372  INFO http-bio-8080-exec-9 RestAuthController:78 - Attempting to authorize : Max
+13:12:07,379  INFO http-bio-8080-exec-9 RestAuthController:86 - Got baseuser : Max
+13:12:07,404  INFO http-bio-8080-exec-3 CustomUserDetailsService:28 - loadUserByUsername username : Max
+13:12:07,426  INFO http-bio-8080-exec-3 CustomUserDetailsService:41 - User : Max found with role :ROLE_PUNTER enabled : true
+13:12:07,427  INFO http-bio-8080-exec-3 CustomUserDetailsService:47 - Using User : Max with authorities :[ROLE_PUNTER]
+13:12:07,560  INFO http-bio-8080-exec-2 WebAnonController:101 - Received goDashboard
+13:12:07,753  INFO http-bio-8080-exec-7 RestPunterControllerImpl:145 - Received getPunter for : Max
+13:12:48,137  INFO http-bio-8080-exec-6 WebAnonController:51 - Received goUpgrade
+13:12:48,300  INFO http-bio-8080-exec-1 RestPunterControllerImpl:145 - Received getPunter for : Max
+13:12:48,358  INFO http-bio-8080-exec-1 RestPunterControllerImpl:277 - Received getUpgradeRequest
+13:13:08,767  INFO http-bio-8080-exec-1 RestPunterControllerImpl:299 - Received submitTransactionDetails
+13:13:08,768  INFO http-bio-8080-exec-1 RestPunterControllerImpl:300 - Upload File : uploadfile date : 05-13-2019 details : Copy and Paste Transaction Details
+13:13:11,761  INFO http-bio-8080-exec-1 WebAnonController:101 - Received goDashboard
+13:13:11,980  INFO http-bio-8080-exec-4 RestPunterControllerImpl:145 - Received getPunter for : Max

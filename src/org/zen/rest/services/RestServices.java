@@ -355,7 +355,6 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		else
 			line = "<font color='Red'>"+ text + bal + lev + "</font></a>";
 		
-		log.info("JJYYY");
 		String method = "return getPunterDetails('" + punter.getContact() + "')";
 		log.info("Method : " + method);
 		String href = "<a href=\"#\" onclick=\"" + method +"\">" + line;
@@ -525,7 +524,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		pj.setPostcode(punter.getPostcode());
 		pj.setCountry(punter.getCountry());
 		pj.setUpstreamContact(punter.getParentContact());
-		pj.setSponsorContact(pj.getSponsorContact());
+		pj.setSponsorContact(punter.getSponsorContact());
 		pj.setRating(punter.getRating());
 		pj.setActivated(punter.getActivated());
 		pj.setPaymentMethods(punter.getPaymentMethods());

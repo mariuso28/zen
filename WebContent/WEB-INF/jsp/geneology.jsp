@@ -30,6 +30,7 @@
     width: 220px;
     height: 220px;
   }
+
 </style>
 
 <script>
@@ -39,6 +40,55 @@ function redirectDashboard()
   window.location.replace("/zen/zx4/web/anon/goDashboard");
 }
 
+var punter1;
+
+function getPunterDetails(contact)
+{
+  access_token = sessionStorage.getItem("access_token");
+  var bearerHeader = 'Bearer ' + access_token;
+     $.ajax({
+    type: "GET",
+         url : '/zen/zx4/api/punter/getPunterByContact?contact=' + contact,
+    headers: { 'Authorization': bearerHeader },
+    cache: false,
+    contentType: 'application/json;',
+         dataType: "json",
+       	 success: function(data) {
+  //         alert(JSON.stringify(data));
+     			if (data == '')
+            {
+							alert("could not get punter by contact")
+               return null;
+            }
+          var resultJson = $.parseJSON(JSON.stringify(data));
+					if (resultJson.status!='OK')
+					{
+						alert(resultJson.status + " " + resultJson.message);
+					}
+    //      alert(JSON.stringify(resultJson.result));
+					punter1 = resultJson.result;
+          populatePunter1();
+        },
+				error:function (e) {
+	  			alert("getPunter ERROR : " + e.status + " - " + e.statusText);
+	      }
+     });
+
+}
+
+function populatePunter1()
+{
+    document.getElementById('contact').value = punter1.contact;
+    document.getElementById('sponsorContact').value = punter1.sponsorContact;
+    document.getElementById('phone').value = punter1.phone;
+    document.getElementById('email').value = punter1.email;
+    document.getElementById('fullName').value = punter1.fullName;
+    document.getElementById('passportIc').value = punter1.passportIc;
+    document.getElementById('address').value = punter1.address;
+    document.getElementById('country').value = punter1.country;
+    document.getElementById('state').value = punter1.state;
+    document.getElementById('gender').value = punter1.gender;
+}
 
 var punter;
 
@@ -73,6 +123,10 @@ function getPunterTree() {
 					punter = resultJson.result;
 
           getModel();
+
+          punter1 = punter;
+          populatePunter1();
+
         },
 				error:function (e) {
 	  			alert("getPunter ERROR : " + e.status + " - " + e.statusText);
@@ -144,6 +198,87 @@ function getModel()
 
 <!--end-main-container-part-->
 
+<!-- Profile display -->
+<div class="row-fluid">
+        <div class="span12">
+          <div class="widget-box">
+            <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+              <h3>Agent Information</h3>
+            </div>
+            <div class="widget-content nopadding">
+              <div class="form-horizontal">
+                <div class="control-group">
+                  <label class="control-label">Username :</label>
+                  <div class="controls">
+                    <input readonly type="text" id="contact" class="span11" value="" readonly/>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label">Zen Sponser&nbsp</label>
+                  <div class="controls">
+                    <input readonly type="text" id="sponsorContact" class="span11" value="" readonly/>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label">Full Name&nbsp</label>
+                  <div class="controls">
+                    <input type="text" id="fullName" class="span11" value="" readonly/>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label">Passport/ID No.&nbsp</label>
+                  <div class="controls">
+                    <input type="text" id="passportIc" class="span11" value="" readonly/>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label">Gender&nbsp</label>
+                  <div class="controls">
+                      <input type="text" id="gender" class="span11" value="" readonly/>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label">Address&nbsp</label>
+                  <div class="controls">
+                    <input type="text" id="address" class="span11" value="" readonly/>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label">Postcode&nbsp</label>
+                  <div class="controls">
+                    <input type="text" id="postcode" class="span11" value="" readonly/>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label">State&nbsp</label>
+                  <div class="controls">
+                    <input type="text" id="state" class="span11" value="" readonly/>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label">Country&nbsp</label>
+                  <div class="controls">
+                    <input type="text" id="country" class="span11" value="" readonly/>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label">Phone No.&nbsp</label>
+                  <div class="controls">
+                    <input type="text" id="phone" class="span11" value="" readonly/>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label">Email&nbsp</label>
+                  <div class="controls">
+                    <input type="text" id="email" class="span11" value="" readonly/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+</div>
+
 <!--Footer-part-->
 
 <div class="row-fluid">
@@ -178,10 +313,13 @@ function getModel()
 <script src="../../../js/tree.js" type="text/javascript">></script>
 
 
+
 <script type="text/javascript">
 
 getPunterTree();
 
 </script>
+
+
 </body>
 </html>

@@ -35,6 +35,10 @@ public interface RestPunterController
 	// ResultJson contains punter's profile if success, message if fail
 	public ResultJson getPunter(OAuth2Authentication auth);
 	
+	@RequestMapping(value = "/getPunterByContact")
+	// ResultJson contains punter's profile if success, message if fail
+	public ResultJson getPunterByContact(OAuth2Authentication auth,@RequestParam("contact") String contact);
+	
 	@RequestMapping(value = "/updatePunter")
 	// ResultJson contains message if success, message if fail
 	public ResultJson updatePunter(OAuth2Authentication auth,@RequestBody PunterProfileJson profile);
