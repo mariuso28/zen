@@ -3,6 +3,7 @@ package org.zen.user.punter.mgr;
 import static org.apache.commons.text.CharacterPredicates.DIGITS;
 import static org.apache.commons.text.CharacterPredicates.LETTERS;
 
+import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Random;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.zen.json.ChangePasswordJson;
+import org.zen.json.NotificationJson;
 import org.zen.json.PaymentMethodJson;
 import org.zen.json.PunterPaymentMethodJson;
 import org.zen.json.PunterProfileJson;
@@ -47,6 +49,44 @@ public class PunterMgr {
 	{
 	}
 	
+	public List<NotificationJson> getNoticationsForPunter(Punter punter) {
+		List<NotificationJson> njs = new ArrayList<NotificationJson>();
+		if (punter.isUpgradeScheduled())
+			njs.add(getUpgradeNotication());
+		else
+		if (punter.getUpgradeStatus().getPaymentStatus().equals(PaymentStatus.PAYMENTMADE))
+			njs.add(getPaymentMade());
+		if (njs.isEmpty())
+			njs.add(getNoNotications());
+		return njs;
+	}
+
+	private NotificationJson getPaymentMade() {
+		NotificationJson nj = new NotificationJson();
+		nj.setMessage("Your payment made - remember to check email for status update");
+		nj.setHref("#");
+		nj.setPriority(2);
+		return nj;
+	}
+
+	private NotificationJson getNoNotications()
+	{
+		NotificationJson nj = new NotificationJson();
+		nj.setMessage("No Posts Currently Flagged");
+		nj.setHref("#");
+		nj.setPriority(5);
+		return nj;
+	}
+	
+	private NotificationJson getUpgradeNotication()
+	{
+		NotificationJson nj = new NotificationJson();
+		nj.setMessage("You are eligible for upgrade!! Upgrade now!!");
+		nj.setHref("/zen/zx4/web/anon/goUpgrade");
+		nj.setPriority(1);
+		return nj;
+	}
+
 	public String resetPassword(Punter punter) throws PunterMgrException
 	{
 		String pw="";
@@ -325,7 +365,7 @@ public class PunterMgr {
 
 	private int canUpgrade2(Punter punter) throws PunterMgrException
 	{
-		if (punter.getRating()==0)
+		if (punter.getRating()<0)
 			return -1;
 		List<Punter> children = getChidren(punter);
 		if (children.size()<ZenModel.FULLCHILDREN)
@@ -519,5 +559,5 @@ public class PunterMgr {
 		this.punterDao = punterDao;
 	}
 
-
+	
 }

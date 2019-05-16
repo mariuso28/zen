@@ -9,6 +9,7 @@ import org.zen.json.PunterPaymentMethodJson;
 import org.zen.json.PunterProfileJson;
 import org.zen.user.BaseUser;
 import org.zen.user.account.Account;
+import org.zen.user.punter.upgrade.PaymentStatus;
 import org.zen.user.punter.upgrade.UpgradeStatus;
 
 public class Punter extends BaseUser {
@@ -23,7 +24,6 @@ public class Punter extends BaseUser {
 	private Punter sponsor;
 	private List<Punter> sponsoredChildren = new ArrayList<Punter>();
 	private Account account = new Account();
-	private boolean upgradeScheduled = false;
 	private boolean systemOwned;
 	private Date activated;
 	private UpgradeStatus upgradeStatus;
@@ -82,14 +82,6 @@ public class Punter extends BaseUser {
 
 	public void setAccount(Account account) {
 		this.account = account;
-	}
-
-	public boolean isUpgradeScheduled() {
-		return upgradeScheduled;
-	}
-
-	public void setUpgradeScheduled(boolean upgradeScheduled) {
-		this.upgradeScheduled = upgradeScheduled;
 	}
 
 	public Punter getSponsor() {
@@ -182,7 +174,7 @@ public class Punter extends BaseUser {
 
 	@Override
 	public String toString() {
-		return "Punter [rating=" + rating + ", upgradeScheduled=" + upgradeScheduled + ", getId()=" + getId()
+		return "Punter [rating=" + rating + ", getId()=" + getId()
 				+ ", getContact()=" + getContact() + ", getEmail()=" + getEmail() + ", getPhone()=" + getPhone()
 				+ ", isEnabled()=" + isEnabled() + "]";
 	}
@@ -193,6 +185,10 @@ public class Punter extends BaseUser {
 
 	public void setLevel(int level) {
 		this.level = level;
+	}
+
+	public boolean isUpgradeScheduled() {
+		return getUpgradeStatus().getPaymentStatus().equals(PaymentStatus.PAYMENTDUE);
 	}
 
 	

@@ -122,7 +122,6 @@ public class ZenModelOriginal {
 	
 	public void upgrade(Punter punter)
 	{
-		punter.setUpgradeScheduled(false);
 		if (punter.getRating()==Integer.MAX_VALUE)
 			return;
 		punter.setRating(punter.getRating()+1);

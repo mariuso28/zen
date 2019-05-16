@@ -19,6 +19,7 @@ import org.zen.json.AccountJson;
 import org.zen.json.ActionJson;
 import org.zen.json.ChangePasswordJson;
 import org.zen.json.ModelJson;
+import org.zen.json.NotificationJson;
 import org.zen.json.PaymentInfoJson;
 import org.zen.json.PaymentMethodJson;
 import org.zen.json.PunterJson;
@@ -52,6 +53,21 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		ratingMgr = new RatingMgr();
 	}
 	
+	public List<NotificationJson> getNotifications(String contact) {
+		Punter punter;
+		try
+		{
+			punter = services.getHome().getPunterDao().getByContact(contact);
+			if (punter == null)
+				throw new RestServicesException("Zen Member : " + contact + " not found - please check");
+			return punterMgr.getNoticationsForPunter(punter);
+		}
+		catch (Exception e)
+		{
+			log.error("resetPassword",e);
+			throw new RestServicesException("Zen Member : " + contact + " not found - please check");
+		}
+	}
 
 	public String resetPassword(String username) {
 		Punter punter;
@@ -467,7 +483,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		ActionJson aj = new ActionJson();
 		if (!xts.isEmpty())
 			aj.setPaymentsPending(Integer.toString(xts.size()));
-		if (punter.getUpgradeStatus().getPaymentStatus().equals(PaymentStatus.PAYMENTDUE))
+		if (punter.isUpgradeScheduled())
 			aj.setUpgradable("&#10004");
 		ppj.setActions(aj);
 		return ppj;
@@ -543,6 +559,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 	public void setServices(Services services) {
 		this.services = services;
 	}
+
 
 	
 	

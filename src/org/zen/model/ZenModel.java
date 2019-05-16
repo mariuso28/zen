@@ -85,7 +85,6 @@ public class ZenModel {
 	
 	public void upgrade(Punter punter, int newRating) throws PunterMgrException
 	{
-		punter.setUpgradeScheduled(false);
 		if (punter.getRating()==Integer.MAX_VALUE)
 			return;
 		if (newRating == punter.getRating())

@@ -14,6 +14,9 @@ import org.zen.json.ResultJson;
 @RequestMapping("/api/punter")
 public interface RestPunterController
 {
+	@RequestMapping(value = "/getNotifications")
+	// ResultJson contains List<NotificationJson> if success, message if fail
+	public ResultJson getNotifications(OAuth2Authentication auth);
 	
 	@RequestMapping(value = "/getRandomUsername")
 	// ResultJson contains String username if success, message if fail

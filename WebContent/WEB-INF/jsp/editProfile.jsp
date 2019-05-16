@@ -293,7 +293,7 @@ function displayPaymentMethods()
         tr = document.createElement('tr');
         tr.className = 'gradeA';
         td = document.createElement('td');
-        td.appendChild(document.createTextNode(i));
+        td.appendChild(document.createTextNode(i+1));
         tr.appendChild(td);
         td = document.createElement('td');
         td.appendChild(document.createTextNode(pm.method));

@@ -27,6 +27,26 @@ public class RestPunterControllerImpl implements RestPunterController
 	private RestServices restServices;
 	
 	
+	@Override
+	@RequestMapping(value = "/getNotifications")
+	// ResultJson contains List<NotificationJson> if success, message if fail
+	public ResultJson getNotifications(OAuth2Authentication auth) {
+		log.info("Received getNotifications");
+		String contact = ((User) auth.getPrincipal()).getUsername();
+		
+		ResultJson result = new ResultJson();
+		try
+		{
+			result.success(restServices.getNotifications(contact));
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			result.fail(e.getMessage());
+		}
+		return result;
+	}
+	
 	@RequestMapping(value = "/getRandomUsername")
 	// ResultJson contains String username if success, message if fail
 	public ResultJson getRandomUsername()
@@ -59,6 +79,9 @@ public class RestPunterControllerImpl implements RestPunterController
 		{
 			PunterProfileJson pj = new PunterProfileJson();
 			pj.setSponsorContact(contact);				// all other fields are empty
+			pj.setPhone("+855");
+			pj.setCountry("Cambodia");
+			pj.setGender("Female");
 			result.success(pj);
 		}
 		catch (Exception e)

@@ -272,14 +272,14 @@ function populateNewProfile()
 {
   document.getElementById('contact').value = newPunter.contact;
   document.getElementById('sponsorContact').value = newPunter.sponsorContact;
-  document.getElementById('phone').value = '+855';
+  document.getElementById('phone').value = newPunter.phone;
   document.getElementById('email').value = newPunter.email;
   document.getElementById('fullName').value = newPunter.fullName;
   document.getElementById('passportIc').value = newPunter.passportIc;
   document.getElementById('address').value = newPunter.address;
-  document.getElementById('country').value = '116';
+  document.getElementById('country').value = newPunter.country;
   document.getElementById('state').value = newPunter.state;
-  document.getElementById('gender').value = 'Female';
+  document.getElementById('gender').value = newPunter.country;
 }
 
 </script>
