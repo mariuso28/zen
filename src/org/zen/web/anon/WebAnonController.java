@@ -30,11 +30,23 @@ public class WebAnonController {
 	
 	
 	@RequestMapping(value = "/goGeneology", method = RequestMethod.GET)
-	public String goGeneology() {
+	public ModelAndView goGeneology(String contact) {
 			
 		log.info("Received goGeneology");
+		
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("contact","");
+		return new ModelAndView("geneology","map",map);
+	}
+	
+	@RequestMapping(value = "/goGeneologyContact", method = RequestMethod.GET)
+	public ModelAndView goGeneologyContact(String contact) {
 			
-		return "geneology";
+		log.info("Received goGeneologyContact");
+		
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("contact",contact);
+		return new ModelAndView("geneology","map",map);
 	}
 	
 	@RequestMapping(value = "/goNewRegistration", method = RequestMethod.GET)

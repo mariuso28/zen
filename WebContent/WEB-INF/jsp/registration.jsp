@@ -151,7 +151,7 @@ function getCountries()
        {
          countries = resultJson.result;
          $.each(countries, function(i, option) {
-            $('#country').append($('<option/>').attr("value", option.code).text(option.country));
+            $('#country').append($('<option/>').attr("value", option.country).text(option.country));
          });
        }
        else

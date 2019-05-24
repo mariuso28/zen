@@ -110,12 +110,12 @@ function createNotificationLi(n)
     li = document.createElement('li');
     d1 = document.createElement('div');
     d1.classList.add('user-thumb');
-    html = '<img width="40" height="40" alt="User" script src="../../../img/demo/av' + n.priority + '.jpg">';
+    html = '<img style="height:40px;width:40px;" alt="User" src="../../../img/demo/av' + n.priority + '.jpg">';
     d1.innerHTML = html;
     li.appendChild(d1);
     d2 = document.createElement('div');
     d2.classList.add('article-post');
-    html = '<a href="' + n.href + '">' + n.message + '</a>';
+    html = '<p><a href="' + n.href + '">' + n.message + '</a></p>';
     d2.innerHTML = html;
     li.appendChild(d2);
     return li;
@@ -159,14 +159,16 @@ function createNotificationLi(n)
           </div>
           <div class="widget-content nopadding collapse in" id="collapseG2">
             <ul class="recent-posts" id="recentPosts">
+          <!--
               <li>
-            <!--
+
                 <div class="user-thumb"> <img width="40" height="40" alt="User" script src="../../../img/demo/av1.jpg"> </div>
                 <div class="article-post"> <span class="user-info"> By: john Deo / Date: 2 Aug 2012 / Time:09:27 AM </span>
                   <p><a href="#">This is a much longer one that will go on for a few lines.It has multiple paragraphs and is full of waffle to pad out the comment.</a> </p>
                 </div>
-            -->
+
               </li>
+          -->
             </ul>
           </div>
         </div>

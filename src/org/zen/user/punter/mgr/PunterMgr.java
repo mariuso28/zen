@@ -21,6 +21,7 @@ import org.zen.json.PunterPaymentMethodJson;
 import org.zen.json.PunterProfileJson;
 import org.zen.model.ZenModel;
 import org.zen.model.ZenModelOriginal;
+import org.zen.payment.Xtransaction;
 import org.zen.payment.persistence.PaymentDao;
 import org.zen.persistence.PersistenceRuntimeException;
 import org.zen.rating.RatingMgr;
@@ -47,6 +48,7 @@ public class PunterMgr {
 	
 	public PunterMgr()
 	{
+		ratingMgr = new RatingMgr();
 	}
 	
 	public List<NotificationJson> getNoticationsForPunter(Punter punter) {
@@ -56,11 +58,46 @@ public class PunterMgr {
 		else
 		if (punter.getUpgradeStatus().getPaymentStatus().equals(PaymentStatus.PAYMENTMADE))
 			njs.add(getPaymentMade());
+		njs.addAll(getPaymentsOutstanding(punter));
+		njs.addAll(getPaymentsDue(punter));
 		if (njs.isEmpty())
 			njs.add(getNoNotications());
 		return njs;
 	}
-
+	
+	private List<NotificationJson> getPaymentsDue(Punter punter) {
+		List<NotificationJson> njs = new ArrayList<NotificationJson>();
+		List<Punter> children = services.getHome().getPunterDao().getSponsoredChildren(punter);
+		for (Punter child : children)
+		{
+			NotificationJson nj = new NotificationJson();
+			UpgradeStatus us = child.getUpgradeStatus();
+			if (us.getPaymentStatus().equals(PaymentStatus.PAYMENTDUE))
+			{
+				nj.setMessage("Waiting for payment of $" + ratingMgr.getUpgradeFeeForRating(us.getNewRating()) + " to be made from " + child.getContact()
+															 + " to upgrade to rank " + us.getNewRating());
+				nj.setHref("/zen/zx4/web/anon/goGeneologyContact?contact="+child.getContact());
+				nj.setPriority(3);
+				njs.add(nj);
+			}
+		}
+		return njs;
+	}
+	
+	private List<NotificationJson> getPaymentsOutstanding(Punter punter) {
+		List<NotificationJson> njs = new ArrayList<NotificationJson>();
+		List<Xtransaction> xts = services.getHome().getPaymentDao().getXtransactionsForMember("payee",punter.getId(), PaymentStatus.PAYMENTMADE, 0, Integer.MAX_VALUE);
+		for (Xtransaction xt : xts)
+		{
+			NotificationJson nj = new NotificationJson();
+			nj.setMessage("Payment of $" + xt.getAmount() + " submitted from " + xt.getPayerContact() + " to " + xt.getDescription());
+			nj.setHref("/zen/zx4/web/anon/goPaymentReceived");
+			nj.setPriority(1);
+			njs.add(nj);
+		}
+		return njs;
+	}
+	
 	private NotificationJson getPaymentMade() {
 		NotificationJson nj = new NotificationJson();
 		nj.setMessage("Your payment made - remember to check email for status update");
@@ -211,6 +248,9 @@ public class PunterMgr {
 			String un = fu.getRandomName();
 			un = un.replace(" ","");
 			un = un.replace("'","");
+			if (un.length()>6)
+				un = un.substring(0,6);
+			un = un.toLowerCase();
 			if (bud.getByContact(un)==null)
 				return un;
 		}

@@ -330,15 +330,15 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 	private List<PunterJson> getPunters(String rootContact, ModelJson mj) throws PunterMgrException
 	{
 		Punter root = punterMgr.getByContact(rootContact);
-		PunterJson parent = addPunter(root,mj);	
+		PunterJson parent = addPunter(root,mj,null);	
 //		log.info("created " + services.getZenModel().getPopulation() + " punterJsons");
 		List<PunterJson> result =  new ArrayList<PunterJson>();
 		result.add(parent);
 		return result;
 	}
 
-	private PunterJson addPunter(Punter punter, ModelJson mj) throws PunterMgrException {
-		PunterJson pj = createPunterJson(punter);
+	private PunterJson addPunter(Punter punter, ModelJson mj,Punter parent) throws PunterMgrException {
+		PunterJson pj = createPunterJson(punter,parent);
 		if (punter.isSystemOwned())
 			mj.setPopulationInside(mj.getPopulationInside()+1);
 		else
@@ -348,14 +348,19 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		List<Punter> children = punterMgr.getChidren(punter);
 		for (Punter p : children)
 		{
-			pj.getChildren().add(addPunter(p,mj));
+			pj.getChildren().add(addPunter(p,mj,punter));
 		}
 		return pj;
 	}
 	
-	private PunterJson createPunterJson(Punter punter)
+	private PunterJson createPunterJson(Punter punter, Punter parent)
 	{
 		PunterJson pj = new PunterJson();
+		if (parent!=null)
+			pj.setParentId(parent.getContact());
+		else
+			pj.setParentId(null);
+		pj.setId(punter.getContact());
 		int imageId = 12;
 		if (!punter.getEmail().equals("zen@test.com"))
 			imageId = punter.getRating();
@@ -372,9 +377,9 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			line = "<font color='Red'>"+ text + bal + lev + "</font></a>";
 		
 		String method = "return getPunterDetails('" + punter.getContact() + "')";
-		log.info("Method : " + method);
+	//	log.info("Method : " + method);
 		String href = "<a href=\"#\" onclick=\"" + method +"\">" + line;
-		log.info("href : " + href);
+	//	log.info("href : " + href);
 		pj.setText(href);
 //		pj.setAccount(createAccountJson(punter.getAccount()));
 		return pj;

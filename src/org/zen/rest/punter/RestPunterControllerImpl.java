@@ -51,7 +51,7 @@ public class RestPunterControllerImpl implements RestPunterController
 	// ResultJson contains String username if success, message if fail
 	public ResultJson getRandomUsername()
 	{
-		log.info("Received getRandomUsername");
+//		log.info("Received getRandomUsername");
 		ResultJson result = new ResultJson();
 		try
 		{

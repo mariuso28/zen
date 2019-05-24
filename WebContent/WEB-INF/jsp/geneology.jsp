@@ -92,7 +92,7 @@ function populatePunter1()
 
 var punter;
 
-function getPunterTree() {
+function getPunterTree(searchTerm) {
 
 	access_token = sessionStorage.getItem("access_token");
 //	alert(access_token);
@@ -122,11 +122,16 @@ function getPunterTree() {
     //      alert(JSON.stringify(resultJson.result));
 					punter = resultJson.result;
 
-          getModel();
+          getModel(searchTerm);
 
           punter1 = punter;
           populatePunter1();
 
+          if (searchTerm != "")
+          {
+              expand(searchTerm);
+              getPunterDetails(searchTerm);
+      		}
         },
 				error:function (e) {
 	  			alert("getPunter ERROR : " + e.status + " - " + e.statusText);
@@ -134,6 +139,7 @@ function getPunterTree() {
      });
  }
 
+var tree;
 
 function getModel()
 {
@@ -156,13 +162,54 @@ function getModel()
 
 			var dText = model.punters;
 
-			$('#treeD').tree({
+			tree = $('#tree').tree({
 						dataSource: dText,
 						imageUrlField: 'imageUrl',
 						primaryKey: 'id'
 				});
-		}
+    }
 	});
+}
+
+function expand(id)
+{
+  n1 = tree.getNodeById(id);
+  tree.expand(n1);
+  while (true)
+  {
+    var data = tree.getDataById(id);
+    if (data.parentId == null)
+      break;
+    nn = tree.getNodeById(data.parentId);
+    tree.expand(nn);
+    id = data.parentId;
+  }
+}
+
+function collapse(id)
+{
+  nn = tree.getNodeById(id);
+  tree.collapse(nn);
+  while (true)
+  {
+    var data = tree.getDataById(id);
+    if (data.parentId == null)
+      break;
+    nn = tree.getNodeById(data.parentId);
+    tree.collapse(nn);
+    id = data.parentId;
+  }
+}
+
+var searchTerm = "";
+
+function Search() {
+//  alert("In : " + $('#query').val());
+  if (searchTerm != "")
+    collapse(searchTerm);
+  searchTerm = $('#query').val();
+  expand(searchTerm);
+  getPunterDetails(searchTerm);
 }
 
 </script>
@@ -191,7 +238,7 @@ function getModel()
 
     <div class="row-fluid">
       <div class="span12">
-        <div style="float:left;width:1000px;" id="treeD"></div>
+        <div style="float:left;width:1000px;" id="tree"></div>
       </div>
     </div>
 </div>
@@ -200,7 +247,11 @@ function getModel()
 
 <!-- Profile display -->
 <div class="row-fluid">
+
         <div class="span12">
+          <input type="text" id="query" /> <button onclick="Search()">Search</button>
+        </div>
+
           <div class="widget-box">
             <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
               <h3>Agent Information</h3>
@@ -312,11 +363,13 @@ function getModel()
 <script src="../../../js/core.js" type="text/javascript"></script>
 <script src="../../../js/tree.js" type="text/javascript">></script>
 
-
-
 <script type="text/javascript">
 
-getPunterTree();
+$.ajaxSetup({
+   async: false
+});
+
+getPunterTree("${map['contact']}");
 
 </script>
 

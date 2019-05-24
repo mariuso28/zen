@@ -4,23 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PunterJson {
-	private long id;
+	private String id;
     private String text;
     private String imageUrl;
     private AccountJson account;
+    private String parentId;
     private List<PunterJson> children = new ArrayList<PunterJson>();
     
     public PunterJson()
     {
     }
  
-	public long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(long id) {
+
+	public void setId(String id) {
 		this.id = id;
 	}
-    
+
 	public String getText() {
 		return text;
 	}
@@ -49,6 +51,14 @@ public class PunterJson {
 
 	public void setAccount(AccountJson account) {
 		this.account = account;
+	}
+
+	public String getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
 	}
 	
 }
