@@ -434,8 +434,21 @@ public class PunterMgr {
 		List<Punter> children = punterDao.getChildren(root);
 		if (children.size()<ZenModelOriginal.FULLCHILDREN)
 			return root;
+		Punter parent = null;
+		int max = ZenModelOriginal.FULLCHILDREN;
+		for (Punter child : children)
+		{
+			List<Punter> children1 = punterDao.getChildren(child);
+			if (children1.size()<max)
+			{
+				parent = child;
+				max = children1.size();
+			}
+		}
+		if (parent != null)
+			return parent;
 		Random r = new Random();
-		Punter parent = children.get(r.nextInt(ZenModelOriginal.FULLCHILDREN));
+		parent = children.get(r.nextInt(ZenModelOriginal.FULLCHILDREN));
 		return getParent(parent);
 	}
 
