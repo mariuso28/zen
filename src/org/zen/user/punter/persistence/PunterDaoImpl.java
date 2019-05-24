@@ -453,20 +453,37 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	}
 	
 	@Override
-	public void deletePunter(final Punter punter) {
+	public void deletePunter(final Punter punter)
+	{
+		List<Punter> cs = getChildren(punter);
+		if (!cs.isEmpty())
+		{
+			for (Punter c : cs)
+				deletePunter(c);
+		}
+		deletePunterA(punter);
+	}
+	
+	private void deletePunterA(final Punter punter) {
 		try
 		{
-			final String sql0 = "DELETE FROM upgradestatus WHERE id=?";
-			getJdbcTemplate().update(sql0,new Object[] { punter.getId() });
+			final String sqlu = "DELETE FROM upgradestatus WHERE id=?";
+			getJdbcTemplate().update(sqlu,new Object[] { punter.getId() });
 			
-			final String sql = "DELETE FROM punterpaymentmethod WHERE punterid=?";
-			getJdbcTemplate().update(sql,new Object[] { punter.getId() });
+			final String sqlpi = "DELETE FROM paymentinfo WHERE xtransactionid IN (SELECT id FROM xtransaction WHERE payerid=? OR payeeid=?)";
+			getJdbcTemplate().update(sqlpi,new Object[] { punter.getId(), punter.getId() });
 			
-			final String sql1 = "DELETE FROM account WHERE id=?";
-			getJdbcTemplate().update(sql1,new Object[] { punter.getId() });
+			final String sqlx = "DELETE FROM xtransaction WHERE payerid=? OR payeeid=?";
+			getJdbcTemplate().update(sqlx,new Object[] { punter.getId(), punter.getId() });
 			
-			final String sql2 = "DELETE FROM baseuser WHERE id=?";
-			getJdbcTemplate().update(sql2,new Object[] { punter.getId() });
+			final String sqlp = "DELETE FROM punterpaymentmethod WHERE punterid=?";
+			getJdbcTemplate().update(sqlp,new Object[] { punter.getId() });
+			
+			final String sqla = "DELETE FROM account WHERE id=?";
+			getJdbcTemplate().update(sqla,new Object[] { punter.getId() });
+			
+			final String sqlb = "DELETE FROM baseuser WHERE id=?";
+			getJdbcTemplate().update(sqlb,new Object[] { punter.getId() });
 		}
 		catch (DataAccessException e)
 		{
@@ -493,7 +510,7 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 					+ "acc.id IN (SELECT bu.id FROM baseuser AS bu WHERE Role = 'ROLE_PUNTER' "
 					+ "AND systemowned='" + systemOwned + "')";
 			getJdbcTemplate().update(sql1);
-			
+				
 			final String sql2 = "DELETE FROM baseuser WHERE Role = 'ROLE_PUNTER' AND systemowned='" + systemOwned + "'";
 			getJdbcTemplate().update(sql2);
 		}
@@ -508,19 +525,19 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	public void deleteAllPunters() {
 		try
 		{
-			final String sql0 = "DELETE FROM upgradestatus AS pus WHERE "
-					+ "pus.id IN (SELECT bu.id FROM baseuser AS bu WHERE Role = 'ROLE_PUNTER')";
+			final String sql0 = "DELETE FROM upgradestatus";
 			getJdbcTemplate().update(sql0);
 			
-			final String sql = "DELETE FROM punterpaymentmethod AS pmm WHERE "
-					+ "pmm.punterid IN (SELECT bu.id FROM baseuser AS bu WHERE Role = 'ROLE_PUNTER')";
+			final String sql = "DELETE FROM punterpaymentmethod";
 			getJdbcTemplate().update(sql);
 			
-			final String sql1 = "DELETE FROM account AS acc WHERE "
-					+ "acc.id IN (SELECT bu.id FROM baseuser AS bu WHERE Role = 'ROLE_PUNTER')";
+			final String sql1 = "DELETE FROM account";
 			getJdbcTemplate().update(sql1);
 			
-			final String sql2 = "DELETE FROM baseuser WHERE Role = 'ROLE_PUNTER'";
+			final String sqlx = "DELETE FROM xaction";
+			getJdbcTemplate().update(sqlx);
+			
+			final String sql2 = "DELETE FROM baseuser";
 			getJdbcTemplate().update(sql2);
 		}
 		catch (DataAccessException e)

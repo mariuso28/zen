@@ -74,7 +74,8 @@ function submitTransactionDetails()
   					alert("Failed " + result.message);
   					return;
   				}
-  				alert("Transaction details successfully submitted.");
+  				alert("Transaction details successfully submitted.\nCheck email for comfirmation of receipt.");
+          redirectDashboard();
   			},
   			error:function (e) {
     			alert("submitTransactionDetails ERROR : " + e.status + " - " + e.statusText);

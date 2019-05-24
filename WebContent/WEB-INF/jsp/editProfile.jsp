@@ -363,7 +363,7 @@ function updateProfile() {
                 return;
  					    }
    					  alert('Profile successfully updated');
-              refreshProfile();
+              redirectDashboard();
           },
           error:function (e) {
  	  			    alert("updatePunter ERROR : " + e.status + " - " + e.statusText);

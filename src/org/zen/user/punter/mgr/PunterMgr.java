@@ -246,10 +246,14 @@ public class PunterMgr {
 		while (true)
 		{
 			String un = fu.getRandomName();
-			un = un.replace(" ","");
-			un = un.replace("'","");
-			if (un.length()>6)
-				un = un.substring(0,6);
+			int pos = un.indexOf(' ');
+			if (pos>0)
+				un = un.substring(0,pos);
+			pos = un.indexOf('\'');
+			if (pos>0)
+				un = un.substring(0,pos);
+			if (un.length()>6 || un.length()<3)
+				continue;
 			un = un.toLowerCase();
 			if (bud.getByContact(un)==null)
 				return un;
@@ -401,6 +405,7 @@ public class PunterMgr {
 			parentToPay = getByUUID(parentToPay.getParentId());
 		}
 		us.setSponsorContact(parentToPay.getContact());
+		punterDao.updateUpgradeStatus(punter);
 	}
 
 	private int canUpgrade2(Punter punter) throws PunterMgrException
@@ -498,6 +503,21 @@ public class PunterMgr {
 			log.error(e.getMessage(),e);
 			throw new PunterMgrException("Could not delete all contacts - contact support.");
 		}
+	}
+	
+	public Punter getUpgradeParentToPay(final Punter punter,int newRating)
+	{ 
+		Punter parent = punterDao.getByContact(punter.getParentContact());
+		if (parent.getRating()==-1)
+			return parent;
+		parent = punterDao.getByContact(parent.getParentContact());				// skip a generation
+		while (parent.getRating()!=-1)
+		{
+			if (parent.getRating() >= newRating)
+				break;
+			parent = punterDao.getByContact(parent.getParentContact());
+		}
+		return parent;
 	}
 	
 	public void deleteByContact(final Punter punter) throws PunterMgrException

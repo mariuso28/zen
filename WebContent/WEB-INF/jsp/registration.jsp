@@ -79,8 +79,8 @@ function getPunter() {
 					punter = resultJson.result;
           if (punter.paymentMethods.length==0)
           {
-            alert('You have no payment methods set up.\nPlease go to edit profile to set up at least one.');
-            redirectDashboard();
+            alert('You have no payment methods set up.\nPlease edit profile to set up at least one.');
+            window.location="/zen/zx4/web/anon/goEditProfile";
             return;
           }
         },

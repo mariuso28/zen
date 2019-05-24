@@ -230,7 +230,7 @@ function createPaymentTr(payment)
   td.appendChild(document.createTextNode("USD " + payment.amount));
   tr.appendChild(td);
   td = document.createElement('td');
-  link = "/zen/zx4/web/anon/goPaymentDetails?paymentId="+payment.id+"&memberType=payee"
+  link = "/zen/zx4/web/anon/goPaymentDetails?paymentId="+payment.id+"&memberType=payer"
   td.innerHTML='<a href='+link
            +'><center><button class="btn btn-success btn-mini">VIEW</button></center></a>';
   tr.appendChild(td);
@@ -275,7 +275,7 @@ function createPaymentTr(payment)
               <thead>
                 <tr>
                   <th>Id</th>
-                  <th>From</th>
+                  <th>To</th>
                   <th>Phone</th>
                   <th>Description</th>
                   <th>Amount</th>
@@ -298,7 +298,7 @@ function createPaymentTr(payment)
               <thead>
                 <tr>
                   <th>Id</th>
-                  <th>From</th>
+                  <th>To</th>
                   <th>Phone</th>
                   <th>Description</th>
                   <th>Amount</th>
@@ -321,7 +321,7 @@ function createPaymentTr(payment)
               <thead>
                 <tr>
                   <th>Id</th>
-                  <th>From</th>
+                  <th>To</th>
                   <th>Phone</th>
                   <th>Description</th>
                   <th>Amount</th>

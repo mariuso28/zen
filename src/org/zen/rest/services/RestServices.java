@@ -98,7 +98,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			us.setPaymentStatus(PaymentStatus.PAYMENTSUCCESS);
 			punter.setRating(us.getNewRating());
 			xt.setPaymentStatus(PaymentStatus.PAYMENTSUCCESS);
-			services.updatePayment(xt,sponsor, punter);
+			services.updatePaymentSuccess(xt,sponsor, punter);
 			
 			log.info("Payment approved for : " + contact);
 			services.getMailNotifier().notifyUpgradeSuccessful(punter);
@@ -121,9 +121,8 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			UpgradeStatus us = punter.getUpgradeStatus();
 			us.setChanged((new GregorianCalendar()).getTime());
 			us.setPaymentStatus(PaymentStatus.PAYMENTFAIL);
-			punter.setRating(us.getNewRating());
 			xt.setPaymentStatus(PaymentStatus.PAYMENTFAIL);
-			services.updatePayment(xt,sponsor, punter);
+			services.updatePaymentFail(xt,sponsor, punter);
 			log.info("Payment rejected for : " + contact);
 			services.getMailNotifier().notifyUpgradeFailed(punter,sponsor);
 		} catch (Exception e) {
@@ -288,7 +287,12 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		UpgradeJson uj = new UpgradeJson();
 		uj.setCurrentRank(punter.getRating());
 		uj.setUpgradeRank(us.getNewRating());
-		Punter sponsor = punterMgr.getPunterDao().getByContact(punter.getSponsorContact());
+		Punter sponsor = null;
+		if (punter.getRating()==0)
+			sponsor = punterMgr.getPunterDao().getByContact(punter.getSponsorContact());
+		else
+			sponsor = punterMgr.getUpgradeParentToPay(punter,us.getNewRating());
+		
 		uj.setUpline(createPunterProfileJson(sponsor));
 		uj.setFee(ratingMgr.getUpgradeFeeForRating(us.getNewRating()));
 		return uj;

@@ -76,16 +76,31 @@ public class Services {
 		pd.updateAccount(punter.getAccount());
 	}
 	
-	public synchronized void updatePayment(Xtransaction xt,final Punter sponsor,final Punter punter) {
+	public synchronized void updatePaymentFail(Xtransaction xt,final Punter sponsor,final Punter punter) {
 		new TransactionTemplate(getTransactionManager()).execute(new TransactionCallbackWithoutResult() {
 			@Override
 			protected void doInTransactionWithoutResult(TransactionStatus arg0) {
-				doUpdatePayment(xt,sponsor,punter);
+				doUpdatePaymentFail(xt,sponsor,punter);
 			}
 		});
 	}
 		
-	public void doUpdatePayment(Xtransaction xt,Punter sponsor,Punter punter) {
+	private void doUpdatePaymentFail(Xtransaction xt,Punter sponsor,Punter punter) {
+		// update the paymentstatus xtransaction, upgradestatus, rating of punter, email the punter
+		home.getPunterDao().updateUpgradeStatus(punter);
+		home.getPaymentDao().updateXtransaction(xt.getId(), xt.getPaymentStatus());
+	}
+	
+	public synchronized void updatePaymentSuccess(Xtransaction xt,final Punter sponsor,final Punter punter) {
+		new TransactionTemplate(getTransactionManager()).execute(new TransactionCallbackWithoutResult() {
+			@Override
+			protected void doInTransactionWithoutResult(TransactionStatus arg0) {
+				doUpdatePaymentSuccess(xt,sponsor,punter);
+			}
+		});
+	}
+		
+	private void doUpdatePaymentSuccess(Xtransaction xt,Punter sponsor,Punter punter) {
 		// update the paymentstatus xtransaction, upgradestatus, rating of punter, email the punter
 		home.getPunterDao().updateRating(punter);
 		home.getPunterDao().updateUpgradeStatus(punter);
@@ -93,8 +108,6 @@ public class Services {
 		sponsor.getAccount().xfer(xt.getAmount());
 		punter.getAccount().xfer(-1*xt.getAmount());
 		doPerformUpdateAccounts(sponsor,punter);
-		
-		// EMAIL PUNTER
 	}
 
 	public BaseUser getBaseUser(String contact)

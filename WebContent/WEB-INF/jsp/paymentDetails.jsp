@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>paymentReceived</title>
+<title>paymentDetails</title>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link rel="stylesheet" href="../../../css/bootstrap.min.css" />
@@ -58,7 +58,8 @@ function approvePayment()
 						alert(resultJson.status + " " + resultJson.message);
             return;
 					}
-					alert("Payment approved. Member upgraded and notified.")
+					alert("Payment approved. Member upgraded and notified.");
+          window.location="/zen/zx4/web/anon/goPaymentReceived";
         },
 				error:function (e) {
 	  			alert("approvePayment ERROR : " + e.status + " - " + e.statusText);
