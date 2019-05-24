@@ -35150,3 +35150,479 @@ Caused by: org.postgresql.util.PSQLException: ERROR: relation "xtrasaction" does
 14:15:14,423  INFO http-bio-8080-exec-8 WebAnonController:63 - Received goUpgrade
 14:15:14,599  INFO http-bio-8080-exec-8 RestPunterControllerImpl:168 - Received getPunter for : hop
 14:15:14,626  INFO http-bio-8080-exec-11 RestPunterControllerImpl:300 - Received getUpgradeRequest
+16:08:09,765  INFO http-bio-8080-exec-4 WebAnonController:26 - Received login
+16:08:16,423  INFO http-bio-8080-exec-10 RestAuthController:49 - Got authorize1
+16:08:16,424  INFO http-bio-8080-exec-10 RestAuthController:78 - Attempting to authorize : zen
+16:08:16,797  INFO http-bio-8080-exec-10 RestAuthController:86 - Got baseuser : zen
+16:08:16,968  INFO http-bio-8080-exec-3 CustomUserDetailsService:28 - loadUserByUsername username : zen
+16:08:16,996  INFO http-bio-8080-exec-3 CustomUserDetailsService:41 - User : zen found with role :ROLE_PUNTER enabled : true
+16:08:16,997  INFO http-bio-8080-exec-3 CustomUserDetailsService:47 - Using User : zen with authorities :[ROLE_PUNTER]
+16:08:17,241  INFO http-bio-8080-exec-10 WebAnonController:113 - Received goDashboard
+16:08:17,450  INFO http-bio-8080-exec-8 RestPunterControllerImpl:168 - Received getPunter for : zen
+16:08:17,498  INFO http-bio-8080-exec-2 RestPunterControllerImpl:34 - Received getNotifications
+16:08:20,923  INFO http-bio-8080-exec-11 WebAnonController:35 - Received goGeneology
+16:08:21,141  INFO http-bio-8080-exec-4 RestPunterControllerImpl:168 - Received getPunter for : zen
+16:08:21,172  INFO http-bio-8080-exec-4 RestAnonControllerImpl:91 - Received getModel with : zen
+16:09:30,054  INFO http-bio-8080-exec-8 WebAnonController:26 - Received login
+16:09:47,558  INFO http-bio-8080-exec-5 RestAuthController:49 - Got authorize1
+16:09:47,558  INFO http-bio-8080-exec-5 RestAuthController:78 - Attempting to authorize : oscar
+16:09:47,560  INFO http-bio-8080-exec-5 RestAuthController:86 - Got baseuser : oscar
+16:09:47,565  INFO http-bio-8080-exec-8 CustomUserDetailsService:28 - loadUserByUsername username : oscar
+16:09:47,568  INFO http-bio-8080-exec-8 CustomUserDetailsService:41 - User : oscar found with role :ROLE_PUNTER enabled : true
+16:09:47,568  INFO http-bio-8080-exec-8 CustomUserDetailsService:47 - Using User : oscar with authorities :[ROLE_PUNTER]
+16:09:47,745  INFO http-bio-8080-exec-5 WebAnonController:113 - Received goDashboard
+16:09:48,581  INFO http-bio-8080-exec-8 RestPunterControllerImpl:168 - Received getPunter for : oscar
+16:09:48,632  INFO http-bio-8080-exec-6 RestPunterControllerImpl:34 - Received getNotifications
+16:10:08,138  INFO http-bio-8080-exec-5 WebAnonController:35 - Received goGeneology
+16:10:10,384  INFO http-bio-8080-exec-6 RestPunterControllerImpl:168 - Received getPunter for : oscar
+16:10:10,591  INFO http-bio-8080-exec-5 RestAnonControllerImpl:91 - Received getModel with : oscar
+16:10:18,274  INFO http-bio-8080-exec-3 WebAnonController:35 - Received goGeneology
+16:10:19,566  INFO http-bio-8080-exec-4 RestPunterControllerImpl:168 - Received getPunter for : oscar
+16:10:19,601  INFO http-bio-8080-exec-4 RestAnonControllerImpl:91 - Received getModel with : oscar
+16:13:28,218  INFO http-bio-8080-exec-11 WebAnonController:26 - Received login
+16:13:48,567  INFO http-bio-8080-exec-1 RestAuthController:49 - Got authorize1
+16:13:48,569  INFO http-bio-8080-exec-1 RestAuthController:78 - Attempting to authorize : zen
+16:13:48,571  INFO http-bio-8080-exec-1 RestAuthController:86 - Got baseuser : zen
+16:13:48,580  INFO http-bio-8080-exec-7 CustomUserDetailsService:28 - loadUserByUsername username : zen
+16:13:48,583  INFO http-bio-8080-exec-7 CustomUserDetailsService:41 - User : zen found with role :ROLE_PUNTER enabled : true
+16:13:48,583  INFO http-bio-8080-exec-7 CustomUserDetailsService:47 - Using User : zen with authorities :[ROLE_PUNTER]
+16:13:48,681  INFO http-bio-8080-exec-1 WebAnonController:113 - Received goDashboard
+16:13:48,908  INFO http-bio-8080-exec-10 RestPunterControllerImpl:168 - Received getPunter for : zen
+16:13:48,925  INFO http-bio-8080-exec-5 RestPunterControllerImpl:34 - Received getNotifications
+16:13:52,656  INFO http-bio-8080-exec-1 WebAnonController:35 - Received goGeneology
+16:13:52,852  INFO http-bio-8080-exec-5 RestPunterControllerImpl:168 - Received getPunter for : zen
+16:13:52,868  INFO http-bio-8080-exec-10 RestAnonControllerImpl:91 - Received getModel with : zen
+16:14:41,147  INFO http-bio-8080-exec-11 RestPunterControllerImpl:191 - Received getPunterByContact for : molly
+16:15:00,908  INFO http-bio-8080-exec-1 WebAnonController:26 - Received login
+16:15:06,310  INFO http-bio-8080-exec-9 RestAuthController:49 - Got authorize1
+16:15:06,311  INFO http-bio-8080-exec-9 RestAuthController:78 - Attempting to authorize : hop
+16:15:06,314  INFO http-bio-8080-exec-9 RestAuthController:86 - Got baseuser : hop
+16:15:06,322  INFO http-bio-8080-exec-10 CustomUserDetailsService:28 - loadUserByUsername username : hop
+16:15:06,326  INFO http-bio-8080-exec-10 CustomUserDetailsService:41 - User : hop found with role :ROLE_PUNTER enabled : true
+16:15:06,326  INFO http-bio-8080-exec-10 CustomUserDetailsService:47 - Using User : hop with authorities :[ROLE_PUNTER]
+16:15:06,430  INFO http-bio-8080-exec-9 WebAnonController:113 - Received goDashboard
+16:15:06,611  INFO http-bio-8080-exec-1 RestPunterControllerImpl:168 - Received getPunter for : hop
+16:15:06,631  INFO http-bio-8080-exec-6 RestPunterControllerImpl:34 - Received getNotifications
+16:15:46,408  INFO http-bio-8080-exec-6 WebAnonController:63 - Received goUpgrade
+16:15:46,584  INFO http-bio-8080-exec-9 RestPunterControllerImpl:168 - Received getPunter for : hop
+16:15:46,616  INFO http-bio-8080-exec-1 RestPunterControllerImpl:300 - Received getUpgradeRequest
+16:21:57,798  INFO http-bio-8080-exec-5 WebAnonController:35 - Received goGeneology
+16:21:58,757  INFO http-bio-8080-exec-10 RestPunterControllerImpl:168 - Received getPunter for : oscar
+16:21:58,796  INFO http-bio-8080-exec-10 RestAnonControllerImpl:91 - Received getModel with : oscar
+16:22:36,098  INFO http-bio-8080-exec-9 RestPunterControllerImpl:322 - Received submitTransactionDetails
+16:22:36,098  INFO http-bio-8080-exec-9 RestPunterControllerImpl:323 - Upload File : uploadfile date : 05-13-2019 details : I am paying
+16:22:36,102  INFO http-bio-8080-exec-9 RestServices:154 - Upload file is empty using transaction details
+16:22:42,407  INFO http-bio-8080-exec-9 WebAnonController:113 - Received goDashboard
+16:22:42,587  INFO http-bio-8080-exec-4 RestPunterControllerImpl:168 - Received getPunter for : hop
+16:22:42,613  INFO http-bio-8080-exec-11 RestPunterControllerImpl:34 - Received getNotifications
+16:22:45,365  INFO http-bio-8080-exec-11 WebAnonController:79 - Received goPaymentSent
+16:22:45,514  INFO http-bio-8080-exec-11 RestPunterControllerImpl:168 - Received getPunter for : hop
+16:22:45,534  INFO http-bio-8080-exec-4 RestPunterControllerImpl:436 - Received getPaymentsSent
+16:22:45,549  INFO http-bio-8080-exec-11 RestPunterControllerImpl:436 - Received getPaymentsSent
+16:22:45,561  INFO http-bio-8080-exec-4 RestPunterControllerImpl:436 - Received getPaymentsSent
+16:22:59,071  INFO http-bio-8080-exec-4 WebAnonController:26 - Received login
+16:23:04,196  INFO http-bio-8080-exec-10 RestAuthController:49 - Got authorize1
+16:23:04,197  INFO http-bio-8080-exec-10 RestAuthController:78 - Attempting to authorize : zen
+16:23:04,200  INFO http-bio-8080-exec-10 RestAuthController:86 - Got baseuser : zen
+16:23:04,213  INFO http-bio-8080-exec-9 CustomUserDetailsService:28 - loadUserByUsername username : zen
+16:23:04,219  INFO http-bio-8080-exec-9 CustomUserDetailsService:41 - User : zen found with role :ROLE_PUNTER enabled : true
+16:23:04,220  INFO http-bio-8080-exec-9 CustomUserDetailsService:47 - Using User : zen with authorities :[ROLE_PUNTER]
+16:23:04,356  INFO http-bio-8080-exec-11 WebAnonController:113 - Received goDashboard
+16:23:04,535  INFO http-bio-8080-exec-6 RestPunterControllerImpl:168 - Received getPunter for : zen
+16:23:04,562  INFO http-bio-8080-exec-1 RestPunterControllerImpl:34 - Received getNotifications
+16:23:06,414  INFO http-bio-8080-exec-4 WebAnonController:26 - Received login
+16:23:15,644  INFO http-bio-8080-exec-1 WebAnonController:71 - Received goPaymentReceived
+16:23:15,792  INFO http-bio-8080-exec-9 RestPunterControllerImpl:168 - Received getPunter for : zen
+16:23:15,972  INFO http-bio-8080-exec-7 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:23:15,982  INFO http-bio-8080-exec-9 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:23:15,993  INFO http-bio-8080-exec-7 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:23:25,056  INFO http-bio-8080-exec-8 WebAnonController:121 - Received goPaymentDetails with 44 : payee
+16:23:25,196  INFO http-bio-8080-exec-15 RestPunterControllerImpl:369 - Received getPaymentDetails with 44 : payee
+16:23:31,464  INFO http-bio-8080-exec-14 RestPunterControllerImpl:391 - Received approvePayment with 44
+16:23:31,504  INFO http-bio-8080-exec-14 RestServices:103 - Payment approved for : zen
+16:23:31,504  INFO http-bio-8080-exec-14 Services:111 - #### sending email to hop@test.com#######
+16:23:31,505  INFO http-bio-8080-exec-14 Services:112 - subject : Great news from Zen! You have successfully upgraded and can start to earn $$$
+16:23:31,505  INFO http-bio-8080-exec-14 Services:113 - message : Hi hop skip<br/>You have successfully upgraded to Rank<br/><strong>1</strong><br/>Good luck in your recruiting and making money!!
+16:23:31,505  INFO http-bio-8080-exec-14 Services:114 - #####################################################
+16:23:31,506  INFO Thread-3 Mail:187 - Message to : hop@test.com filtered..
+16:23:31,506  INFO Thread-3 Mail:210 - Sending Filtered Message to : hop@test.com to cc: mariuso.pk@gmail.com
+16:23:31,525  INFO Thread-3 Mail:104 - creating message
+16:23:31,536  INFO Thread-3 Mail:117 - creating message
+16:23:31,542  INFO Thread-3 Mail:148 - sending message to : mariuso.pk@gmail.com from : info@homeland.my
+16:23:33,207  INFO http-bio-8080-exec-9 RestAuthController:49 - Got authorize1
+16:23:33,208  INFO http-bio-8080-exec-9 RestAuthController:78 - Attempting to authorize : oscar
+16:23:33,210  INFO http-bio-8080-exec-9 RestAuthController:86 - Got baseuser : oscar
+16:23:33,220  INFO http-bio-8080-exec-11 CustomUserDetailsService:28 - loadUserByUsername username : oscar
+16:23:33,226  INFO http-bio-8080-exec-11 CustomUserDetailsService:41 - User : oscar found with role :ROLE_PUNTER enabled : true
+16:23:33,227  INFO http-bio-8080-exec-11 CustomUserDetailsService:47 - Using User : oscar with authorities :[ROLE_PUNTER]
+16:23:33,359  INFO http-bio-8080-exec-5 WebAnonController:71 - Received goPaymentReceived
+16:23:33,409  INFO http-bio-8080-exec-9 WebAnonController:113 - Received goDashboard
+16:23:33,490  INFO http-bio-8080-exec-13 RestPunterControllerImpl:168 - Received getPunter for : zen
+16:23:33,512  INFO http-bio-8080-exec-15 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:23:33,529  INFO http-bio-8080-exec-14 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:23:33,552  INFO http-bio-8080-exec-12 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:23:34,165  INFO http-bio-8080-exec-17 RestPunterControllerImpl:168 - Received getPunter for : oscar
+16:23:34,204  INFO http-bio-8080-exec-17 RestPunterControllerImpl:34 - Received getNotifications
+16:23:38,761  INFO http-bio-8080-exec-14 WebAnonController:35 - Received goGeneology
+16:23:38,962  INFO http-bio-8080-exec-1 RestPunterControllerImpl:168 - Received getPunter for : zen
+16:23:38,992  INFO http-bio-8080-exec-11 RestAnonControllerImpl:91 - Received getModel with : zen
+16:23:40,655  INFO http-bio-8080-exec-1 RestPunterControllerImpl:191 - Received getPunterByContact for : zen
+16:24:11,931  INFO http-bio-8080-exec-17 WebAnonController:96 - Received goChangePassword
+16:24:13,276  INFO http-bio-8080-exec-5 RestPunterControllerImpl:168 - Received getPunter for : oscar
+16:24:28,331  INFO http-bio-8080-exec-3 WebAnonController:35 - Received goGeneology
+16:24:29,133  INFO http-bio-8080-exec-3 RestPunterControllerImpl:168 - Received getPunter for : oscar
+16:24:29,191  INFO http-bio-8080-exec-9 RestAnonControllerImpl:91 - Received getModel with : oscar
+16:24:36,858  INFO http-bio-8080-exec-3 RestPunterControllerImpl:191 - Received getPunterByContact for : lucy
+16:24:41,425  INFO http-bio-8080-exec-11 WebAnonController:113 - Received goDashboard
+16:24:41,863  INFO http-bio-8080-exec-1 RestPunterControllerImpl:168 - Received getPunter for : oscar
+16:24:41,901  INFO http-bio-8080-exec-1 RestPunterControllerImpl:34 - Received getNotifications
+16:24:45,100  INFO http-bio-8080-exec-1 WebAnonController:35 - Received goGeneology
+16:24:45,895  INFO http-bio-8080-exec-9 RestPunterControllerImpl:168 - Received getPunter for : oscar
+16:24:45,928  INFO http-bio-8080-exec-16 RestAnonControllerImpl:91 - Received getModel with : oscar
+16:24:49,072  INFO http-bio-8080-exec-3 WebAnonController:104 - Received goEditProfile
+16:24:49,369  INFO http-bio-8080-exec-5 RestPunterControllerImpl:168 - Received getPunter for : zen
+16:24:49,421  INFO http-bio-8080-exec-4 RestAnonControllerImpl:109 - Received getCountries
+16:24:49,488  INFO http-bio-8080-exec-5 RestAnonControllerImpl:127 - Received getAvailablePaymentMethods
+16:24:57,212  INFO http-bio-8080-exec-9 WebAnonController:113 - Received goDashboard
+16:24:57,383  INFO http-bio-8080-exec-14 RestPunterControllerImpl:168 - Received getPunter for : zen
+16:24:57,405  INFO http-bio-8080-exec-1 RestPunterControllerImpl:34 - Received getNotifications
+16:25:39,465 ERROR Thread-3 Services:123 - Error on email : Mail server connection failed; nested exception is javax.mail.MessagingException: Could not connect to SMTP host: mail.your-server.de, port: 587;
+  nested exception is:
+	java.net.ConnectException: Connection timed out (Connection timed out). Failed messages: javax.mail.MessagingException: Could not connect to SMTP host: mail.your-server.de, port: 587;
+  nested exception is:
+	java.net.ConnectException: Connection timed out (Connection timed out)
+PkfzHomeStorageException [e=org.springframework.mail.MailSendException: Mail server connection failed; nested exception is javax.mail.MessagingException: Could not connect to SMTP host: mail.your-server.de, port: 587;
+  nested exception is:
+	java.net.ConnectException: Connection timed out (Connection timed out). Failed messages: javax.mail.MessagingException: Could not connect to SMTP host: mail.your-server.de, port: 587;
+  nested exception is:
+	java.net.ConnectException: Connection timed out (Connection timed out); message exceptions (1) are:
+Failed message 1: javax.mail.MessagingException: Could not connect to SMTP host: mail.your-server.de, port: 587;
+  nested exception is:
+	java.net.ConnectException: Connection timed out (Connection timed out)]
+	at org.zen.services.Mail.sendMail(Mail.java:155)
+	at org.zen.services.Mail.sendFilteredEmail(Mail.java:218)
+	at org.zen.services.Mail.sendMail(Mail.java:188)
+	at org.zen.services.Mail.sendMail(Mail.java:169)
+	at org.zen.services.MailNotifier$1.run(MailNotifier.java:121)
+	at java.lang.Thread.run(Thread.java:748)
+16:25:39,469 ERROR Thread-3 Services:124 - Couldn't send message : Error on email : Mail server connection failed; nested exception is javax.mail.MessagingException: Could not connect to SMTP host: mail.your-server.de, port: 587;
+  nested exception is:
+	java.net.ConnectException: Connection timed out (Connection timed out). Failed messages: javax.mail.MessagingException: Could not connect to SMTP host: mail.your-server.de, port: 587;
+  nested exception is:
+	java.net.ConnectException: Connection timed out (Connection timed out)
+16:25:39,469 ERROR Thread-3 Services:128 - Error on email : Mail server connection failed; nested exception is javax.mail.MessagingException: Could not connect to SMTP host: mail.your-server.de, port: 587;
+  nested exception is:
+	java.net.ConnectException: Connection timed out (Connection timed out). Failed messages: javax.mail.MessagingException: Could not connect to SMTP host: mail.your-server.de, port: 587;
+  nested exception is:
+	java.net.ConnectException: Connection timed out (Connection timed out)
+PkfzHomeStorageException [e=org.springframework.mail.MailSendException: Mail server connection failed; nested exception is javax.mail.MessagingException: Could not connect to SMTP host: mail.your-server.de, port: 587;
+  nested exception is:
+	java.net.ConnectException: Connection timed out (Connection timed out). Failed messages: javax.mail.MessagingException: Could not connect to SMTP host: mail.your-server.de, port: 587;
+  nested exception is:
+	java.net.ConnectException: Connection timed out (Connection timed out); message exceptions (1) are:
+Failed message 1: javax.mail.MessagingException: Could not connect to SMTP host: mail.your-server.de, port: 587;
+  nested exception is:
+	java.net.ConnectException: Connection timed out (Connection timed out)]
+	at org.zen.services.Mail.sendMail(Mail.java:155)
+	at org.zen.services.Mail.sendFilteredEmail(Mail.java:218)
+	at org.zen.services.Mail.sendMail(Mail.java:188)
+	at org.zen.services.Mail.sendMail(Mail.java:169)
+	at org.zen.services.MailNotifier$1.run(MailNotifier.java:121)
+	at java.lang.Thread.run(Thread.java:748)
+16:26:39,469  INFO http-bio-8080-exec-17 WebAnonController:35 - Received goGeneology
+16:26:39,658  INFO http-bio-8080-exec-11 RestPunterControllerImpl:168 - Received getPunter for : zen
+16:26:39,667  INFO http-bio-8080-exec-11 RestAnonControllerImpl:91 - Received getModel with : zen
+16:27:52,310  INFO http-bio-8080-exec-17 WebAnonController:71 - Received goPaymentReceived
+16:27:53,283  INFO http-bio-8080-exec-3 WebAnonController:26 - Received login
+16:32:12,506  INFO http-bio-8080-exec-13 WebAnonController:71 - Received goPaymentReceived
+16:32:13,269  INFO http-bio-8080-exec-1 RestPunterControllerImpl:168 - Received getPunter for : oscar
+16:32:13,311  INFO http-bio-8080-exec-1 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:32:13,338  INFO http-bio-8080-exec-13 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:32:13,368  INFO http-bio-8080-exec-13 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:32:16,892  INFO http-bio-8080-exec-13 WebAnonController:96 - Received goChangePassword
+16:32:17,409  INFO http-bio-8080-exec-5 RestPunterControllerImpl:168 - Received getPunter for : oscar
+16:32:27,337  INFO http-bio-8080-exec-5 WebAnonController:113 - Received goDashboard
+16:32:27,944  INFO http-bio-8080-exec-3 RestPunterControllerImpl:168 - Received getPunter for : oscar
+16:32:27,972  INFO http-bio-8080-exec-7 RestPunterControllerImpl:34 - Received getNotifications
+16:32:31,228  INFO http-bio-8080-exec-7 WebAnonController:35 - Received goGeneology
+16:32:32,130  INFO http-bio-8080-exec-16 RestPunterControllerImpl:168 - Received getPunter for : oscar
+16:32:32,160  INFO http-bio-8080-exec-6 RestAnonControllerImpl:91 - Received getModel with : oscar
+16:33:51,334  INFO http-bio-8080-exec-5 WebAnonController:26 - Received login
+16:34:13,320  INFO http-bio-8080-exec-1 RestAuthController:49 - Got authorize1
+16:34:13,321  INFO http-bio-8080-exec-1 RestAuthController:78 - Attempting to authorize : angel
+16:34:13,322  INFO http-bio-8080-exec-1 RestAuthController:86 - Got baseuser : angel
+16:34:13,328  INFO http-bio-8080-exec-7 CustomUserDetailsService:28 - loadUserByUsername username : angel
+16:34:13,330  INFO http-bio-8080-exec-7 CustomUserDetailsService:41 - User : angel found with role :ROLE_PUNTER enabled : true
+16:34:13,330  INFO http-bio-8080-exec-7 CustomUserDetailsService:47 - Using User : angel with authorities :[ROLE_PUNTER]
+16:34:13,426  INFO http-bio-8080-exec-6 WebAnonController:113 - Received goDashboard
+16:34:13,601  INFO http-bio-8080-exec-5 RestPunterControllerImpl:168 - Received getPunter for : angel
+16:34:13,613  INFO http-bio-8080-exec-5 RestPunterControllerImpl:34 - Received getNotifications
+16:34:29,448  INFO http-bio-8080-exec-16 WebAnonController:55 - Received goNewRegistration
+16:34:30,234  INFO http-bio-8080-exec-16 RestAnonControllerImpl:109 - Received getCountries
+16:34:30,292  INFO http-bio-8080-exec-1 RestPunterControllerImpl:74 - Received initializeRegistration for : angel
+16:34:30,300  INFO http-bio-8080-exec-6 RestPunterControllerImpl:168 - Received getPunter for : angel
+16:34:32,097  INFO http-bio-8080-exec-13 WebAnonController:104 - Received goEditProfile
+16:34:32,312  INFO http-bio-8080-exec-1 RestPunterControllerImpl:168 - Received getPunter for : angel
+16:34:32,331  INFO http-bio-8080-exec-3 RestAnonControllerImpl:109 - Received getCountries
+16:34:32,372  INFO http-bio-8080-exec-1 RestAnonControllerImpl:127 - Received getAvailablePaymentMethods
+16:34:39,504  INFO http-bio-8080-exec-3 RestPunterControllerImpl:256 - Received addPaymentMethod with id : 1 accNum : 88888888
+16:34:39,520  INFO http-bio-8080-exec-1 RestPunterControllerImpl:168 - Received getPunter for : angel
+16:34:39,529  INFO http-bio-8080-exec-6 RestAnonControllerImpl:109 - Received getCountries
+16:34:39,575  INFO http-bio-8080-exec-3 RestAnonControllerImpl:127 - Received getAvailablePaymentMethods
+16:34:41,258  INFO http-bio-8080-exec-13 RestPunterControllerImpl:146 - Received updatePunter for : angel
+16:34:42,900  INFO http-bio-8080-exec-3 WebAnonController:113 - Received goDashboard
+16:34:43,065  INFO http-bio-8080-exec-5 RestPunterControllerImpl:168 - Received getPunter for : angel
+16:34:43,080  INFO http-bio-8080-exec-8 RestPunterControllerImpl:34 - Received getNotifications
+16:34:45,008  INFO http-bio-8080-exec-8 WebAnonController:55 - Received goNewRegistration
+16:34:45,216  INFO http-bio-8080-exec-16 RestAnonControllerImpl:109 - Received getCountries
+16:34:45,256  INFO http-bio-8080-exec-7 RestPunterControllerImpl:74 - Received initializeRegistration for : angel
+16:34:45,271  INFO http-bio-8080-exec-3 RestPunterControllerImpl:168 - Received getPunter for : angel
+16:35:57,926  INFO http-bio-8080-exec-6 RestPunterControllerImpl:100 - Received storeRegistration for : angel
+16:35:59,731  INFO http-bio-8080-exec-6 WebAnonController:113 - Received goDashboard
+16:35:59,903  INFO http-bio-8080-exec-8 RestPunterControllerImpl:168 - Received getPunter for : angel
+16:35:59,924  INFO http-bio-8080-exec-8 RestPunterControllerImpl:34 - Received getNotifications
+16:36:06,521  INFO http-bio-8080-exec-8 WebAnonController:35 - Received goGeneology
+16:36:06,703  INFO http-bio-8080-exec-6 RestPunterControllerImpl:168 - Received getPunter for : angel
+16:36:06,722  INFO http-bio-8080-exec-5 RestAnonControllerImpl:91 - Received getModel with : angel
+16:36:27,310  INFO http-bio-8080-exec-3 WebAnonController:26 - Received login
+16:36:31,867  INFO http-bio-8080-exec-1 RestAuthController:49 - Got authorize1
+16:36:31,868  INFO http-bio-8080-exec-1 RestAuthController:78 - Attempting to authorize : kai
+16:36:31,871  INFO http-bio-8080-exec-1 RestAuthController:86 - Got baseuser : kai
+16:36:31,881  INFO http-bio-8080-exec-16 CustomUserDetailsService:28 - loadUserByUsername username : kai
+16:36:31,885  INFO http-bio-8080-exec-16 CustomUserDetailsService:41 - User : kai found with role :ROLE_PUNTER enabled : true
+16:36:31,885  INFO http-bio-8080-exec-16 CustomUserDetailsService:47 - Using User : kai with authorities :[ROLE_PUNTER]
+16:36:31,987  INFO http-bio-8080-exec-7 WebAnonController:113 - Received goDashboard
+16:36:32,133  INFO http-bio-8080-exec-19 RestPunterControllerImpl:168 - Received getPunter for : kai
+16:36:32,150  INFO http-bio-8080-exec-19 RestPunterControllerImpl:34 - Received getNotifications
+16:36:38,725  INFO http-bio-8080-exec-6 WebAnonController:63 - Received goUpgrade
+16:36:38,866  INFO http-bio-8080-exec-20 RestPunterControllerImpl:168 - Received getPunter for : kai
+16:36:38,884  INFO http-bio-8080-exec-18 RestPunterControllerImpl:300 - Received getUpgradeRequest
+16:40:28,792  INFO http-bio-8080-exec-5 RestPunterControllerImpl:322 - Received submitTransactionDetails
+16:40:28,793  INFO http-bio-8080-exec-5 RestPunterControllerImpl:323 - Upload File : uploadfile date : 05-13-2019 details : I paid you
+16:40:28,797  INFO http-bio-8080-exec-5 RestServices:154 - Upload file is empty using transaction details
+16:40:33,169  INFO http-bio-8080-exec-5 WebAnonController:113 - Received goDashboard
+16:40:33,350  INFO http-bio-8080-exec-18 RestPunterControllerImpl:168 - Received getPunter for : kai
+16:40:33,364  INFO http-bio-8080-exec-18 RestPunterControllerImpl:34 - Received getNotifications
+16:40:46,660  INFO http-bio-8080-exec-18 WebAnonController:26 - Received login
+16:40:53,744  INFO http-bio-8080-exec-1 RestAuthController:49 - Got authorize1
+16:40:53,745  INFO http-bio-8080-exec-1 RestAuthController:78 - Attempting to authorize : angel
+16:40:53,747  INFO http-bio-8080-exec-1 RestAuthController:86 - Got baseuser : angel
+16:40:53,755  INFO http-bio-8080-exec-18 CustomUserDetailsService:28 - loadUserByUsername username : angel
+16:40:53,757  INFO http-bio-8080-exec-18 CustomUserDetailsService:41 - User : angel found with role :ROLE_PUNTER enabled : true
+16:40:53,758  INFO http-bio-8080-exec-18 CustomUserDetailsService:47 - Using User : angel with authorities :[ROLE_PUNTER]
+16:40:53,855  INFO http-bio-8080-exec-1 WebAnonController:113 - Received goDashboard
+16:40:54,039  INFO http-bio-8080-exec-13 RestPunterControllerImpl:168 - Received getPunter for : angel
+16:40:54,055  INFO http-bio-8080-exec-3 RestPunterControllerImpl:34 - Received getNotifications
+16:41:00,018  INFO http-bio-8080-exec-5 WebAnonController:71 - Received goPaymentReceived
+16:41:00,152  INFO http-bio-8080-exec-1 RestPunterControllerImpl:168 - Received getPunter for : angel
+16:41:00,168  INFO http-bio-8080-exec-17 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:41:00,181  INFO http-bio-8080-exec-1 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:41:00,191  INFO http-bio-8080-exec-17 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:41:04,647  INFO http-bio-8080-exec-17 WebAnonController:121 - Received goPaymentDetails with 45 : payee
+16:41:04,828  INFO http-bio-8080-exec-6 RestPunterControllerImpl:369 - Received getPaymentDetails with 45 : payee
+16:41:12,093  INFO http-bio-8080-exec-20 RestPunterControllerImpl:391 - Received approvePayment with 45
+16:41:12,122  INFO http-bio-8080-exec-20 RestServices:103 - Payment approved for : angel
+16:41:12,122  INFO http-bio-8080-exec-20 Services:111 - #### sending email to kai@test.com#######
+16:41:12,122  INFO http-bio-8080-exec-20 Services:112 - subject : Great news from Zen! You have successfully upgraded and can start to earn $$$
+16:41:12,122  INFO http-bio-8080-exec-20 Services:113 - message : Hi Koo Toong<br/>You have successfully upgraded to Rank<br/><strong>1</strong><br/>Good luck in your recruiting and making money!!
+16:41:12,122  INFO http-bio-8080-exec-20 Services:114 - #####################################################
+16:41:12,123  INFO Thread-4 Mail:187 - Message to : kai@test.com filtered..
+16:41:12,123  INFO Thread-4 Mail:210 - Sending Filtered Message to : kai@test.com to cc: mariuso.pk@gmail.com
+16:41:12,123  INFO Thread-4 Mail:104 - creating message
+16:41:12,124  INFO Thread-4 Mail:117 - creating message
+16:41:12,124  INFO Thread-4 Mail:148 - sending message to : mariuso.pk@gmail.com from : info@homeland.my
+16:41:13,869  INFO http-bio-8080-exec-1 WebAnonController:71 - Received goPaymentReceived
+16:41:14,008  INFO http-bio-8080-exec-1 RestPunterControllerImpl:168 - Received getPunter for : angel
+16:41:14,023  INFO http-bio-8080-exec-13 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:41:14,039  INFO http-bio-8080-exec-20 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:41:14,047  INFO http-bio-8080-exec-1 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:41:18,324  INFO http-bio-8080-exec-5 WebAnonController:26 - Received login
+16:41:25,278  INFO http-bio-8080-exec-6 RestAuthController:49 - Got authorize1
+16:41:25,279  INFO http-bio-8080-exec-6 RestAuthController:78 - Attempting to authorize : kai
+16:41:25,280  INFO http-bio-8080-exec-6 RestAuthController:86 - Got baseuser : kai
+16:41:25,287  INFO http-bio-8080-exec-5 CustomUserDetailsService:28 - loadUserByUsername username : kai
+16:41:25,290  INFO http-bio-8080-exec-5 CustomUserDetailsService:41 - User : kai found with role :ROLE_PUNTER enabled : true
+16:41:25,290  INFO http-bio-8080-exec-5 CustomUserDetailsService:47 - Using User : kai with authorities :[ROLE_PUNTER]
+16:41:25,391  INFO http-bio-8080-exec-16 WebAnonController:113 - Received goDashboard
+16:41:25,599  INFO http-bio-8080-exec-3 RestPunterControllerImpl:168 - Received getPunter for : kai
+16:41:25,608  INFO http-bio-8080-exec-1 RestPunterControllerImpl:34 - Received getNotifications
+16:41:54,026  INFO http-bio-8080-exec-13 WebAnonController:104 - Received goEditProfile
+16:41:54,777  INFO http-bio-8080-exec-17 RestPunterControllerImpl:168 - Received getPunter for : kai
+16:41:54,788  INFO http-bio-8080-exec-17 RestAnonControllerImpl:109 - Received getCountries
+16:41:54,834  INFO http-bio-8080-exec-18 RestAnonControllerImpl:127 - Received getAvailablePaymentMethods
+16:42:07,280  INFO http-bio-8080-exec-18 WebAnonController:104 - Received goEditProfile
+16:42:07,646  INFO http-bio-8080-exec-3 RestPunterControllerImpl:168 - Received getPunter for : kai
+16:42:07,662  INFO http-bio-8080-exec-3 RestAnonControllerImpl:109 - Received getCountries
+16:42:07,706  INFO http-bio-8080-exec-3 RestAnonControllerImpl:127 - Received getAvailablePaymentMethods
+16:42:14,283  INFO http-bio-8080-exec-3 WebAnonController:79 - Received goPaymentSent
+16:42:14,426  INFO http-bio-8080-exec-13 RestPunterControllerImpl:168 - Received getPunter for : kai
+16:42:14,456  INFO http-bio-8080-exec-13 RestPunterControllerImpl:436 - Received getPaymentsSent
+16:42:14,469  INFO http-bio-8080-exec-13 RestPunterControllerImpl:436 - Received getPaymentsSent
+16:42:14,479  INFO http-bio-8080-exec-13 RestPunterControllerImpl:436 - Received getPaymentsSent
+16:42:36,350  INFO http-bio-8080-exec-16 WebAnonController:55 - Received goNewRegistration
+16:42:36,553  INFO http-bio-8080-exec-19 RestAnonControllerImpl:109 - Received getCountries
+16:42:36,615  INFO http-bio-8080-exec-19 RestPunterControllerImpl:74 - Received initializeRegistration for : kai
+16:42:36,626  INFO http-bio-8080-exec-18 RestPunterControllerImpl:168 - Received getPunter for : kai
+16:42:37,753  INFO http-bio-8080-exec-18 WebAnonController:104 - Received goEditProfile
+16:42:37,937  INFO http-bio-8080-exec-6 RestPunterControllerImpl:168 - Received getPunter for : kai
+16:42:37,958  INFO http-bio-8080-exec-5 RestAnonControllerImpl:109 - Received getCountries
+16:42:38,002  INFO http-bio-8080-exec-6 RestAnonControllerImpl:127 - Received getAvailablePaymentMethods
+16:42:43,855  INFO http-bio-8080-exec-5 RestPunterControllerImpl:256 - Received addPaymentMethod with id : 1 accNum : 88888888
+16:42:43,889  INFO http-bio-8080-exec-18 RestPunterControllerImpl:168 - Received getPunter for : kai
+16:42:43,898  INFO http-bio-8080-exec-13 RestAnonControllerImpl:109 - Received getCountries
+16:42:43,945  INFO http-bio-8080-exec-5 RestAnonControllerImpl:127 - Received getAvailablePaymentMethods
+16:42:45,074  INFO http-bio-8080-exec-13 RestPunterControllerImpl:146 - Received updatePunter for : kai
+16:42:46,365  INFO http-bio-8080-exec-1 WebAnonController:113 - Received goDashboard
+16:42:46,567  INFO http-bio-8080-exec-16 RestPunterControllerImpl:168 - Received getPunter for : kai
+16:42:46,578  INFO http-bio-8080-exec-19 RestPunterControllerImpl:34 - Received getNotifications
+16:43:19,447 ERROR Thread-4 Services:123 - Error on email : Mail server connection failed; nested exception is javax.mail.MessagingException: Could not connect to SMTP host: mail.your-server.de, port: 587;
+  nested exception is:
+	java.net.ConnectException: Connection timed out (Connection timed out). Failed messages: javax.mail.MessagingException: Could not connect to SMTP host: mail.your-server.de, port: 587;
+  nested exception is:
+	java.net.ConnectException: Connection timed out (Connection timed out)
+PkfzHomeStorageException [e=org.springframework.mail.MailSendException: Mail server connection failed; nested exception is javax.mail.MessagingException: Could not connect to SMTP host: mail.your-server.de, port: 587;
+  nested exception is:
+	java.net.ConnectException: Connection timed out (Connection timed out). Failed messages: javax.mail.MessagingException: Could not connect to SMTP host: mail.your-server.de, port: 587;
+  nested exception is:
+	java.net.ConnectException: Connection timed out (Connection timed out); message exceptions (1) are:
+Failed message 1: javax.mail.MessagingException: Could not connect to SMTP host: mail.your-server.de, port: 587;
+  nested exception is:
+	java.net.ConnectException: Connection timed out (Connection timed out)]
+	at org.zen.services.Mail.sendMail(Mail.java:155)
+	at org.zen.services.Mail.sendFilteredEmail(Mail.java:218)
+	at org.zen.services.Mail.sendMail(Mail.java:188)
+	at org.zen.services.Mail.sendMail(Mail.java:169)
+	at org.zen.services.MailNotifier$1.run(MailNotifier.java:121)
+	at java.lang.Thread.run(Thread.java:748)
+16:43:19,448 ERROR Thread-4 Services:124 - Couldn't send message : Error on email : Mail server connection failed; nested exception is javax.mail.MessagingException: Could not connect to SMTP host: mail.your-server.de, port: 587;
+  nested exception is:
+	java.net.ConnectException: Connection timed out (Connection timed out). Failed messages: javax.mail.MessagingException: Could not connect to SMTP host: mail.your-server.de, port: 587;
+  nested exception is:
+	java.net.ConnectException: Connection timed out (Connection timed out)
+16:43:19,448 ERROR Thread-4 Services:128 - Error on email : Mail server connection failed; nested exception is javax.mail.MessagingException: Could not connect to SMTP host: mail.your-server.de, port: 587;
+  nested exception is:
+	java.net.ConnectException: Connection timed out (Connection timed out). Failed messages: javax.mail.MessagingException: Could not connect to SMTP host: mail.your-server.de, port: 587;
+  nested exception is:
+	java.net.ConnectException: Connection timed out (Connection timed out)
+PkfzHomeStorageException [e=org.springframework.mail.MailSendException: Mail server connection failed; nested exception is javax.mail.MessagingException: Could not connect to SMTP host: mail.your-server.de, port: 587;
+  nested exception is:
+	java.net.ConnectException: Connection timed out (Connection timed out). Failed messages: javax.mail.MessagingException: Could not connect to SMTP host: mail.your-server.de, port: 587;
+  nested exception is:
+	java.net.ConnectException: Connection timed out (Connection timed out); message exceptions (1) are:
+Failed message 1: javax.mail.MessagingException: Could not connect to SMTP host: mail.your-server.de, port: 587;
+  nested exception is:
+	java.net.ConnectException: Connection timed out (Connection timed out)]
+	at org.zen.services.Mail.sendMail(Mail.java:155)
+	at org.zen.services.Mail.sendFilteredEmail(Mail.java:218)
+	at org.zen.services.Mail.sendMail(Mail.java:188)
+	at org.zen.services.Mail.sendMail(Mail.java:169)
+	at org.zen.services.MailNotifier$1.run(MailNotifier.java:121)
+	at java.lang.Thread.run(Thread.java:748)
+16:46:43,360  INFO http-bio-8080-exec-20 WebAnonController:35 - Received goGeneology
+16:46:43,529  INFO http-bio-8080-exec-1 RestPunterControllerImpl:168 - Received getPunter for : kai
+16:46:43,552  INFO http-bio-8080-exec-16 RestAnonControllerImpl:91 - Received getModel with : kai
+16:46:49,118  INFO http-bio-8080-exec-3 WebAnonController:55 - Received goNewRegistration
+16:46:49,773  INFO http-bio-8080-exec-13 RestAnonControllerImpl:109 - Received getCountries
+16:46:49,821  INFO http-bio-8080-exec-13 RestPunterControllerImpl:74 - Received initializeRegistration for : kai
+16:46:49,835  INFO http-bio-8080-exec-13 RestPunterControllerImpl:168 - Received getPunter for : kai
+16:47:41,458  INFO http-bio-8080-exec-13 RestPunterControllerImpl:100 - Received storeRegistration for : kai
+16:47:43,265  INFO http-bio-8080-exec-13 WebAnonController:113 - Received goDashboard
+16:47:43,439  INFO http-bio-8080-exec-18 RestPunterControllerImpl:168 - Received getPunter for : kai
+16:47:43,453  INFO http-bio-8080-exec-18 RestPunterControllerImpl:34 - Received getNotifications
+16:47:53,377  INFO http-bio-8080-exec-16 WebAnonController:26 - Received login
+16:47:58,777  INFO http-bio-8080-exec-19 RestAuthController:49 - Got authorize1
+16:47:58,778  INFO http-bio-8080-exec-19 RestAuthController:78 - Attempting to authorize : kai
+16:47:58,780  INFO http-bio-8080-exec-19 RestAuthController:86 - Got baseuser : kai
+16:47:58,786  INFO http-bio-8080-exec-13 CustomUserDetailsService:28 - loadUserByUsername username : kai
+16:47:58,788  INFO http-bio-8080-exec-13 CustomUserDetailsService:41 - User : kai found with role :ROLE_PUNTER enabled : true
+16:47:58,788  INFO http-bio-8080-exec-13 CustomUserDetailsService:47 - Using User : kai with authorities :[ROLE_PUNTER]
+16:47:58,882  INFO http-bio-8080-exec-1 WebAnonController:113 - Received goDashboard
+16:47:59,032  INFO http-bio-8080-exec-6 RestPunterControllerImpl:168 - Received getPunter for : kai
+16:47:59,041  INFO http-bio-8080-exec-6 RestPunterControllerImpl:34 - Received getNotifications
+16:48:00,929  INFO http-bio-8080-exec-16 WebAnonController:45 - Received goGeneologyContact
+16:48:01,089  INFO http-bio-8080-exec-20 RestPunterControllerImpl:168 - Received getPunter for : kai
+16:48:01,111  INFO http-bio-8080-exec-3 RestAnonControllerImpl:91 - Received getModel with : kai
+16:48:01,151  INFO http-bio-8080-exec-17 RestPunterControllerImpl:191 - Received getPunterByContact for : bella
+16:48:19,677  INFO http-bio-8080-exec-5 WebAnonController:26 - Received login
+16:48:25,549  INFO http-bio-8080-exec-17 RestAuthController:49 - Got authorize1
+16:48:25,549  INFO http-bio-8080-exec-17 RestAuthController:78 - Attempting to authorize : bella
+16:48:25,550  INFO http-bio-8080-exec-17 RestAuthController:86 - Got baseuser : bella
+16:48:25,555  INFO http-bio-8080-exec-20 CustomUserDetailsService:28 - loadUserByUsername username : bella
+16:48:25,557  INFO http-bio-8080-exec-20 CustomUserDetailsService:41 - User : bella found with role :ROLE_PUNTER enabled : true
+16:48:25,558  INFO http-bio-8080-exec-20 CustomUserDetailsService:47 - Using User : bella with authorities :[ROLE_PUNTER]
+16:48:25,650  INFO http-bio-8080-exec-16 WebAnonController:113 - Received goDashboard
+16:48:25,787  INFO http-bio-8080-exec-3 RestPunterControllerImpl:168 - Received getPunter for : bella
+16:48:25,799  INFO http-bio-8080-exec-19 RestPunterControllerImpl:34 - Received getNotifications
+16:48:27,312  INFO http-bio-8080-exec-6 WebAnonController:63 - Received goUpgrade
+16:48:27,455  INFO http-bio-8080-exec-6 RestPunterControllerImpl:168 - Received getPunter for : bella
+16:48:27,467  INFO http-bio-8080-exec-5 RestPunterControllerImpl:300 - Received getUpgradeRequest
+16:48:31,243  INFO http-bio-8080-exec-6 RestPunterControllerImpl:322 - Received submitTransactionDetails
+16:48:31,243  INFO http-bio-8080-exec-6 RestPunterControllerImpl:323 - Upload File : uploadfile date : 05-13-2019 details : Copy and Paste Transaction Details
+16:48:31,248  INFO http-bio-8080-exec-6 RestServices:154 - Upload file is empty using transaction details
+16:48:32,637  INFO http-bio-8080-exec-5 WebAnonController:113 - Received goDashboard
+16:48:32,799  INFO http-bio-8080-exec-18 RestPunterControllerImpl:168 - Received getPunter for : bella
+16:48:32,829  INFO http-bio-8080-exec-6 RestPunterControllerImpl:34 - Received getNotifications
+16:48:34,869  INFO http-bio-8080-exec-1 WebAnonController:26 - Received login
+16:48:39,886  INFO http-bio-8080-exec-18 RestAuthController:49 - Got authorize1
+16:48:39,887  INFO http-bio-8080-exec-18 RestAuthController:78 - Attempting to authorize : kai
+16:48:39,889  INFO http-bio-8080-exec-18 RestAuthController:86 - Got baseuser : kai
+16:48:39,895  INFO http-bio-8080-exec-6 CustomUserDetailsService:28 - loadUserByUsername username : kai
+16:48:39,898  INFO http-bio-8080-exec-6 CustomUserDetailsService:41 - User : kai found with role :ROLE_PUNTER enabled : true
+16:48:39,899  INFO http-bio-8080-exec-6 CustomUserDetailsService:47 - Using User : kai with authorities :[ROLE_PUNTER]
+16:48:39,994  INFO http-bio-8080-exec-16 WebAnonController:113 - Received goDashboard
+16:48:40,146  INFO http-bio-8080-exec-17 RestPunterControllerImpl:168 - Received getPunter for : kai
+16:48:40,155  INFO http-bio-8080-exec-3 RestPunterControllerImpl:34 - Received getNotifications
+16:48:41,655  INFO http-bio-8080-exec-17 WebAnonController:71 - Received goPaymentReceived
+16:48:41,801  INFO http-bio-8080-exec-20 RestPunterControllerImpl:168 - Received getPunter for : kai
+16:48:41,809  INFO http-bio-8080-exec-16 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:48:41,823  INFO http-bio-8080-exec-17 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:48:41,829  INFO http-bio-8080-exec-20 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:48:43,744  INFO http-bio-8080-exec-17 WebAnonController:121 - Received goPaymentDetails with 46 : payee
+16:48:43,875  INFO http-bio-8080-exec-3 RestPunterControllerImpl:369 - Received getPaymentDetails with 46 : payee
+16:48:46,297  INFO http-bio-8080-exec-17 RestPunterControllerImpl:391 - Received approvePayment with 46
+16:48:46,313  INFO http-bio-8080-exec-17 RestServices:103 - Payment approved for : kai
+16:48:46,314  INFO http-bio-8080-exec-17 Services:111 - #### sending email to bella@test.com#######
+16:48:46,314  INFO http-bio-8080-exec-17 Services:112 - subject : Great news from Zen! You have successfully upgraded and can start to earn $$$
+16:48:46,314  INFO http-bio-8080-exec-17 Services:113 - message : Hi bella bell<br/>You have successfully upgraded to Rank<br/><strong>1</strong><br/>Good luck in your recruiting and making money!!
+16:48:46,315  INFO http-bio-8080-exec-17 Services:114 - #####################################################
+16:48:46,315  INFO Thread-5 Mail:187 - Message to : bella@test.com filtered..
+16:48:46,316  INFO Thread-5 Mail:210 - Sending Filtered Message to : bella@test.com to cc: mariuso.pk@gmail.com
+16:48:46,316  INFO Thread-5 Mail:104 - creating message
+16:48:46,316  INFO Thread-5 Mail:117 - creating message
+16:48:46,317  INFO Thread-5 Mail:148 - sending message to : mariuso.pk@gmail.com from : info@homeland.my
+16:48:47,895  INFO http-bio-8080-exec-19 WebAnonController:71 - Received goPaymentReceived
+16:48:48,099  INFO http-bio-8080-exec-18 RestPunterControllerImpl:168 - Received getPunter for : kai
+16:48:48,130  INFO http-bio-8080-exec-16 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:48:48,153  INFO http-bio-8080-exec-3 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:48:48,185  INFO http-bio-8080-exec-5 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:48:52,647  INFO Thread-5 Mail:150 - send message complete
+16:48:59,070  INFO http-bio-8080-exec-17 WebAnonController:35 - Received goGeneology
+16:48:59,227  INFO http-bio-8080-exec-1 RestPunterControllerImpl:168 - Received getPunter for : kai
+16:48:59,247  INFO http-bio-8080-exec-6 RestAnonControllerImpl:91 - Received getModel with : kai
+16:49:01,124  INFO http-bio-8080-exec-20 RestPunterControllerImpl:191 - Received getPunterByContact for : kai
+16:53:17,428  INFO http-bio-8080-exec-17 WebAnonController:79 - Received goPaymentSent
+16:53:17,594  INFO http-bio-8080-exec-16 RestPunterControllerImpl:168 - Received getPunter for : kai
+16:53:17,628  INFO http-bio-8080-exec-16 RestPunterControllerImpl:436 - Received getPaymentsSent
+16:53:17,648  INFO http-bio-8080-exec-6 RestPunterControllerImpl:436 - Received getPaymentsSent
+16:53:17,670  INFO http-bio-8080-exec-13 RestPunterControllerImpl:436 - Received getPaymentsSent
+16:53:23,051  INFO http-bio-8080-exec-3 WebAnonController:121 - Received goPaymentDetails with 45 : payer
+16:53:23,194  INFO http-bio-8080-exec-18 RestPunterControllerImpl:369 - Received getPaymentDetails with 45 : payer
+16:53:27,005  INFO http-bio-8080-exec-18 WebAnonController:71 - Received goPaymentReceived
+16:53:27,142  INFO http-bio-8080-exec-16 RestPunterControllerImpl:168 - Received getPunter for : kai
+16:53:27,155  INFO http-bio-8080-exec-19 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:53:27,174  INFO http-bio-8080-exec-18 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:53:27,181  INFO http-bio-8080-exec-3 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:53:30,336  INFO http-bio-8080-exec-20 WebAnonController:121 - Received goPaymentDetails with 46 : payee
+16:53:30,481  INFO http-bio-8080-exec-19 RestPunterControllerImpl:369 - Received getPaymentDetails with 46 : payee
+16:53:33,461  INFO http-bio-8080-exec-20 WebAnonController:63 - Received goUpgrade
+16:53:33,589  INFO http-bio-8080-exec-1 RestPunterControllerImpl:168 - Received getPunter for : kai
+16:53:33,608  INFO http-bio-8080-exec-3 RestPunterControllerImpl:300 - Received getUpgradeRequest
+16:53:44,869  INFO http-bio-8080-exec-6 WebAnonController:71 - Received goPaymentReceived
+16:53:45,005  INFO http-bio-8080-exec-1 RestPunterControllerImpl:168 - Received getPunter for : kai
+16:53:45,031  INFO http-bio-8080-exec-3 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:53:45,052  INFO http-bio-8080-exec-1 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:53:45,064  INFO http-bio-8080-exec-13 RestPunterControllerImpl:346 - Received getPaymentsReceived
+16:54:04,053  INFO http-bio-8080-exec-13 WebAnonController:35 - Received goGeneology
+16:54:04,230  INFO http-bio-8080-exec-1 RestPunterControllerImpl:168 - Received getPunter for : kai
+16:54:04,256  INFO http-bio-8080-exec-18 RestAnonControllerImpl:91 - Received getModel with : kai
+17:00:02,461  INFO http-bio-8080-exec-6 WebAnonController:26 - Received login

@@ -32,12 +32,16 @@ public class MailNotifier {
 	}
 	
 	public void notifyUpgradeSuccessful(Punter punter) {
-		final String subject = "Great news from Zen! You have successfully upgraded and can earn even more $$$";
+		String subject = "Great news from Zen! You have successfully upgraded and can ";
+		if (punter.getRating()==1)
+			subject += "start to earn $$$";
+		else
+			subject += "earn even more $$$";
 				
-		final String msg = "Hi " + punter.getFullName() 
-				+ "<br/>You have successfully upgraded to Rank<br/><br/>" 
+		String msg = "Hi " + punter.getFullName() 
+				+ "<br/>You have successfully upgraded to Rank<br/><strong>" 
 				+ punter.getRating()
-				+ "<br/>Good luck as you continue to recruit and make even money!!";
+				+ "</strong><br/>Good luck in your recruiting and making money!!";
 		
 		final List<String> attactments = new  ArrayList<String>();
 		sendMail(punter, subject, msg, attactments, false);		
@@ -47,11 +51,11 @@ public class MailNotifier {
 		final String subject = "Great news from Zen! You are now entitled to upgrade and earn more $$$";
 				
 		final String msg = "Hi " + punter.getFullName() 
-				+ "<br/>You have satisfied the requirements to upgrade from Rank<br/><br/>" 
-				+ punter.getRating() + " to " + punter.getRating()+1
-				+ "<br/><br/>Please login and proceed to upgrade to make your upgrade payment of $" 
+				+ "<br/>You have satisfied the requirements to upgrade from Rank<br/>" 
+				+ punter.getRating() + " to <strong>" + punter.getRating()+1
+				+ "<s/trong><br/>Please login and proceed to upgrade to make your upgrade payment of $" 
 				+ services.getPunterMgr().getRatingMgr().getUpgradeFeeForRating(punter.getRating())
-				+ "<br/>To continue to recruit and make even money!!";
+				+ "<br/>To continue to recruit and make even more money!!";
 		
 		final List<String> attactments = new  ArrayList<String>();
 		sendMail(punter, subject, msg, attactments, false);		
