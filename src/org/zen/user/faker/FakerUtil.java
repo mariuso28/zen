@@ -31,7 +31,7 @@ public class FakerUtil {
 		}
 	}
 	
-	private String sanitize(String name) {
+	public String sanitize(String name) {
 		String s = "";
 		for (int i=0; i<name.length(); i++)
 		{

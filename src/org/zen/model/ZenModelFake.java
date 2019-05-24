@@ -3,41 +3,38 @@ package org.zen.model;
 import java.util.Random;
 
 import org.zen.json.PunterProfileJson;
-import org.zen.user.faker.FakerUtil;
 import org.zen.user.punter.Punter;
-import org.zen.user.punter.mgr.PunterMgr;
 
 public class ZenModelFake {
 
-	private FakerUtil fu;
-	
 	public ZenModelFake()
 	{
-		fu = new FakerUtil();	
-		fu.exclude("zen");
 	}
 	
-	public void reset()
-	{
-		fu = new FakerUtil();
-		fu.exclude("zen");
-	}
-	
-	public PunterProfileJson createProfile(boolean systemOwned,Punter parent)
+	public PunterProfileJson createProfile(Punter sponsor,String contact)
 	{
 		Random r = new Random();
-		
-		String prefix = "";
-		if (!systemOwned)
-			prefix = "p-";
-		String contact = prefix + fu.getExclusiveRandomName();
 		String phone = "012" + r.nextInt(10000000);
 		while (phone.length()<10)
 			phone += '0';
-		PunterProfileJson childProfile = PunterMgr.makeProfile(contact,contact+"@test.com",phone,"88888888",
-										parent.getContact(),systemOwned);
+		PunterProfileJson childProfile = makeProfile(contact,contact+"@test.com",phone,"88888888",
+										sponsor.getContact());
 		return childProfile;
 	}
 	
+	PunterProfileJson makeProfile(String contact,String email,String phone,String password,
+																			String sponsorContact)
+	{
+		PunterProfileJson pj = new PunterProfileJson();
+		pj.setContact(contact);
+		pj.setFullName(contact.toUpperCase());
+		pj.setEmail(email);
+		pj.setPhone(phone);
+		pj.setPassword(password);
+		pj.setCountry("Cambodia");
+		pj.setGender("Other");
+		pj.setSponsorContact(sponsorContact);
+		return pj;
+	}
 	
 }

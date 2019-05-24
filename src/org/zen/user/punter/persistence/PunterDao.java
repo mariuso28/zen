@@ -25,4 +25,5 @@ public interface PunterDao {
 	public void setPunterEnabled(Punter punter);
 	public List<Punter> getSponsoredChildren(Punter parent);
 	public void updateUpgradeStatus(Punter punter);
+	public List<Punter> getPuntersForLevel(int level);
 }

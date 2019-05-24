@@ -4,12 +4,18 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.zen.json.PaymentMethodJson;
+import org.zen.json.PunterProfileJson;
 import org.zen.json.RatingJson;
 import org.zen.rating.RatingMgr;
+import org.zen.rest.services.RestServices;
 import org.zen.services.Services;
 import org.zen.user.punter.Punter;
 import org.zen.user.punter.mgr.PunterMgr;
 import org.zen.user.punter.mgr.PunterMgrException;
+import org.zen.user.punter.persistence.PunterDao;
 
 public class ZenModel {
 
@@ -18,9 +24,14 @@ public class ZenModel {
 	@Autowired
 	private Services services;
 	@Autowired
+	private RestServices restServices;
+	@Autowired
 	private PunterMgr punterMgr;
+	@Autowired
+	private PunterDao punterDao;
 	private RatingMgr ratingMgr;
 	private ZenModelFake zenModelFake = new ZenModelFake();
+	private Punter zenRoot;
 	
 	public final static int FULLCHILDREN = 3;
 	
@@ -29,16 +40,64 @@ public class ZenModel {
 		ratingMgr = new RatingMgr();
 	}
 	
-
-	public void payJoinFee(Punter punter) throws PunterMgrException
+	private void recruitPunters(Punter root,int level)
 	{
-		double buyIn = RatingMgr.ZENBUYIN;
-		Punter sponsor = punterMgr.getByUUID(punter.getSponsorId());
-		log.info("Punter : " + punter.getContact() + " paying join fee : " + buyIn + " to : " + sponsor.getContact());
-		
-		punter.getAccount().xfer(-1*buyIn);
-		sponsor.getAccount().xfer(buyIn);
-		services.updateAccounts(sponsor,punter);
+		zenRoot = root;
+		recruitPuntersToLevel(root,level);
+	}
+	
+	private void performUpgrades(Punter root,int level) {
+		// need to try from leaf and cascade up
+		for (; level>0; level--)
+		{
+			List<Punter> ps = punterDao.getPuntersForLevel(level);
+			for (Punter p : ps)
+				if (p.isUpgradeScheduled())
+					upgradePunter(p);
+		}
+	}
+
+	private void upgradePunter(Punter p) {
+		long paymentId = restServices.submitTransactionDetails(p.getContact(),null,"05-25-2019",
+				"Pay from " + p.getContact() + " to " + p.getContact());
+		restServices.approvePayment(p.getSponsorContact(),Long.toString(paymentId));
+	}
+
+	private void recruitPuntersToLevel(Punter root,int level)
+	{
+		if (level==0)
+			return;
+		for (int i=0; i<FULLCHILDREN; i++)
+			recruitNewPunter(root);
+		level--;
+		if (level==0)
+			return;
+		List<Punter> children = punterDao.getChildren(root);
+		for (Punter c : children)
+			recruitPuntersToLevel(c,level);
+	}
+	
+	private void recruitNewPunter(Punter sponsor)
+	{
+		try
+		{
+			PunterProfileJson np = zenModelFake.createProfile(sponsor,restServices.getRandomUsername());
+			restServices.register(sponsor.getContact(),np);
+			addPaymentMethod(np.getContact());
+			Punter punter = punterDao.getByContact(np.getContact());
+			performUpgrades(zenRoot,punter.getLevel());
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			throw e;
+		}
+	}
+	
+	private void addPaymentMethod(String npContact) {
+		List<PaymentMethodJson> pms = restServices.getServices().getHome().getPaymentDao().getAvailablePaymentMethods();
+		PaymentMethodJson first = pms.get(0);
+		restServices.addPunterPaymentMethod(npContact,Integer.toString(first.getId()),"99999999");
 	}
 	
 	// COMBINED CHECK AND UPGRADE FOR MODEL INITIALIZATION - 
@@ -157,6 +216,27 @@ public class ZenModel {
 
 	public void setZenModelFake(ZenModelFake zenModelFake) {
 		this.zenModelFake = zenModelFake;
+	}
+	
+	public static void main(String[] args)
+	{
+		@SuppressWarnings("resource")
+		ApplicationContext context = new ClassPathXmlApplicationContext(
+				"zen-service.xml");
+		try
+		{
+			ZenModelInitialize zmi = (ZenModelInitialize) context.getBean("zenModelInitialize");
+			Punter root = zmi.initializeModel();
+			ZenModel zm = (ZenModel) context.getBean("zenModel");
+			zm.recruitPunters(root, 6);
+			zmi.printModel(root);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		log.info("Done");
+		System.exit(0);
 	}
 	
 }

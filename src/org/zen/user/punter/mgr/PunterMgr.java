@@ -166,19 +166,6 @@ public class PunterMgr {
 		return random;
 	}
 	
-	public static PunterProfileJson makeProfile(String contact,String email,String phone,String password,
-				String sponsorContact,boolean systemOwned)
-	{
-		PunterProfileJson pj = new PunterProfileJson();
-		pj.setContact(contact);
-		pj.setEmail(email);
-		pj.setPhone(phone);
-		pj.setPassword(password);
-		pj.setSponsorContact(sponsorContact);
-		pj.setSystemOwned(systemOwned);
-		return pj;
-	}
-	
 	public void changePassword(Punter punter, ChangePasswordJson changePassword) throws PunterMgrException{
 
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -252,6 +239,9 @@ public class PunterMgr {
 			pos = un.indexOf('\'');
 			if (pos>0)
 				un = un.substring(0,pos);
+			un = fu.sanitize(un);
+			if (un==null)
+				continue;
 			if (un.length()>6 || un.length()<3)
 				continue;
 			un = un.toLowerCase();
@@ -475,7 +465,7 @@ public class PunterMgr {
 
 	private void validateContact(String contact) throws PunterMgrValidationException{
 		EmailValidator ev = new EmailValidator();
-		if (contact== null || !ev.validate(contact+"@test.com"))
+		if (contact==null || !ev.validate(contact+"@test.com"))
 		{
 			log.info(contact);
 			throw new PunterMgrValidationException("Please complete contact from alpha and digit and period characters only.");

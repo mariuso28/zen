@@ -85,7 +85,6 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		}
 	}
 
-	
 	public void approvePayment(String contact,String paymentId) {
 		
 		Punter sponsor = getPunter(contact);
@@ -131,7 +130,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		}
 	}
 	
-	public void submitTransactionDetails(String contact, MultipartFile uploadfile, String transactionDate,
+	public long submitTransactionDetails(String contact, MultipartFile uploadfile, String transactionDate,
 			String transactionDetails) {
 		
 			SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
@@ -149,7 +148,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			Punter punter = getPunter(contact);
 			PaymentInfo pi = new PaymentInfo();
 			pi.setTransactionDate(td);
-			if (uploadfile.isEmpty())
+			if (uploadfile==null || uploadfile.isEmpty())
 			{
 				log.info("Upload file is empty using transaction details");
 				if (transactionDetails.isEmpty())
@@ -190,6 +189,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 				
 				services.getHome().getPaymentDao().storeXtransaction(xt);						// THESE NEED TO BE IN A TRANSACTION
 				services.getHome().getPunterDao().updateUpgradeStatus(punter);
+				return xt.getId();
 				
 			} catch (Exception e) {
 				log.info(e.getMessage());

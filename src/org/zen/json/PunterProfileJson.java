@@ -1,5 +1,6 @@
 package org.zen.json;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -23,7 +24,7 @@ public class PunterProfileJson {
 	private int rating;
 	private ActionJson actions;
 	private Date activated;
-	private List<PunterPaymentMethodJson> paymentMethods;
+	private List<PunterPaymentMethodJson> paymentMethods = new ArrayList<PunterPaymentMethodJson>();
 	
 	public PunterProfileJson()
 	{

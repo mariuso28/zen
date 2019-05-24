@@ -52,7 +52,7 @@ public class ZenSimModel {
 	
 	private void initialize() throws PunterMgrException
 	{
-		zenModel.getZenModelFake().reset();
+//		zenModel.getZenModelFake().reset();
 		zenModel.getPunterMgr().deleteAllPunters(false);
 		setSystemPunters(zenModel.getPunterMgr().getSystemPunters());
 		for (Punter punter : systemPunters)

@@ -16,8 +16,6 @@ public class ZenModelInitialize {
 
 	private static Logger log = Logger.getLogger(ZenModelInitialize.class);
 	@Autowired
-	private ZenModel zenModel;
-	@Autowired
 	private PunterMgr punterMgr;
 	
 	public ZenModelInitialize()
@@ -26,52 +24,18 @@ public class ZenModelInitialize {
 	
 	public Punter initializeModel() throws Exception
 	{
-	//	List<List<Punter>> levels = new ArrayList<List<Punter>>();
-		zenModel.getZenModelFake().reset();
 		punterMgr.deleteAllPunters();
-		PunterProfileJson rootProfile = PunterMgr.makeProfile("zen","zen@test.com","0123456789","88888888",null,true);
-		rootProfile.setCountry("Cambodia");
+		ZenModelFake zmf = new ZenModelFake();
+		PunterProfileJson rootProfile = zmf.makeProfile("zen","zen@test.com","0123456789","88888888",null);
 		rootProfile.setFullName("Zen Top Level");
 		punterMgr.registerPunter(rootProfile);
 		Punter root = punterMgr.getByContact("zen");
 		punterMgr.setPunterEnabled(root,true);
 		log.info("Got root : " + root);
-		/*
-		List<Punter> level = new ArrayList<Punter>();
-		level.add(root);
-		for (int i=0; i<4; i++)
-		{
-			level = recruitLevel(level);
-			levels.add(level);					
-		}
-		log.info("Upgrading members");
-		for (int i=1; i<4; i++)
-		{
-			level = levels.get(i);
-			for (Punter punter : level)
-				zenModel.tryUpgrade(punter);
-		}
-		*/
 		return root;
 	}
 	
-	@SuppressWarnings("unused")
-	private List<Punter> recruitLevel(List<Punter> parents) throws PunterMgrException
-	{
-		List<Punter> recruits = new ArrayList<Punter>();
-		for (Punter parent : parents)
-		{
-			for (int i=0; i<ZenModel.FULLCHILDREN; i++)
-			{
-				PunterProfileJson childProfile = zenModel.getZenModelFake().createProfile(true,parent);
-				Punter child = punterMgr.registerPunter(childProfile);
-				zenModel.payJoinFee(child);
-				recruits.add(child);
-			}
-		}
-		return recruits;
-	}
-
+	
 	public PunterMgr getPunterMgr() {
 		return punterMgr;
 	}
@@ -80,14 +44,6 @@ public class ZenModelInitialize {
 		this.punterMgr = punterMgr;
 	}
 	
-	public ZenModel getZenModel() {
-		return zenModel;
-	}
-
-	public void setZenModel(ZenModel zenModel) {
-		this.zenModel = zenModel;
-	}
-
 	public void printModel(Punter root) throws PunterMgrException
 	{
 		List<Integer> levelCounts = new ArrayList<Integer>();

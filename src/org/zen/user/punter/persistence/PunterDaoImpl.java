@@ -380,6 +380,30 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	}
 	
 	@Override
+	public List<Punter> getPuntersForLevel(int level) {
+		final String sql = "SELECT bu.*,s.contact as sponsorcontact,p.contact as parentcontact FROM baseuser as bu " +
+				"INNER JOIN baseuser AS s ON s.id = bu.sponsorid " + 
+				"INNER JOIN baseuser AS p ON p.id = bu.parentid " +
+				"WHERE bu.level=?";
+		try
+		{
+			List<Punter> punters = getJdbcTemplate().query(sql,new PreparedStatementSetter() {
+				        public void setValues(PreparedStatement preparedStatement) throws SQLException {
+				          preparedStatement.setObject(1, level);
+				        }
+				      }, BeanPropertyRowMapper.newInstance(Punter.class));
+			for (Punter p : punters)
+				populateObjects(p);
+			return punters;
+		}
+		catch (DataAccessException e)
+		{
+			log.error("Could not execute : " + e.getMessage(),e);
+			throw new PersistenceRuntimeException("Could not execute getChildren : " + e.getMessage());
+		}
+	}
+	
+	@Override
 	public List<Punter> getSponsoredChildren(final Punter parent) {
 		final String sql = "SELECT bu.*,s.contact as sponsorcontact,p.contact as parentcontact FROM baseuser as bu " +
 			"INNER JOIN baseuser AS s ON s.id = bu.sponsorid " + 
@@ -494,6 +518,7 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	
 	@Override
 	public void deleteAllPunters(boolean systemOwned) {
+		// INCOMPLETE NEEDS CHECKING IF USED
 		try
 		{
 			final String sql0 = "DELETE FROM upgradestatus AS pus WHERE "
@@ -534,7 +559,10 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 			final String sql1 = "DELETE FROM account";
 			getJdbcTemplate().update(sql1);
 			
-			final String sqlx = "DELETE FROM xaction";
+			final String sqlpi = "DELETE FROM paymentinfo";
+			getJdbcTemplate().update(sqlpi);
+			
+			final String sqlx = "DELETE FROM xtransaction";
 			getJdbcTemplate().update(sqlx);
 			
 			final String sql2 = "DELETE FROM baseuser";
@@ -546,4 +574,6 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 			throw new PersistenceRuntimeException("Could not execute deleteAllPunters : " + e.getMessage());
 		}
 	}
+
+	
 }

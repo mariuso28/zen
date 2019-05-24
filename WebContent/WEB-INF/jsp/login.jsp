@@ -105,7 +105,7 @@ function login() {
         <div class="controls">
           <div class="main_input_box">
             <span class="add-on bg_lg"><i class="icon-user"> </i></span>
-            <input type="text" id="username" value="gold" placeholder="Username" />
+            <input type="text" id="username" value="zen" placeholder="Username" />
           </div>
         </div>
         </div>
