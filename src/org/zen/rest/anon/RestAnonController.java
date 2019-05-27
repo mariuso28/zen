@@ -35,7 +35,4 @@ public interface RestAnonController
 	// ResultJson contains message if success, message if fail
 	public ResultJson resetPassword(@RequestParam("username") String username);
 	
-	@RequestMapping(value = "/getModel")
-	// ResultJson contains model if success, message if fail
-	public ResultJson getModel(@RequestParam("contact") String contact);	
 }

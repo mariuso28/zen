@@ -27,6 +27,7 @@ import org.zen.persistence.PersistenceRuntimeException;
 import org.zen.rating.RatingMgr;
 import org.zen.services.Services;
 import org.zen.user.account.Account;
+import org.zen.user.faker.FakeContactGen;
 import org.zen.user.faker.FakerUtil;
 import org.zen.user.persistence.BaseUserDao;
 import org.zen.user.punter.Punter;
@@ -45,10 +46,12 @@ public class PunterMgr {
 	private RatingMgr ratingMgr;
 	@Autowired
 	private PunterDao punterDao;
+	private FakeContactGen fakeContactGen;
 	
 	public PunterMgr()
 	{
 		ratingMgr = new RatingMgr();
+		fakeContactGen = new FakeContactGen(services);
 	}
 	
 	public List<NotificationJson> getNoticationsForPunter(Punter punter) {
@@ -225,6 +228,11 @@ public class PunterMgr {
 			log.error(e.getMessage(),e);
 			throw new PunterMgrException("could not setPunterEnabled - contact support.");
 		}
+	}
+	
+	public FakeContact getFakeContact()
+	{
+		
 	}
 	
 	public String getRandomUsername() {
@@ -596,6 +604,9 @@ public class PunterMgr {
 	}
 
 	private void populatePunter(Punter punter) throws Exception{
+		if (punter.getParentId()==null)
+			return;
+		
 		punter.setSponsor(punterDao.getById(punter.getSponsorId()));
 		punter.setParent(punterDao.getById(punter.getParentId()));
 	}

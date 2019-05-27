@@ -256,7 +256,7 @@ public class ZenModel {
 		{
 			ZenModelInitialize zmi = (ZenModelInitialize) context.getBean("zenModelInitialize");
 			ZenModel zm = (ZenModel) context.getBean("zenModel");
-			zm.recruitPunters(zmi, 8, 10);
+			zm.recruitPunters(zmi, 0, 6);
 //			zmi.printModel(root);
 		}
 		catch (Exception e)

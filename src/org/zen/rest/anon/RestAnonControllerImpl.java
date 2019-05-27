@@ -84,23 +84,7 @@ public class RestAnonControllerImpl implements RestAnonController{
 		return result;
 	}
 	
-	@RequestMapping(value = "/getModel")
-	// ResultJson contains model if success, message if fail
-	public ResultJson getModel(@RequestParam("contact") String contact)
-	{
-		log.info("Received getModel with : " + contact);
-		ResultJson result = new ResultJson();
-		try
-		{
-			result.success(restServices.getModel(contact));
-		}
-		catch (Exception e)
-		{
-			log.error(e.getMessage(),e);
-			result.fail(e.getMessage());
-		}
-		return result;
-	}
+	
 
 	@Override
 	@RequestMapping(value = "/getCountries")

@@ -333,6 +333,54 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		return mj;
 	}
 	
+	public List<String> searchModelByContact(String searchTerm) throws PunterMgrException{
+
+		Punter contact = punterMgr.getByContact(searchTerm);
+		if (contact == null)
+			throw new RestServicesException("Agent : " + searchTerm + " not in your hierarchy.");
+		List<String> ids = new ArrayList<String>();
+		ids.add(contact.getContact());
+		while (true)
+		{
+			if (contact.getParentContact()==null)
+				break;
+			Punter p = services.getHome().getPunterDao().getByContact(contact.getParentContact());
+			ids.add(0,p.getContact());
+			contact = p;
+		}
+		return ids;
+	}
+
+	
+	public List<PunterJson> getRoot(String rootContact) throws PunterMgrException
+	{
+		Punter root = punterMgr.getByContact(rootContact);
+		List<PunterJson> result = new ArrayList<PunterJson>();
+		result.add(createPunterJson(root));
+		return result;
+	}
+		
+	public List<PunterJson> getPunters(String rootContact) throws PunterMgrException
+	{
+		Punter root = punterMgr.getByContact(rootContact);
+		List<PunterJson> result = new ArrayList<PunterJson>();
+		List<Punter> children = services.getHome().getPunterDao().getChildren(root);
+		for (Punter p : children)
+			result.add(createPunterJson(p));
+		return result;
+	}
+	
+	@SuppressWarnings("unused")
+	private PunterJson addPunter(Punter punter,Punter parent) throws PunterMgrException {
+		PunterJson pj = createPunterJson(punter);
+		List<Punter> children = punterMgr.getChidren(punter);
+		for (Punter p : children)
+		{
+			pj.getChildren().add(addPunter(p,punter));
+		}
+		return pj;
+	}
+	
 	private List<PunterJson> getPunters(String rootContact, ModelJson mj) throws PunterMgrException
 	{
 		Punter root = punterMgr.getByContact(rootContact);
@@ -344,7 +392,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 	}
 
 	private PunterJson addPunter(Punter punter, ModelJson mj,Punter parent) throws PunterMgrException {
-		PunterJson pj = createPunterJson(punter,parent);
+		PunterJson pj = createPunterJson(punter);
 		if (punter.isSystemOwned())
 			mj.setPopulationInside(mj.getPopulationInside()+1);
 		else
@@ -359,13 +407,11 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		return pj;
 	}
 	
-	private PunterJson createPunterJson(Punter punter, Punter parent)
+	private PunterJson createPunterJson(Punter punter)
 	{
 		PunterJson pj = new PunterJson();
-		if (parent!=null)
-			pj.setParentId(parent.getContact());
-		else
-			pj.setParentId(null);
+		pj.setParentId(punter.getParentContact());
+		pj.setHasChildren(services.getHome().getPunterDao().getChildrenCnt(punter)>0);
 		pj.setId(punter.getContact());
 		int imageId = 12;
 		if (!punter.getEmail().equals("zen@test.com"))
@@ -571,7 +617,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		this.services = services;
 	}
 
-
+	
 	
 	
 

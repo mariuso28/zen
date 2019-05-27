@@ -40,11 +40,12 @@ function redirectDashboard()
   window.location.replace("/zen/zx4/web/anon/goDashboard");
 }
 
+var access_token;
 var punter1;
+var ids;
 
 function getPunterDetails(contact)
 {
-  access_token = sessionStorage.getItem("access_token");
   var bearerHeader = 'Bearer ' + access_token;
      $.ajax({
     type: "GET",
@@ -63,7 +64,7 @@ function getPunterDetails(contact)
           var resultJson = $.parseJSON(JSON.stringify(data));
 					if (resultJson.status!='OK')
 					{
-						alert(resultJson.status + " " + resultJson.message);
+						alert("Error " + resultJson.status + " " + resultJson.message);
 					}
     //      alert(JSON.stringify(resultJson.result));
 					punter1 = resultJson.result;
@@ -94,9 +95,6 @@ var punter;
 
 function getPunterTree(searchTerm) {
 
-	access_token = sessionStorage.getItem("access_token");
-//	alert(access_token);
-
   var bearerHeader = 'Bearer ' + access_token;
      $.ajax({
 
@@ -122,16 +120,11 @@ function getPunterTree(searchTerm) {
     //      alert(JSON.stringify(resultJson.result));
 					punter = resultJson.result;
 
-          getModel(searchTerm);
+          getModel();
 
           punter1 = punter;
           populatePunter1();
 
-          if (searchTerm != "")
-          {
-              expand(searchTerm);
-              getPunterDetails(searchTerm);
-      		}
         },
 				error:function (e) {
 	  			alert("getPunter ERROR : " + e.status + " - " + e.statusText);
@@ -143,34 +136,63 @@ var tree;
 
 function getModel()
 {
-	$.ajax({
-	type: "POST",
-	 url : "/zen/zx4/api/anon/getModel?contact="+punter.contact,
-	 cache: false,
-	 contentType: 'application/json;',
-	 dataType: "json",
-		success: function(data) {
-			var result = $.parseJSON(JSON.stringify(data));
-			if (result.status != 'OK')
-			{
-				alert('Error : ' + result.message);
-				return;
-			}
-		//	alert('Ok : + ' + JSON.stringify(result.result));
-
-			var model = result.result;
-
-			var dText = model.punters;
-
-			tree = $('#tree').tree({
-						dataSource: dText,
+  	tree = $('#tree').tree({
+						dataSource: "/zen/zx4/api/punter/getModel?access_token="+access_token,
 						imageUrlField: 'imageUrl',
-						primaryKey: 'id'
+						primaryKey: 'id',
+             lazyLoading: true,
+             dataBound: function (e) {
+            // alert('dataBound is fired.');
+         }
 				});
-    }
-	});
+
 }
 
+function searchModelByContact()
+{
+  var bearerHeader = 'Bearer ' + access_token;
+     $.ajax({
+    type: "GET",
+         url : '/zen/zx4/api/punter/searchModelByContact?searchTerm=' + searchTerm,
+    headers: { 'Authorization': bearerHeader },
+    cache: false,
+    contentType: 'application/json;',
+         dataType: "json",
+       	 success: function(data) {
+  //         alert(JSON.stringify(data));
+     			if (data == '')
+            {
+							alert("could not get punter by contact")
+               return null;
+            }
+          var resultJson = $.parseJSON(JSON.stringify(data));
+					if (resultJson.status!='OK')
+					{
+						alert(resultJson.status + " " + resultJson.message);
+					}
+    //      alert(JSON.stringify(resultJson.result));
+          ids = resultJson.result;
+					expandModelToContact();
+        },
+				error:function (e) {
+	  			alert("getPunter ERROR : " + e.status + " - " + e.statusText);
+	      }
+     });
+
+}
+
+function expandModelToContact()
+{
+  tree.collapseAll();
+  for (i=0; i<ids.length; i++)
+  {
+    n1 = tree.getNodeById(ids[i]);
+    tree.expand(n1);
+  }
+  getPunterDetails(ids[ids.length-1]);
+}
+
+/*
 function expand(id)
 {
   n1 = tree.getNodeById(id);
@@ -201,15 +223,22 @@ function collapse(id)
   }
 }
 
+*/
+
 var searchTerm = "";
 
 function Search() {
+
+  searchTerm = $('#query').val();
+  searchModelByContact();
+  /*
 //  alert("In : " + $('#query').val());
   if (searchTerm != "")
     collapse(searchTerm);
   searchTerm = $('#query').val();
   expand(searchTerm);
   getPunterDetails(searchTerm);
+  */
 }
 
 </script>
@@ -236,10 +265,8 @@ function Search() {
       <h2>My Downline</h2>
     </div>
 
-    <div class="row-fluid">
-      <div class="span12">
-        <div style="float:left;width:1000px;" id="tree"></div>
-      </div>
+    <div style="overflow-x: auto">
+      <div style="float:left;" id="tree"></div>
     </div>
 </div>
 
@@ -368,6 +395,8 @@ function Search() {
 $.ajaxSetup({
    async: false
 });
+
+access_token = sessionStorage.getItem("access_token");
 
 getPunterTree("${map['contact']}");
 

@@ -1,5 +1,8 @@
 package org.zen.rest.punter;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.zen.json.ChangePasswordJson;
+import org.zen.json.PunterJson;
 import org.zen.json.PunterProfileJson;
 import org.zen.json.ResultJson;
 
@@ -49,6 +53,14 @@ public interface RestPunterController
 	@RequestMapping(value = "/getDownstreamPunters")
 	// ResultJson contains downstream punter profiles if success, message if fail
 	public ResultJson getDownstreamPunters(OAuth2Authentication auth);
+	
+	@RequestMapping(value = "/getModel")
+	// contains tree json if success, null if fail
+	public List<PunterJson> getModel(OAuth2Authentication auth,@RequestParam Map<String,String> allRequestParams);
+	
+	@RequestMapping(value = "/searchModelByContact")
+	// ResultJson contains list contact and parentlist in reverse order if success, message if fail
+	public ResultJson searchModelByContact(OAuth2Authentication auth,@RequestParam String searchTerm);
 	
 	@RequestMapping(value = "/getPaymentMethods")
 	// ResultJson contains List<PaymentMethodJson> if success, message if fail

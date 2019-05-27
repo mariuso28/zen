@@ -1,6 +1,7 @@
 package org.zen.rest.punter;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.zen.json.ChangePasswordJson;
+import org.zen.json.PunterJson;
 import org.zen.json.PunterProfileJson;
 import org.zen.json.ResultJson;
 import org.zen.json.UpgradeJson;
@@ -228,7 +230,52 @@ public class RestPunterControllerImpl implements RestPunterController
 		}
 		return result;
 	}
+	
+	@Override
+	@RequestMapping(value = "/getModel")
+	// contains tree json if success, message if fail
+	public List<PunterJson> getModel(OAuth2Authentication auth,@RequestParam Map<String,String> allRequestParams)
+	{
+		log.info("Received getModel : " + allRequestParams);
+		String contact = ((User) auth.getPrincipal()).getUsername();
+		
+		String parentId = allRequestParams.get("parentId");
+		
+		try
+		{	
+			if (parentId == null)
+				return restServices.getRoot(contact);
+		
+			return restServices.getPunters(parentId);
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			return null;
+		}
+	}
+	
+	@RequestMapping(value = "/searchModelByContact")
+	// ResultJson contains list contact and parentlist in reverse order if success, message if fail
+	public ResultJson searchModelByContact(OAuth2Authentication auth,@RequestParam String searchTerm)
+	{
+		log.info("Received searchModelByContact with : " + searchTerm);
+	//	String contact = ((User) auth.getPrincipal()).getUsername();
+		
+		ResultJson result = new ResultJson();
+		try
+		{
+			result.success(restServices.searchModelByContact(searchTerm));
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			result.fail(e.getMessage());
+		}
+		return result;
+	}
 	 
+	
 	@Override
 	@RequestMapping(value = "/getPaymentMethods")
 	// ResultJson contains List<PunterPaymentMethodJson> if success, message if fail

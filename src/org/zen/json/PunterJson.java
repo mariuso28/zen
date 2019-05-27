@@ -10,6 +10,7 @@ public class PunterJson {
     private AccountJson account;
     private String parentId;
     private List<PunterJson> children = new ArrayList<PunterJson>();
+    private boolean hasChildren;
     
     public PunterJson()
     {
@@ -59,6 +60,14 @@ public class PunterJson {
 
 	public void setParentId(String parentId) {
 		this.parentId = parentId;
+	}
+
+	public boolean isHasChildren() {
+		return hasChildren;
+	}
+
+	public void setHasChildren(boolean hasChildren) {
+		this.hasChildren = hasChildren;
 	}
 	
 }
