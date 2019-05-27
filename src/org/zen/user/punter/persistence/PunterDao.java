@@ -15,6 +15,7 @@ public interface PunterDao {
 	public List<Punter> getChildren(Punter root);
 	public int getChildrenCnt(final Punter parent);
 	public void deleteAllPunters();
+	public void deletePuntersBetweenLevels(int from,int to);
 	public void deleteAllPunters(boolean systemOwned);
 	public void updateAccount(Account account);
 	public void updateRating(Punter punter);
@@ -26,4 +27,5 @@ public interface PunterDao {
 	public List<Punter> getSponsoredChildren(Punter parent);
 	public void updateUpgradeStatus(Punter punter);
 	public List<Punter> getPuntersForLevel(int level);
+	public int getMaxLevelPopulated();
 }

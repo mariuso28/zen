@@ -370,6 +370,7 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 				      }, BeanPropertyRowMapper.newInstance(Punter.class));
 			for (Punter p : punters)
 				populateObjects(p);
+			parent.setChildren(punters);
 			return punters;
 		}
 		catch (DataAccessException e)
@@ -441,6 +442,21 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 		}
 	}
 
+	@Override
+	public int getMaxLevelPopulated() {
+		try
+		{
+			final String sql = "SELECT MAX(level) FROM baseUser";
+			Integer cnt = getJdbcTemplate().queryForObject(sql,Integer.class );
+			return cnt;
+		}
+		catch (DataAccessException e)
+		{
+			log.error("Could not execute : " + e.getMessage(),e);
+			throw new PersistenceRuntimeException("Could not execute getMaxLevelPopulated : " + e.getMessage());
+		}
+	}
+	
 	@Override
 	public Punter getById(final UUID id) {
 		final String sql = "SELECT bu.*,s.contact as sponsorcontact,p.contact as parentcontact FROM baseuser as bu " +
@@ -516,25 +532,88 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 		}
 	}
 	
+	public void deletePuntersBetweenLevels(int from,int to) {
+		
+		for (int level=to; level>=from; level--)
+		{
+			try
+			{
+				final String sql0 = "DELETE FROM upgradestatus AS pus WHERE "
+						+ "pus.id IN (SELECT bu.id FROM baseuser AS bu WHERE level='" + level + "')";
+				getJdbcTemplate().update(sql0);
+				
+				final String sql = "DELETE FROM punterpaymentmethod AS pmm WHERE "
+						+ "pmm.punterid IN (SELECT bu.id FROM baseuser AS bu WHERE level='" + level + "')";
+				getJdbcTemplate().update(sql);
+				
+				final String sql1 = "DELETE FROM account AS acc WHERE "
+						+ "acc.id IN (SELECT bu.id FROM baseuser AS bu WHERE level='" + level + "')";
+				getJdbcTemplate().update(sql1);
+				
+				final String sqlpi1 = "DELETE FROM paymentinfo WHERE xtransactionid IN "
+						+ "(SELECT id FROM xtransaction WHERE payerid IN "
+						+ "(SELECT bu.contact FROM baseuser AS bu WHERE level='" + level + "'))";
+				getJdbcTemplate().update(sqlpi1);
+				
+				final String sqlpi2 = "DELETE FROM paymentinfo WHERE xtransactionid IN "
+						+ "(SELECT id FROM xtransaction WHERE payeeid IN "
+						+ "(SELECT bu.contact FROM baseuser AS bu WHERE level='" + level + "'))";
+				getJdbcTemplate().update(sqlpi2);
+				
+				final String sqlx = "DELETE FROM xtransaction WHERE payerid IN " + 
+											"(SELECT bu.contact FROM baseuser AS bu WHERE level='" + level + "'))";
+				getJdbcTemplate().update(sqlx);
+				
+				final String sqlx2 = "DELETE FROM xtransaction WHERE payeeid IN " + 
+						"(SELECT bu.contact FROM baseuser AS bu WHERE level='" + level + "'))";
+				getJdbcTemplate().update(sqlx2);
+					
+				final String sql2 = "DELETE FROM baseuser WHERE Role = 'ROLE_PUNTER' AND level='" + level + "'";
+				getJdbcTemplate().update(sql2);
+			}
+			catch (DataAccessException e)
+			{
+				log.error("Could not execute : " + e.getMessage(),e);
+				throw new PersistenceRuntimeException("Could not execute deletePuntersBetweenLevels : " + e.getMessage());
+			}
+		}
+	}
+
+	
 	@Override
 	public void deleteAllPunters(boolean systemOwned) {
 		// INCOMPLETE NEEDS CHECKING IF USED
 		try
 		{
 			final String sql0 = "DELETE FROM upgradestatus AS pus WHERE "
-					+ "pus.id IN (SELECT bu.id FROM baseuser AS bu WHERE Role = 'ROLE_PUNTER' "
-					+ "AND systemowned='" + systemOwned + "')";
+					+ "pus.id IN (SELECT bu.id FROM baseuser AS bu WHERE systemowned='" + systemOwned + "')";
 			getJdbcTemplate().update(sql0);
 			
 			final String sql = "DELETE FROM punterpaymentmethod AS pmm WHERE "
-					+ "pmm.punterid IN (SELECT bu.id FROM baseuser AS bu WHERE Role = 'ROLE_PUNTER' "
-					+ "AND systemowned='" + systemOwned + "')";
+					+ "pmm.punterid IN (SELECT bu.id FROM baseuser AS bu WHERE systemowned='" + systemOwned + "')";
 			getJdbcTemplate().update(sql);
 			
 			final String sql1 = "DELETE FROM account AS acc WHERE "
-					+ "acc.id IN (SELECT bu.id FROM baseuser AS bu WHERE Role = 'ROLE_PUNTER' "
-					+ "AND systemowned='" + systemOwned + "')";
+					+ "acc.id IN (SELECT bu.id FROM baseuser AS bu WHERE systemowned='" + systemOwned + "')";
 			getJdbcTemplate().update(sql1);
+			
+			final String sqlpi1 = "DELETE FROM paymentinfo WHERE xtransactionid IN "
+					+ "(SELECT id FROM xtransaction WHERE payerid IN "
+					+ "(SELECT bu.contact FROM baseuser AS bu WHERE systemowned='" + systemOwned + "'))";
+			getJdbcTemplate().update(sqlpi1);
+			
+			final String sqlpi2 = "DELETE FROM paymentinfo WHERE xtransactionid IN "
+					+ "(SELECT id FROM xtransaction WHERE payeeid IN "
+					+ "(SELECT bu.contact FROM baseuser AS bu WHERE systemowned='" + systemOwned + "'))";
+			getJdbcTemplate().update(sqlpi2);
+			
+			final String sqlx = "DELETE FROM xtransaction WHERE payerid IN " + 
+										"(SELECT bu.contact FROM baseuser AS bu WHERE systemowned='" + systemOwned + "'))";
+			getJdbcTemplate().update(sqlx);
+			
+			final String sqlx2 = "DELETE FROM xtransaction WHERE payeeid IN " + 
+					"(SELECT bu.contact FROM baseuser AS bu WHERE systemowned='" + systemOwned + "'))";
+			getJdbcTemplate().update(sqlx2);
 				
 			final String sql2 = "DELETE FROM baseuser WHERE Role = 'ROLE_PUNTER' AND systemowned='" + systemOwned + "'";
 			getJdbcTemplate().update(sql2);
@@ -574,6 +653,8 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 			throw new PersistenceRuntimeException("Could not execute deleteAllPunters : " + e.getMessage());
 		}
 	}
+
+	
 
 	
 }

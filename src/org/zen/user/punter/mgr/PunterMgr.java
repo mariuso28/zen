@@ -245,8 +245,10 @@ public class PunterMgr {
 			if (un.length()>6 || un.length()<3)
 				continue;
 			un = un.toLowerCase();
-			if (bud.getByContact(un)==null)
+			List<String> contacts = bud.getNearestContactId(un);
+			if (contacts.isEmpty())
 				return un;
+			return contacts.get(0);
 		}
 	}
 

@@ -83,7 +83,7 @@ function getPendingPayments() {
 
  $.ajax({
     type: "GET",
-         url : '/zen/zx4/api/punter/getPaymentsReceived?paymentStatus=PAYMENTMADE&offset=0&limit=10',
+         url : '/zen/zx4/api/punter/getPaymentsReceived?paymentStatus=PAYMENTMADE&offset=0&limit=-1',
     headers: { 'Authorization': bearerHeader },
     cache: false,
     contentType: 'application/json;',
@@ -116,7 +116,7 @@ function getPendingPayments() {
 
   $.ajax({
      type: "GET",
-          url : '/zen/zx4/api/punter/getPaymentsReceived?paymentStatus=PAYMENTSUCCESS&offset=0&limit=10',
+          url : '/zen/zx4/api/punter/getPaymentsReceived?paymentStatus=PAYMENTSUCCESS&offset=0&limit=-1',
      headers: { 'Authorization': bearerHeader },
      cache: false,
      contentType: 'application/json;',
@@ -149,7 +149,7 @@ function getPendingPayments() {
 
   $.ajax({
      type: "GET",
-          url : '/zen/zx4/api/punter/getPaymentsReceived?paymentStatus=PAYMENTFAIL&offset=0&limit=10',
+          url : '/zen/zx4/api/punter/getPaymentsReceived?paymentStatus=PAYMENTFAIL&offset=0&limit=-1',
      headers: { 'Authorization': bearerHeader },
      cache: false,
      contentType: 'application/json;',

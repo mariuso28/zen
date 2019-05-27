@@ -31,7 +31,6 @@ public class ZenModel {
 	private PunterDao punterDao;
 	private RatingMgr ratingMgr;
 	private ZenModelFake zenModelFake = new ZenModelFake();
-	private Punter zenRoot;
 	
 	public final static int FULLCHILDREN = 3;
 	
@@ -40,41 +39,70 @@ public class ZenModel {
 		ratingMgr = new RatingMgr();
 	}
 	
-	private void recruitPunters(Punter root,int level)
+	private void recruitPunters(ZenModelInitialize zmi,int initLevel, int level) throws Exception
 	{
-		zenRoot = root;
-		recruitPuntersToLevel(root,level);
-	}
-	
-	private void performUpgrades(Punter root,int level) {
-		// need to try from leaf and cascade up
-		for (; level>0; level--)
+		Punter root;
+		if (initLevel==0)
 		{
-			List<Punter> ps = punterDao.getPuntersForLevel(level);
-			for (Punter p : ps)
-				if (p.isUpgradeScheduled())
-					upgradePunter(p);
+			root = zmi.initializeModel();
+			log.info("Populating levels " + 0 + " - " + level);
+			recruitPuntersToLevel(root,0,level);
+		}
+		else
+		{
+			log.info("Populating levels " + initLevel + " - " + level);
+			recruitPuntersBetweenLevels(initLevel,level);
 		}
 	}
 
+	void recruitPuntersBetweenLevels(int initialLevel,int level)
+	{	
+		List<Punter> lev = punterDao.getPuntersForLevel(initialLevel+1);
+		for (Punter p : lev)
+			punterDao.deletePunter(p);
+		for (int l=initialLevel;  l< level; l++)
+		{
+			lev = punterDao.getPuntersForLevel(l);
+			for (Punter p : lev)
+			{
+				for (int i=0; i<FULLCHILDREN; i++)
+				{
+					recruitNewPunter(p);
+				}
+			}
+		}
+	}
+	
 	private void upgradePunter(Punter p) {
 		long paymentId = restServices.submitTransactionDetails(p.getContact(),null,"05-25-2019",
 				"Pay from " + p.getContact() + " to " + p.getContact());
 		restServices.approvePayment(p.getSponsorContact(),Long.toString(paymentId));
 	}
 
-	private void recruitPuntersToLevel(Punter root,int level)
+	private void recruitPuntersToLevel(Punter root,int initialLevel,int level)
 	{
-		if (level==0)
+		if (level==initialLevel)
 			return;
 		for (int i=0; i<FULLCHILDREN; i++)
 			recruitNewPunter(root);
 		level--;
-		if (level==0)
+		if (level==initialLevel)
 			return;
 		List<Punter> children = punterDao.getChildren(root);
 		for (Punter c : children)
-			recruitPuntersToLevel(c,level);
+			recruitPuntersToLevel(c,initialLevel,level);
+	}
+	
+	private void performUpgrades(Punter punter) {
+		
+		while (punter.getRating()!=-1)
+		{
+			if (punter.isUpgradeScheduled())
+				upgradePunter(punter);
+			else
+				break;
+			punter = punterDao.getByContact(punter.getParentContact());
+		}
 	}
 	
 	private void recruitNewPunter(Punter sponsor)
@@ -85,7 +113,8 @@ public class ZenModel {
 			restServices.register(sponsor.getContact(),np);
 			addPaymentMethod(np.getContact());
 			Punter punter = punterDao.getByContact(np.getContact());
-			performUpgrades(zenRoot,punter.getLevel());
+			// performUpgrades(zenRoot,punter.getLevel());
+			performUpgrades(punter);
 		}
 		catch (Exception e)
 		{
@@ -226,10 +255,9 @@ public class ZenModel {
 		try
 		{
 			ZenModelInitialize zmi = (ZenModelInitialize) context.getBean("zenModelInitialize");
-			Punter root = zmi.initializeModel();
 			ZenModel zm = (ZenModel) context.getBean("zenModel");
-			zm.recruitPunters(root, 6);
-			zmi.printModel(root);
+			zm.recruitPunters(zmi, 8, 10);
+//			zmi.printModel(root);
 		}
 		catch (Exception e)
 		{

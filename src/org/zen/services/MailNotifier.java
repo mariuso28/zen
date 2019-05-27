@@ -87,25 +87,11 @@ public class MailNotifier {
 		sendMail(punter, subject, msg, attactments, false);		
 	}
 	
-	/*
-	public void notifyEmailVerification(final BaseUser baseUser, String domainTarget) throws Exception {
-		final String subject = "Please Verify Your Registration";
-		
-		// @RequestMapping(value = "/verify", params="code", method = RequestMethod.GET)
-		String link = "http://" + domainTarget+"/zen/zx4/anon/verify?code&id=" + baseUser.getId().toString();
-		
-		final String msg = "Hi " + baseUser.getContact() + "\nYour Zen Registration is set to your email : " + baseUser.getEmail() 
-				+ ".\nPlease click on the link below to activate your registration.\n\n"
-				+ link
-				+"\n\nKind regards - goldmine.online.";
-		
-		final List<String> attactments = new  ArrayList<String>();
-		sendMail(baseUser, subject, msg, attactments, false);
-	}
-	*/
-	
 	private void sendMail(BaseUser baseUser, String subject, String msg, List<String> attactments,boolean simple)
 	{
+		if (services.getMail().getMailDisabled().equals("true"))
+			return;
+		
 		try
 		{
 			log.info("#### sending email to " + baseUser.getEmail() + "#######");

@@ -64,7 +64,7 @@ public class BaseUserDaoImpl extends NamedParameterJdbcDaoSupport implements Bas
 
 	private void generatePossibilities(List<String> possibilities,String tryWith) throws DataAccessException{
 		final String sql = "SELECT contact FROM baseUser WHERE contact=?";
-		int cnt = 0;
+		int cnt = 1;
 		String orig = tryWith;
 		while (possibilities.size()<5)
 		{

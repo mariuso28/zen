@@ -204,6 +204,8 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		List<XactionJson> xjs = new ArrayList<XactionJson>();
 		PaymentStatus ps = PaymentStatus.valueOf(paymentStatus);
 		try {
+			if (limit==-1)
+				limit = Long.MAX_VALUE;
 			List<Xtransaction> xts = services.getHome().getPaymentDao().getXtransactionsForMember(memberType, punter.getId(), ps, offset, limit);
 			for (Xtransaction  xt : xts)
 				xjs.add(createXactionJson(xt,memberType));
