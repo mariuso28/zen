@@ -12,6 +12,7 @@ import org.zen.json.RatingJson;
 import org.zen.rating.RatingMgr;
 import org.zen.rest.services.RestServices;
 import org.zen.services.Services;
+import org.zen.user.faker.FakeContact;
 import org.zen.user.punter.Punter;
 import org.zen.user.punter.mgr.PunterMgr;
 import org.zen.user.punter.mgr.PunterMgrException;
@@ -75,7 +76,7 @@ public class ZenModel {
 	
 	private void upgradePunter(Punter p) {
 		long paymentId = restServices.submitTransactionDetails(p.getContact(),null,"05-25-2019",
-				"Pay from " + p.getContact() + " to " + p.getContact());
+				"Pay from " + p.getContact() + " to " + p.getSponsorContact());
 		restServices.approvePayment(p.getSponsorContact(),Long.toString(paymentId));
 	}
 
@@ -109,7 +110,8 @@ public class ZenModel {
 	{
 		try
 		{
-			PunterProfileJson np = zenModelFake.createProfile(sponsor,restServices.getRandomUsername());
+			FakeContact fc = punterMgr.getFakeContact(sponsor.getLevel()<ZenModelOriginal.SYSTEMLEVELS);
+			PunterProfileJson np = zenModelFake.createProfile(sponsor,fc);
 			restServices.register(sponsor.getContact(),np);
 			addPaymentMethod(np.getContact());
 			Punter punter = punterDao.getByContact(np.getContact());
@@ -256,7 +258,7 @@ public class ZenModel {
 		{
 			ZenModelInitialize zmi = (ZenModelInitialize) context.getBean("zenModelInitialize");
 			ZenModel zm = (ZenModel) context.getBean("zenModel");
-			zm.recruitPunters(zmi, 0, 6);
+			zm.recruitPunters(zmi, 0, 5);
 //			zmi.printModel(root);
 		}
 		catch (Exception e)

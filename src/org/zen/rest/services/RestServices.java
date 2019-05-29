@@ -295,7 +295,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		else
 			sponsor = punterMgr.getUpgradeParentToPay(punter,us.getNewRating());
 		
-		uj.setUpline(createPunterProfileJson(sponsor));
+		uj.setUpline(createPunterProfileJson(sponsor,false));
 		uj.setFee(ratingMgr.getUpgradeFeeForRating(us.getNewRating()));
 		return uj;
 	}
@@ -414,7 +414,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		pj.setHasChildren(services.getHome().getPunterDao().getChildrenCnt(punter)>0);
 		pj.setId(punter.getContact());
 		int imageId = 12;
-		if (!punter.getEmail().equals("zen@test.com"))
+		if (!punter.getContact().equals(punterMgr.getZenContact().getContact()))
 			imageId = punter.getRating();
 		pj.setImageUrl("../../../img/" + imageId + ".jpeg");
 		String text = punter.getContact();
@@ -429,9 +429,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			line = "<font color='Red'>"+ text + bal + lev + "</font></a>";
 		
 		String method = "return getPunterDetails('" + punter.getContact() + "')";
-	//	log.info("Method : " + method);
 		String href = "<a href=\"#\" onclick=\"" + method +"\">" + line;
-	//	log.info("href : " + href);
 		pj.setText(href);
 //		pj.setAccount(createAccountJson(punter.getAccount()));
 		return pj;
@@ -532,10 +530,18 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		}
 	}
 	
-	public PunterProfileJson getPunterProfile(String contact) throws RestServicesException{
+	public PunterProfileJson getPunterProfileForCaller(String caller, String contact) throws RestServicesException{
 	
+		boolean fullyPopulate = true;
 		Punter punter = getPunter(contact);
-		PunterProfileJson ppj = createPunterProfileJson(punter);
+		if (!caller.equals(contact))
+		{
+			Punter cp = getPunter(caller);
+			if (!cp.isSystemOwned() && !punter.getSponsorContact().equals(caller))
+				fullyPopulate = false;
+		}
+		
+		PunterProfileJson ppj = createPunterProfileJson(punter,fullyPopulate);
 		List<Xtransaction> xts = services.getHome().getPaymentDao().getXtransactionsForMember("payee",punter.getId(), PaymentStatus.PAYMENTMADE, 0, Integer.MAX_VALUE); 
 		ActionJson aj = new ActionJson();
 		if (!xts.isEmpty())
@@ -571,7 +577,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			List<Punter> punters = services.getHome().getPunterDao().getSponsoredChildren(punter);
 			for (Punter p : punters)
 			{
-				dsp.add(createPunterProfileJson(p));
+				dsp.add(createPunterProfileJson(p,punter.isSystemOwned()));
 			}
 			return dsp;
 		}
@@ -582,25 +588,29 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		}
 	}
 	
-	private PunterProfileJson createPunterProfileJson(Punter punter) {
+	private PunterProfileJson createPunterProfileJson(Punter punter, boolean isSystemOwned) {
 		PunterProfileJson pj = new PunterProfileJson();	
 		pj.setId(punter.getId());
 		pj.setContact(punter.getContact());
-		pj.setEmail(punter.getEmail());
-		pj.setPhone(punter.getPhone());
 		pj.setSystemOwned(punter.isSystemOwned());
 		pj.setFullName(punter.getFullName());
-		pj.setGender(punter.getGender());
-		pj.setPassportIc(punter.getPassportIc());
-		pj.setAddress(punter.getAddress());
-		pj.setState(punter.getState());
-		pj.setPostcode(punter.getPostcode());
-		pj.setCountry(punter.getCountry());
 		pj.setUpstreamContact(punter.getParentContact());
 		pj.setSponsorContact(punter.getSponsorContact());
 		pj.setRating(punter.getRating());
 		pj.setActivated(punter.getActivated());
 		pj.setPaymentMethods(punter.getPaymentMethods());
+		if (!isSystemOwned)
+			return pj;
+			
+		pj.setGender(punter.getGender());
+		pj.setEmail(punter.getEmail());
+		pj.setPhone(punter.getPhone());
+		pj.setPassportIc(punter.getPassportIc());
+		pj.setAddress(punter.getAddress());
+		pj.setState(punter.getState());
+		pj.setPostcode(punter.getPostcode());
+		pj.setCountry(punter.getCountry());
+	
 		return pj;
 	}
 
@@ -616,6 +626,8 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 	public void setServices(Services services) {
 		this.services = services;
 	}
+
+	
 
 	
 	

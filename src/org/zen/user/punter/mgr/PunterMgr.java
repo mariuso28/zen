@@ -27,6 +27,7 @@ import org.zen.persistence.PersistenceRuntimeException;
 import org.zen.rating.RatingMgr;
 import org.zen.services.Services;
 import org.zen.user.account.Account;
+import org.zen.user.faker.FakeContact;
 import org.zen.user.faker.FakeContactGen;
 import org.zen.user.faker.FakerUtil;
 import org.zen.user.persistence.BaseUserDao;
@@ -40,18 +41,26 @@ import org.zen.util.PhoneValidator;
 public class PunterMgr {
 
 	private static final Logger log = Logger.getLogger(PunterMgr.class);
-
 	@Autowired
 	private Services services;
 	private RatingMgr ratingMgr;
 	@Autowired
 	private PunterDao punterDao;
 	private FakeContactGen fakeContactGen;
+	private FakeContact zenContact;
 	
 	public PunterMgr()
 	{
+	}
+	
+	public void init()
+	{
 		ratingMgr = new RatingMgr();
 		fakeContactGen = new FakeContactGen(services);
+		String zenRootContact = services.getProp().getProperty("zenRootContact", "mony;Mony;Seyha"); 
+		String[] toks = zenRootContact.split(";");
+		String zenSupportEmail = services.getProp().getProperty("zenSupportEmail","zen@test.com");
+		setZenContact(new FakeContact(toks[0],toks[1],toks[2],zenSupportEmail));		
 	}
 	
 	public List<NotificationJson> getNoticationsForPunter(Punter punter) {
@@ -230,9 +239,31 @@ public class PunterMgr {
 		}
 	}
 	
-	public FakeContact getFakeContact()
+	public FakeContact getFakeContact(boolean systemGen)
 	{
-		
+		BaseUserDao bud = services.getHome().getBaseUserDao();
+		FakeContact fc;
+		while (true)
+		{
+			if (systemGen)
+			{
+				fc = fakeContactGen.getSytemFakeContact();
+				fc.setEmail(zenContact.getEmail());
+			}
+			else
+			{
+				fc = fakeContactGen.getFakeContact();
+			}
+			if (zenContact.getContact().equals(fc.getContact()))
+				continue;
+			if (!punterDao.getByFullName(fc.getFullName()).isEmpty())
+				continue;
+			List<String> contacts = bud.getNearestContactId(fc.getContact());
+			if (!contacts.isEmpty())
+				fc.setContact(contacts.get(0));
+			break;
+		}
+		return fc;
 	}
 	
 	public String getRandomUsername() {
@@ -619,20 +650,20 @@ public class PunterMgr {
 		this.ratingMgr = ratingMgr;
 	}
 
-	public Services getServices() {
-		return services;
-	}
-
-	public void setServices(Services services) {
-		this.services = services;
-	}
-
 	public PunterDao getPunterDao() {
 		return punterDao;
 	}
 
 	public void setPunterDao(PunterDao punterDao) {
 		this.punterDao = punterDao;
+	}
+
+	public FakeContact getZenContact() {
+		return zenContact;
+	}
+
+	public void setZenContact(FakeContact zenContact) {
+		this.zenContact = zenContact;
 	}
 
 	

@@ -110,9 +110,13 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	@Override
 	public List<Punter> getSystemPunters()
 	{
+		final String sql = "SELECT bu.*,s.contact as sponsorcontact,p.contact as parentcontact FROM baseuser as bu " +
+				"INNER JOIN baseuser AS s ON s.id = bu.sponsorid " + 
+				"INNER JOIN baseuser AS p ON p.id = bu.parentid " +
+				"WHERE bu.systemowned=true AND bu.rating>0";
+
 		try
 		{
-			final String sql = "SELECT * FROM baseuser WHERE systemowned=true AND rating>0";
 			List<Punter> punters = getJdbcTemplate().query(sql,BeanPropertyRowMapper.newInstance(Punter.class));
 			for (Punter p : punters)
 				populateObjects(p);
@@ -121,7 +125,25 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 		catch (DataAccessException e)
 		{
 			log.error("Could not execute : " + e.getMessage(),e);
-			throw new PersistenceRuntimeException("Could not execute getSystemOwnedRevenue : " + e.getMessage());
+			throw new PersistenceRuntimeException("Could not execute getSystemPunters : " + e.getMessage());
+		}
+	}
+	
+	@Override
+	public List<Punter> getAllPunters()
+	{
+		final String sql = "SELECT bu.*,s.contact as sponsorcontact,p.contact as parentcontact FROM baseuser as bu " +
+				"INNER JOIN baseuser AS s ON s.id = bu.sponsorid " + 
+				"INNER JOIN baseuser AS p ON p.id = bu.parentid";
+		try
+		{
+			List<Punter> punters = getJdbcTemplate().query(sql,BeanPropertyRowMapper.newInstance(Punter.class));
+			return punters;
+		}
+		catch (DataAccessException e)
+		{
+			log.error("Could not execute : " + e.getMessage(),e);
+			throw new PersistenceRuntimeException("Could not execute getAllPunters : " + e.getMessage());
 		}
 	}
 	
@@ -147,17 +169,17 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	
 	@Override
 	public void update(final Punter punter) {
+		final Timestamp ts = new Timestamp((new GregorianCalendar()).getTime().getTime());
 		try
 		{
 			getJdbcTemplate().update("UPDATE baseuser SET email=?,phone=?,"
-										+ "fullname=?,gender=?,passportic=?,address=?,state=?,postcode=?,country=?"
+										+ "fullname=?,gender=?,passportic=?,address=?,state=?,postcode=?,country=?,contact=?,updated=?"
 										+ " WHERE id=?"
 						, new PreparedStatementSetter() {
 						public void setValues(PreparedStatement ps) throws SQLException {
 			    	  	
 						ps.setString(1, punter.getEmail().toLowerCase());
 						ps.setString(2, punter.getPhone());
-						
 						ps.setString(3, punter.getFullName());
 						ps.setString(4, punter.getGender());
 						ps.setString(5, punter.getPassportIc());
@@ -165,7 +187,9 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 						ps.setString(7, punter.getState());
 						ps.setString(8, punter.getPostcode());
 						ps.setString(9, punter.getCountry());
-						ps.setObject(10, punter.getId());
+						ps.setString(10, punter.getContact());
+						ps.setTimestamp(11, ts);
+						ps.setObject(12, punter.getId());
 						
 			      }
 			    });
@@ -179,13 +203,14 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	
 	@Override
 	public void store(final Punter punter) {
+		final Timestamp ts = new Timestamp((new GregorianCalendar()).getTime().getTime());
 		punter.setId(UUID.randomUUID());
 		try
 		{
 			getJdbcTemplate().update("INSERT INTO baseuser (id,contact,email,phone,password,role,enabled,rating,"
 										+ "fullname,gender,passportic,address,state,postcode,country,"
-										+ "parentid,sponsorid,systemowned,level) "
-										+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+										+ "parentid,sponsorid,systemowned,level,created) "
+										+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
 			        , new PreparedStatementSetter() {
 						public void setValues(PreparedStatement ps) throws SQLException {
 			    	  	
@@ -218,6 +243,7 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 						}
 						ps.setBoolean(18, punter.isSystemOwned());
 						ps.setInt(19, punter.getLevel());
+						ps.setTimestamp(20,ts);
 			      }
 			    });
 			createPunterObjects(punter);
@@ -279,6 +305,30 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 		{
 			log.error("Could not execute : " + e.getMessage(),e);
 			throw new PersistenceRuntimeException("Could not execute updateUpgradeStatus : " + e.getMessage());
+		}
+	}
+	
+	@Override
+	public List<Punter> getByFullName(final String fullName) {
+		
+		final String sql = "SELECT bu.*,s.contact as sponsorcontact,p.contact as parentcontact FROM baseuser as bu " +
+							"INNER JOIN baseuser AS s ON s.id = bu.sponsorid " + 
+							"INNER JOIN baseuser AS p ON p.id = bu.parentid " +
+							"WHERE bu.fullname=?";
+		try
+		{
+			List<Punter> punters = getJdbcTemplate().query(sql,new PreparedStatementSetter() {
+				        public void setValues(PreparedStatement preparedStatement) throws SQLException {
+				          preparedStatement.setString(1, fullName);
+				         }
+				      }, BeanPropertyRowMapper.newInstance(Punter.class));
+			
+			return punters;
+		}
+		catch (DataAccessException e)
+		{
+			log.error("Could not execute : " + e.getMessage(),e);
+			throw new PersistenceRuntimeException("Could not execute getByEmail : " + e.getMessage());
 		}
 	}
 

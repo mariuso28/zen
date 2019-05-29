@@ -173,7 +173,7 @@ public class RestPunterControllerImpl implements RestPunterController
 		
 		try
 		{
-			PunterProfileJson punter = restServices.getPunterProfile(contact);
+			PunterProfileJson punter = restServices.getPunterProfileForCaller(contact,contact);
 			if (punter!=null)
 				result.success(punter);
 			else
@@ -190,13 +190,13 @@ public class RestPunterControllerImpl implements RestPunterController
 	// ResultJson contains punter's profile if success, message if fail
 	public ResultJson getPunterByContact(OAuth2Authentication auth,@RequestParam("contact") String contact)
 	{
-		log.info("Received getPunterByContact for : " + contact);
-		
+		String caller = ((User) auth.getPrincipal()).getUsername();		
+		log.info("Received getPunterByContact for : " + contact);	
 		ResultJson result = new ResultJson();
 		
 		try
 		{
-			PunterProfileJson punter = restServices.getPunterProfile(contact);
+			PunterProfileJson punter = restServices.getPunterProfileForCaller(caller,contact);
 			if (punter!=null)
 				result.success(punter);
 			else
@@ -205,6 +205,27 @@ public class RestPunterControllerImpl implements RestPunterController
 		catch (Exception e)
 		{
 			result.fail("Error getting Zen member : " + contact + " - contact support.");
+		}
+		return result;
+	}
+	
+	@Override
+	@RequestMapping(value = "/sendPaymentQuery")
+	// ResultJson contains nothing if success, message if fail
+	public ResultJson sendPaymentQuery(OAuth2Authentication auth,@RequestParam("paymentId") String paymentId)
+	{
+		String contact = ((User) auth.getPrincipal()).getUsername();
+		log.info("Received getDownstreamPunters for : " + contact);
+		
+		ResultJson result = new ResultJson();
+		
+		try
+		{
+			result.success();
+		}
+		catch (Exception e)
+		{
+			result.fail("Error sending payment query - contact support.");
 		}
 		return result;
 	}

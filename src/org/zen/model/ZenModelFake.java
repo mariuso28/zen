@@ -3,6 +3,7 @@ package org.zen.model;
 import java.util.Random;
 
 import org.zen.json.PunterProfileJson;
+import org.zen.user.faker.FakeContact;
 import org.zen.user.punter.Punter;
 
 public class ZenModelFake {
@@ -11,18 +12,19 @@ public class ZenModelFake {
 	{
 	}
 	
-	public PunterProfileJson createProfile(Punter sponsor,String contact)
-	{
+	public PunterProfileJson createProfile(Punter sponsor, FakeContact fc) {
 		Random r = new Random();
 		String phone = "012" + r.nextInt(10000000);
 		while (phone.length()<10)
 			phone += '0';
-		PunterProfileJson childProfile = makeProfile(contact,contact+"@test.com",phone,"88888888",
-										sponsor.getContact());
-		return childProfile;
+		PunterProfileJson pj = makeProfile(fc.getContact(),fc.getEmail(),phone,"88888888",
+				sponsor==null ? null : sponsor.getContact());
+		pj.setFullName(fc.getSurName() + " " + fc.getGivenName());
+		pj.setEmail(fc.getEmail());
+		return pj;
 	}
 	
-	PunterProfileJson makeProfile(String contact,String email,String phone,String password,
+	private PunterProfileJson makeProfile(String contact,String email,String phone,String password,
 																			String sponsorContact)
 	{
 		PunterProfileJson pj = new PunterProfileJson();
@@ -36,5 +38,7 @@ public class ZenModelFake {
 		pj.setSponsorContact(sponsorContact);
 		return pj;
 	}
+
+	
 	
 }

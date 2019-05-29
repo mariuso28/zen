@@ -103,4 +103,9 @@ public interface RestPunterController
 	// PkfzResultJson contains List<XactionJson> if success, message if fail
 	public ResultJson getPaymentsSent(OAuth2Authentication auth, String paymentStatus, long offset, long limit);
 	
+	@RequestMapping(value = "/sendPaymentQuery")
+	// ResultJson contains nothing if success, message if fail
+	public ResultJson sendPaymentQuery(OAuth2Authentication auth,@RequestParam("paymentId") String paymentId);
+	
+	
 }

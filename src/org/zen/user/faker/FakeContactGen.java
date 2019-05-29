@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -16,6 +17,8 @@ public class FakeContactGen {
 
 	private List<String> surNames = new ArrayList<String>();
 	private List<String> givenNames = new ArrayList<String>();
+	private int nextSurname;
+	private int nextGiven;
 	
 	public FakeContactGen(Services services)
 	{
@@ -24,6 +27,25 @@ public class FakeContactGen {
 		log.info("Using given names from : " + givenNamePath);
 		log.info("Using surnames from : " + surNamePath);
 		loadNames(surNamePath,givenNamePath);
+		Collections.shuffle(surNames);
+		Collections.shuffle(givenNames);
+		nextSurname = 0;
+		nextGiven = 0;
+	}
+	
+	public FakeContact getSytemFakeContact()
+	{
+		if (nextSurname==surNames.size())
+			nextSurname = 0;
+		if (nextGiven==givenNames.size())
+			nextGiven = 0;
+		FakeContact fc = new FakeContact();
+		String contact = surNames.get(nextSurname++);
+		fc.setContact(contact.toLowerCase());
+		fc.setSurName(contact);
+		fc.setGivenName(givenNames.get(nextGiven++));
+		fc.setFullName(fc.getSurName()+" "+fc.getGivenName());
+		return fc;
 	}
 	
 	public FakeContact getFakeContact()
@@ -31,9 +53,11 @@ public class FakeContactGen {
 		FakeContact fc = new FakeContact();
 		Random r = new Random();
 		String contact = surNames.get(r.nextInt(surNames.size()-1));
-		fc.setContact(contact);
+		fc.setContact(contact.toLowerCase());
 		fc.setSurName(contact);
 		fc.setGivenName(givenNames.get(r.nextInt(givenNames.size()-1)));
+		fc.setFullName(fc.getSurName()+" "+fc.getGivenName());
+		fc.setEmail(contact+"@test.com");
 		return fc;
 	}
 	

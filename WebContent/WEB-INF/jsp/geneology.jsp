@@ -81,15 +81,74 @@ function populatePunter1()
 {
     document.getElementById('contact').value = punter1.contact;
     document.getElementById('sponsorContact').value = punter1.sponsorContact;
+    document.getElementById('fullName').value = punter1.fullName;
+    if (!punter.systemOwned)
+      if (punter.contact != punter1.contact && punter.contact != punter1.sponsorContact)
+      {
+        document.getElementById('systemOnly').innerHTML = "";
+        return;
+      }
+
+      document.getElementById('systemOnly').innerHTML =
+      '<div class="control-group">' +
+        '<label class="control-label">Passport/ID No.&nbsp</label>' +
+        '<div class="controls">' +
+        '<input type="text" id="passportIc" class="span11" value="" readonly/>' +
+        '</div>' +
+        '</div>' +
+        '<div class="control-group">' +
+        '<label class="control-label">Gender&nbsp</label>' +
+        '<div class="controls">' +
+            '<input type="text" id="gender" class="span11" value="" readonly/>' +
+        '</div>' +
+      '</div>' +
+      '<div class="control-group">' +
+        '<label class="control-label">Address&nbsp</label>' +
+        '<div class="controls">' +
+          '<input type="text" id="address" class="span11" value="" readonly/>' +
+        '</div>' +
+      '</div>' +
+      '<div class="control-group">' +
+        '<label class="control-label">Postcode&nbsp</label>' +
+        '<div class="controls">' +
+          '<input type="text" id="postcode" class="span11" value="" readonly/>' +
+        '</div>' +
+      '</div>' +
+      '<div class="control-group">' +
+        '<label class="control-label">State&nbsp</label>' +
+        '<div class="controls">' +
+          '<input type="text" id="state" class="span11" value="" readonly/>' +
+        '</div>' +
+      '</div>' +
+      '<div class="control-group">' +
+        '<label class="control-label">Country&nbsp</label>' +
+        '<div class="controls">' +
+          '<input type="text" id="country" class="span11" value="" readonly/>' +
+        '</div>' +
+      '</div>' +
+      '<div class="control-group">' +
+        '<label class="control-label">Phone No.&nbsp</label>' +
+        '<div class="controls">' +
+          '<input type="text" id="phone" class="span11" value="" readonly/>' +
+        '</div>' +
+        '<div class="control-group">' +
+          '<label class="control-label">Email&nbsp</label>' +
+          '<div class="controls">' +
+            '<input type="text" id="email" class="span11" value="" readonly/>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+
     document.getElementById('phone').value = punter1.phone;
     document.getElementById('email').value = punter1.email;
-    document.getElementById('fullName').value = punter1.fullName;
     document.getElementById('passportIc').value = punter1.passportIc;
     document.getElementById('address').value = punter1.address;
     document.getElementById('country').value = punter1.country;
     document.getElementById('state').value = punter1.state;
     document.getElementById('gender').value = punter1.gender;
 }
+
+
 
 var punter;
 
@@ -231,14 +290,6 @@ function Search() {
 
   searchTerm = $('#query').val();
   searchModelByContact();
-  /*
-//  alert("In : " + $('#query').val());
-  if (searchTerm != "")
-    collapse(searchTerm);
-  searchTerm = $('#query').val();
-  expand(searchTerm);
-  getPunterDetails(searchTerm);
-  */
 }
 
 </script>
@@ -303,54 +354,58 @@ function Search() {
                     <input type="text" id="fullName" class="span11" value="" readonly/>
                   </div>
                 </div>
-                <div class="control-group">
-                  <label class="control-label">Passport/ID No.&nbsp</label>
-                  <div class="controls">
-                    <input type="text" id="passportIc" class="span11" value="" readonly/>
+                <div id="systemOnly">
+  <!--
+                  <div class="control-group">
+                    <label class="control-label">Passport/ID No.&nbsp</label>
+                    <div class="controls">
+                      <input type="text" id="passportIc" class="span11" value="" readonly/>
+                    </div>
                   </div>
-                </div>
-                <div class="control-group">
-                  <label class="control-label">Gender&nbsp</label>
-                  <div class="controls">
-                      <input type="text" id="gender" class="span11" value="" readonly/>
+                  <div class="control-group">
+                    <label class="control-label">Gender&nbsp</label>
+                    <div class="controls">
+                        <input type="text" id="gender" class="span11" value="" readonly/>
+                    </div>
                   </div>
-                </div>
-                <div class="control-group">
-                  <label class="control-label">Address&nbsp</label>
-                  <div class="controls">
-                    <input type="text" id="address" class="span11" value="" readonly/>
+                  <div class="control-group">
+                    <label class="control-label">Address&nbsp</label>
+                    <div class="controls">
+                      <input type="text" id="address" class="span11" value="" readonly/>
+                    </div>
                   </div>
-                </div>
-                <div class="control-group">
-                  <label class="control-label">Postcode&nbsp</label>
-                  <div class="controls">
-                    <input type="text" id="postcode" class="span11" value="" readonly/>
+                  <div class="control-group">
+                    <label class="control-label">Postcode&nbsp</label>
+                    <div class="controls">
+                      <input type="text" id="postcode" class="span11" value="" readonly/>
+                    </div>
                   </div>
-                </div>
-                <div class="control-group">
-                  <label class="control-label">State&nbsp</label>
-                  <div class="controls">
-                    <input type="text" id="state" class="span11" value="" readonly/>
+                  <div class="control-group">
+                    <label class="control-label">State&nbsp</label>
+                    <div class="controls">
+                      <input type="text" id="state" class="span11" value="" readonly/>
+                    </div>
                   </div>
-                </div>
-                <div class="control-group">
-                  <label class="control-label">Country&nbsp</label>
-                  <div class="controls">
-                    <input type="text" id="country" class="span11" value="" readonly/>
+                  <div class="control-group">
+                    <label class="control-label">Country&nbsp</label>
+                    <div class="controls">
+                      <input type="text" id="country" class="span11" value="" readonly/>
+                    </div>
                   </div>
-                </div>
-                <div class="control-group">
-                  <label class="control-label">Phone No.&nbsp</label>
-                  <div class="controls">
-                    <input type="text" id="phone" class="span11" value="" readonly/>
+                  <div class="control-group">
+                    <label class="control-label">Phone No.&nbsp</label>
+                    <div class="controls">
+                      <input type="text" id="phone" class="span11" value="" readonly/>
+                    </div>
                   </div>
-                </div>
-                <div class="control-group">
-                  <label class="control-label">Email&nbsp</label>
-                  <div class="controls">
-                    <input type="text" id="email" class="span11" value="" readonly/>
+                  <div class="control-group">
+                    <label class="control-label">Email&nbsp</label>
+                    <div class="controls">
+                      <input type="text" id="email" class="span11" value="" readonly/>
+                    </div>
                   </div>
-                </div>
+              </div>
+               <!-- systemOnly -->
               </div>
             </div>
           </div>

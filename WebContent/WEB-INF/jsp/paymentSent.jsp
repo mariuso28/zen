@@ -37,6 +37,11 @@ var successfulPayments;
 var failedPayments;
 var punter;
 
+function sendQuery(paymentId)
+{
+  alert(paymentId);
+}
+
 function getPunter() {
 
 	access_token = sessionStorage.getItem("access_token");
@@ -83,7 +88,7 @@ function getPendingPayments() {
 
  $.ajax({
     type: "GET",
-         url : '/zen/zx4/api/punter/getPaymentsSent?paymentStatus=PAYMENTMADE&offset=0&limit=10',
+         url : '/zen/zx4/api/punter/getPaymentsSent?paymentStatus=PAYMENTMADE&offset=0&limit=-1',
     headers: { 'Authorization': bearerHeader },
     cache: false,
     contentType: 'application/json;',
@@ -116,7 +121,7 @@ function getPendingPayments() {
 
   $.ajax({
      type: "GET",
-          url : '/zen/zx4/api/punter/getPaymentsSent?paymentStatus=PAYMENTSUCCESS&offset=0&limit=10',
+          url : '/zen/zx4/api/punter/getPaymentsSent?paymentStatus=PAYMENTSUCCESS&offset=0&limit=-1',
      headers: { 'Authorization': bearerHeader },
      cache: false,
      contentType: 'application/json;',
@@ -149,7 +154,7 @@ function getPendingPayments() {
 
   $.ajax({
      type: "GET",
-          url : '/zen/zx4/api/punter/getPaymentsSent?paymentStatus=PAYMENTFAIL&offset=0&limit=10',
+          url : '/zen/zx4/api/punter/getPaymentsSent?paymentStatus=PAYMENTFAIL&offset=0&limit=-1',
      headers: { 'Authorization': bearerHeader },
      cache: false,
      contentType: 'application/json;',
@@ -182,7 +187,7 @@ function getPendingPayments() {
      pl.innerHTML="";
 
      pendingPayments.forEach((payment, i) => {
-         tr=createPaymentTr(payment);
+         tr=createPaymentTr(payment,'pending');
          pl.appendChild(tr);
        })
 }
@@ -193,7 +198,7 @@ function displayPaymentsSuccess()
     pl.innerHTML="";
 
     successfulPayments.forEach((payment, i) => {
-        tr=createPaymentTr(payment);
+        tr=createPaymentTr(payment,'success');
         pl.appendChild(tr);
       })
 }
@@ -204,12 +209,12 @@ function displayPaymentsFailed()
     pl.innerHTML="";
 
     failedPayments.forEach((payment, i) => {
-        tr=createPaymentTr(payment);
+        tr=createPaymentTr(payment,'failed');
         pl.appendChild(tr);
       })
 }
 
-function createPaymentTr(payment)
+function createPaymentTr(payment,status)
 {
   tr = document.createElement('tr');
   tr.className = 'gradeA';
@@ -219,8 +224,13 @@ function createPaymentTr(payment)
   td = document.createElement('td');
   td.innerHTML="<i>" + payment.contact+"</i><br>" + payment.fullName;
   tr.appendChild(td);
-  td = document.createElement('td');
-  td.appendChild(document.createTextNode(payment.phone));
+  if (status != 'success')
+  {
+    td = document.createElement('td');
+    td.innerHTML='<a href="#"><center>'+
+    '<button class="btn btn-success btn-mini" onclick=sendQuery(' + payment.id+
+    ')>QUERY</button></center></a>';
+  }
   tr.appendChild(td);
   td = document.createElement('td');
   td.appendChild(document.createTextNode(payment.description));
@@ -276,7 +286,7 @@ function createPaymentTr(payment)
                 <tr>
                   <th>Id</th>
                   <th>To</th>
-                  <th>Phone</th>
+                  <th>Query</th>
                   <th>Description</th>
                   <th>Amount</th>
                   <th>Payment Details</th>
@@ -299,7 +309,6 @@ function createPaymentTr(payment)
                 <tr>
                   <th>Id</th>
                   <th>To</th>
-                  <th>Phone</th>
                   <th>Description</th>
                   <th>Amount</th>
                   <th>Payment Details</th>
@@ -322,7 +331,7 @@ function createPaymentTr(payment)
                 <tr>
                   <th>Id</th>
                   <th>To</th>
-                  <th>Phone</th>
+                  <th>Query</th>
                   <th>Description</th>
                   <th>Amount</th>
                   <th>Payment Details</th>

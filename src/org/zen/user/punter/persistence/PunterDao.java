@@ -10,6 +10,7 @@ public interface PunterDao {
 
 	public void store(Punter bu);
 	public Punter getByContact(final String contact);
+	public List<Punter> getByFullName(final String fullName);
 	public Punter getById(UUID id);
 	public void deletePunter(Punter punter);
 	public List<Punter> getChildren(Punter root);
@@ -28,4 +29,5 @@ public interface PunterDao {
 	public void updateUpgradeStatus(Punter punter);
 	public List<Punter> getPuntersForLevel(int level);
 	public int getMaxLevelPopulated();
+	public List<Punter> getAllPunters();
 }

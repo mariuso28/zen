@@ -14,7 +14,6 @@ import org.zen.payment.Xtransaction;
 import org.zen.persistence.home.Home;
 import org.zen.user.BaseUser;
 import org.zen.user.punter.Punter;
-import org.zen.user.punter.mgr.PunterMgr;
 import org.zen.user.punter.persistence.PunterDao;
 
 public class Services {
@@ -24,8 +23,6 @@ public class Services {
 	
 	@Autowired
 	private PlatformTransactionManager transactionManager;
-	@Autowired
-	private PunterMgr punterMgr;
 	
 	private Home home;
 	private Mail mail;
@@ -47,6 +44,7 @@ public class Services {
 		mail.setMailDisabled(prop.getProperty("mailDisabled"));
 	
 		setMailNotifier(new MailNotifier(this));
+		
 	}
 	
 	
@@ -131,11 +129,6 @@ public class Services {
 		this.transactionManager = transactionManager;
 	}
 	
-	public PunterMgr getPunterMgr() {
-		return punterMgr;
-	}
-
-
 	public String getPropertiesPath() {
 		return propertiesPath;
 	}

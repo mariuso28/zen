@@ -26,10 +26,10 @@ public class ZenModelInitialize {
 	{
 		punterMgr.deleteAllPunters();
 		ZenModelFake zmf = new ZenModelFake();
-		PunterProfileJson rootProfile = zmf.makeProfile("zen","zen@test.com","0123456789","88888888",null);
-		rootProfile.setFullName("Zen Top Level");
+		
+		PunterProfileJson rootProfile = zmf.createProfile(null,punterMgr.getZenContact());
 		punterMgr.registerPunter(rootProfile);
-		Punter root = punterMgr.getByContact("zen");
+		Punter root = punterMgr.getByContact(punterMgr.getZenContact().getContact());
 		punterMgr.setPunterEnabled(root,true);
 		log.info("Got root : " + root);
 		return root;

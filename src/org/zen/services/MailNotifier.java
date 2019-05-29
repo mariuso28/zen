@@ -47,6 +47,7 @@ public class MailNotifier {
 		sendMail(punter, subject, msg, attactments, false);		
 	}
 	
+	/*
 	public void notifyUpgradeRequired(Punter punter) {
 		final String subject = "Great news from Zen! You are now entitled to upgrade and earn more $$$";
 				
@@ -60,6 +61,7 @@ public class MailNotifier {
 		final List<String> attactments = new  ArrayList<String>();
 		sendMail(punter, subject, msg, attactments, false);		
 	}
+	*/
 	
 	public void notifyFirstUpgradeRequired(Punter punter) {
 		final String subject = "Please login to pay your fee to join Zen and start to earn $$$";

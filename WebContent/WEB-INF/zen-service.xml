@@ -26,16 +26,16 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 		<property name="dataSource" ref="dataSource"/>
 	</bean>
 
-	<bean id="punterMgr"
-		class="org.zen.user.punter.mgr.PunterMgr" >
-
-	</bean>
 
 	<bean id="services"
 		class="org.zen.services.Services" init-method="initServices">
 		<property name="home" ref="home" />		
 		<property name="mail" ref="mail" />
 		<property name="propertiesPath" value="/home/pmk/zen-properties/zen.properties"/>
+	</bean>
+
+	<bean id="punterMgr"
+		class="org.zen.user.punter.mgr.PunterMgr" init-method="init">
 	</bean>
 
 	<bean id="zenModel"

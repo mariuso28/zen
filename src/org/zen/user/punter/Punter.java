@@ -29,6 +29,8 @@ public class Punter extends BaseUser {
 	private UpgradeStatus upgradeStatus;
 	private List<PunterPaymentMethodJson> paymentMethods = new ArrayList<PunterPaymentMethodJson>();
 	private int level;
+	private Date created;
+	private Date updated;
 	
 	public Punter()
 	{
@@ -39,7 +41,8 @@ public class Punter extends BaseUser {
 	
 	public void copyProfileValues(PunterProfileJson profile)
 	{
-		setContact(profile.getContact());
+		if (profile.getContact()!=null)					// null if comes from update
+			setContact(profile.getContact());
 		setEmail(profile.getEmail());
 		setPhone(profile.getPhone());
 		setFullName(profile.getFullName());
@@ -191,5 +194,20 @@ public class Punter extends BaseUser {
 		return getUpgradeStatus().getPaymentStatus().equals(PaymentStatus.PAYMENTDUE);
 	}
 
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	public Date getUpdated() {
+		return updated;
+	}
+
+	public void setUpdated(Date updated) {
+		this.updated = updated;
+	}
 	
 }
