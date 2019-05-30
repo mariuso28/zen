@@ -53,6 +53,26 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		ratingMgr = new RatingMgr();
 	}
 	
+	public void sendPaymentQuery(String contact, String paymentId) {
+		Punter punter;
+		try
+		{
+			punter = services.getHome().getPunterDao().getByContact(contact);
+			if (punter == null)
+				throw new RestServicesException("Zen Member : " + contact + " not found - please check");
+			long idL = Long.parseLong(paymentId);
+			Xtransaction xt = services.getHome().getPaymentDao().getXtransactionById(idL);
+			Punter payee = services.getHome().getPunterDao().getById(xt.getPayeeId());
+			Punter zen = services.getHome().getPunterDao().getByContact(punterMgr.getZenContact().getContact());
+			services.getMailNotifier().notifyPaymentQuery(zen,punter,payee,xt);
+		}
+		catch (Exception e)
+		{
+			log.error("sendPaymentQuery",e);
+			throw new RestServicesException("error sendPaymentQuery - contact support.");
+		}
+	}
+	
 	public List<NotificationJson> getNotifications(String contact) {
 		Punter punter;
 		try
@@ -64,8 +84,8 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		}
 		catch (Exception e)
 		{
-			log.error("resetPassword",e);
-			throw new RestServicesException("Zen Member : " + contact + " not found - please check");
+			log.error("getNotifications",e);
+			throw new RestServicesException("error getNotifications - contact support.");
 		}
 	}
 
@@ -103,7 +123,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			services.getMailNotifier().notifyUpgradeSuccessful(punter);
 			
 			// SET NEW UPGRADESTATUS for upstream
-			punterMgr.tryUpgrade(sponsor);
+			punterMgr.tryUpgrade(sponsor,this);
 			
 		} catch (Exception e) {
 			log.error(e.getMessage(),e);
@@ -164,6 +184,8 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 				pi.setTransactionDetails("");
 				try {
 					pi.setUploadFileBytes(uploadfile.getBytes());
+					pi.setUploadFileName(uploadfile.getOriginalFilename());
+					log.info("storing file : " + uploadfile.getOriginalFilename());
 				} catch (IOException e) {
 					log.error(e.getMessage(),e);
 					String msg = "Invalid upload file - please try another.";
@@ -626,11 +648,5 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 	public void setServices(Services services) {
 		this.services = services;
 	}
-
-	
-
-	
-	
-	
 
 }

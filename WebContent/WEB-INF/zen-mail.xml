@@ -23,10 +23,10 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 </bean>
 
 <bean id="mailSender2" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-	<property name="host" value="mail.your-server.de" />
+	<property name="host" value="78.46.155.245" />
 	<property name="port" value="587" />
-	<property name="username" value="info@homeland.my" />
-	<property name="password" value="0Kll747N2fiHrp5B" />
+	<property name="username" value="info@zenwing.net" />
+	<property name="password" value="28F7TT881c41l2qc" />
 
 	<property name="javaMailProperties">
 		<props>

@@ -185,5 +185,10 @@
 	    <artifactId>javafaker</artifactId>
 	    <version>0.12</version>
 	</dependency>
+	<dependency>
+		<groupId>com.google.cloud</groupId>
+  		<artifactId>google-cloud-translate</artifactId>
+  		<version>1.74.0</version>
+	</dependency>
 	</dependencies>
 </project>

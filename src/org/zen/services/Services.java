@@ -1,9 +1,11 @@
 package org.zen.services;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -44,7 +46,16 @@ public class Services {
 		mail.setMailDisabled(prop.getProperty("mailDisabled"));
 	
 		setMailNotifier(new MailNotifier(this));
-		
+
+		String scratchDir = prop.getProperty("scratchPath");
+		if (scratchDir!=null)
+		{
+			try {
+				FileUtils.cleanDirectory(new File(scratchDir));
+			} catch (IOException e) {
+				log.error("Couldn't clear dir - " + scratchDir,e);
+			} 
+		}
 	}
 	
 	

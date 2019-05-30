@@ -199,10 +199,8 @@ function getModel()
 						dataSource: "/zen/zx4/api/punter/getModel?access_token="+access_token,
 						imageUrlField: 'imageUrl',
 						primaryKey: 'id',
-             lazyLoading: true,
-             dataBound: function (e) {
-            // alert('dataBound is fired.');
-         }
+            lazyLoading: true,
+            width: 500
 				});
 
 }

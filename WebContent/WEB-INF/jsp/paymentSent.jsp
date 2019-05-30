@@ -39,13 +39,39 @@ var punter;
 
 function sendQuery(paymentId)
 {
-  alert(paymentId);
-}
+  var bearerHeader = 'Bearer ' + access_token;
+     $.ajax({
+
+    type: "GET",
+         url : '/zen/zx4/api/punter/sendPaymentQuery?paymentId=' + paymentId,
+    headers: { 'Authorization': bearerHeader },
+    cache: false,
+    contentType: 'application/json;',
+         dataType: "json",
+       	 success: function(data) {
+    //      alert(JSON.stringify(data));
+     			if (data == '')
+            {
+							alert("could not sendPaymentQuery")
+               return;
+            }
+
+          var resultJson = $.parseJSON(JSON.stringify(data));
+					if (resultJson.status!='OK')
+					{
+						alert(resultJson.status + " " + resultJson.message);
+            return;
+					}
+          alert("Zen support has been notified. Will contact payee and get back to you.");
+
+        },
+				error:function (e) {
+	  			alert("sendPaymentQuery ERROR : " + e.status + " - " + e.statusText);
+	      }
+     });
+ }
 
 function getPunter() {
-
-	access_token = sessionStorage.getItem("access_token");
-//	alert(access_token);
 
   var bearerHeader = 'Bearer ' + access_token;
      $.ajax({
@@ -56,7 +82,6 @@ function getPunter() {
     cache: false,
     contentType: 'application/json;',
          dataType: "json",
-         async: false,
        	 success: function(data) {
     //      alert(JSON.stringify(data));
      			if (data == '')
@@ -224,7 +249,7 @@ function createPaymentTr(payment,status)
   td = document.createElement('td');
   td.innerHTML="<i>" + payment.contact+"</i><br>" + payment.fullName;
   tr.appendChild(td);
-  if (status != 'success')
+  if (status == 'pending')
   {
     td = document.createElement('td');
     td.innerHTML='<a href="#"><center>'+
@@ -331,7 +356,6 @@ function createPaymentTr(payment,status)
                 <tr>
                   <th>Id</th>
                   <th>To</th>
-                  <th>Query</th>
                   <th>Description</th>
                   <th>Amount</th>
                   <th>Payment Details</th>

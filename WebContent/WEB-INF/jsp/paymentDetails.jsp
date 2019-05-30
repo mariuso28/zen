@@ -161,9 +161,6 @@ function getPaymentDetails(paymentId,memberType) {
      td.innerHTML="<i>" + payment.contact+"</i><br>" + payment.fullName;
      tr.appendChild(td);
      td = document.createElement('td');
-     td.appendChild(document.createTextNode(payment.phone));
-     tr.appendChild(td);
-     td = document.createElement('td');
      td.appendChild(document.createTextNode(payment.description));
      tr.appendChild(td);
      td = document.createElement('td');
@@ -228,7 +225,6 @@ function getPaymentDetails(paymentId,memberType) {
                 <tr>
                   <th>Id</th>
                   <th id='cp'></th>
-                  <th>Phone</th>
                   <th>Description</th>
                   <th>Amount</th>
                   <th>Status</th>

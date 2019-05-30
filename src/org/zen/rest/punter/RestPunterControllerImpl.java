@@ -215,12 +215,12 @@ public class RestPunterControllerImpl implements RestPunterController
 	public ResultJson sendPaymentQuery(OAuth2Authentication auth,@RequestParam("paymentId") String paymentId)
 	{
 		String contact = ((User) auth.getPrincipal()).getUsername();
-		log.info("Received getDownstreamPunters for : " + contact);
-		
+		log.info("Received getDownstreamPunters for : " + contact);		
 		ResultJson result = new ResultJson();
 		
 		try
 		{
+			restServices.sendPaymentQuery(contact,paymentId);
 			result.success();
 		}
 		catch (Exception e)

@@ -2,6 +2,7 @@ package org.zen.persistence.home;
 
 import org.zen.domain.country.persistence.CountryDao;
 import org.zen.payment.persistence.PaymentDao;
+import org.zen.translate.persistence.TranslationDao;
 import org.zen.user.persistence.BaseUserDao;
 import org.zen.user.punter.persistence.PunterDao;
 
@@ -11,6 +12,7 @@ public class HomeImpl implements Home {
 	private PunterDao punterDao;
 	private CountryDao countryDao;
 	private PaymentDao paymentDao;
+	private TranslationDao translationDao;
 	
 	public HomeImpl()
 	{
@@ -50,6 +52,14 @@ public class HomeImpl implements Home {
 
 	public void setPaymentDao(PaymentDao paymentDao) {
 		this.paymentDao = paymentDao;
+	}
+
+	public TranslationDao getTranslationDao() {
+		return translationDao;
+	}
+
+	public void setTranslationDao(TranslationDao translationDao) {
+		this.translationDao = translationDao;
 	}
 
 	

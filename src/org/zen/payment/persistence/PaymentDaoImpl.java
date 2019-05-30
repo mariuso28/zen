@@ -134,14 +134,15 @@ public class PaymentDaoImpl extends NamedParameterJdbcDaoSupport implements Paym
 		PaymentInfo pi = xt.getPaymentInfo();
 		Timestamp ts = new Timestamp(pi.getTransactionDate().getTime());
 		
-		getJdbcTemplate().update("INSERT INTO paymentinfo (xtransactionid,transactiondate,transactiondetails,uploadfilebytes) "
-				+ "VALUES (?,?,?,?)"
+		getJdbcTemplate().update("INSERT INTO paymentinfo (xtransactionid,transactiondate,transactiondetails,uploadfilebytes,uploadfilename) "
+				+ "VALUES (?,?,?,?,?)"
 				, new PreparedStatementSetter() {
 					public void setValues(PreparedStatement ps) throws SQLException {
 						ps.setLong(1, xt.getId());
 						ps.setTimestamp(2, ts);
 						ps.setString(3, pi.getTransactionDetails());
 						ps.setBytes(4,pi.getUploadFileBytes());
+						ps.setString(5, pi.getUploadFileName());
 					}
 				});
 	}

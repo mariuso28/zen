@@ -3,6 +3,7 @@ package org.zen.user.punter.mgr;
 import static org.apache.commons.text.CharacterPredicates.DIGITS;
 import static org.apache.commons.text.CharacterPredicates.LETTERS;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -25,6 +26,7 @@ import org.zen.payment.Xtransaction;
 import org.zen.payment.persistence.PaymentDao;
 import org.zen.persistence.PersistenceRuntimeException;
 import org.zen.rating.RatingMgr;
+import org.zen.rest.services.RestServices;
 import org.zen.services.Services;
 import org.zen.user.account.Account;
 import org.zen.user.faker.FakeContact;
@@ -403,25 +405,25 @@ public class PunterMgr {
 		return punter;
 	}
 
-	public void tryUpgrade(Punter punter) throws PunterMgrException
+	public void tryUpgrade(Punter punter, RestServices restServices) throws PunterMgrException
 	{
 		int newRating = canUpgrade2(punter);
 		if (newRating<=0)
 			return;
 		
-		scheduleUpgrade(punter,newRating);
+		scheduleUpgrade(punter,newRating,restServices);
 		while (true)
 		{
 			Punter parent = getByUUID(punter.getParentId());
 			newRating = canUpgrade2(parent);
 			if (newRating<=0)
 				return;
-			scheduleUpgrade(parent,newRating);
+			scheduleUpgrade(parent,newRating,restServices);
 			punter = parent;
 		}
 	}
 	
-	private void scheduleUpgrade(Punter punter, int newRating) throws PunterMgrException {
+	private void scheduleUpgrade(Punter punter, int newRating,RestServices restServices) throws PunterMgrException {
 		UpgradeStatus us = punter.getUpgradeStatus();
 		us.setPaymentStatus(PaymentStatus.PAYMENTDUE);
 		us.setNewRating(newRating);
@@ -437,6 +439,19 @@ public class PunterMgr {
 		}
 		us.setSponsorContact(parentToPay.getContact());
 		punterDao.updateUpgradeStatus(punter);
+		if (punter.isSystemOwned())						// upgrade automatically
+		{
+			SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+			String ds = sdf.format((new GregorianCalendar()).getTime());
+			long paymentId = restServices.submitTransactionDetails(punter.getContact(),null,ds,
+					"Pay from " + punter.getContact() + " to " + punter.getSponsorContact());
+			restServices.approvePayment(punter.getSponsorContact(),Long.toString(paymentId));
+		}
+		else
+		{
+			double fee = ratingMgr.getUpgradeFeeForRating(newRating);
+			services.getMailNotifier().notifyUpgradeRequired(punter,fee);
+		}
 	}
 
 	private int canUpgrade2(Punter punter) throws PunterMgrException

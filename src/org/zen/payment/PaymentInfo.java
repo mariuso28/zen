@@ -7,6 +7,7 @@ public class PaymentInfo {
 	private Date transactionDate;
 	private String transactionDetails;
 	private byte[] uploadFileBytes;
+	private String uploadFileName;
 	
 	public PaymentInfo()
 	{
@@ -42,6 +43,14 @@ public class PaymentInfo {
 
 	public void setXtransactionId(int xtransactionId) {
 		this.xtransactionId = xtransactionId;
+	}
+
+	public String getUploadFileName() {
+		return uploadFileName;
+	}
+
+	public void setUploadFileName(String uploadFileName) {
+		this.uploadFileName = uploadFileName;
 	}
 	
 	

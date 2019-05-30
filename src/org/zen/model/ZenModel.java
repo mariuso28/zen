@@ -1,5 +1,7 @@
 package org.zen.model;
 
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -75,7 +77,9 @@ public class ZenModel {
 	}
 	
 	private void upgradePunter(Punter p) {
-		long paymentId = restServices.submitTransactionDetails(p.getContact(),null,"05-25-2019",
+		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+		String ds = sdf.format((new GregorianCalendar()).getTime());
+		long paymentId = restServices.submitTransactionDetails(p.getContact(),null,ds,
 				"Pay from " + p.getContact() + " to " + p.getSponsorContact());
 		restServices.approvePayment(p.getSponsorContact(),Long.toString(paymentId));
 	}
@@ -258,7 +262,7 @@ public class ZenModel {
 		{
 			ZenModelInitialize zmi = (ZenModelInitialize) context.getBean("zenModelInitialize");
 			ZenModel zm = (ZenModel) context.getBean("zenModel");
-			zm.recruitPunters(zmi, 0, 5);
+			zm.recruitPunters(zmi, 0, 4);
 //			zmi.printModel(root);
 		}
 		catch (Exception e)
