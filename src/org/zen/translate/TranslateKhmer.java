@@ -15,7 +15,7 @@ public class TranslateKhmer {
 	{
 		@SuppressWarnings("resource")
 		ApplicationContext context = new ClassPathXmlApplicationContext(
-				"zen-service.xml");
+				"zen-persistence.xml");
 		Home home = (Home) context.getBean("home");
 		
 		Translate translate = TranslateOptions.getDefaultInstance().getService();
@@ -28,6 +28,7 @@ public class TranslateKhmer {
 				            k,
 				            TranslateOption.sourceLanguage("en"),
 				            TranslateOption.targetLanguage("km"));
+			 System.out.println("xlate : " + k + " to : " + translation.getTranslatedText());
 			 home.getTranslationDao().store("km", k, translation.getTranslatedText());
 		}
 	}

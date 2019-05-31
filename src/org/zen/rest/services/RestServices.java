@@ -53,13 +53,18 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		ratingMgr = new RatingMgr();
 	}
 	
+	private String x(String src)
+	{
+		return services.getTxm().xlate(src);
+	}
+	
 	public void sendPaymentQuery(String contact, String paymentId) {
 		Punter punter;
 		try
 		{
 			punter = services.getHome().getPunterDao().getByContact(contact);
 			if (punter == null)
-				throw new RestServicesException("Zen Member : " + contact + " not found - please check");
+				throw new RestServicesException(x("Zen Member : ") + contact + x(" not found - please check."));
 			long idL = Long.parseLong(paymentId);
 			Xtransaction xt = services.getHome().getPaymentDao().getXtransactionById(idL);
 			Punter payee = services.getHome().getPunterDao().getById(xt.getPayeeId());
@@ -69,7 +74,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		catch (Exception e)
 		{
 			log.error("sendPaymentQuery",e);
-			throw new RestServicesException("error sendPaymentQuery - contact support.");
+			throw new RestServicesException(x("error send payment query" + x(" - contact support.")));
 		}
 	}
 	
@@ -79,13 +84,13 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		{
 			punter = services.getHome().getPunterDao().getByContact(contact);
 			if (punter == null)
-				throw new RestServicesException("Zen Member : " + contact + " not found - please check");
+				throw new RestServicesException(x("Zen Member : ") + contact + x(" not found - please check"));
 			return punterMgr.getNoticationsForPunter(punter);
 		}
 		catch (Exception e)
 		{
 			log.error("getNotifications",e);
-			throw new RestServicesException("error getNotifications - contact support.");
+			throw new RestServicesException(x("error get notifications") + x(" - contact support."));
 		}
 	}
 
@@ -93,15 +98,13 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		Punter punter;
 		try
 		{
-			punter = services.getHome().getPunterDao().getByContact(username);
-			if (punter == null)
-				throw new RestServicesException("Zen Member : " + username + " not found - please check");
+			punter = getPunter(username);
 			return punterMgr.resetPassword(punter);
 		}
 		catch (Exception e)
 		{
 			log.error("resetPassword",e);
-			throw new RestServicesException("Zen Member : " + username + " not found - please check");
+			throw new RestServicesException(x("Zen Member : ") + username + x(" not found - please check"));
 		}
 	}
 
@@ -127,7 +130,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			
 		} catch (Exception e) {
 			log.error(e.getMessage(),e);
-			throw new RestServicesException("Could not approve payment for id - contact support.");
+			throw new RestServicesException(x("Could not approve payment for id") + x(" - contact support."));
 		}
 	}
 
@@ -146,7 +149,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			services.getMailNotifier().notifyUpgradeFailed(punter,sponsor);
 		} catch (Exception e) {
 			log.error(e.getMessage(),e);
-			throw new RestServicesException("Could not approve payment for id - contact support.");
+			throw new RestServicesException(x("Could not approve payment for id") + x(" - contact support."));
 		}
 	}
 	
@@ -161,7 +164,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			}
 			catch (ParseException e)
 			{
-				String msg = "Invalid transaction date : " + transactionDate + " should be mm-dd-yyyy format.";
+				String msg = x("Invalid transaction date : ") + transactionDate + x(" should be mm-dd-yyyy format.");
 				log.info(msg);
 				throw new RestServicesException(msg);
 			}
@@ -173,7 +176,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 				log.info("Upload file is empty using transaction details");
 				if (transactionDetails.isEmpty())
 				{
-					String msg = "Invalid transaction - details or upload file must be submitted.";
+					String msg = x("Invalid transaction - details or upload file must be submitted.");
 					log.info(msg);
 					throw new RestServicesException(msg);
 				}
@@ -188,7 +191,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 					log.info("storing file : " + uploadfile.getOriginalFilename());
 				} catch (IOException e) {
 					log.error(e.getMessage(),e);
-					String msg = "Invalid upload file - please try another.";
+					String msg = x("Invalid upload file - please try another.");
 					log.info(msg);
 					throw new RestServicesException(msg);
 				}
@@ -202,9 +205,9 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 				xt.setDate((new GregorianCalendar().getTime()));
 				xt.setAmount(ratingMgr.getUpgradeFeeForRating(us.getNewRating()));
 				if (us.getNewRating()==1)
-					xt.setDescription("Zen Activate Member At Rank 1");
+					xt.setDescription(x("Zen Activate Member At Rank 1"));
 				else
-					xt.setDescription("Zen Upgrade Member To Rank " + us.getNewRating());
+					xt.setDescription(x("Zen Upgrade Member To Rank ") + us.getNewRating());
 				us.setPaymentStatus(PaymentStatus.PAYMENTMADE);
 				xt.setPaymentStatus(us.getPaymentStatus());
 				xt.setPaymentInfo(pi);
@@ -215,7 +218,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 				
 			} catch (Exception e) {
 				log.info(e.getMessage());
-				throw new RestServicesException("Could not submit transaction details - contact support.");
+				throw new RestServicesException(x("Could not submit transaction details") + x(" - contact support."));
 			}
 	}
 	
@@ -233,7 +236,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 				xjs.add(createXactionJson(xt,memberType));
 		} catch (Exception e) {
 			log.error(e.getMessage(),e);
-			throw new RestServicesException("Could not get transactions for member - contact support.");
+			throw new RestServicesException(x("Could not get transactions for member") + x(" - contact support."));
 		}
 		return xjs;
 	}
@@ -248,7 +251,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			return xj;
 		} catch (Exception e) {
 			log.error(e.getMessage(),e);
-			throw new RestServicesException("Could not get transaction for id - contact support.");
+			throw new RestServicesException(x("Could not get transaction for id") + x(" - contact support."));
 		}
 	}
 	
@@ -295,14 +298,14 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		Punter punter = getPunter(contact);
 		UpgradeStatus us = punter.getUpgradeStatus();
 		if (!us.getPaymentStatus().equals(PaymentStatus.PAYMENTDUE) && !us.getPaymentStatus().equals(PaymentStatus.PAYMENTFAIL))
-			throw new RestServicesException("Member not eligible for upgrade at this time.");
+			throw new RestServicesException(x("Member not eligible for upgrade at this time."));
 			
 		try {
 			UpgradeJson uj = getUpgradeRequest(punter);
 			return uj;	
 		} catch (Exception e) {
 			log.error(e.getMessage(),e);
-			throw new RestServicesException("Could not get upgrade request - contact support.");
+			throw new RestServicesException(x("Could not get upgrade request") + x(" - contact support."));
 		}
 	}
 
@@ -359,7 +362,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 
 		Punter contact = punterMgr.getByContact(searchTerm);
 		if (contact == null)
-			throw new RestServicesException("Agent : " + searchTerm + " not in your hierarchy.");
+			throw new RestServicesException(x("Zen Member : ") + searchTerm + x(" not in your hierarchy."));
 		List<String> ids = new ArrayList<String>();
 		ids.add(contact.getContact());
 		while (true)
@@ -513,7 +516,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		catch (Exception e)
 		{
 			log.error("updatePunterProfile",e);
-			throw new RestServicesException("Zen Member : " + contact + " could not be updated - contact support");
+			throw new RestServicesException(x("Zen Member : ") + contact + x(" could not be updated") + x(" - contact support."));
 		}
 	}
 
@@ -535,7 +538,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		catch (Exception e)
 		{
 			log.error(e.getMessage(),e);
-			throw new RestServicesException("Could not add payment method - contact support");
+			throw new RestServicesException(x("Could not add payment method") + x(" - contact support."));
 		}
 	}
 		
@@ -548,7 +551,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		catch (Exception e)
 		{
 			log.error(e.getMessage(),e);
-			throw new RestServicesException("Could not delete payment method - contact support");
+			throw new RestServicesException(x("Could not delete payment method") + x(" - contact support."));
 		}
 	}
 	
@@ -580,12 +583,12 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		{
 			punter = services.getHome().getPunterDao().getByContact(contact);
 			if (punter == null)
-				throw new RestServicesException("Zen Member : " + contact + " not found - contact support");
+				throw new RestServicesException(x("Zen Member : ") + contact + x(" not found") + x(" - contact support."));
 		}
 		catch (Exception e)
 		{
 			log.error("getPunter",e);
-			throw new RestServicesException("Zen Member : " + contact + " not found - contact support");
+			throw new RestServicesException(x("Zen Member : ") + contact + x(" not found") + x(" - contact support."));
 		}
 		return punter;
 	}
@@ -606,7 +609,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		catch (Exception e)
 		{
 			log.error("getDownstreamPunters",e);
-			throw new RestServicesException("Zen downstream members for : " + contact + " not found - contact support");
+			throw new RestServicesException(x("Zen downstream members for : ") + contact + x(" not found") + x(" - contact support."));
 		}
 	}
 	

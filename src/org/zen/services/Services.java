@@ -14,6 +14,7 @@ import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.zen.payment.Xtransaction;
 import org.zen.persistence.home.Home;
+import org.zen.translate.mgr.TransalationMgr;
 import org.zen.user.BaseUser;
 import org.zen.user.punter.Punter;
 import org.zen.user.punter.persistence.PunterDao;
@@ -31,6 +32,7 @@ public class Services {
 	private String propertiesPath;
 	private Properties prop;
 	private MailNotifier mailNotifier;
+	private TransalationMgr txm;
 	
 	public void initServices()
 	{	
@@ -56,6 +58,8 @@ public class Services {
 				log.error("Couldn't clear dir - " + scratchDir,e);
 			} 
 		}
+		
+		setTxm(new TransalationMgr(this));
 	}
 	
 	
@@ -168,6 +172,16 @@ public class Services {
 	}
 	public void setMailNotifier(MailNotifier mailNotifier) {
 		this.mailNotifier = mailNotifier;
+	}
+
+
+	public TransalationMgr getTxm() {
+		return txm;
+	}
+
+
+	public void setTxm(TransalationMgr txm) {
+		this.txm = txm;
 	}
 	
 	

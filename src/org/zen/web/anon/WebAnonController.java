@@ -4,11 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+import org.zen.services.Services;
 
 @Controller
 @RequestMapping("/web/anon")
@@ -17,15 +19,25 @@ import org.springframework.web.servlet.ModelAndView;
 
 public class WebAnonController {
 	private static Logger log = Logger.getLogger(WebAnonController.class);
-//	@Autowired
-//	private Services services;
+	@Autowired
+	private Services services;
+	
+	@RequestMapping(value = "/changeLanguage", method = RequestMethod.GET)
+	public String changeLanguage(String isoCode) {
+			
+		log.info("Received changeLanguage");
+		
+		services.getTxm().changeIsoCode(isoCode);
+		
+		return "login" + services.getTxm().getJspPrefix();
+	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String logon() {
 			
 		log.info("Received login");
 			
-		return "login";
+		return "login"+ services.getTxm().getJspPrefix();
 	}
 	
 	
@@ -36,7 +48,7 @@ public class WebAnonController {
 		
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("contact","");
-		return new ModelAndView("geneology","map",map);
+		return new ModelAndView("geneolog" + services.getTxm().getJspPrefix(),"map",map);
 	}
 	
 	@RequestMapping(value = "/goGeneologyContact", method = RequestMethod.GET)
@@ -46,7 +58,7 @@ public class WebAnonController {
 		
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("contact",contact);
-		return new ModelAndView("geneology","map",map);
+		return new ModelAndView("geneology"+ services.getTxm().getJspPrefix(),"map",map);
 	}
 	
 	@RequestMapping(value = "/goNewRegistration", method = RequestMethod.GET)
@@ -54,7 +66,7 @@ public class WebAnonController {
 			
 		log.info("Received goNewRegistration");
 			
-		return "registration";
+		return "registration" + services.getTxm().getJspPrefix();
 	}
 	
 	@RequestMapping(value = "/goUpgrade", method = RequestMethod.GET)
@@ -62,7 +74,7 @@ public class WebAnonController {
 			
 		log.info("Received goUpgrade");
 			
-		return "upgrade";
+		return "upgrade" + services.getTxm().getJspPrefix();
 	}
 	
 	@RequestMapping(value = "/goPaymentReceived", method = RequestMethod.GET)
@@ -70,7 +82,7 @@ public class WebAnonController {
 			
 		log.info("Received goPaymentReceived");
 			
-		return "paymentReceived";
+		return "paymentReceived"+ services.getTxm().getJspPrefix();
 	}
 	
 	@RequestMapping(value = "/goPaymentSent", method = RequestMethod.GET)
@@ -78,7 +90,7 @@ public class WebAnonController {
 			
 		log.info("Received goPaymentSent");
 			
-		return "paymentSent";
+		return "paymentSent" + services.getTxm().getJspPrefix();
 	}
 	
 	@RequestMapping(value = "/goAgentList", method = RequestMethod.GET)
@@ -86,7 +98,7 @@ public class WebAnonController {
 			
 		log.info("Received goAgentList");
 			
-		return "agentList";
+		return "agentList"+ services.getTxm().getJspPrefix();
 	}
 	
    
@@ -95,7 +107,7 @@ public class WebAnonController {
 			
 		log.info("Received goChangePassword");
 			
-		return "changePassword";
+		return "changePassword"+ services.getTxm().getJspPrefix();
 	}
 	
 	@RequestMapping(value = "/goEditProfile", method = RequestMethod.GET)
@@ -103,7 +115,7 @@ public class WebAnonController {
 			
 		log.info("Received goEditProfile");
 			
-		return "editProfile";
+		return "editProfile"+ services.getTxm().getJspPrefix();
 	}
 	
 	
@@ -112,7 +124,7 @@ public class WebAnonController {
 			
 		log.info("Received goDashboard");
 			
-		return "dashboard";
+		return "dashboard"+ services.getTxm().getJspPrefix();
 	}
 	
 	@RequestMapping(value = "/goPaymentDetails", method = RequestMethod.GET)
@@ -123,7 +135,7 @@ public class WebAnonController {
 		Map<String,String> info = new HashMap<String,String>();
 		info.put("paymentId",paymentId);
 		info.put("memberType",memberType);
-		return new ModelAndView("paymentDetails","info",info);
+		return new ModelAndView("paymentDetails"+ services.getTxm().getJspPrefix(),"info",info);
 	}
 	
 	
@@ -148,6 +160,6 @@ public class WebAnonController {
 			
 		log.info("Received accessDenied");
 			
-		return "accessDenied";
+		return "accessDenied" + services.getTxm().getJspPrefix();
 	}
 }

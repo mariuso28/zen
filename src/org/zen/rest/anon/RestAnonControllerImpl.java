@@ -65,27 +65,6 @@ public class RestAnonControllerImpl implements RestAnonController{
 		return result;
 	}
 	
-	
-	@RequestMapping(value = "/getPunterDetails")
-	// ResultJson contains punterDetails if success, message if fail
-	public ResultJson getPunterDetails(@RequestParam("email") String email)
-	{
-		log.info("Received getPunterDetails");
-		ResultJson result = new ResultJson();
-		try
-		{
-//			result.success(restServices.getPunterDetails(email));
-		}
-		catch (Exception e)
-		{
-			log.error(e.getMessage(),e);
-			result.fail(e.getMessage());
-		}
-		return result;
-	}
-	
-	
-
 	@Override
 	@RequestMapping(value = "/getCountries")
 	// ResultJson contains List<CountryJson> if success, message if fail

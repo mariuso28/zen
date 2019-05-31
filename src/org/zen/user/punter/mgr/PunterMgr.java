@@ -65,6 +65,11 @@ public class PunterMgr {
 		setZenContact(new FakeContact(toks[0],toks[1],toks[2],zenSupportEmail));		
 	}
 	
+	private String x(String src)
+	{
+		return services.getTxm().xlate(src);
+	}
+	
 	public List<NotificationJson> getNoticationsForPunter(Punter punter) {
 		List<NotificationJson> njs = new ArrayList<NotificationJson>();
 		if (punter.isUpgradeScheduled())
@@ -88,8 +93,8 @@ public class PunterMgr {
 			UpgradeStatus us = child.getUpgradeStatus();
 			if (us.getPaymentStatus().equals(PaymentStatus.PAYMENTDUE))
 			{
-				nj.setMessage("Waiting for payment of $" + ratingMgr.getUpgradeFeeForRating(us.getNewRating()) + " to be made from " + child.getContact()
-															 + " to upgrade to rank " + us.getNewRating());
+				nj.setMessage(x("Waiting for payment of $") + ratingMgr.getUpgradeFeeForRating(us.getNewRating()) + x(" to be made from ") + child.getContact()
+															 + x(" to upgrade to rank ") + us.getNewRating());
 				nj.setHref("/zen/zx4/web/anon/goGeneologyContact?contact="+child.getContact());
 				nj.setPriority(3);
 				njs.add(nj);
@@ -104,7 +109,7 @@ public class PunterMgr {
 		for (Xtransaction xt : xts)
 		{
 			NotificationJson nj = new NotificationJson();
-			nj.setMessage("Payment of $" + xt.getAmount() + " submitted from " + xt.getPayerContact() + " to " + xt.getDescription());
+			nj.setMessage(x("Payment of $") + xt.getAmount() + x(" submitted from ") + xt.getPayerContact() + x(" to ") + x(xt.getDescription()));
 			nj.setHref("/zen/zx4/web/anon/goPaymentReceived");
 			nj.setPriority(1);
 			njs.add(nj);
@@ -114,7 +119,7 @@ public class PunterMgr {
 	
 	private NotificationJson getPaymentMade() {
 		NotificationJson nj = new NotificationJson();
-		nj.setMessage("Your payment made - remember to check email for status update");
+		nj.setMessage(x("Your payment made - remember to check email for status update."));
 		nj.setHref("#");
 		nj.setPriority(2);
 		return nj;
@@ -123,7 +128,7 @@ public class PunterMgr {
 	private NotificationJson getNoNotications()
 	{
 		NotificationJson nj = new NotificationJson();
-		nj.setMessage("No Posts Currently Flagged");
+		nj.setMessage(x("No Posts Currently Flagged."));
 		nj.setHref("#");
 		nj.setPriority(5);
 		return nj;
@@ -132,7 +137,7 @@ public class PunterMgr {
 	private NotificationJson getUpgradeNotication()
 	{
 		NotificationJson nj = new NotificationJson();
-		nj.setMessage("You are eligible for upgrade!! Upgrade now!!");
+		nj.setMessage(x("You are eligible for upgrade!! Upgrade now!!"));
 		nj.setHref("/zen/zx4/web/anon/goUpgrade");
 		nj.setPriority(1);
 		return nj;
@@ -160,13 +165,13 @@ public class PunterMgr {
 		{
 			punterDao.updatePassword(punter);
 			services.getMailNotifier().notifyPasswordReset(punter,pw);
-			String msg = "A reset password has been sent to your email : " + punter.getEmail() + ". Please logon and change at your convenience.";
+			String msg = x("A reset password has been sent to your email : ") + punter.getEmail() + x(". Please logon and change at your convenience.");
 			log.info(msg);
 			return msg;
 		}
 		catch (Exception e)
 		{
-			throw new PunterMgrException("Could not reset password - contact support.");
+			throw new PunterMgrException(x("Could not reset password") +  x(" - contact support."));
 		}
 	}
 	
@@ -185,7 +190,7 @@ public class PunterMgr {
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
 		boolean match = encoder.matches(changePassword.getOldPassword(),punter.getPassword());
 		if (!match)
-			throw new PunterMgrException("Old password not correct, fix or logout to reset.");
+			throw new PunterMgrException(x("Old password not correct, fix or logout to reset."));
 		validatePassword(changePassword.getPassword());
 		punter.setPassword(encoder.encode(changePassword.getPassword()));
 		try
@@ -194,7 +199,7 @@ public class PunterMgr {
 		}
 		catch (Exception e)
 		{
-			throw new PunterMgrException("Could not change password - contact support.");
+			throw new PunterMgrException(x("Could not change password") +  x(" - contact support."));
 		}
 	}
 
@@ -207,7 +212,7 @@ public class PunterMgr {
 		catch (Exception e)
 		{
 			log.error(e.getMessage(),e);
-			throw new PunterMgrException("Could not get system punters - contact support.");
+			throw new PunterMgrException(x("Could not get system punters") +  x(" - contact support."));
 		}
 	}
 	
@@ -222,7 +227,7 @@ public class PunterMgr {
 			level++;
 			parent = punterDao.getById(parent.getParentId());
 			if (parent == null)
-				throw new PunterMgrException("Could not get level - contact support");
+				throw new PunterMgrException(x("Could not get level") + x(" - contact support."));
 			if (parent.getId().equals(upstream.getId()))
 				return level;
 		}
@@ -237,7 +242,7 @@ public class PunterMgr {
 		catch (Exception e)
 		{
 			log.error(e.getMessage(),e);
-			throw new PunterMgrException("could not setPunterEnabled - contact support.");
+			throw new PunterMgrException(x("could not set punter enabled")+  x(" - contact support."));
 		}
 	}
 	
@@ -300,7 +305,7 @@ public class PunterMgr {
 			List<String> contacts = bud.getNearestContactId(profile.getContact());
 			if (!contacts.isEmpty())
 			{
-				String msg = "Member name : " + profile.getContact() + " already taken please choose another. Suggested alternatives : ";
+				String msg = x("Member name : ") + profile.getContact() + x(" already taken please choose another. Suggested alternatives : ");
 				for (String contact : contacts)
 					msg += contact + ",";
 				throw new PunterMgrException(msg.substring(0,msg.length()-1)+".");
@@ -310,7 +315,7 @@ public class PunterMgr {
 		catch (PersistenceRuntimeException e)
 		{
 			log.error(e.getMessage(),e);
-			throw new PunterMgrException("Could not register member with contact name - contact support.");
+			throw new PunterMgrException(x("Could not register member with contact name")+  x(" - contact support."));
 		}
 		validatePassword(profile.getPassword());
 		validateProfileValues(profile);
@@ -328,7 +333,7 @@ public class PunterMgr {
 		catch (Exception e)
 		{
 			log.error(e.getMessage(),e);
-			throw new PunterMgrException("Could not register member error on store - contact support.");
+			throw new PunterMgrException(x("Could not register member with contact name") +  x(" - contact support."));
 		}
 	}
 	
@@ -359,18 +364,18 @@ public class PunterMgr {
 
 	public void validateProfileValues(PunterProfileJson profile) throws PunterMgrValidationException
 	{
-		validateField("Full Name",profile.getFullName());
+		validateField(x("Full Name"),profile.getFullName());
 		PhoneValidator pv = new PhoneValidator();
 		if (!pv.validate(profile.getPhone()))
-			throw new PunterMgrValidationException("Invalid phone number : " + profile.getPhone() + " - please fix.");
+			throw new PunterMgrValidationException(x("Invalid phone number : ") + profile.getPhone() + x(" - please fix."));
 		EmailValidator ev = new EmailValidator();
 		if (!ev.validate(profile.getEmail()))
-			throw new PunterMgrValidationException("Invalid email : " + profile.getEmail() + " - please fix.");
+			throw new PunterMgrValidationException(x("Invalid email : ") + profile.getEmail() + x(" - please fix."));
 	}
 	
 	private void validateField(String fieldName, String field) throws PunterMgrValidationException{
 		if (field == null || field.isEmpty())
-			throw new PunterMgrValidationException("Please supply a valid " + fieldName);
+			throw new PunterMgrValidationException(x("Please supply a valid ") + fieldName);
 	}
 
 	private Punter createPunter(PunterProfileJson profile, Punter sponsor, Punter parent) {
@@ -444,7 +449,7 @@ public class PunterMgr {
 			SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
 			String ds = sdf.format((new GregorianCalendar()).getTime());
 			long paymentId = restServices.submitTransactionDetails(punter.getContact(),null,ds,
-					"Pay from " + punter.getContact() + " to " + punter.getSponsorContact());
+					x("Pay from ") + punter.getContact() + x(" to ") + punter.getSponsorContact());
 			restServices.approvePayment(punter.getSponsorContact(),Long.toString(paymentId));
 		}
 		else
@@ -506,7 +511,7 @@ public class PunterMgr {
 			Punter sponsor = punterDao.getByContact(sponsorContact);
 			if (sponsor==null)
 			{
-				String msg = "Zen sponsor : " + sponsorContact + " does not exist. Please check.";
+				String msg = x("Zen sponsor : ") + sponsorContact + x(" does not exist. Please check.");
 				log.error(msg);
 				throw new PunterMgrException(msg);
 			}
@@ -515,7 +520,7 @@ public class PunterMgr {
 		catch (PersistenceRuntimeException e)
 		{
 			log.error(e.getMessage(),e);
-			throw new PunterMgrException("Could not validate sponsor - contact support.");
+			throw new PunterMgrException(x("Could not validate sponsor") +  x(" - contact support."));
 		}
 	}
 
@@ -524,7 +529,7 @@ public class PunterMgr {
 		if (contact==null || !ev.validate(contact+"@test.com"))
 		{
 			log.info(contact);
-			throw new PunterMgrValidationException("Please complete contact from alpha and digit and period characters only.");
+			throw new PunterMgrValidationException(x("Please complete contact from alpha and digit and period characters only."));
 		}
 	}
 
@@ -535,7 +540,7 @@ public class PunterMgr {
 				if (Character.isDigit(password.charAt(i)))
 					return;
 		}
-		throw new PunterMgrValidationException("Password must be at least 8 characters and contain at least 1 digit.");
+		throw new PunterMgrValidationException(x("Password must be at least 8 characters and contain at least 1 digit."));
 	}
 
 	public void deleteAllPunters(boolean systemOwned) throws PunterMgrException
@@ -547,7 +552,7 @@ public class PunterMgr {
 		catch (Exception e)
 		{
 			log.error(e.getMessage(),e);
-			throw new PunterMgrException("Could not delete all contacts - contact support.");
+			throw new PunterMgrException(x("Could not delete all contacts") +  x(" - contact support."));
 		}
 	}
 	
@@ -560,7 +565,7 @@ public class PunterMgr {
 		catch (Exception e)
 		{
 			log.error(e.getMessage(),e);
-			throw new PunterMgrException("Could not delete all contacts - contact support.");
+			throw new PunterMgrException(x("Could not delete all contacts") + x(" - contact support."));
 		}
 	}
 	
@@ -588,7 +593,7 @@ public class PunterMgr {
 		catch (Exception e)
 		{
 			log.error(e.getMessage(),e);
-			throw new PunterMgrException("Could not delete punter by contact - contact support.");
+			throw new PunterMgrException(x("Could not delete punter by contact") +  x(" - contact support."));
 		}
 	}
 	
@@ -603,7 +608,7 @@ public class PunterMgr {
 		catch (Exception e)
 		{
 			log.error(e.getMessage(),e);
-			throw new PunterMgrException("Could not get punter by contact - contact support.");
+			throw new PunterMgrException(x("Could not get punter by contact") +  x(" - contact support."));
 		}
 	}
 	
@@ -617,7 +622,7 @@ public class PunterMgr {
 		catch (Exception e)
 		{
 			log.error(e.getMessage(),e);
-			throw new PunterMgrException("Could not get children - contact support.");
+			throw new PunterMgrException(x("Could not get children")+  x(" - contact support."));
 		}
 	}
 	
@@ -630,7 +635,7 @@ public class PunterMgr {
 		catch (Exception e)
 		{
 			log.error(e.getMessage(),e);
-			throw new PunterMgrException("Could not get children - contact support.");
+			throw new PunterMgrException(x("Could not get children") +  x(" - contact support."));
 		}
 	}
 	
@@ -645,7 +650,7 @@ public class PunterMgr {
 		catch (Exception e)
 		{
 			log.error(e.getMessage(),e);
-			throw new PunterMgrException("Could not get punter by id - contact support.");
+			throw new PunterMgrException(x("Could not get punter by id") +  x(" - contact support."));
 		}
 	}
 

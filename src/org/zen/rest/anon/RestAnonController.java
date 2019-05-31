@@ -18,11 +18,7 @@ public interface RestAnonController
 	@RequestMapping(value = "/getSuccess")
 	// ResultJson contains message if success, message if fail
 	public ResultJson getSuccess();	
-		
-	@RequestMapping(value = "/getPunterDetails")
-	// ResultJson contains punterDetails if success, message if fail
-	public ResultJson getPunterDetails(@RequestParam("email") String email);
-		
+				
 	@RequestMapping(value = "/getCountries")
 	// ResultJson contains List<CountryJson> if success, message if fail
 	public ResultJson getCountries();	
