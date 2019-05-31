@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.zen.persistence.PersistenceRuntimeException;
@@ -45,7 +46,12 @@ public class TranslationDaoImpl extends NamedParameterJdbcDaoSupport implements 
 		try
 		{
 			String sql = "SELECT translation FROM translations WHERE isocode=? AND src=?";
-			return getJdbcTemplate().queryForObject(sql, new Object[] { src, isoCode }, String.class);
+			return getJdbcTemplate().queryForObject(sql, new Object[] { isoCode, src }, String.class);
+		}
+		catch (EmptyResultDataAccessException e)
+		{
+			log.error("No transalation found for : " + src + " isoCode : " + isoCode);
+			return null;
 		}
 		catch (DataAccessException e)
 		{

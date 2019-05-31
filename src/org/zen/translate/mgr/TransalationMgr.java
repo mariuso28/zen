@@ -36,7 +36,7 @@ public class TransalationMgr {
 			Map<String,String> hm = new HashMap<String,String>();
 			frequents.put(c, hm);
 			String xlate = translationDao.translate(" not found", c);
-			hm.put("Could not ", xlate);
+			hm.put(" not found", xlate);
 			xlate = translationDao.translate("Could not ", c);
 			hm.put("Could not ", xlate);
 			xlate = translationDao.translate(" - contact support.", c);
@@ -62,11 +62,25 @@ public class TransalationMgr {
 		return xlate;
 	}
 	
+	public Map<String,String> getLabels(String jsp) {
+		Map<String,String> map = new HashMap<String,String>();
+		if (jsp.equals("editProfile"))
+		{
+			map.put("myUserProfileLabel", xlate("My User Profile"));
+			map.put("personalInfomationLabel",xlate("Personal Information"));
+			map.put("usernameLabel",xlate("User Name"));
+			map.put("zenSponsorLabel",xlate("Zen Sponsor"));
+			map.put("fullNameLabel",xlate("Full Name"));
+			map.put("passportIcLabel", xlate("Passport ID"));
+		}
+		return map;
+	}
+	
 	public String getJspPrefix()
 	{
 		if (isoCode.equals("en"))
 			return "";
-		return "_" + isoCode;
+		return isoCode + "/";
 	}
 
 	public void changeIsoCode(String ic) {
@@ -105,6 +119,8 @@ public class TransalationMgr {
 	public void setCurrFrequent(Map<String,String> currFrequent) {
 		this.currFrequent = currFrequent;
 	}
+
+	
 	
 	
 }

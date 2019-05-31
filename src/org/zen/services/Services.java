@@ -62,6 +62,15 @@ public class Services {
 		setTxm(new TransalationMgr(this));
 	}
 	
+	public void storePaymentMade(Punter punter, Xtransaction xt) {
+		new TransactionTemplate(getTransactionManager()).execute(new TransactionCallbackWithoutResult() {
+			@Override
+			protected void doInTransactionWithoutResult(TransactionStatus arg0) {
+				getHome().getPaymentDao().storeXtransaction(xt);						
+				getHome().getPunterDao().updateUpgradeStatus(punter);
+			}
+		});	
+	}
 	
 	public synchronized void updateAccountsAndRating(Punter parentToPay, Punter punter) {
 		new TransactionTemplate(getTransactionManager()).execute(new TransactionCallbackWithoutResult() {
@@ -183,6 +192,9 @@ public class Services {
 	public void setTxm(TransalationMgr txm) {
 		this.txm = txm;
 	}
+
+
+	
 	
 	
 

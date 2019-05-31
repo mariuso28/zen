@@ -1,5 +1,7 @@
 package org.zen.rest.anon;
 
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +16,7 @@ import org.zen.rest.services.RestServices;
 @RequestMapping("/api/anon")
 public class RestAnonControllerImpl implements RestAnonController{
 	@Autowired RestServices restServices;
+	
 	
 	private static Logger log = Logger.getLogger(RestAnonControllerImpl.class);
 	
@@ -93,6 +96,27 @@ public class RestAnonControllerImpl implements RestAnonController{
 		try
 		{
 			result.success(restServices.getServices().getHome().getPaymentDao().getAvailablePaymentMethods());
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			result.fail(e.getMessage());
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = "/getLabels")
+	// ResultJson contains Map<String,String> if success, message if fail
+	public ResultJson getLabels(@RequestParam("jsp") String jsp)
+	{
+		log.info("Received getLabels");
+		
+		ResultJson result = new ResultJson();
+		try
+		{
+			Map<String,String> map = restServices.getServices().getTxm().getLabels(jsp);
+			log.info("Got labels : " + map);
+			result.success(map);
 		}
 		catch (Exception e)
 		{

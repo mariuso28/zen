@@ -29,7 +29,7 @@ public class WebAnonController {
 		
 		services.getTxm().changeIsoCode(isoCode);
 		
-		return "login" + services.getTxm().getJspPrefix();
+		return services.getTxm().getJspPrefix() + "login" ;
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -37,7 +37,7 @@ public class WebAnonController {
 			
 		log.info("Received login");
 			
-		return "login"+ services.getTxm().getJspPrefix();
+		return services.getTxm().getJspPrefix() + "login";
 	}
 	
 	
@@ -48,7 +48,7 @@ public class WebAnonController {
 		
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("contact","");
-		return new ModelAndView("geneolog" + services.getTxm().getJspPrefix(),"map",map);
+		return new ModelAndView(services.getTxm().getJspPrefix() + "geneolog" ,"map",map);
 	}
 	
 	@RequestMapping(value = "/goGeneologyContact", method = RequestMethod.GET)
@@ -58,7 +58,7 @@ public class WebAnonController {
 		
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("contact",contact);
-		return new ModelAndView("geneology"+ services.getTxm().getJspPrefix(),"map",map);
+		return new ModelAndView(services.getTxm().getJspPrefix() + "geneology","map",map);
 	}
 	
 	@RequestMapping(value = "/goNewRegistration", method = RequestMethod.GET)
@@ -66,7 +66,7 @@ public class WebAnonController {
 			
 		log.info("Received goNewRegistration");
 			
-		return "registration" + services.getTxm().getJspPrefix();
+		return services.getTxm().getJspPrefix() + "registration" ;
 	}
 	
 	@RequestMapping(value = "/goUpgrade", method = RequestMethod.GET)
@@ -74,7 +74,7 @@ public class WebAnonController {
 			
 		log.info("Received goUpgrade");
 			
-		return "upgrade" + services.getTxm().getJspPrefix();
+		return services.getTxm().getJspPrefix() + "upgrade" ;
 	}
 	
 	@RequestMapping(value = "/goPaymentReceived", method = RequestMethod.GET)
@@ -82,7 +82,7 @@ public class WebAnonController {
 			
 		log.info("Received goPaymentReceived");
 			
-		return "paymentReceived"+ services.getTxm().getJspPrefix();
+		return services.getTxm().getJspPrefix() + "paymentReceived";
 	}
 	
 	@RequestMapping(value = "/goPaymentSent", method = RequestMethod.GET)
@@ -90,7 +90,7 @@ public class WebAnonController {
 			
 		log.info("Received goPaymentSent");
 			
-		return "paymentSent" + services.getTxm().getJspPrefix();
+		return services.getTxm().getJspPrefix() + "paymentSent" ;
 	}
 	
 	@RequestMapping(value = "/goAgentList", method = RequestMethod.GET)
@@ -98,7 +98,7 @@ public class WebAnonController {
 			
 		log.info("Received goAgentList");
 			
-		return "agentList"+ services.getTxm().getJspPrefix();
+		return services.getTxm().getJspPrefix() + "agentList";
 	}
 	
    
@@ -107,7 +107,7 @@ public class WebAnonController {
 			
 		log.info("Received goChangePassword");
 			
-		return "changePassword"+ services.getTxm().getJspPrefix();
+		return services.getTxm().getJspPrefix() + "changePassword";
 	}
 	
 	@RequestMapping(value = "/goEditProfile", method = RequestMethod.GET)
@@ -115,7 +115,7 @@ public class WebAnonController {
 			
 		log.info("Received goEditProfile");
 			
-		return "editProfile"+ services.getTxm().getJspPrefix();
+		return services.getTxm().getJspPrefix() + "editProfile";
 	}
 	
 	
@@ -124,7 +124,7 @@ public class WebAnonController {
 			
 		log.info("Received goDashboard");
 			
-		return "dashboard"+ services.getTxm().getJspPrefix();
+		return services.getTxm().getJspPrefix() + "dashboard";
 	}
 	
 	@RequestMapping(value = "/goPaymentDetails", method = RequestMethod.GET)
@@ -135,7 +135,7 @@ public class WebAnonController {
 		Map<String,String> info = new HashMap<String,String>();
 		info.put("paymentId",paymentId);
 		info.put("memberType",memberType);
-		return new ModelAndView("paymentDetails"+ services.getTxm().getJspPrefix(),"info",info);
+		return new ModelAndView(services.getTxm().getJspPrefix() + "paymentDetails","info",info);
 	}
 	
 	
@@ -160,6 +160,6 @@ public class WebAnonController {
 			
 		log.info("Received accessDenied");
 			
-		return "accessDenied" + services.getTxm().getJspPrefix();
+		return services.getTxm().getJspPrefix() + "accessDenied";
 	}
 }

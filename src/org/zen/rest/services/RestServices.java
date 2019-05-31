@@ -212,8 +212,8 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 				xt.setPaymentStatus(us.getPaymentStatus());
 				xt.setPaymentInfo(pi);
 				
-				services.getHome().getPaymentDao().storeXtransaction(xt);						// THESE NEED TO BE IN A TRANSACTION
-				services.getHome().getPunterDao().updateUpgradeStatus(punter);
+				services.storePaymentMade(punter,xt);
+				
 				return xt.getId();
 				
 			} catch (Exception e) {

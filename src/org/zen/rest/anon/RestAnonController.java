@@ -31,4 +31,7 @@ public interface RestAnonController
 	// ResultJson contains message if success, message if fail
 	public ResultJson resetPassword(@RequestParam("username") String username);
 	
+	@RequestMapping(value = "/getLabels")
+	// ResultJson contains Map<String,String> if success, message if fail
+	public ResultJson getLabels(@RequestParam("jsp") String jsp);
 }
