@@ -40,6 +40,55 @@ function redirectDashboard()
   window.location.replace("/zen/zx4/web/anon/goDashboard");
 }
 
+var labels;
+
+function getLabels()
+{
+  $.ajax({
+
+ type: "GET",
+      url : '/zen/zx4/api/anon/getLabels?jsp=editProfile',
+  cache: false,
+ contentType: 'application/json;',
+      dataType: "json",
+       async: false,
+      success: function(data) {
+        if (data == '')
+         {
+           alert("could not getLabels")
+            return null;
+         }
+
+       var resultJson = $.parseJSON(JSON.stringify(data));
+       if (resultJson.status=='OK')
+       {
+         labels = resultJson.result;
+         displayLabels();
+       }
+       else
+       {
+         alert(resultJson.message);
+       }
+     },
+     error:function (e) {
+       alert("getLabels ERROR : " + e.status + " - " + e.statusText);
+     }
+  });
+}
+
+function displayLabels()
+{
+//  console.log(labels);
+  const entries = Object.entries(labels);
+  for (const [lab, val] of entries)
+  {
+  //  console.log(lab + val);
+    elem = document.getElementById(lab)
+    if (elem!=null)
+      elem.innerHTML=val;
+  }
+}
+
 var access_token;
 var punter1;
 var ids;
@@ -91,48 +140,48 @@ function populatePunter1()
 
       document.getElementById('systemOnly').innerHTML =
       '<div class="control-group">' +
-        '<label class="control-label">Passport/ID No.&nbsp</label>' +
+        '<label class="control-label" id="passportIcLabel">Passport/ID No.&nbsp</label>' +
         '<div class="controls">' +
         '<input type="text" id="passportIc" class="span11" value="" readonly/>' +
         '</div>' +
         '</div>' +
         '<div class="control-group">' +
-        '<label class="control-label">Gender&nbsp</label>' +
+        '<label class="control-label" id="genderLabel">Gender&nbsp</label>' +
         '<div class="controls">' +
             '<input type="text" id="gender" class="span11" value="" readonly/>' +
         '</div>' +
       '</div>' +
       '<div class="control-group">' +
-        '<label class="control-label">Address&nbsp</label>' +
+        '<label class="control-label" id="addressLabel">Address&nbsp</label>' +
         '<div class="controls">' +
           '<input type="text" id="address" class="span11" value="" readonly/>' +
         '</div>' +
       '</div>' +
       '<div class="control-group">' +
-        '<label class="control-label">Postcode&nbsp</label>' +
+        '<label class="control-label" id="postCodeLabel">Postcode&nbsp</label>' +
         '<div class="controls">' +
           '<input type="text" id="postcode" class="span11" value="" readonly/>' +
         '</div>' +
       '</div>' +
       '<div class="control-group">' +
-        '<label class="control-label">State&nbsp</label>' +
+        '<label class="control-label" id="stateLabel">State&nbsp</label>' +
         '<div class="controls">' +
           '<input type="text" id="state" class="span11" value="" readonly/>' +
         '</div>' +
       '</div>' +
       '<div class="control-group">' +
-        '<label class="control-label">Country&nbsp</label>' +
+        '<label class="control-label" id="countryLabel">Country&nbsp</label>' +
         '<div class="controls">' +
           '<input type="text" id="country" class="span11" value="" readonly/>' +
         '</div>' +
       '</div>' +
       '<div class="control-group">' +
-        '<label class="control-label">Phone No.&nbsp</label>' +
+        '<label class="control-label" id="phoneLabel">Phone No.&nbsp</label>' +
         '<div class="controls">' +
           '<input type="text" id="phone" class="span11" value="" readonly/>' +
         '</div>' +
         '<div class="control-group">' +
-          '<label class="control-label">Email&nbsp</label>' +
+          '<label class="control-label" id="emailLabel">Email&nbsp</label>' +
           '<div class="controls">' +
             '<input type="text" id="email" class="span11" value="" readonly/>' +
           '</div>' +
@@ -146,9 +195,9 @@ function populatePunter1()
     document.getElementById('country').value = punter1.country;
     document.getElementById('state').value = punter1.state;
     document.getElementById('gender').value = punter1.gender;
+
+    getLabels();
 }
-
-
 
 var punter;
 
@@ -184,6 +233,7 @@ function getPunterTree(searchTerm) {
           punter1 = punter;
           populatePunter1();
 
+          getLabels();
         },
 				error:function (e) {
 	  			alert("getPunter ERROR : " + e.status + " - " + e.statusText);
@@ -236,6 +286,7 @@ function searchModelByContact()
 	      }
      });
 
+    getLabels();
 }
 
 function expandModelToContact()
@@ -311,7 +362,7 @@ function Search() {
     <jsp:include page="actions.jsp"/>
 <!--End-Action boxes-->
     <div id="content-header">
-      <h2>My Downline</h2>
+      <h2 id="myDownlineLabel">My Downline</h2>
     </div>
 
     <div style="overflow-x: auto">
@@ -325,29 +376,29 @@ function Search() {
 <div class="row-fluid">
 
         <div class="span12">
-          <input type="text" id="query" /> <button onclick="Search()">Search</button>
+          <input type="text" id="query" /> <button onclick="Search()" id="searchLabel">Search</button>
         </div>
 
           <div class="widget-box">
             <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-              <h3>Agent Information</h3>
+              <h3 id="agentInformationLabel">Agent Information</h3>
             </div>
             <div class="widget-content nopadding">
               <div class="form-horizontal">
                 <div class="control-group">
-                  <label class="control-label">Username :</label>
+                  <label class="control-label" id="usernameLabel">Username :</label>
                   <div class="controls">
                     <input readonly type="text" id="contact" class="span11" value="" readonly/>
                   </div>
                 </div>
                 <div class="control-group">
-                  <label class="control-label">Zen Sponser&nbsp</label>
+                  <label class="control-label" id="zenSponsorLabel">Zen Sponser&nbsp</label>
                   <div class="controls">
                     <input readonly type="text" id="sponsorContact" class="span11" value="" readonly/>
                   </div>
                 </div>
                 <div class="control-group">
-                  <label class="control-label">Full Name&nbsp</label>
+                  <label class="control-label" id="fullNameLable">Full Name&nbsp</label>
                   <div class="controls">
                     <input type="text" id="fullName" class="span11" value="" readonly/>
                   </div>

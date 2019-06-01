@@ -72,6 +72,51 @@ public class TransalationMgr {
 			map.put("zenSponsorLabel",xlate("Zen Sponsor"));
 			map.put("fullNameLabel",xlate("Full Name"));
 			map.put("passportIcLabel", xlate("Passport ID"));
+			map.put("genderLabel", xlate("Gender"));
+			map.put("maleLabel", xlate("Male"));
+			map.put("femaleLabel", xlate("Female"));
+			map.put("otherLabel", xlate("Other"));
+			map.put("addressLabel", xlate("Address"));
+			map.put("otherLabel", xlate("Other"));
+			map.put("postCodeLabel", xlate("Postcode"));
+			map.put("stateLabel", xlate("State"));
+			map.put("countryLabel", xlate("Country"));
+			map.put("phoneLabel", xlate("Phone"));
+			map.put("emailLabel", xlate("Email"));
+			map.put("yourPaymentMethodsLabel", xlate("Your Payment Methods :"));
+			map.put("noLabel", xlate("Number"));
+			map.put("methodLabel", xlate("Method"));
+			map.put("pmCountryLabel", xlate("Country"));
+			map.put("accountNumberLabel", xlate("Account Number"));
+			map.put("deleteLabel", xlate("Delete"));
+			map.put("addPaymentMethodLabel", xlate("Add Payment Method :"));
+			map.put("saveLabel", xlate("Save"));
+			map.put("cancelLabel", xlate("Cancel"));
+			map.put("methodCountryLabel", xlate("Method - Country"));
+			map.put("newUserRegistrationLabel", xlate("New User Registration"));
+			map.put("sponsorInformationLabel", xlate("Sponsor Information"));
+			map.put("zenSponsorUsernameLabel", xlate("Zen User Name"));
+			map.put("newAgentInformationLabel", xlate("New Agent Information"));		
+			map.put("zenUsernameLabel", xlate("Zen User Name"));
+			map.put("passwordLabel", xlate("Password"));
+			map.put("confirmPasswordLabel", xlate("Confrim Password"));
+			map.put("generateLabel", xlate("Generate"));
+			map.put("changePasswordLabel", xlate("Change Password")); 
+			map.put("oldPasswordLabel", xlate("Old Password"));
+			map.put("newPasswordLabel", xlate("New Password")); 
+			map.put("confirmPasswordLabel", xlate("Confirm Password"));
+			map.put("myDownlineLabel", xlate("My Down line"));
+			map.put("agentInformationLabel", xlate("Agent Information"));
+			map.put("searchLabel", xlate("Search"));
+		}
+		else
+		if (jsp.equals("login"))
+		{
+			map.put("lostPasswordLable", xlate("Lost Password?"));
+			map.put("loginLabel", xlate("Login"));
+			map.put("alert1Label","Please supply your Zen username so we can reset your password.");
+			map.put("alert2Label","A new password for zen member : ");
+			map.put("alert3Label"," will be sent to your email");
 		}
 		return map;
 	}

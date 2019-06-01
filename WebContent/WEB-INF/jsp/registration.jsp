@@ -128,6 +128,55 @@ function generateRandom()
   });
 }
 
+var labels;
+
+function getLabels()
+{
+  $.ajax({
+
+ type: "GET",
+      url : '/zen/zx4/api/anon/getLabels?jsp=editProfile',
+  cache: false,
+ contentType: 'application/json;',
+      dataType: "json",
+       async: false,
+      success: function(data) {
+        if (data == '')
+         {
+           alert("could not getLabels")
+            return null;
+         }
+
+       var resultJson = $.parseJSON(JSON.stringify(data));
+       if (resultJson.status=='OK')
+       {
+         labels = resultJson.result;
+         displayLabels();
+       }
+       else
+       {
+         alert(resultJson.message);
+       }
+     },
+     error:function (e) {
+       alert("getLabels ERROR : " + e.status + " - " + e.statusText);
+     }
+  });
+}
+
+function displayLabels()
+{
+//  console.log(labels);
+  const entries = Object.entries(labels);
+  for (const [lab, val] of entries)
+  {
+  //  console.log(lab + val);
+    elem = document.getElementById(lab)
+    if (elem!=null)
+      elem.innerHTML=val;
+  }
+}
+
 var countries;
 
 function getCountries()
@@ -150,9 +199,7 @@ function getCountries()
        if (resultJson.status=='OK')
        {
          countries = resultJson.result;
-         $.each(countries, function(i, option) {
-            $('#country').append($('<option/>').attr("value", option.country).text(option.country));
-         });
+         displayCountries();
        }
        else
        {
@@ -162,6 +209,14 @@ function getCountries()
      error:function (e) {
        alert("getCountries ERROR : " + e.status + " - " + e.statusText);
      }
+  });
+}
+
+function displayCountries()
+{
+  $('#country').empty();
+  $.each(countries, function(i,country) {
+      $('#country').append($('<option/>').attr("value", country).text(country));
   });
 }
 
@@ -301,19 +356,19 @@ function populateNewProfile()
     <jsp:include page="actions.jsp"/>
 <!--End-Action boxes-->
     <div id="content-header">
-      <h2>New User Registration</h2>
+      <h2 id="newUserRegistrationLabel">New User Registration</h2>
     </div>
 
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-            <h3>Sponsor Information</h3>
+            <h3 id="sponsorInformationLabel">Sponsor Information</h3>
           </div>
           <div class="widget-content nopadding">
             <div class="form-horizontal">
               <div class="control-group">
-                <label class="control-label">Zen Username :</label>
+                <label class="control-label" id="zenSponsorUsernameLabel">Zen Username :</label>
                 <div class="controls">
                   <input type="text" readonly id="sponsorContact" class="span11"/>
                 </div>
@@ -323,90 +378,88 @@ function populateNewProfile()
         </div>
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-            <h3>New Agent Information</h3>
+            <h3 id="newAgentInformationLabel">New Agent Information</h3>
           </div>
           <div class="widget-content nopadding">
             <div class="form-horizontal">
               <div class="control-group">
-                <label class="control-label required-field">Zen Username&nbsp</label>
+                <label class="control-label required-field" id="zenUsername">Zen Username&nbsp</label>
                 <div class="controls">
-                  <input type="text" id="contact" class="span11"/><a href="#" onClick="return generateRandom()"> Generate</a>
+                  <input type="text" id="contact" class="span11"/><a href="#" onClick="return generateRandom()" id="generateLabel"> Generate</a>
                 </div>
               </div><div class="control-group">
-                <label class="control-label required-field">Password&nbsp</label>
+                <label class="control-label required-field" id="passwordLabel">Password&nbsp</label>
                 <div class="controls">
                   <input type="password" id="password" class="span11"/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label required-field">Confirm Password&nbsp</label>
+                <label class="control-label required-field" id="confirmPasswordLabel">Confirm Password&nbsp</label>
                 <div class="controls">
                   <input type="password" id="vpassword" class="span11"/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label required-field">Full Name&nbsp</label>
+                <label class="control-label required-field" id='fullNameLabel'>Full Name&nbsp</label>
                 <div class="controls">
                   <input type="text" id="fullName" class="span11"/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">Passport/ID No.&nbsp</label>
+                <label class="control-label" id="passportIcLabel">Passport/ID No.&nbsp</label>
                 <div class="controls">
                   <input type="text" id="passportIc" class="span11"/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label required-field">Gender&nbsp</label>
+                <label class="control-label required-field" id="genderLabel">Gender&nbsp</label>
                 <div class="controls">
-                  <label style="margin-top:4px;">
-                    <select id="gender">
-                    	<option value="Male">Male</option>
-                    	<option value="Female">Female</option>
-                    	<option value="Other">Other</option>
-                    </select>
-                </div>
+                  <select id="gender">
+                  	<option id="maleLabel" value="Male">Male</option>
+                  	<option id="femaleLabel" value="Female">Female</option>
+                  	<option id="otherLabel" value="Other">Other</option>
+                  </select>
               </div>
               <div class="control-group">
-                <label class="control-label">Address&nbsp</label>
+                <label class="control-label" id="addressLabel">Address&nbsp</label>
                 <div class="controls">
                   <input type="text" id="address" class="span11"/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">Postcode&nbsp</label>
+                <label class="control-label" id="postCodeLabel">Postcode&nbsp</label>
                 <div class="controls">
                   <input type="text" id="postcode" class="span11"/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">State&nbsp</label>
+                <label class="control-label" id="stateLabel">State&nbsp</label>
                 <div class="controls">
                   <input type="text" id="state" class="span11"/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label required-field">Country&nbsp</label>
+                <label class="control-label required-field" id="countryLabel">Country&nbsp</label>
                 <div class="controls">
                   <select id="country">
                   </select>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label required-field">Phone No.&nbsp</label>
+                <label class="control-label required-field" id="phoneLabel">>Phone No.&nbsp</label>
                 <div class="controls">
                   <input type="text" id="phone" class="span11" />
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label required-field">Email&nbsp</label>
+                <label class="control-label required-field" id="emailLabel">Email&nbsp</label>
                 <div class="controls">
                   <input type="text" id="email" class="span11"/>
                 </div>
               </div>
               <div class="form-actions">
-                <button type="submit" onclick="return storeRegistration();" class="btn btn-success">Save</button>
-                <button type="submit" onclick="return redirectDashboard();" class="btn btn-danger">Cancel</button>
+                <button type="submit" onclick="return storeRegistration();" class="btn btn-success" id="saveLabel">Save</button>
+                <button type="submit" onclick="return redirectDashboard();" class="btn btn-danger" id="cancelLabel">Cancel</button>
               </div>
             </div>
           </div>
@@ -458,6 +511,8 @@ $.ajaxSetup({
 getCountries();
 initializeRegistration();
 getPunter();
+getLabels();
+
 //set Important Lables
 document.getElementById('paymentsPending').innerHTML = punter.actions.paymentsPending;
 document.getElementById('upgradable').innerHTML = punter.actions.upgradable;

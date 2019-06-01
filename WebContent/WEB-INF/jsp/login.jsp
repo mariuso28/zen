@@ -19,6 +19,56 @@
 
 <script>
 
+var labels;
+
+function getLabels()
+{
+  $.ajax({
+
+ type: "GET",
+      url : '/zen/zx4/api/anon/getLabels?jsp=login',
+  cache: false,
+ contentType: 'application/json;',
+      dataType: "json",
+       async: false,
+      success: function(data) {
+        if (data == '')
+         {
+           alert("could not getLabels")
+            return null;
+         }
+
+       var resultJson = $.parseJSON(JSON.stringify(data));
+       if (resultJson.status=='OK')
+       {
+         labels = resultJson.result;
+         displayLabels();
+       }
+       else
+       {
+         alert(resultJson.message);
+       }
+     },
+     error:function (e) {
+       alert("getLabels ERROR : " + e.status + " - " + e.statusText);
+     }
+  });
+}
+
+function displayLabels()
+{
+//  console.log(labels);
+  const entries = Object.entries(labels);
+  for (const [lab, val] of entries)
+  {
+  //  console.log(lab + val);
+    elem = document.getElementById(lab)
+    if (elem!=null)
+      elem.innerHTML=val;
+  }
+}
+
+
 function lostPassword() {
 
 
@@ -26,11 +76,11 @@ function lostPassword() {
 
   if (username=="")
   {
-    alert("Please supply your Zen username so we can reset your password.");
+    alert(label["alert1"]);
     return;
   }
 
-  if (!confirm("A new password for zen member : " + username + " will be sent to your email"))
+  if (!confirm(label["alert2"] + username + label["alert3"]))
     return;
 
   $.ajax({
@@ -99,12 +149,20 @@ function login() {
   <div id="loginbox">
     <form id="loginform" class="form-vertical" action="index.html">
       <div class="control-group normal_text">
-        <h3><img src="../../../img/GoldenCircle_02.png" alt="Logo" width="100"/></h3>
+      <h3>
+        <a href="/zen/zx4/web/anon/changeLanguage?isoCode=km">
+          <img src="../../../img/flag_km.png" alt="Logo" width="100"/>
+        </a>
+        <img src="../../../img/GoldenCircle_02.png" alt="Logo" width="100"/>
+        <a href="/zen/zx4/web/anon/changeLanguage?isoCode=en">
+          <img src="../../../img/flag_en.png" alt="Logo" width="100"/>
+        </a>
+      </h3>
       </div>
       <div class="control-group">
         <div class="controls">
           <div class="main_input_box">
-            <span class="add-on bg_lg"><i class="icon-user"> </i></span>
+            <span class="add-on bg_lg"><i class="icon-user"></i></span>
             <input type="text" id="username" value="mony" placeholder="Username" />
           </div>
         </div>
@@ -118,29 +176,21 @@ function login() {
           </div>
           </div>
           <div class="form-actions">
-            <span class="pull-left"><a href="#" onclick="return lostPassword()" class="flip-link btn btn-info" id="to-recover">Lost password?</a></span>
+            <span class="pull-left"><a href="#" onclick="return lostPassword()" class="flip-link btn btn-info"
+              id="lostPasswordLable">Lost password?</a></span>
             <span class="pull-right">
-              <a type="submit" onclick="return login()" class="btn btn-success" />Login</a></span>
+              <a type="submit" onclick="return login()" class="btn btn-success" id="loginLabel"/>Login</a></span>
           </div>
-    </form>
-    <form id="recoverform" action="#" class="form-vertical">
-      <p class="normal_text">Enter your e-mail address below and we will send you instructions how to recover a password.</p>
-
-      <div class="controls">
-        <div class="main_input_box">
-          <span class="add-on bg_lo"><i class="icon-envelope"></i></span><input type="text" placeholder="E-mail address" />
-                        </div>
-        </div>
-
-        <div class="form-actions">
-          <span class="pull-left"><a href="#" class="flip-link btn btn-success" id="to-login">&laquo; Back to login</a></span>
-          <span class="pull-right"><a class="btn btn-info"/>Reecover</a></span>
-        </div>
     </form>
   </div>
 
   <script src="js/jquery.min.js"></script>
   <script src="js/matrix.login.js"></script>
+
+<script>
+  getLabels();
+</script>
+
 </body>
 
 </html>

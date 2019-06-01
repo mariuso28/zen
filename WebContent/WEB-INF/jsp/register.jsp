@@ -196,7 +196,7 @@ function doRegister()
 
   if (password.value != vpassword.value)
   {
-    error.appendChild(document.createTextNode("verification password and password must match."));
+    error.appendChild(document.createTextNode("ពាក្យសម្ងាត់ផ្ទៀងផ្ទាត់និងពាក្យសម្ងាត់ត្រូវតែដូចគ្នា"));
     return;
   }
 
@@ -254,12 +254,11 @@ function registerJson(jsonData) {
   <header>
     <div class="container" style="background-color: #129c94; max-width:100%; height:52px;">
             <div class="topHeading" style="max-width:920px;">
-              Register to Recruit on Zen
-
-            <a style="font-family:inherit;font-size: 18px; color:green; font-weight: bold;"
-                                  href="/zen/web/anon/login">Cancel</a>
-            <input id="register" value="Register" onClick="return doRegister();" type="button"
-                  style="font-family:inherit;font-size: 18px; color:green; font-weight: bold;" />
+              <%-- Register to Recruit on Zen --%>
+              ចុះឈ្មោះដើម្បីជ្រើសរើសនៅលើ Zen
+            <%-- <a style="font-family:inherit;font-size: 18px; color:green; font-weight: bold;" href="/zen/web/anon/login">Cancel</a> --%>
+            <a style="font-family:inherit;font-size: 18px; color:green; font-weight: bold;" href="/zen/web/anon/login">បោះបង់</a>
+            <input id="register" value="Register" onClick="return doRegister();" type="button" style="font-family:inherit;font-size: 18px; color:green; font-weight: bold;" />
       </div>
     </div>
   </header>
@@ -269,7 +268,8 @@ function registerJson(jsonData) {
 				<div class="regPanelLeft">
           <div class="regLine">
             <div class="regLineLeft">
-							zen contact
+							<%-- zen contact --%>
+              Zen អ្នក​ដែល​អាច​ទាក់ទង​បាន&colon;
 						</div>
 						<div class="regLineRight">
 							<input id="contact" type="text" value=""
@@ -278,7 +278,8 @@ function registerJson(jsonData) {
           </div>
 					<div class="regLine">
 						<div class="regLineLeft">
-							email
+							<%-- email --%>
+              អ៊ីមែល&colon;
 						</div>
 						<div class="regLineRight">
 							<input id="email" type="text" value=""
@@ -287,7 +288,8 @@ function registerJson(jsonData) {
           </div>
           <div class="regLine">
             <div class="regLineLeft">
-							password
+							<%-- password --%>
+              ពាក្យសម្ងាត់&colon;
 						</div>
 						<div class="regLineRight">
 							<input id="password" type="text" value=""
@@ -295,11 +297,13 @@ function registerJson(jsonData) {
 						</div>
           </div>
           <div class="regLine">
-            (at least 8 chars and contains 1 number and 1 uppercase character)
+            <%-- (at least 8 characters and contains 1 number and 1 uppercase character) --%>
+            (យ៉ាងហោចណាស់ 8 តួអក្សរហើយមានលេខ 1 ខ្ទង់និងតួអក្សរធំ 1)
           </div>
           <div class="regLine">
             <div class="regLineLeft">
-              verify password
+              <%-- verify password --%>
+              ផ្ទៀងផ្ទាត់​ពាក្យសម្ងាត់&colon;
             </div>
             <div class="regLineRight">
               <input id="vpassword" type="text" value=""
@@ -308,7 +312,8 @@ function registerJson(jsonData) {
           </div>
           <div class="regLine">
             <div class="regLineLeft">
-							phone
+							<%-- phone --%>
+              ទូរស័ព្ទ&colon;
 						</div>
 						<div class="regLineRight">
 							<input id="phone" type="text" value=""
@@ -317,7 +322,8 @@ function registerJson(jsonData) {
 					</div>
         <div class="regLine">
           <div class="regLineLeft">
-            Full Name
+            <%-- Full Name --%>
+            ឈ្មោះ​ពេញ&colon;
           </div>
           <div class="regLineRight">
             <input id="fullName" type="text" value=""
@@ -326,7 +332,8 @@ function registerJson(jsonData) {
         </div>
         <div class="regLine">
           <div class="regLineLeft">
-            gender
+            <%-- gender --%>
+            ភេទ&colon;
           </div>
           <div class="regLineRight">
             <input id="gender" type="text" value=""
@@ -335,7 +342,8 @@ function registerJson(jsonData) {
         </div>
         <div class="regLine">
           <div class="regLineLeft">
-            Passport/IC
+            <%-- Passport/IC --%>
+            លិខិតឆ្លងដែន/លេខអត្តសញ្ញាណ&colon;
           </div>
           <div class="regLineRight">
             <input id="passportIc" type="text" value=""
@@ -344,7 +352,8 @@ function registerJson(jsonData) {
         </div>
         <div class="regLine">
           <div class="regLineLeft">
-            address
+            <%-- address --%>
+            អាសយដ្ឋាន&colon;
           </div>
           <div class="regLineRight">
             <input id="address" type="text" value=""
@@ -353,7 +362,8 @@ function registerJson(jsonData) {
         </div>
         <div class="regLine">
           <div class="regLineLeft">
-            state
+            <%-- state --%>
+            រដ្ឋ&colon;
           </div>
           <div class="regLineRight">
             <input id="state" type="text" value=""
@@ -362,7 +372,8 @@ function registerJson(jsonData) {
         </div>
         <div class="regLine">
           <div class="regLineLeft">
-            postcode
+            <%-- postcode --%>
+            លេខកូដប្រៃសនី&colon;
           </div>
           <div class="regLineRight">
             <input id="postcode" type="text" value=""
@@ -371,7 +382,8 @@ function registerJson(jsonData) {
         </div>
         <div class="regLine">
           <div class="regLineLeft">
-            country
+            <%-- country --%>
+            ប្រទេស&colon;
           </div>
           <div class="regLineRight">
             <input id="country" type="text" value=""

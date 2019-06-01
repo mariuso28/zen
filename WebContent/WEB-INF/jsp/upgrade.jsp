@@ -74,7 +74,7 @@ function submitTransactionDetails()
   					alert("Failed " + result.message);
   					return;
   				}
-  				alert("Transaction details successfully submitted.\nCheck email for comfirmation of receipt.");
+  				alert("ព័ត៌មានលម្អិតនៃប្រតិបត្តិការបានដាក់ស្នើដោយជោគជ័យ\nពិនិត្យអ៊ីម៉ែលដើម្បីបញ្ជាក់ការទទួល។");
           redirectDashboard();
   			},
   			error:function (e) {
@@ -170,15 +170,15 @@ function displayUpgradeRequest()
 {
   if (punter.rating==0)
   {
-    document.getElementById("msg1").innerHTML = "You have successfully registered with Zen. Make you registration payment today to proceed to <strong>Rank 1</strong> and start making money!";
-    document.getElementById("title").value = "Zen Activate Member At Rank 1";
-    document.getElementById("fee").innerHTML = "Activation Fee: USD " + upgradeRequest.fee;
+    document.getElementById("msg1").innerHTML = "អអ្នកបានចុះឈ្មោះដោយជោគជ័យជាមួយ Zen ។ ធ្វើការទូទាត់របស់អ្នកនៅថ្ងៃនេះដើម្បីបន្តចំណាត់ថ្នាក់។ <strong>ចំណាត់ថ្នាក់ 1</strong> ហើយចាប់ផ្តើមរកលុយ!";
+    document.getElementById("title").value = "Zen ធ្វើឱ្យសមាជិកនៅឋានៈ1";
+    document.getElementById("fee").innerHTML = "តម្លៃធ្វើឱ្យសកម្ម: USD " + upgradeRequest.fee;
   }
   else {
-    document.getElementById("msg1").innerHTML = "You are now at Rank <strong>" + upgradeRequest.currentRank +
-    "</strong>. Upgrade today to <strong>Rank " + upgradeRequest.upgradeRank + "</strong> to start earning more!";
-    document.getElementById("title").value = "Zen Upgrade Member To Rank " + upgradeRequest.upgradeRank;
-    document.getElementById("fee").innerHTML = "Upgrade Fee: USD " + upgradeRequest.fee;
+    document.getElementById("msg1").innerHTML = "ឥឡូវនេះអ្នកស្ថិតនៅចំណាត់ថ្នាក់ <strong>" + upgradeRequest.currentRank +
+    "</strong>. ធ្វើបច្ចុប្បន្នភាពថ្ងៃនេះ <strong>ចំណាត់ថ្នាក់ " + upgradeRequest.upgradeRank + "</strong> ដើម្បីចាប់ផ្តើមរកប្រាក់បានច្រើន!";
+    document.getElementById("title").value = "Zen ធ្វើឱ្យសមាជិកនៅឋានៈ " + upgradeRequest.upgradeRank;
+    document.getElementById("fee").innerHTML = "តម្លៃធ្វើឱ្យសកម: USD " + upgradeRequest.fee;
   }
   document.getElementById('uplineFullName').appendChild(document.createTextNode(upgradeRequest.upline.fullName));
   document.getElementById('uplineContact').appendChild(document.createTextNode(upgradeRequest.upline.contact));
@@ -230,7 +230,8 @@ function displayUpgradeRequest()
       <h2>Upgrade</h2>
     </div>
     <div class="alert alert2"> <a class="close" data-dismiss="alert" href="#">X</a>
-      <h4 class="alert-heading">Congratulations!</h4>
+      <%-- <h4 class="alert-heading">Congratulations!</h4> --%>
+      <h4 class="alert-heading">អបអរសាទរ!</h4>
       <div class="a" id="msg1"></div>
     </div>
 
@@ -239,17 +240,17 @@ function displayUpgradeRequest()
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5><font color="darkorange" size="5">Upline Information</font></h5>
+            <h5><font color="darkorange" size="5">ព័ត៌មានឡើងលើ</font></h5>
           </div>
           <div class="widget-content nopadding">
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th style="text-align:left;">Full Name</th>
-                  <th style="text-align:left;">Zen Username</th>
-                  <th style="text-align:left;">Phone</th>
-                  <th style="text-align:left;">Country</th>
-                  <th style="text-align:left;">Rank</th>
+                  <th style="text-align:left;">ឈ្មោះ​ពេញ</th>
+                  <th style="text-align:left;">ឈ្មោះអ្នកប្រើ Zen</th>
+                  <th style="text-align:left;">លេខទូរសព្ទ</th>
+                  <th style="text-align:left;">ប្រទេស</th>
+                  <th style="text-align:left;">ចំណាត់ថ្នាក់</th>
                 </tr>
               </thead>
               <tbody>
@@ -266,7 +267,7 @@ function displayUpgradeRequest()
         </div>  <!-- widget-box -->
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-time"></i></span>
-            <h3><font color="darkgreen">1. Make Payment to Upline</font></h3>
+            <h3><font color="darkgreen">1. ធ្វើឱ្យការទូទាត់សងខ្ពស់</font></h3>
           </div>
           <div class="widget-content nopadding">
             <h3 style="color:darkred; text-indent: 2.5em;" id="fee"></h3>
@@ -275,20 +276,20 @@ function displayUpgradeRequest()
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th style="text-align:left;">Method</th>
-                  <th style="text-align:left;">Account</th>
-                  <th style="text-align:left;">Country</th>
+                  <th style="text-align:left;">វិធីសាស្រ្ត</th>
+                  <th style="text-align:left;">លេខ​គណនី</th>
+                  <th style="text-align:left;">ប្រទេស</th>
                 </tr>
               </thead>
               <tbody id="paymentMethods">
                 <tr class="gradeA">
                   <td>Wing</td>
-                  <td>0958779473</td>
+                  <td>0968157361</td>
                   <td>Cambodia</td>
                 </tr>
                 <tr class="gradeA">
                   <td>TrueMoney</td>
-                  <td>0958779473</td>
+                  <td>0968157361</td>
                   <td>Cambodia</td>
                 </tr>
               </tbody>
@@ -297,12 +298,14 @@ function displayUpgradeRequest()
         </div>  <!-- widget-box -->
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-time"></i></span>
-            <h3><font color="darkgreen">2. Submit Payment Form</font></h3>
+            <%-- <h3><font color="darkgreen">2. Submit Payment Form</font></h3> --%>
+            <h3><font color="darkgreen">2. ដាក់ស្នើទម្រង់ទូទាត់</font></h3>
           </div>
           <div class="widget-box">
             <div class="widget-content nopadding">
               <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-                <h4>Summission Information</h4>
+                <%-- <h4>Submission Information</h4> --%>
+                <h4>Submission Information</h4>
               </div>
               <div class="form-horizontal">
                 <div class="control-group">
@@ -312,30 +315,35 @@ function displayUpgradeRequest()
                   </div>
                 </div>
                 <div class="control-group">
+                  <%-- <label class="control-label">Username:</label> --%>
                   <label class="control-label">Username:</label>
                   <div class="controls">
                     <input readonly type="text" id="contact" class="span11" value=""/>
                   </div>
                 </div>
                 <div class="control-group">
+                  <%-- <label class="control-label">Full Name:</label> --%>
                   <label class="control-label">Full Name:</label>
                   <div class="controls">
                     <input readonly type="text" id="fullName" class="span11" value=""/>
                   </div>
                 </div>
                 <div class="control-group">
+                  <%-- <label class="control-label">Phone No.:</label> --%>
                   <label class="control-label">Phone No.:</label>
                   <div class="controls">
                     <input readonly type="text" id="phone" class="span11" value=""/>
                   </div>
                 </div>
                 <div class="control-group">
+                  <%-- <label class="control-label">Email:</label> --%>
                   <label class="control-label">Email:</label>
                   <div class="controls">
                     <input readonly type="text" id="email" class="span11" value=""/>
                   </div>
                 </div>
                 <div class="control-group">
+                  <%-- <label class="control-label">Transaction Date:</label> --%>
                   <label class="control-label">Transaction Date:</label>
                   <div class="controls">
                     <input id="transactionDate" type="text" data-date="05-13-2019" data-date-format="dd-mm-yyyy" value="05-13-2019"
@@ -343,12 +351,14 @@ function displayUpgradeRequest()
                     <span class="help-block">Date in (mm-dd-yyyy) format</span> </div>
                 </div>
                 <div class="control-group">
+                  <%-- <label class="control-label">Transaction Details</label> --%>
                   <label class="control-label">Transaction Details</label>
                   <div class="controls">
                     <textarea id="transactionDetails" class="span11" rows="8" cols="50">Copy and Paste Transaction Details</textarea>
                   </div>
                 </div>
                 <div class="control-group">
+                  <%-- <label class="control-label">Upload Transaction Slip:</label> --%>
                   <label class="control-label">Upload Transaction Slip:</label>
                   <div class="controls">
                     <form id="upload-form" enctype="multipart/form-data"  method="post">
@@ -359,7 +369,9 @@ function displayUpgradeRequest()
                   </div>
                 </div>
                 <div class="form-actions">
-                  <button type="submit" onclick="return submitTransactionDetails()" class="btn btn-success">Submit</button>
+                  <%-- <button type="submit" onclick="return submitTransactionDetails()" class="btn btn-success">Submit</button> --%>
+                  <button type="submit" onclick="return redirectDashboard()" class="btn btn-danger">Cancel</button>
+                  <%-- <button type="submit" onclick="return submitTransactionDetails()" class="btn btn-success">Submit</button> --%>
                   <button type="submit" onclick="return redirectDashboard()" class="btn btn-danger">Cancel</button>
                 </div>
               </div>
@@ -373,7 +385,7 @@ function displayUpgradeRequest()
           <div class="widget-content nopadding">
             <h4 style="color:darkblue; text-indent: 2.5em;">Check your email for the payment confirmation from us.</h4>
             <h4 style="color:darkblue; text-indent: 2.5em;">If you do not receive the email confirmation within 24 hours, please check your SPAM folder.</h4>
-            <h4 style="color:darkblue; text-indent: 2.5em;">Write to <a href="mailto:help@goldmine.online">&lt;help@goldmine.online&gt;</a> for further assistance.</h4>
+            <h4 style="color:darkblue; text-indent: 2.5em;">Write to <a href="mailto:help@zenwing.net">&lt;help@zenwing.net&gt;</a> for further assistance.</h4>
           </div>
         </div>
       </div>  <!-- span12 -->

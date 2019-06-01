@@ -35,6 +35,55 @@ function redirectDashboard()
   window.location.replace("/zen/zx4/web/anon/goDashboard");
 }
 
+var labels;
+
+function getLabels()
+{
+  $.ajax({
+
+ type: "GET",
+      url : '/zen/zx4/api/anon/getLabels?jsp=editProfile',
+  cache: false,
+ contentType: 'application/json;',
+      dataType: "json",
+       async: false,
+      success: function(data) {
+        if (data == '')
+         {
+           alert("could not getLabels")
+            return null;
+         }
+
+       var resultJson = $.parseJSON(JSON.stringify(data));
+       if (resultJson.status=='OK')
+       {
+         labels = resultJson.result;
+         displayLabels();
+       }
+       else
+       {
+         alert(resultJson.message);
+       }
+     },
+     error:function (e) {
+       alert("getLabels ERROR : " + e.status + " - " + e.statusText);
+     }
+  });
+}
+
+function displayLabels()
+{
+//  console.log(labels);
+  const entries = Object.entries(labels);
+  for (const [lab, val] of entries)
+  {
+  //  console.log(lab + val);
+    elem = document.getElementById(lab)
+    if (elem!=null)
+      elem.innerHTML=val;
+  }
+}
+
 var punter;
 
 function getPunter() {
@@ -141,37 +190,37 @@ function getPunter() {
     <jsp:include page="actions.jsp"/>
 <!--End-Action boxes-->
     <div id="content-header">
-      <h2>My User Profile</h2>
+      <h2 id="myUserProfileLabel">My User Profile</h2>
     </div>
 
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-            <h3>Change Password</h3>
+            <h3 id="changePasswordLabel">Change Password</h3>
           </div>
           <div class="widget-content nopadding">
             <div class="form-horizontal">
               <div class="control-group">
-                <label class="control-label">Old Password :</label>
+                <label class="control-label" id="oldPasswordLabel">Old Password :</label>
                 <div class="controls">
                   <input type="password" id="oldPassword" class="span11"/>
                 </div>
               </div><div class="control-group">
-                <label class="control-label">New Password :</label>
+                <label class="control-label" id="newPasswordLabel">New Password :</label>
                 <div class="controls">
                   <input type="password" id="password" class="span11"/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label">Confirm Password :</label>
+                <label class="control-label" id="confirmPasswordLabel">Confirm Password :</label>
                 <div class="controls">
                   <input type="password" id="vpassword" class="span11"/>
                 </div>
               </div>
               <div class="form-actions">
-                <button type="submit" onclick="return changePassword();" class="btn btn-success">Save</button>
-                <button type="submit" onclick="return redirectDashboard();" class="btn btn-danger">Cancel</button>
+                <button type="submit" onclick="return changePassword();" class="btn btn-success" id="saveLabel">Save</button>
+                <button type="submit" onclick="return redirectDashboard();" class="btn btn-danger" id="cancelLabel">Cancel</button>
               </div>
             </div>
           </div>
@@ -221,6 +270,8 @@ function resetMenu() {
 
 }
 getPunter();
+getLabels();
+
 //set Important Lables
 document.getElementById('paymentsPending').innerHTML = punter.actions.paymentsPending;
 document.getElementById('upgradable').innerHTML = punter.actions.upgradable;

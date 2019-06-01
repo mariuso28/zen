@@ -52,5 +52,13 @@ function testAllowed()
       </ul>
     </li>
     <li><a href="/zen/zx4/web/anon/login"><i class="icon icon-off"></i> <span>Logout</span></a> </li>
+    <li>
+      <a href="/zen/zx4/web/anon/changeLanguage?isoCode=km">
+        <img src="../../../img/flag_km.png" alt="Logo" width="50"/>
+      </a>
+      <a href="/zen/zx4/web/anon/changeLanguage?isoCode=en">
+        <img src="../../../img/flag_en.png" alt="Logo" width="50"/>
+      </a>
+    </li>
   </ul>
 </div>

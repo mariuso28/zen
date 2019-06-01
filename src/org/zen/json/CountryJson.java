@@ -4,6 +4,7 @@ public class CountryJson {
 
 	private String code;
 	private String country;
+	private String countrykm;
 	
 	public CountryJson()
 	{
@@ -23,6 +24,14 @@ public class CountryJson {
 
 	public void setCountry(String country) {
 		this.country = country;
+	}
+
+	public String getCountrykm() {
+		return countrykm;
+	}
+
+	public void setCountrykm(String countrykm) {
+		this.countrykm = countrykm;
 	}
 	
 	

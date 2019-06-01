@@ -8,4 +8,6 @@ public interface CountryDao {
 
 	public List<CountryJson> getCountries();
 	public CountryJson getCountryByCode(String code);
+	public List<String> getCountryList(String isoCode);
+	public void update(CountryJson country);
 }
