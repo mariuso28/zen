@@ -146,7 +146,7 @@ public class WebAnonController {
 		Map<String,String> info = new HashMap<String,String>();
 		info.put("paymentId",paymentId);
 		info.put("memberType",memberType);
-		ModelAndView mv = new ModelAndView("paymentDetails" ,"map",info);
+		ModelAndView mv = new ModelAndView("paymentDetails" ,"info",info);
 		model.addAttribute("link",mv);
 		return mv;
 	}

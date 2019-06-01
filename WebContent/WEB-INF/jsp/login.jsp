@@ -76,11 +76,11 @@ function lostPassword() {
 
   if (username=="")
   {
-    alert(label["alert1"]);
+    alert(labels["alert1"]);
     return;
   }
 
-  if (!confirm(label["alert2"] + username + label["alert3"]))
+  if (!confirm(labels["alert2"] + " " + username + " " + labels["alert3"]))
     return;
 
   $.ajax({

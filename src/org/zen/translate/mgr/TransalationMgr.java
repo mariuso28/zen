@@ -112,11 +112,31 @@ public class TransalationMgr {
 		else
 		if (jsp.equals("login"))
 		{
-			map.put("lostPasswordLable", xlate("Lost Password?"));
+			map.put("lostPasswordLabel", xlate("Lost Password?"));
 			map.put("loginLabel", xlate("Login"));
-			map.put("alert1Label","Please supply your Zen username so we can reset your password.");
-			map.put("alert2Label","A new password for zen member : ");
-			map.put("alert3Label"," will be sent to your email");
+			map.put("alert1",xlate("Please supply your Zen username so we can reset your password."));
+			map.put("alert2",xlate("A new password for zen member : "));
+			map.put("alert3",xlate(" will be sent to your email"));
+		}
+		else
+		if (jsp.equals("paymentReceived") || jsp.equals("paymentSent"))
+		{
+			map.put("paymentReceivedLabel", xlate("Payment Received"));
+			map.put("pendingLabel", xlate("Pending"));
+			map.put("successfulLabel", xlate("Successful"));
+			map.put("failedLabel", xlate("Failed"));
+			for (int i=1; i<=3; i++)
+			{
+				map.put("idLabel" + i, xlate("Id"));
+				map.put("fromLabel" + i, xlate("From"));
+				map.put("descriptionLabel" + i, xlate("Description"));
+				map.put("amountLabel" + i, xlate("Amount"));
+				map.put("paymentDetailsLabel" + i, xlate("Payment Details"));
+				map.put("statusLabel" + i, xlate("Status"));
+				map.put("dateTimeLabel" + i, xlate("Date/Time"));
+			}
+			map.put("viewButton", xlate("VIEW"));
+			map.put("queryButton", xlate("QUERY"));
 		}
 		return map;
 	}

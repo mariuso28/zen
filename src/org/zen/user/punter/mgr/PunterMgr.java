@@ -160,6 +160,7 @@ public class PunterMgr {
 			}
 		}
 		PasswordEncoder encoder = new BCryptPasswordEncoder();
+		log.info("Reset password for : " + punter.getContact() + " to : " + pw);
 		punter.setPassword(encoder.encode(pw));
 		try
 		{

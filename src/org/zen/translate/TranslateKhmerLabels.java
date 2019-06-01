@@ -29,7 +29,9 @@ public class TranslateKhmerLabels {
 				"Change Password", "Old Password", "New Password", "Confirm Password",							// Password stuff
 				"My Down line", "Agent Information", "Search",													// Geneology
 				"Login", "Lost Password?", "Please supply your Zen username so we can reset your password.",	// login
-				"A new password for zen member : ", " will be sent to your email"};													
+				"A new password for zen member : ", " will be sent to your email",
+				"Payment Received", "Pending", "Successful", "Failed", "Id", "From", "Description", "Amount",	// payments			
+				"Payment Details", "Status", "Date/Time", "VIEW", "QUERY" };
 		
 		for (String k : src)
 		{

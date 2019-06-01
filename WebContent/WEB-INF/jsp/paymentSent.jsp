@@ -348,7 +348,7 @@ function createPaymentTr(payment,status)
         </div>  <!-- widget-box -->
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5><font color="darkgreen" size="5">Failed</font></h5>
+            <h5><font color="red" size="5">Failed</font></h5>
           </div>
           <div class="widget-content nopadding">
             <table class="table table-bordered data-table">
