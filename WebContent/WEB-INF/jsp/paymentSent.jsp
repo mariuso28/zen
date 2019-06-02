@@ -31,6 +31,55 @@
 
 <script>
 
+var labels;
+
+function getLabels()
+{
+  $.ajax({
+
+ type: "GET",
+      url : '/zen/zx4/api/anon/getLabels?jsp=paymentSent',
+  cache: false,
+ contentType: 'application/json;',
+      dataType: "json",
+       async: false,
+      success: function(data) {
+        if (data == '')
+         {
+           alert("could not getLabels")
+            return null;
+         }
+
+       var resultJson = $.parseJSON(JSON.stringify(data));
+       if (resultJson.status=='OK')
+       {
+         labels = resultJson.result;
+         displayLabels();
+       }
+       else
+       {
+         alert(resultJson.message);
+       }
+     },
+     error:function (e) {
+       alert("getLabels ERROR : " + e.status + " - " + e.statusText);
+     }
+  });
+}
+
+function displayLabels()
+{
+//  console.log(labels);
+  const entries = Object.entries(labels);
+  for (const [lab, val] of entries)
+  {
+  //  console.log(lab + val);
+    elem = document.getElementById(lab)
+    if (elem!=null)
+      elem.innerHTML=val;
+  }
+}
+
 var access_token;
 var pendingPayments;
 var successfulPayments;
@@ -254,7 +303,8 @@ function createPaymentTr(payment,status)
     td = document.createElement('td');
     td.innerHTML='<a href="#"><center>'+
     '<button class="btn btn-success btn-mini" onclick=sendQuery(' + payment.id+
-    ')>QUERY</button></center></a>';
+    ')>'+ labels['queryButton']
+    + '</button></center></a>';
   }
   tr.appendChild(td);
   td = document.createElement('td');
@@ -267,7 +317,8 @@ function createPaymentTr(payment,status)
   td = document.createElement('td');
   link = "/zen/zx4/web/anon/goPaymentDetails?paymentId="+payment.id+"&memberType=payer"
   td.innerHTML='<a href='+link
-           +'><center><button class="btn btn-success btn-mini">VIEW</button></center></a>';
+           +'><center><button class="btn btn-success btn-mini">'+ labels['viewButton']
+           + '</button></center></a>';
   tr.appendChild(td);
   td = document.createElement('td');
   td.style = "text-align:center";
@@ -296,27 +347,27 @@ function createPaymentTr(payment,status)
           <jsp:include page="actions.jsp"/>
     <!--End-Action boxes-->
     <div id="content-header">
-      <h2>Payment Sent</h2>
+      <h2 id="paymentSentLabel">Payment Sent</h2>
     </div>
 
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5><font color="darkorange" size="5">Pending</font></h5>
+            <h5><font color="darkorange" size="5" id="pendingLabel">Pending</font></h5>
           </div>
           <div class="widget-content nopadding">
             <table class="table table-bordered data-table">
               <thead>
                 <tr>
-                  <th>Id</th>
-                  <th>To</th>
-                  <th>Query</th>
-                  <th>Description</th>
-                  <th>Amount</th>
-                  <th>Payment Details</th>
-                  <th>Status</th>
-                  <th>Date/Time</th>
+                  <th id="idLabel1">Id</th>
+                  <th id="toLabel1">To</th>
+                  <th id="queryLabel1">Query</th>
+                  <th id="descriptionLabel1">Description</th>
+                  <th id="amountLabel1">Amount</th>
+                  <th id="paymentDetailsLabel1">Payment Details</th>
+                  <th id="statusLabel1">Status</th>
+                  <th id="dateTimeLabel1">Date/Time</th>
                 </tr>
               </thead>
               <tbody id="paymentsPendingTbody">
@@ -326,19 +377,19 @@ function createPaymentTr(payment,status)
         </div>  <!-- widget-box -->
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5><font color="darkgreen" size="5">Successful</font></h5>
+            <h5><font color="darkgreen" size="5" id="successfulLabel">Successful</font></h5>
           </div>
           <div class="widget-content nopadding">
             <table class="table table-bordered data-table">
               <thead>
                 <tr>
-                  <th>Id</th>
-                  <th>To</th>
-                  <th>Description</th>
-                  <th>Amount</th>
-                  <th>Payment Details</th>
-                  <th>Status</th>
-                  <th>Date/Time</th>
+                  <th id="idLabel2">Id</th>
+                  <th id="toLabel2">To</th>
+                  <th id="descriptionLabel2">Description</th>
+                  <th id="amountLabel2">Amount</th>
+                  <th id="paymentDetailsLabel2">Payment Details</th>
+                  <th id="statusLabel2">Status</th>
+                  <th id="dateTimeLabel2">Date/Time</th>
                 </tr>
               </thead>
               <tbody id="paymentsSuccess">
@@ -348,19 +399,19 @@ function createPaymentTr(payment,status)
         </div>  <!-- widget-box -->
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5><font color="red" size="5">Failed</font></h5>
+            <h5><font color="red" size="5" id="failedLabel">Failed</font></h5>
           </div>
           <div class="widget-content nopadding">
             <table class="table table-bordered data-table">
               <thead>
                 <tr>
-                  <th>Id</th>
-                  <th>To</th>
-                  <th>Description</th>
-                  <th>Amount</th>
-                  <th>Payment Details</th>
-                  <th>Status</th>
-                  <th>Date/Time</th>
+                  <th id="idLabel3">Id</th>
+                  <th id="toLabel3">To</th>
+                  <th id="descriptionLabel3">Description</th>
+                  <th id="amountLabel3">Amount</th>
+                  <th id="paymentDetailsLabel3">Payment Details</th>
+                  <th id="statusLabel3">Status</th>
+                  <th id="dateTimeLabel3">Date/Time</th>
                 </tr>
               </thead>
               <tbody id="paymentsFailed">
@@ -406,6 +457,7 @@ document.getElementById('paymentsPending').innerHTML = punter.actions.paymentsPe
 document.getElementById('upgradable').innerHTML = punter.actions.upgradable;
 
 //	alert(access_token);
+getLabels();
 getPendingPayments();
 getSuccessfulPayments();
 getFailedPayments();

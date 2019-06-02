@@ -9,7 +9,7 @@ import com.google.cloud.translate.TranslateOptions;
 import com.google.cloud.translate.Translation;
 import com.google.cloud.translate.Translate.TranslateOption;
 
-public class TranslateKhmer {
+public class TranslateKhmerMessages {
 
 	public static void main(String... args)
 	{
@@ -31,5 +31,6 @@ public class TranslateKhmer {
 			 System.out.println("xlate : " + k + " to : " + translation.getTranslatedText());
 			 home.getTranslationDao().store("km", k, translation.getTranslatedText());
 		}
+		System.out.println("DONE");
 	}
 }

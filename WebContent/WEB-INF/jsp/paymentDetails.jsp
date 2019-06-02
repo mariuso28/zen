@@ -31,6 +31,56 @@
 
 <script>
 
+var labels;
+
+function getLabels()
+{
+  $.ajax({
+
+ type: "GET",
+      url : '/zen/zx4/api/anon/getLabels?jsp=paymentDetails',
+  cache: false,
+ contentType: 'application/json;',
+      dataType: "json",
+       async: false,
+      success: function(data) {
+        if (data == '')
+         {
+           alert("could not getLabels")
+            return null;
+         }
+
+       var resultJson = $.parseJSON(JSON.stringify(data));
+       if (resultJson.status=='OK')
+       {
+         labels = resultJson.result;
+         displayLabels();
+       }
+       else
+       {
+         alert(resultJson.message);
+       }
+     },
+     error:function (e) {
+       alert("getLabels ERROR : " + e.status + " - " + e.statusText);
+     }
+  });
+}
+
+function displayLabels()
+{
+//  console.log(labels);
+  const entries = Object.entries(labels);
+  for (const [lab, val] of entries)
+  {
+  //  console.log(lab + val);
+    elem = document.getElementById(lab)
+    if (elem!=null)
+      elem.innerHTML=val;
+  }
+}
+
+
 var payment;
 
 function approvePayment()
@@ -137,10 +187,10 @@ function getPaymentDetails(paymentId,memberType) {
  function displayPaymentDetails(memberType)
  {
      if (memberType=='payee')
-        document.getElementById('cp').innerHTML='Payment From';
+        document.getElementById('cp').innerHTML=labels['paymentFromLabel'];
      else
      {
-        document.getElementById('cp').innerHTML='Payment To';
+        document.getElementById('cp').innerHTML=labels['paymentToLabel'];
      }
 
      if (memberType=='payer' || payment.status!='Pending')
@@ -217,18 +267,18 @@ function getPaymentDetails(paymentId,memberType) {
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5><font color="darkorange" size="5">Payment Details</font></h5>
+            <h5><font color="darkorange" size="5" id="paymentDetailsLabel">Payment Details</font></h5>
           </div>
           <div class="widget-content nopadding">
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th>Id</th>
+                  <th id="idLabel1">Id</th>
                   <th id='cp'></th>
-                  <th>Description</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                  <th>Date/Time</th>
+                  <th id="descriptionLabel1">Description</th>
+                  <th id="amountLabel1">Amount</th>
+                  <th id="statusLabel1">Status</th>
+                  <th id="dateTimeLabel1">Date/Time</th>
                 </tr>
               </thead>
               <tbody id="paymentDetails">
@@ -239,30 +289,32 @@ function getPaymentDetails(paymentId,memberType) {
         <div class="widget-box">
           <div class="widget-content nopadding">
             <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-              <h4>Transaction Information</h4>
+              <h4 id="transactionInformationLabel">Transaction Information</h4>
             </div>
               <div class="control-group">
-                <label class="control-label">Transaction Date:</label>
+                <label class="control-label" id="transactionDateLabel">Transaction Date:</label>
                 <div class="controls">
                   <input id="transactionDate" type="text" data-date="" data-date-format="dd-mm-yyyy" value=""
                         readonly class="datepicker span11">
-                  <span class="help-block">Date in (mm-dd-yyyy) format</span> </div>
+                  <span class="help-block" id="dateInFormatLabel">Date in (mm-dd-yyyy) format</span> </div>
               </div>
               <div class="control-group" id="transactionDetailsDiv">
-                <label class="control-label">Transaction Details:</label>
+                <label class="control-label" id="transactionDetailsLabel">Transaction Details:</label>
                 <div class="controls">
                   <textarea readonly id="transactionDetails" class="span11" rows="8" cols="50"></textarea>
                 </div>
               </div>
               <div class="control-group" id="transactionSlipDiv">
-                <label class="control-label">Transaction Slip:</label>
+                <label class="control-label" id="transactionSlipLabel">Transaction Slip:</label>
                 <div class="controls">
                   <div id="image"></div>
                 </div>
               </div>
               <div class="form-actions" id="approveRejectDiv">
-                <button type="submit" onclick="return approvePayment()" class="btn btn-success">Approve</button>
-                <button type="submit" onclick="return rejectPayment()" class="btn btn-danger">Reject</button>
+                <button type="submit" onclick="return approvePayment()"
+                      class="btn btn-success" id="approveButton">Approve</button>
+                <button type="submit" onclick="return rejectPayment()"
+                  class="btn btn-danger" id="rejectButton">Reject</button>
               </div>
             </div>
           </div>
@@ -295,8 +347,12 @@ $.ajaxSetup({
    async: false
 });
 
+getLabels();
+
 access_token = sessionStorage.getItem("access_token");
 getPaymentDetails(${info['paymentId']},"${info['memberType']}");
+
+
 </script>
 
 </body>

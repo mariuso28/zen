@@ -93,7 +93,7 @@ public class Keys {
 		keys.add("get level");
 		keys.add("set punter enabled");
 		keys.add("register member with contact name");
-		// keys.add("");
+		keys.add("Error getting Zen member : ");
 		// keys.add("");
 	}
 	

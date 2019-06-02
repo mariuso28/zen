@@ -177,11 +177,11 @@ public class RestPunterControllerImpl implements RestPunterController
 			if (punter!=null)
 				result.success(punter);
 			else
-				result.fail("Error getting Zen member : " + contact + " - contact support.");
+				result.fail(restServices.x("Error getting Zen member : ") + contact + restServices.x(" - contact support."));
 		}
 		catch (Exception e)
 		{
-			result.fail("Error getting Zen member : " + contact + " - contact support.");
+			result.fail(restServices.x("Error getting Zen member : ") + contact + restServices.x(" - contact support."));
 		}
 		return result;
 	}
@@ -200,11 +200,11 @@ public class RestPunterControllerImpl implements RestPunterController
 			if (punter!=null)
 				result.success(punter);
 			else
-				result.fail("Error getting Zen member : " + contact + " - contact support.");
+				result.fail(restServices.x("Error getting Zen member : ") + contact + restServices.x(" - contact support."));
 		}
 		catch (Exception e)
 		{
-			result.fail("Error getting Zen member : " + contact + " - contact support.");
+			result.fail(restServices.x("Error getting Zen member : ") + contact + restServices.x(" - contact support."));
 		}
 		return result;
 	}
@@ -225,7 +225,7 @@ public class RestPunterControllerImpl implements RestPunterController
 		}
 		catch (Exception e)
 		{
-			result.fail("Error sending payment query - contact support.");
+			result.fail(e.getMessage());
 		}
 		return result;
 	}
@@ -247,7 +247,7 @@ public class RestPunterControllerImpl implements RestPunterController
 		}
 		catch (Exception e)
 		{
-			result.fail("Error getting downstream members for : " + contact + " - contact support.");
+			result.fail(e.getMessage());
 		}
 		return result;
 	}

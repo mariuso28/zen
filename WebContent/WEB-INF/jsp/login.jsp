@@ -177,7 +177,7 @@ function login() {
           </div>
           <div class="form-actions">
             <span class="pull-left"><a href="#" onclick="return lostPassword()" class="flip-link btn btn-info"
-              id="lostPasswordLable">Lost password?</a></span>
+              id="lostPasswordLabel">Lost password?</a></span>
             <span class="pull-right">
               <a type="submit" onclick="return login()" class="btn btn-success" id="loginLabel"/>Login</a></span>
           </div>

@@ -53,7 +53,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		ratingMgr = new RatingMgr();
 	}
 	
-	private String x(String src)
+	public String x(String src)
 	{
 		return services.getTxm().xlate(src);
 	}
@@ -205,9 +205,9 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 				xt.setDate((new GregorianCalendar().getTime()));
 				xt.setAmount(ratingMgr.getUpgradeFeeForRating(us.getNewRating()));
 				if (us.getNewRating()==1)
-					xt.setDescription(x("Zen Activate Member At Rank 1"));
+					xt.setDescription("Zen Activate Member At Rank 1");
 				else
-					xt.setDescription(x("Zen Upgrade Member To Rank ") + us.getNewRating());
+					xt.setDescription("Zen Upgrade Member To Rank " + us.getNewRating());
 				us.setPaymentStatus(PaymentStatus.PAYMENTMADE);
 				xt.setPaymentStatus(us.getPaymentStatus());
 				xt.setPaymentInfo(pi);
@@ -287,10 +287,10 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			xj.setFullName(xt.getPayerFullName());
 			xj.setPhone(xt.getPayerPhone());
 		}
-		xj.setStatus(xt.getPaymentStatus().getDisplayStatus());
+		xj.setStatus(x(xt.getPaymentStatus().getDisplayStatus()));
 		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy hh:mm");
 		xj.setDate(sdf.format(xt.getDate()));
-		xj.setDescription(xt.getDescription());
+		xj.setDescription(x(xt.getDescription()));
 		return xj;
 	}
 

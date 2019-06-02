@@ -44,6 +44,56 @@ function redirectDashboard()
   window.location.replace("/zen/zx4/web/anon/goDashboard");
 }
 
+var labels;
+
+function getLabels()
+{
+  $.ajax({
+
+ type: "GET",
+      url : '/zen/zx4/api/anon/getLabels?jsp=upgrade',
+  cache: false,
+ contentType: 'application/json;',
+      dataType: "json",
+       async: false,
+      success: function(data) {
+        if (data == '')
+         {
+           alert("could not getLabels")
+            return null;
+         }
+
+       var resultJson = $.parseJSON(JSON.stringify(data));
+       if (resultJson.status=='OK')
+       {
+         labels = resultJson.result;
+         displayLabels();
+       }
+       else
+       {
+         alert(resultJson.message);
+       }
+     },
+     error:function (e) {
+       alert("getLabels ERROR : " + e.status + " - " + e.statusText);
+     }
+  });
+}
+
+function displayLabels()
+{
+//  console.log(labels);
+  const entries = Object.entries(labels);
+  for (const [lab, val] of entries)
+  {
+  //  console.log(lab + val);
+    elem = document.getElementById(lab)
+    if (elem!=null)
+      elem.innerHTML=val;
+  }
+}
+
+
 function submitTransactionDetails()
 {
     access_token = sessionStorage.getItem("access_token");
@@ -74,11 +124,12 @@ function submitTransactionDetails()
   					alert("Failed " + result.message);
   					return;
   				}
-  				alert("ព័ត៌មានលម្អិតនៃប្រតិបត្តិការបានដាក់ស្នើដោយជោគជ័យ\nពិនិត្យអ៊ីម៉ែលដើម្បីបញ្ជាក់ការទទួល។");
+  				alert("Transaction details successfully submitted.\nCheck email for comfirmation of receipt.");
           redirectDashboard();
   			},
   			error:function (e) {
-    			alert("submitTransactionDetails ERROR : " + e.status + " - " + e.statusText);
+    			alert(e.status + " - " + e.statusText);
+          redirectDashboard();
         }
   	});
 }
@@ -111,7 +162,8 @@ function getPunter() {
           var resultJson = $.parseJSON(JSON.stringify(data));
 					if (resultJson.status!='OK')
 					{
-						alert(resultJson.status + " " + resultJson.message);
+						alert(resultJson.message);
+            redirectDashboard();
             return;
 					}
     //      alert(JSON.stringify(resultJson.result));
@@ -153,7 +205,8 @@ function getUpgradeRequest() {
            var resultJson = $.parseJSON(JSON.stringify(data));
  					if (resultJson.status!='OK')
  					{
- 						 alert(resultJson.status + " " + resultJson.message);
+ 						 alert(resultJson.message);
+             redirectDashboard();
              return;
  					}
           // alert(JSON.stringify(resultJson.result));
@@ -170,20 +223,25 @@ function displayUpgradeRequest()
 {
   if (punter.rating==0)
   {
-    document.getElementById("msg1").innerHTML = "អអ្នកបានចុះឈ្មោះដោយជោគជ័យជាមួយ Zen ។ ធ្វើការទូទាត់របស់អ្នកនៅថ្ងៃនេះដើម្បីបន្តចំណាត់ថ្នាក់។ <strong>ចំណាត់ថ្នាក់ 1</strong> ហើយចាប់ផ្តើមរកលុយ!";
-    document.getElementById("title").value = "Zen ធ្វើឱ្យសមាជិកនៅឋានៈ1";
-    document.getElementById("fee").innerHTML = "តម្លៃធ្វើឱ្យសកម្ម: USD " + upgradeRequest.fee;
+    document.getElementById("msg1").innerHTML = labels['uplabel1'] + "<strong>"
+        + labels['Rank'] +
+        '1</strong>' + labels['uplabel2'];
+    document.getElementById("title").value = labels['uplabel3'] + "1";
+    document.getElementById("fee").innerHTML = labels['uplabel4'] +"USD " + upgradeRequest.fee;
   }
   else {
-    document.getElementById("msg1").innerHTML = "ឥឡូវនេះអ្នកស្ថិតនៅចំណាត់ថ្នាក់ <strong>" + upgradeRequest.currentRank +
-    "</strong>. ធ្វើបច្ចុប្បន្នភាពថ្ងៃនេះ <strong>ចំណាត់ថ្នាក់ " + upgradeRequest.upgradeRank + "</strong> ដើម្បីចាប់ផ្តើមរកប្រាក់បានច្រើន!";
-    document.getElementById("title").value = "Zen ធ្វើឱ្យសមាជិកនៅឋានៈ " + upgradeRequest.upgradeRank;
-    document.getElementById("fee").innerHTML = "តម្លៃធ្វើឱ្យសកម: USD " + upgradeRequest.fee;
+    document.getElementById("msg1").innerHTML = labels['uplabel5'] +"<strong>"
+                    + upgradeRequest.currentRank +
+    "</strong>." + labels['uplabel6']  + labels['Rank'] + upgradeRequest.upgradeRank
+    + "</strong>"+ labels['uplabel7'];
+    document.getElementById("title").value = labels['uplabel8'] + upgradeRequest.upgradeRank;
+    document.getElementById("fee").innerHTML = labels['uplabel9']+ "USD " + upgradeRequest.fee;
   }
   document.getElementById('uplineFullName').appendChild(document.createTextNode(upgradeRequest.upline.fullName));
   document.getElementById('uplineContact').appendChild(document.createTextNode(upgradeRequest.upline.contact));
-  document.getElementById('uplinePhone').appendChild(document.createTextNode(upgradeRequest.upline.phone));
+/*  document.getElementById('uplinePhone').appendChild(document.createTextNode(upgradeRequest.upline.phone));
   document.getElementById('uplineCountry').appendChild(document.createTextNode(upgradeRequest.upline.country));
+*/
   document.getElementById('uplineRank').appendChild(document.createTextNode(upgradeRequest.upline.rating));
 
   var pl = document.getElementById('paymentMethods');
@@ -206,8 +264,8 @@ function displayUpgradeRequest()
 
     document.getElementById("contact").value = punter.contact;
     document.getElementById("fullName").value = punter.fullName;
-    document.getElementById("phone").value = punter.phone;
-    document.getElementById("email").value = punter.email;
+//    document.getElementById("phone").value = punter.phone;
+//    document.getElementById("email").value = punter.email;
 }
 
 </script>
@@ -227,11 +285,10 @@ function displayUpgradeRequest()
       <jsp:include page="actions.jsp"/>
 <!--End-Action boxes-->
     <div id="content-header">
-      <h2>Upgrade</h2>
+      <h2 id="upgradeLabel">Upgrade</h2>
     </div>
     <div class="alert alert2"> <a class="close" data-dismiss="alert" href="#">X</a>
-      <%-- <h4 class="alert-heading">Congratulations!</h4> --%>
-      <h4 class="alert-heading">អបអរសាទរ!</h4>
+      <h4 class="alert-heading" id="congratulationsLabel">Congratulations!</h4>
       <div class="a" id="msg1"></div>
     </div>
 
@@ -240,25 +297,21 @@ function displayUpgradeRequest()
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5><font color="darkorange" size="5">ព័ត៌មានឡើងលើ</font></h5>
+            <h5><font color="darkorange" size="5" id="uplineInformationLabel">Upline Information</font></h5>
           </div>
           <div class="widget-content nopadding">
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th style="text-align:left;">ឈ្មោះ​ពេញ</th>
-                  <th style="text-align:left;">ឈ្មោះអ្នកប្រើ Zen</th>
-                  <th style="text-align:left;">លេខទូរសព្ទ</th>
-                  <th style="text-align:left;">ប្រទេស</th>
-                  <th style="text-align:left;">ចំណាត់ថ្នាក់</th>
+                  <th style="text-align:left;" id="fullNameLabel">Full Name</th>
+                  <th style="text-align:left;" id="zenUsernameLabel">Zen Username</th>
+                  <th style="text-align:left;" id="rankLabel">Rank</th>
                 </tr>
               </thead>
               <tbody>
                 <tr class="gradeA">
                   <td id="uplineFullName"></td>
                   <td><i id="uplineContact"></i></td>
-                  <td id="uplinePhone"></td>
-                  <td id="uplineCountry"></td>
                   <td id="uplineRank"></td>
                 </tr>
               </tbody>
@@ -267,7 +320,7 @@ function displayUpgradeRequest()
         </div>  <!-- widget-box -->
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-time"></i></span>
-            <h3><font color="darkgreen">1. ធ្វើឱ្យការទូទាត់សងខ្ពស់</font></h3>
+            <h3><font color="darkgreen">1. <span float="left" id='makePaymentUplineLabel'>"Make Payment Upline"</span></font></h3>
           </div>
           <div class="widget-content nopadding">
             <h3 style="color:darkred; text-indent: 2.5em;" id="fee"></h3>
@@ -276,90 +329,74 @@ function displayUpgradeRequest()
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th style="text-align:left;">វិធីសាស្រ្ត</th>
-                  <th style="text-align:left;">លេខ​គណនី</th>
-                  <th style="text-align:left;">ប្រទេស</th>
+                  <th style="text-align:left;" id="methodLabel">Method</th>
+                  <th style="text-align:left;" id="accountNumberLabel">Account No.</th>
+                  <th style="text-align:left;" id="pmCountryLabel">Country</th>
                 </tr>
               </thead>
               <tbody id="paymentMethods">
-                <tr class="gradeA">
-                  <td>Wing</td>
-                  <td>0968157361</td>
-                  <td>Cambodia</td>
-                </tr>
-                <tr class="gradeA">
-                  <td>TrueMoney</td>
-                  <td>0968157361</td>
-                  <td>Cambodia</td>
-                </tr>
               </tbody>
             </table>
           </div>  <!-- widget-content nopadding -->
         </div>  <!-- widget-box -->
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-time"></i></span>
-            <%-- <h3><font color="darkgreen">2. Submit Payment Form</font></h3> --%>
-            <h3><font color="darkgreen">2. ដាក់ស្នើទម្រង់ទូទាត់</font></h3>
+            <h3><font color="darkgreen">2. <span float="left" id='submitPaymentFormLabel'>Submit Payment Form</span></font></h3>
           </div>
           <div class="widget-box">
             <div class="widget-content nopadding">
               <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-                <%-- <h4>Submission Information</h4> --%>
-                <h4>Submission Information</h4>
+                <h4 id="submissionInformationLabel">Summission Information</h4>
               </div>
               <div class="form-horizontal">
                 <div class="control-group">
-                  <label class="control-label">Title :</label>
+                  <label class="control-label" id="titleLabel">Title :</label>
                   <div class="controls">
                     <input readonly type="text" id="title" class="span11" value=""/>
                   </div>
                 </div>
                 <div class="control-group">
-                  <%-- <label class="control-label">Username:</label> --%>
-                  <label class="control-label">Username:</label>
+                  <label class="control-label" id="zenUsernameLabel2">Zen Username:</label>
                   <div class="controls">
                     <input readonly type="text" id="contact" class="span11" value=""/>
                   </div>
                 </div>
                 <div class="control-group">
-                  <%-- <label class="control-label">Full Name:</label> --%>
-                  <label class="control-label">Full Name:</label>
+                  <label class="control-label" id="fullNameLabel2">Full Name:</label>
                   <div class="controls">
                     <input readonly type="text" id="fullName" class="span11" value=""/>
                   </div>
                 </div>
+        <!--
                 <div class="control-group">
-                  <%-- <label class="control-label">Phone No.:</label> --%>
                   <label class="control-label">Phone No.:</label>
                   <div class="controls">
                     <input readonly type="text" id="phone" class="span11" value=""/>
                   </div>
                 </div>
                 <div class="control-group">
-                  <%-- <label class="control-label">Email:</label> --%>
                   <label class="control-label">Email:</label>
                   <div class="controls">
                     <input readonly type="text" id="email" class="span11" value=""/>
                   </div>
                 </div>
+        -->
                 <div class="control-group">
-                  <%-- <label class="control-label">Transaction Date:</label> --%>
-                  <label class="control-label">Transaction Date:</label>
+                  <label class="control-label" id="transactionDateLabel">Transaction Date:</label>
                   <div class="controls">
                     <input id="transactionDate" type="text" data-date="05-13-2019" data-date-format="dd-mm-yyyy" value="05-13-2019"
                                   class="datepicker span11">
-                    <span class="help-block">Date in (mm-dd-yyyy) format</span> </div>
+                    <span class="help-block" id="dateInFormatLabel">Date in (mm-dd-yyyy) format</span> </div>
                 </div>
                 <div class="control-group">
-                  <%-- <label class="control-label">Transaction Details</label> --%>
-                  <label class="control-label">Transaction Details</label>
+                  <label class="control-label" id="transactionDetailsLabel">Transaction Details</label>
                   <div class="controls">
-                    <textarea id="transactionDetails" class="span11" rows="8" cols="50">Copy and Paste Transaction Details</textarea>
+                    <textarea id="transactionDetails" class="span11" rows="8" cols="50">
+                      </textarea>
                   </div>
                 </div>
                 <div class="control-group">
-                  <%-- <label class="control-label">Upload Transaction Slip:</label> --%>
-                  <label class="control-label">Upload Transaction Slip:</label>
+                  <label class="control-label" id="uploadTransactionSlipLabel">Upload Transaction Slip:</label>
                   <div class="controls">
                     <form id="upload-form" enctype="multipart/form-data"  method="post">
     									<input id="upload-input" type="file"
@@ -369,10 +406,10 @@ function displayUpgradeRequest()
                   </div>
                 </div>
                 <div class="form-actions">
-                  <%-- <button type="submit" onclick="return submitTransactionDetails()" class="btn btn-success">Submit</button> --%>
-                  <button type="submit" onclick="return redirectDashboard()" class="btn btn-danger">Cancel</button>
-                  <%-- <button type="submit" onclick="return submitTransactionDetails()" class="btn btn-success">Submit</button> --%>
-                  <button type="submit" onclick="return redirectDashboard()" class="btn btn-danger">Cancel</button>
+                  <button type="submit" onclick="return submitTransactionDetails()"
+                    class="btn btn-success" id="submitButton">Submit</button>
+                  <button type="submit" onclick="return redirectDashboard()"
+                    class="btn btn-danger" id="cancelButton">Cancel</button>
                 </div>
               </div>
             </div>
@@ -380,12 +417,14 @@ function displayUpgradeRequest()
         </div>  <!-- widget-box -->
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-time"></i></span>
-            <h3><font color="darkgreen">3. Check Payment Email</font></h3>
-          </div>
+        </div>
+          <h3><font color="darkgreen">3. <span float="left" id='checkPaymentEmailLabel'></span></font></h3>
           <div class="widget-content nopadding">
-            <h4 style="color:darkblue; text-indent: 2.5em;">Check your email for the payment confirmation from us.</h4>
-            <h4 style="color:darkblue; text-indent: 2.5em;">If you do not receive the email confirmation within 24 hours, please check your SPAM folder.</h4>
-            <h4 style="color:darkblue; text-indent: 2.5em;">Write to <a href="mailto:help@zenwing.net">&lt;help@zenwing.net&gt;</a> for further assistance.</h4>
+            <h4 style="color:darkblue; text-indent: 2.5em;" id='cpLabel1'></h4>
+            <h4 style="color:darkblue; text-indent: 2.5em;" id='cpLabel2'></h4>
+            <h4 style="color:darkblue; text-indent: 2.5em;"><span id='cpLabel3'></span>
+            <a href="mailto:help@goldmine.online">&lt;help@goldmine.online&gt;</a>
+            <span id='cpLabel4'></span></h4>
           </div>
         </div>
       </div>  <!-- span12 -->
@@ -423,12 +462,16 @@ $.ajaxSetup({
    async: false
 });
 
+  getLabels();
+
   getPunter();
 //set Important Lables
   document.getElementById('paymentsPending').innerHTML = punter.actions.paymentsPending;
   document.getElementById('upgradable').innerHTML = punter.actions.upgradable;
 
   getUpgradeRequest();
+
+
 </script>
 
 </body>
