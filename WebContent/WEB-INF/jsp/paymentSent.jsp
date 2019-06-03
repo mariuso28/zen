@@ -54,7 +54,6 @@ function getLabels()
        if (resultJson.status=='OK')
        {
          labels = resultJson.result;
-         displayLabels();
        }
        else
        {
@@ -347,27 +346,27 @@ function createPaymentTr(payment,status)
           <jsp:include page="actions.jsp"/>
     <!--End-Action boxes-->
     <div id="content-header">
-      <h2 id="paymentSentLabel">Payment Sent</h2>
+      <h2 id="paymentSentLabel"></h2>
     </div>
 
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5><font color="darkorange" size="5" id="pendingLabel">Pending</font></h5>
+            <h5><font color="darkorange" size="5" id="pendingLabel"></font></h5>
           </div>
           <div class="widget-content nopadding">
             <table class="table table-bordered data-table">
               <thead>
                 <tr>
-                  <th id="idLabel1">Id</th>
-                  <th id="toLabel1">To</th>
-                  <th id="queryLabel1">Query</th>
-                  <th id="descriptionLabel1">Description</th>
-                  <th id="amountLabel1">Amount</th>
-                  <th id="paymentDetailsLabel1">Payment Details</th>
-                  <th id="statusLabel1">Status</th>
-                  <th id="dateTimeLabel1">Date/Time</th>
+                  <th id="idLabel1"></th>
+                  <th id="toLabel1"></th>
+                  <th id="queryLabel1"></th>
+                  <th id="descriptionLabel1"></th>
+                  <th id="amountLabel1"></th>
+                  <th id="paymentDetailsLabel1"></th>
+                  <th id="statusLabel1"></th>
+                  <th id="dateTimeLabel1"></th>
                 </tr>
               </thead>
               <tbody id="paymentsPendingTbody">
@@ -377,19 +376,19 @@ function createPaymentTr(payment,status)
         </div>  <!-- widget-box -->
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5><font color="darkgreen" size="5" id="successfulLabel">Successful</font></h5>
+            <h5><font color="darkgreen" size="5" id="successfulLabel"></font></h5>
           </div>
           <div class="widget-content nopadding">
             <table class="table table-bordered data-table">
               <thead>
                 <tr>
-                  <th id="idLabel2">Id</th>
-                  <th id="toLabel2">To</th>
-                  <th id="descriptionLabel2">Description</th>
-                  <th id="amountLabel2">Amount</th>
-                  <th id="paymentDetailsLabel2">Payment Details</th>
-                  <th id="statusLabel2">Status</th>
-                  <th id="dateTimeLabel2">Date/Time</th>
+                  <th id="idLabel2"></th>
+                  <th id="toLabel2"></th>
+                  <th id="descriptionLabel2"></th>
+                  <th id="amountLabel2"></th>
+                  <th id="paymentDetailsLabel2"></th>
+                  <th id="statusLabel2"></th>
+                  <th id="dateTimeLabel2"></th>
                 </tr>
               </thead>
               <tbody id="paymentsSuccess">
@@ -399,19 +398,19 @@ function createPaymentTr(payment,status)
         </div>  <!-- widget-box -->
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5><font color="red" size="5" id="failedLabel">Failed</font></h5>
+            <h5><font color="red" size="5" id="failedLabel"></font></h5>
           </div>
           <div class="widget-content nopadding">
             <table class="table table-bordered data-table">
               <thead>
                 <tr>
-                  <th id="idLabel3">Id</th>
-                  <th id="toLabel3">To</th>
-                  <th id="descriptionLabel3">Description</th>
-                  <th id="amountLabel3">Amount</th>
-                  <th id="paymentDetailsLabel3">Payment Details</th>
-                  <th id="statusLabel3">Status</th>
-                  <th id="dateTimeLabel3">Date/Time</th>
+                  <th id="idLabel3"></th>
+                  <th id="toLabel3"></th>
+                  <th id="descriptionLabel3"></th>
+                  <th id="amountLabel3"></th>
+                  <th id="paymentDetailsLabel3"></th>
+                  <th id="statusLabel3"></th>
+                  <th id="dateTimeLabel3"></th>
                 </tr>
               </thead>
               <tbody id="paymentsFailed">
@@ -461,6 +460,9 @@ getLabels();
 getPendingPayments();
 getSuccessfulPayments();
 getFailedPayments();
+
+displayLabels();
+
 </script>
 
 </body>

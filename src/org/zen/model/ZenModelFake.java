@@ -33,7 +33,7 @@ public class ZenModelFake {
 		pj.setEmail(email);
 		pj.setPhone(phone);
 		pj.setPassword(password);
-		pj.setCountry("Cambodia");
+		pj.setCountry("116");
 		pj.setGender("Other");
 		pj.setSponsorContact(sponsorContact);
 		return pj;

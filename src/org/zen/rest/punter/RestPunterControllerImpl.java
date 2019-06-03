@@ -82,7 +82,7 @@ public class RestPunterControllerImpl implements RestPunterController
 			PunterProfileJson pj = new PunterProfileJson();
 			pj.setSponsorContact(contact);				// all other fields are empty
 			pj.setPhone("+855");
-			pj.setCountry("Cambodia");
+			pj.setCountry("116");
 			pj.setGender("Female");
 			result.success(pj);
 		}

@@ -67,7 +67,7 @@ function getLabels()
        if (resultJson.status=='OK')
        {
          labels = resultJson.result;
-         displayLabels();
+
        }
        else
        {
@@ -285,27 +285,26 @@ function displayUpgradeRequest()
       <jsp:include page="actions.jsp"/>
 <!--End-Action boxes-->
     <div id="content-header">
-      <h2 id="upgradeLabel">Upgrade</h2>
+      <h2 id="upgradeLabel"></h2>
     </div>
     <div class="alert alert2"> <a class="close" data-dismiss="alert" href="#">X</a>
-      <h4 class="alert-heading" id="congratulationsLabel">Congratulations!</h4>
+      <h4 class="alert-heading" id="congratulationsLabel"></h4>
       <div class="a" id="msg1"></div>
     </div>
-
 
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5><font color="darkorange" size="5" id="uplineInformationLabel">Upline Information</font></h5>
+            <h5><font color="darkorange" size="5" id="uplineInformationLabel"></font></h5>
           </div>
           <div class="widget-content nopadding">
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th style="text-align:left;" id="fullNameLabel">Full Name</th>
-                  <th style="text-align:left;" id="zenUsernameLabel">Zen Username</th>
-                  <th style="text-align:left;" id="rankLabel">Rank</th>
+                  <th style="text-align:left;" id="fullNameLabel"></th>
+                  <th style="text-align:left;" id="zenUsernameLabel"></th>
+                  <th style="text-align:left;" id="rankLabel"></th>
                 </tr>
               </thead>
               <tbody>
@@ -320,7 +319,7 @@ function displayUpgradeRequest()
         </div>  <!-- widget-box -->
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-time"></i></span>
-            <h3><font color="darkgreen">1. <span float="left" id='makePaymentUplineLabel'>"Make Payment Upline"</span></font></h3>
+            <h3><font color="darkgreen">1. <span float="left" id='makePaymentUplineLabel'></span></font></h3>
           </div>
           <div class="widget-content nopadding">
             <h3 style="color:darkred; text-indent: 2.5em;" id="fee"></h3>
@@ -329,9 +328,9 @@ function displayUpgradeRequest()
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th style="text-align:left;" id="methodLabel">Method</th>
-                  <th style="text-align:left;" id="accountNumberLabel">Account No.</th>
-                  <th style="text-align:left;" id="pmCountryLabel">Country</th>
+                  <th style="text-align:left;" id="methodLabel"></th>
+                  <th style="text-align:left;" id="accountNumberLabel"></th>
+                  <th style="text-align:left;" id="pmCountryLabel"></th>
                 </tr>
               </thead>
               <tbody id="paymentMethods">
@@ -341,28 +340,28 @@ function displayUpgradeRequest()
         </div>  <!-- widget-box -->
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"><i class="icon-time"></i></span>
-            <h3><font color="darkgreen">2. <span float="left" id='submitPaymentFormLabel'>Submit Payment Form</span></font></h3>
+            <h3><font color="darkgreen">2. <span float="left" id='submitPaymentFormLabel'></span></font></h3>
           </div>
           <div class="widget-box">
             <div class="widget-content nopadding">
               <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-                <h4 id="submissionInformationLabel">Summission Information</h4>
+                <h4 id="submissionInformationLabel"></h4>
               </div>
               <div class="form-horizontal">
                 <div class="control-group">
-                  <label class="control-label" id="titleLabel">Title :</label>
+                  <label class="control-label" id="titleLabel"></label>
                   <div class="controls">
                     <input readonly type="text" id="title" class="span11" value=""/>
                   </div>
                 </div>
                 <div class="control-group">
-                  <label class="control-label" id="zenUsernameLabel2">Zen Username:</label>
+                  <label class="control-label" id="zenUsernameLabel2"></label>
                   <div class="controls">
                     <input readonly type="text" id="contact" class="span11" value=""/>
                   </div>
                 </div>
                 <div class="control-group">
-                  <label class="control-label" id="fullNameLabel2">Full Name:</label>
+                  <label class="control-label" id="fullNameLabel2"></label>
                   <div class="controls">
                     <input readonly type="text" id="fullName" class="span11" value=""/>
                   </div>
@@ -382,21 +381,21 @@ function displayUpgradeRequest()
                 </div>
         -->
                 <div class="control-group">
-                  <label class="control-label" id="transactionDateLabel">Transaction Date:</label>
+                  <label class="control-label" id="transactionDateLabel"></label>
                   <div class="controls">
                     <input id="transactionDate" type="text" data-date="05-13-2019" data-date-format="dd-mm-yyyy" value="05-13-2019"
                                   class="datepicker span11">
-                    <span class="help-block" id="dateInFormatLabel">Date in (mm-dd-yyyy) format</span> </div>
+                    <span class="help-block" id="dateInFormatLabel"></span> </div>
                 </div>
                 <div class="control-group">
-                  <label class="control-label" id="transactionDetailsLabel">Transaction Details</label>
+                  <label class="control-label" id="transactionDetailsLabel"></label>
                   <div class="controls">
                     <textarea id="transactionDetails" class="span11" rows="8" cols="50">
                       </textarea>
                   </div>
                 </div>
                 <div class="control-group">
-                  <label class="control-label" id="uploadTransactionSlipLabel">Upload Transaction Slip:</label>
+                  <label class="control-label" id="uploadTransactionSlipLabel"></label>
                   <div class="controls">
                     <form id="upload-form" enctype="multipart/form-data"  method="post">
     									<input id="upload-input" type="file"
@@ -407,9 +406,9 @@ function displayUpgradeRequest()
                 </div>
                 <div class="form-actions">
                   <button type="submit" onclick="return submitTransactionDetails()"
-                    class="btn btn-success" id="submitButton">Submit</button>
+                    class="btn btn-success" id="submitButton"></button>
                   <button type="submit" onclick="return redirectDashboard()"
-                    class="btn btn-danger" id="cancelButton">Cancel</button>
+                    class="btn btn-danger" id="cancelButton"></button>
                 </div>
               </div>
             </div>
@@ -471,6 +470,7 @@ $.ajaxSetup({
 
   getUpgradeRequest();
 
+  displayLabels();
 
 </script>
 

@@ -42,7 +42,7 @@ function getLabels()
   $.ajax({
 
  type: "GET",
-      url : '/zen/zx4/api/anon/getLabels?jsp=editProfile',
+      url : '/zen/zx4/api/anon/getLabels?jsp=changePassword',
   cache: false,
  contentType: 'application/json;',
       dataType: "json",
@@ -58,7 +58,7 @@ function getLabels()
        if (resultJson.status=='OK')
        {
          labels = resultJson.result;
-         displayLabels();
+
        }
        else
        {
@@ -190,37 +190,37 @@ function getPunter() {
     <jsp:include page="actions.jsp"/>
 <!--End-Action boxes-->
     <div id="content-header">
-      <h2 id="myUserProfileLabel">My User Profile</h2>
+      <h2 id="myUserProfileLabel"></h2>
     </div>
 
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-            <h3 id="changePasswordLabel">Change Password</h3>
+            <h3 id="changePasswordLabel"></h3>
           </div>
           <div class="widget-content nopadding">
             <div class="form-horizontal">
               <div class="control-group">
-                <label class="control-label" id="oldPasswordLabel">Old Password :</label>
+                <label class="control-label" id="oldPasswordLabel"></label>
                 <div class="controls">
                   <input type="password" id="oldPassword" class="span11"/>
                 </div>
               </div><div class="control-group">
-                <label class="control-label" id="newPasswordLabel">New Password :</label>
+                <label class="control-label" id="newPasswordLabel"></label>
                 <div class="controls">
                   <input type="password" id="password" class="span11"/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" id="confirmPasswordLabel">Confirm Password :</label>
+                <label class="control-label" id="confirmPasswordLabel"></label>
                 <div class="controls">
                   <input type="password" id="vpassword" class="span11"/>
                 </div>
               </div>
               <div class="form-actions">
-                <button type="submit" onclick="return changePassword();" class="btn btn-success" id="saveLabel">Save</button>
-                <button type="submit" onclick="return redirectDashboard();" class="btn btn-danger" id="cancelLabel">Cancel</button>
+                <button type="submit" onclick="return changePassword();" class="btn btn-success" id="saveLabel"></button>
+                <button type="submit" onclick="return redirectDashboard();" class="btn btn-danger" id="cancelLabel"></button>
               </div>
             </div>
           </div>
@@ -264,17 +264,20 @@ function getPunter() {
 
 <script type="text/javascript">
 
-// resets the menu selection upon entry to this page:
-function resetMenu() {
-   document.gomenu.selector.selectedIndex = 2;
+$.ajaxSetup({
+   async: false
+});
 
-}
-getPunter();
+
 getLabels();
+getPunter();
+
 
 //set Important Lables
 document.getElementById('paymentsPending').innerHTML = punter.actions.paymentsPending;
 document.getElementById('upgradable').innerHTML = punter.actions.upgradable;
+
+ displayLabels();
 
 </script>
 </body>

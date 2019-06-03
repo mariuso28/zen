@@ -18,6 +18,7 @@ public class PunterProfileJson {
 	private String state;
 	private String postcode;
 	private String country;
+	private String countryCode;
 	private String upstreamContact;
 	private String sponsorContact;
 	private boolean systemOwned;
@@ -181,6 +182,14 @@ public class PunterProfileJson {
 
 	public void setActions(ActionJson actions) {
 		this.actions = actions;
+	}
+
+	public String getCountryCode() {
+		return countryCode;
+	}
+
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
 	}
 
 	

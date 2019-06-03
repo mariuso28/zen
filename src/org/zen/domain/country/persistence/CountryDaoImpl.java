@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
+import org.zen.json.CountryDisplayJson;
 import org.zen.json.CountryJson;
 import org.zen.persistence.PersistenceRuntimeException;
 
@@ -13,19 +14,19 @@ public class CountryDaoImpl extends NamedParameterJdbcDaoSupport implements Coun
 	private static Logger log = Logger.getLogger(CountryDaoImpl.class);
 	
 	@Override
-	public List<String> getCountryList(String isoCode) {
+	public List<CountryDisplayJson> getCountryList(String isoCode) {
 		try
 		{
-			String sql = "SELECT country FROM country ORDER BY displayorder,country";
+			String sql = "SELECT country,code FROM country ORDER BY displayorder,country";
 			if (isoCode!=null && !isoCode.equals("") && !isoCode.equals("en"))
-				sql = "SELECT country" + isoCode + " FROM country ORDER BY displayorder,country";
-			List<String> countries = getJdbcTemplate().queryForList(sql,String.class);
+				sql = "SELECT country" + isoCode + " AS country,code FROM country ORDER BY displayorder,country";
+			List<CountryDisplayJson> countries = getJdbcTemplate().query(sql,BeanPropertyRowMapper.newInstance(CountryDisplayJson.class));
 			return countries;
 		}
 		catch (DataAccessException e)
 		{
 			log.error("Could not execute : " + e.getMessage(),e);
-			throw new PersistenceRuntimeException("Could not execute getCountries : " + e.getMessage());
+			throw new PersistenceRuntimeException("Could not execute getCountryList : " + e.getMessage());
 		}
 	}
 	

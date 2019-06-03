@@ -204,7 +204,7 @@ function createNotificationLi(n)
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title bg_ly" data-toggle="collapse" href="#collapseG2"><span class="icon"><i class="icon-chevron-down"></i></span>
-            <h5 id="latestLabel">Latest</h5>
+            <h5 id="latestLabel"></h5>
           </div>
           <div class="widget-content nopadding collapse in" id="collapseG2">
             <ul class="recent-posts" id="recentPosts">

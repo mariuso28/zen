@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.zen.json.AccountJson;
 import org.zen.json.ActionJson;
 import org.zen.json.ChangePasswordJson;
+import org.zen.json.CountryJson;
 import org.zen.json.ModelJson;
 import org.zen.json.NotificationJson;
 import org.zen.json.PaymentInfoJson;
@@ -290,7 +291,12 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		xj.setStatus(x(xt.getPaymentStatus().getDisplayStatus()));
 		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy hh:mm");
 		xj.setDate(sdf.format(xt.getDate()));
-		xj.setDescription(x(xt.getDescription()));
+		String desc = xt.getDescription().trim();
+		int pos = desc.lastIndexOf("Rank ")+5;
+		if (pos<0)
+			xj.setDescription(x(xt.getDescription()));
+		else
+			xj.setDescription(x(desc.substring(0,pos))+desc.substring(pos));
 		return xj;
 	}
 
@@ -634,7 +640,12 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		pj.setAddress(punter.getAddress());
 		pj.setState(punter.getState());
 		pj.setPostcode(punter.getPostcode());
-		pj.setCountry(punter.getCountry());
+		pj.setCountryCode(punter.getCountry());
+		CountryJson cj = services.getHome().getCountryDao().getCountryByCode(punter.getCountry());
+		if (services.getTxm().getIsoCode().equals("km"))
+			pj.setCountry(cj.getCountrykm());
+		else
+			pj.setCountry(cj.getCountry());
 	
 		return pj;
 	}

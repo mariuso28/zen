@@ -47,7 +47,7 @@ function getLabels()
   $.ajax({
 
  type: "GET",
-      url : '/zen/zx4/api/anon/getLabels?jsp=editProfile',
+      url : '/zen/zx4/api/anon/getLabels?jsp=geneology',
   cache: false,
  contentType: 'application/json;',
       dataType: "json",
@@ -63,7 +63,6 @@ function getLabels()
        if (resultJson.status=='OK')
        {
          labels = resultJson.result;
-         displayLabels();
        }
        else
        {
@@ -135,53 +134,54 @@ function populatePunter1()
       if (punter.contact != punter1.contact && punter.contact != punter1.sponsorContact)
       {
         document.getElementById('systemOnly').innerHTML = "";
+        displayLabels();
         return;
       }
 
       document.getElementById('systemOnly').innerHTML =
       '<div class="control-group">' +
-        '<label class="control-label" id="passportIcLabel">Passport/ID No.&nbsp</label>' +
+        '<label class="control-label" id="passportIcLabel"></label>' +
         '<div class="controls">' +
         '<input type="text" id="passportIc" class="span11" value="" readonly/>' +
         '</div>' +
         '</div>' +
         '<div class="control-group">' +
-        '<label class="control-label" id="genderLabel">Gender&nbsp</label>' +
+        '<label class="control-label" id="genderLabel"></label>' +
         '<div class="controls">' +
             '<input type="text" id="gender" class="span11" value="" readonly/>' +
         '</div>' +
       '</div>' +
       '<div class="control-group">' +
-        '<label class="control-label" id="addressLabel">Address&nbsp</label>' +
+        '<label class="control-label" id="addressLabel"></label>' +
         '<div class="controls">' +
           '<input type="text" id="address" class="span11" value="" readonly/>' +
         '</div>' +
       '</div>' +
       '<div class="control-group">' +
-        '<label class="control-label" id="postCodeLabel">Postcode&nbsp</label>' +
+        '<label class="control-label" id="postCodeLabel"></label>' +
         '<div class="controls">' +
           '<input type="text" id="postcode" class="span11" value="" readonly/>' +
         '</div>' +
       '</div>' +
       '<div class="control-group">' +
-        '<label class="control-label" id="stateLabel">State&nbsp</label>' +
+        '<label class="control-label" id="stateLabel"></label>' +
         '<div class="controls">' +
           '<input type="text" id="state" class="span11" value="" readonly/>' +
         '</div>' +
       '</div>' +
       '<div class="control-group">' +
-        '<label class="control-label" id="countryLabel">Country&nbsp</label>' +
+        '<label class="control-label" id="countryLabel"></label>' +
         '<div class="controls">' +
           '<input type="text" id="country" class="span11" value="" readonly/>' +
         '</div>' +
       '</div>' +
       '<div class="control-group">' +
-        '<label class="control-label" id="phoneLabel">Phone No.&nbsp</label>' +
+        '<label class="control-label" id="phoneLabel"></label>' +
         '<div class="controls">' +
           '<input type="text" id="phone" class="span11" value="" readonly/>' +
         '</div>' +
         '<div class="control-group">' +
-          '<label class="control-label" id="emailLabel">Email&nbsp</label>' +
+          '<label class="control-label" id="emailLabel"></label>' +
           '<div class="controls">' +
             '<input type="text" id="email" class="span11" value="" readonly/>' +
           '</div>' +
@@ -196,7 +196,7 @@ function populatePunter1()
     document.getElementById('state').value = punter1.state;
     document.getElementById('gender').value = punter1.gender;
 
-    getLabels();
+    displayLabels();
 }
 
 var punter;
@@ -228,12 +228,13 @@ function getPunterTree(searchTerm) {
     //      alert(JSON.stringify(resultJson.result));
 					punter = resultJson.result;
 
+          getLabels();
           getModel();
 
           punter1 = punter;
           populatePunter1();
 
-          getLabels();
+
         },
 				error:function (e) {
 	  			alert("getPunter ERROR : " + e.status + " - " + e.statusText);
@@ -286,7 +287,6 @@ function searchModelByContact()
 	      }
      });
 
-    getLabels();
 }
 
 function expandModelToContact()
@@ -386,19 +386,19 @@ function Search() {
             <div class="widget-content nopadding">
               <div class="form-horizontal">
                 <div class="control-group">
-                  <label class="control-label" id="usernameLabel">Username :</label>
+                  <label class="control-label" id="usernameLabel"></label>
                   <div class="controls">
                     <input readonly type="text" id="contact" class="span11" value="" readonly/>
                   </div>
                 </div>
                 <div class="control-group">
-                  <label class="control-label" id="zenSponsorLabel">Zen Sponser&nbsp</label>
+                  <label class="control-label" id="zenSponsorLabel"></label>
                   <div class="controls">
                     <input readonly type="text" id="sponsorContact" class="span11" value="" readonly/>
                   </div>
                 </div>
                 <div class="control-group">
-                  <label class="control-label" id="fullNameLable">Full Name&nbsp</label>
+                  <label class="control-label" id="fullNameLabel"></label>
                   <div class="controls">
                     <input type="text" id="fullName" class="span11" value="" readonly/>
                   </div>

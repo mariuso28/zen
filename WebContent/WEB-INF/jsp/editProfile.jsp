@@ -69,7 +69,7 @@ function getLabels()
        if (resultJson.status=='OK')
        {
          labels = resultJson.result;
-         displayLabels();
+
        }
        else
        {
@@ -133,10 +133,10 @@ function displayCountries()
 {
   $('#country').empty();
   $.each(countries, function(i,country) {
-    if (punter.country==country)
-     $('#country').append($('<option selected/>').attr("value", country).text(country));
+    if (punter.countryCode==country.code)
+     $('#country').append($('<option selected/>').attr("value", country.code).text(country.country));
     else {
-      $('#country').append($('<option/>').attr("value", country).text(country));
+      $('#country').append($('<option/>').attr("value", country.code).text(country.country));
     }
   });
 }
@@ -269,6 +269,8 @@ function addPunterPaymentMethod(id,accountNumber)
 
 function refreshProfile()
 {
+  getLabels();
+
   getPunter();
 //set Important Labels
   document.getElementById('paymentsPending').innerHTML = punter.actions.paymentsPending;
@@ -276,7 +278,8 @@ function refreshProfile()
 
   getCountries();
   getAvailablePaymentMethods();
-  getLabels();
+
+  displayLabels();
 }
 
 function getPunter() {
@@ -438,98 +441,98 @@ function updateProfile() {
     <jsp:include page="actions.jsp"/>
 <!--End-Action boxes-->
     <div id="content-header">
-      <h2 id='myUserProfileLabel'>My User Profile</h2>
+      <h2 id='myUserProfileLabel'></h2>
     </div>
 
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-            <h3 id='personalInfomationLabel'>Personal Information</h3>
+            <h3 id='personalInfomationLabel'></h3>
           </div>
           <div class="widget-content nopadding">
             <div class="form-horizontal">
               <div class="control-group">
-                <label class="control-label" id='usernameLabel'>Username :</label>
+                <label class="control-label" id='usernameLabel'></label>
                 <div class="controls">
                   <input readonly type="text" id="contact" class="span11" value=""/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" id="zenSponsorLabel">Zen Sponser&nbsp</label>
+                <label class="control-label" id="zenSponsorLabel"></label>
                 <div class="controls">
                   <input readonly type="text" id="sponsorContact" class="span11" value=""/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label required-field" id='fullNameLabel'>Full Name&nbsp</label>
+                <label class="control-label required-field" id='fullNameLabel'></label>
                 <div class="controls">
                   <input type="text" id="fullName" class="span11" value=""/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" id="passportIcLabel">Passport/ID No.&nbsp</label>
+                <label class="control-label" id="passportIcLabel"></label>
                 <div class="controls">
                   <input type="text" id="passportIc" class="span11" value=""/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label required-field" id="genderLabel">Gender&nbsp</label>
+                <label class="control-label required-field" id="genderLabel"></label>
                 <div class="controls">
                   <select id="gender">
-                  	<option id="maleLabel" value="Male">Male</option>
-                  	<option id="femaleLabel" value="Female">Female</option>
-                  	<option id="otherLabel" value="Other">Other</option>
+                  	<option id="maleLabel" value="Male"></option>
+                  	<option id="femaleLabel" value="Female"></option>
+                  	<option id="otherLabel" value="Other"></option>
                   </select>
               </div>
               <div class="control-group">
-                <label class="control-label" id="addressLabel">Address&nbsp</label>
+                <label class="control-label" id="addressLabel"></label>
                 <div class="controls">
                   <input type="text" id="address" class="span11" value=""/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" id="postCodeLabel">Postcode&nbsp</label>
+                <label class="control-label" id="postCodeLabel"></label>
                 <div class="controls">
                   <input type="text" id="postcode" class="span11" value=""/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" id="stateLabel">State&nbsp</label>
+                <label class="control-label" id="stateLabel"></label>
                 <div class="controls">
                   <input type="text" id="state" class="span11" value=""/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label required-field" id="countryLabel">Country&nbsp</label>
+                <label class="control-label required-field" id="countryLabel"></label>
                 <div class="controls">
                   <select id="country">
                   </select>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label required-field" id="phoneLabel">Phone&nbsp</label>
+                <label class="control-label required-field" id="phoneLabel"></label>
                 <div class="controls">
                   <input type="text" id="phone" class="span11" value="+855 "/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label required-field" id="emailLabel">Email&nbsp</label>
+                <label class="control-label required-field" id="emailLabel"></label>
                 <div class="controls">
                   <input type="text" id="email" class="span11" value=""/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" id="yourPaymentMethodsLabel">Your Payment Methods :</label>
+                <label class="control-label" id="yourPaymentMethodsLabel"></label>
                 <div class="controls">
                 <table class="table table-bordered data-table">
                   <thead>
                     <tr>
-                      <th id="noLabel">No.</th>
-                      <th id="methodLabel">Method</th>
-                      <th id="pmCountryLabel">Country</th>
-                      <th id="accountNumberLabel">Account Number</th>
-                      <th id="deleteLabel">Delete</th>
+                      <th id="noLabel"></th>
+                      <th id="methodLabel"></th>
+                      <th id="pmCountryLabel"></th>
+                      <th id="accountNumberLabel"></th>
+                      <th id="deleteLabel"></th>
                     </tr>
                   </thead>
                   <tbody id='paymentMethodList'>
@@ -538,15 +541,15 @@ function updateProfile() {
                 <div>
               </div>
               <div class="control-group">
-                <label class="control-label" id="addPaymentMethodLabel">Add Payment Method :</label>
+                <label class="control-label" id="addPaymentMethodLabel"></label>
                 <div class="controls">
                   <select id="avaiLabelPaymentMethods" onchange="addPaymentMethod(value)">
                   </select>
                 </div>
               </div>
               <div class="form-actions">
-                <button type="submit" onclick="return updateProfile();" class="btn btn-success" id="saveLabel">Save</button>
-                <button type="submit" class="btn btn-danger" onclick="return redirectDashboard();" id="cancelLabel">Cancel</button>
+                <button type="submit" onclick="return updateProfile();" class="btn btn-success" id="saveLabel"></button>
+                <button type="submit" class="btn btn-danger" onclick="return redirectDashboard();" id="cancelLabel"></button>
               </div>
             </div>
           </div>
@@ -591,9 +594,11 @@ function updateProfile() {
 <script src="../../../js/jquery.dataTables.min.js"></script>
 <script src="../../../js/matrix.tables.js"></script>
 
-
-
 <script type="text/javascript">
+
+$.ajaxSetup({
+   async: false
+});
 
 refreshProfile();
 

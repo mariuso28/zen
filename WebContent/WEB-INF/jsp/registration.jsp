@@ -135,7 +135,7 @@ function getLabels()
   $.ajax({
 
  type: "GET",
-      url : '/zen/zx4/api/anon/getLabels?jsp=editProfile',
+      url : '/zen/zx4/api/anon/getLabels?jsp=registration',
   cache: false,
  contentType: 'application/json;',
       dataType: "json",
@@ -151,7 +151,6 @@ function getLabels()
        if (resultJson.status=='OK')
        {
          labels = resultJson.result;
-         displayLabels();
        }
        else
        {
@@ -216,7 +215,11 @@ function displayCountries()
 {
   $('#country').empty();
   $.each(countries, function(i,country) {
-      $('#country').append($('<option/>').attr("value", country).text(country));
+    if (newPunter.countryCode==country.code)
+     $('#country').append($('<option selected/>').attr("value", country.code).text(country.country));
+    else {
+      $('#country').append($('<option/>').attr("value", country.code).text(country.country));
+    }
   });
 }
 
@@ -356,19 +359,19 @@ function populateNewProfile()
     <jsp:include page="actions.jsp"/>
 <!--End-Action boxes-->
     <div id="content-header">
-      <h2 id="newUserRegistrationLabel">New User Registration</h2>
+      <h2 id="newUserRegistrationLabel"></h2>
     </div>
 
     <div class="row-fluid">
       <div class="span12">
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-            <h3 id="sponsorInformationLabel">Sponsor Information</h3>
+            <h3 id="sponsorInformationLabel"></h3>
           </div>
           <div class="widget-content nopadding">
             <div class="form-horizontal">
               <div class="control-group">
-                <label class="control-label" id="zenSponsorUsernameLabel">Zen Username :</label>
+                <label class="control-label" id="zenSponsorUsernameLabel"></label>
                 <div class="controls">
                   <input type="text" readonly id="sponsorContact" class="span11"/>
                 </div>
@@ -378,88 +381,88 @@ function populateNewProfile()
         </div>
         <div class="widget-box">
           <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
-            <h3 id="newAgentInformationLabel">New Agent Information</h3>
+            <h3 id="newAgentInformationLabel"></h3>
           </div>
           <div class="widget-content nopadding">
             <div class="form-horizontal">
               <div class="control-group">
-                <label class="control-label required-field" id="zenUsername">Zen Username&nbsp</label>
+                <label class="control-label required-field" id="zenUsername"></label>
                 <div class="controls">
                   <input type="text" id="contact" class="span11"/><a href="#" onClick="return generateRandom()" id="generateLabel"> Generate</a>
                 </div>
               </div><div class="control-group">
-                <label class="control-label required-field" id="passwordLabel">Password&nbsp</label>
+                <label class="control-label required-field" id="passwordLabel"></label>
                 <div class="controls">
                   <input type="password" id="password" class="span11"/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label required-field" id="confirmPasswordLabel">Confirm Password&nbsp</label>
+                <label class="control-label required-field" id="confirmPasswordLabel"></label>
                 <div class="controls">
                   <input type="password" id="vpassword" class="span11"/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label required-field" id='fullNameLabel'>Full Name&nbsp</label>
+                <label class="control-label required-field" id='fullNameLabel'></label>
                 <div class="controls">
                   <input type="text" id="fullName" class="span11"/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" id="passportIcLabel">Passport/ID No.&nbsp</label>
+                <label class="control-label" id="passportIcLabel"></label>
                 <div class="controls">
                   <input type="text" id="passportIc" class="span11"/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label required-field" id="genderLabel">Gender&nbsp</label>
+                <label class="control-label required-field" id="genderLabel"></label>
                 <div class="controls">
                   <select id="gender">
-                  	<option id="maleLabel" value="Male">Male</option>
-                  	<option id="femaleLabel" value="Female">Female</option>
-                  	<option id="otherLabel" value="Other">Other</option>
+                  	<option id="maleLabel" value="Male"></option>
+                  	<option id="femaleLabel" value="Female"></option>
+                  	<option id="otherLabel" value="Other"></option>
                   </select>
               </div>
               <div class="control-group">
-                <label class="control-label" id="addressLabel">Address&nbsp</label>
+                <label class="control-label" id="addressLabel"></label>
                 <div class="controls">
                   <input type="text" id="address" class="span11"/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" id="postCodeLabel">Postcode&nbsp</label>
+                <label class="control-label" id="postCodeLabel"></label>
                 <div class="controls">
                   <input type="text" id="postcode" class="span11"/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label" id="stateLabel">State&nbsp</label>
+                <label class="control-label" id="stateLabel"></label>
                 <div class="controls">
                   <input type="text" id="state" class="span11"/>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label required-field" id="countryLabel">Country&nbsp</label>
+                <label class="control-label required-field" id="countryLabel"></label>
                 <div class="controls">
                   <select id="country">
                   </select>
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label required-field" id="phoneLabel">>Phone No.&nbsp</label>
+                <label class="control-label required-field" id="phoneLabel"></label>
                 <div class="controls">
                   <input type="text" id="phone" class="span11" />
                 </div>
               </div>
               <div class="control-group">
-                <label class="control-label required-field" id="emailLabel">Email&nbsp</label>
+                <label class="control-label required-field" id="emailLabel"></label>
                 <div class="controls">
                   <input type="text" id="email" class="span11"/>
                 </div>
               </div>
               <div class="form-actions">
-                <button type="submit" onclick="return storeRegistration();" class="btn btn-success" id="saveLabel">Save</button>
-                <button type="submit" onclick="return redirectDashboard();" class="btn btn-danger" id="cancelLabel">Cancel</button>
+                <button type="submit" onclick="return storeRegistration();" class="btn btn-success" id="saveLabel"></button>
+                <button type="submit" onclick="return redirectDashboard();" class="btn btn-danger" id="cancelLabel"></button>
               </div>
             </div>
           </div>
@@ -507,11 +510,14 @@ $.ajaxSetup({
    async: false
 });
 
-
-getCountries();
-initializeRegistration();
-getPunter();
 getLabels();
+
+initializeRegistration();
+getCountries();
+
+getPunter();
+
+displayLabels();
 
 //set Important Lables
 document.getElementById('paymentsPending').innerHTML = punter.actions.paymentsPending;
