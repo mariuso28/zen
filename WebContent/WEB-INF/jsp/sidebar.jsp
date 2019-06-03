@@ -4,7 +4,7 @@ function testZen()
 {
   if (punter.rating>-1)
     return true;
-  alert("Feature not available for top level Zen.");
+  alert(labels['sbDbAlert1']);
   return false;
 }
 
@@ -14,7 +14,7 @@ function testAllowed()
     return false;
   if (punter.rating!=0)
     return true;
-  alert("Feature not available until payment to join complete.");
+  alert(labels['sbDbAlert2']);
   return false;
 }
 
@@ -41,15 +41,13 @@ function testAllowed()
         <li><a href="/zen/zx4/web/anon/goUpgrade" onclick="return testZen()"><span id="sbUpgradeLabel"></span>
                 <span class="label label-important" style="margin-left:5px;" id='upgradable'></span></a></li>
         <li><a href="/zen/zx4/web/anon/goNewRegistration" onclick="return testAllowed()"><span id="sbNewRegistrationLabel"></a></li>
-    <!--    <li><a href="/zen/zx4/web/anon/goGeneology">Geneology</a></li>  -->
-<!--        <li><a href="#">Grade Summary</a></li>  -->
       </ul>
     </li>
     <li class="submenu"> <a href="#"><i class="icon icon-money"></i>
       <span id="sbPaymentLabel"/><span class="caret" style="margin-left:10px; margin-top:8px;">
       </span></a>
       <ul>
-        <li><a href="/zen/zx4/web/anon/goPaymentReceived"><span id="sbPaymentReceivedLabel">
+        <li><a href="/zen/zx4/web/anon/goPaymentReceived"><span id="sbPaymentReceivedLabel"></span>
           <span class="label label-important" style="margin-left:5px;" id='paymentsPending'></span>
         </a></li>
         <li><a href="/zen/zx4/web/anon/goPaymentSent" onclick="return testZen()">

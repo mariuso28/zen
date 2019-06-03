@@ -103,6 +103,8 @@ public class TranslationLabels {
 		map.put("upLabel7",xlate(" to start earning more!"));
 		map.put("upLabel8",xlate("Zen Upgrade Member To Rank "));
 		map.put("upLabel9",xlate("Upgrade Fee: "));
+		map.put("upAlert1",xlate("Transaction details successfully submitted."));
+		map.put("upAlert2",xlate("Check email for comfirmation of receipt."));
 		return map;
 	}
 	
@@ -116,6 +118,7 @@ public class TranslationLabels {
 		map.put("confirmPasswordLabel", xlate("Confirm Password"));
 		map.put("saveLabel", xlate("Save"));
 		map.put("cancelLabel", xlate("Cancel"));
+		map.put("pwAlert1", xlate("Password/verify password must match."));
 		return map;
 	}
 	
@@ -149,6 +152,7 @@ public class TranslationLabels {
 		map.put("addPaymentMethodLabel", xlate("Add Payment Method :"));
 		map.put("saveLabel", xlate("Save"));
 		map.put("cancelLabel", xlate("Cancel"));
+		map.put("epAlert1",xlate("Profile successfully updated"));
 		return map;
 	}
 	
@@ -161,7 +165,7 @@ public class TranslationLabels {
 		map.put("newAgentInformationLabel", xlate("New Agent Information"));		
 		map.put("zenUsernameLabel", xlate("Zen User Name"));
 		map.put("passwordLabel", xlate("Password"));
-		map.put("confirmPasswordLabel", xlate("Confrim Password"));
+		map.put("confirmPasswordLabel", xlate("Confirm Password"));
 		map.put("generateLabel", xlate("Generate"));
 		map.put("fullNameLabel",xlate("Full Name"));
 		map.put("passportIcLabel", xlate("Passport ID"));
@@ -178,6 +182,9 @@ public class TranslationLabels {
 		map.put("emailLabel", xlate("Email"));
 		map.put("saveLabel", xlate("Save"));
 		map.put("cancelLabel", xlate("Cancel"));
+		
+		map.put("rAlert1",xlate("You have no payment methods set up"));
+		map.put("rAlert2",xlate("Please edit profile to set up at least one."));
 		
 		return map;
 	}
@@ -203,6 +210,9 @@ public class TranslationLabels {
 		map.put("dbUpgradeLabel", xlate("Upgrade"));
 		map.put("dbAgentListLabel", xlate("Agent List")); 
 		map.put("dbNewRegistrationLabel", xlate("New Registration"));
+		
+		map.put("sbDbAlert1",xlate("Feature not available for top level Zen."));
+		map.put("sbDbAlert2",xlate("Feature not available until payment to join complete."));
 	}
 	
 	private Map<String,String> setupPaymentSentLabels() {
@@ -268,6 +278,8 @@ public class TranslationLabels {
 		map.put("dateInFormatLabel",xlate("Date in (mm-dd-yyyy) format")); 
 		map.put("approveButton", xlate("Approve"));
 		map.put("rejectButton", xlate("Reject"));
+		map.put("pdAlert1","Payment approved. Member upgraded and notified.");
+		map.put("pdAlert2","Payment rejected. Member notified.");
 		return map;
 	}
 	

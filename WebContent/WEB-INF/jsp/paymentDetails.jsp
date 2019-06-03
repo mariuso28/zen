@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="../../../css/select2.css" />
 <link rel="stylesheet" href="../../../css/matrix-style.css" />
 <link rel="stylesheet" href="../../../css/matrix-media.css" />
-<link href="../../font-awesome/css/font-awesome.css" rel="stylesheet" />
+<link href="../../../css/font-awesome.css" rel="stylesheet" />
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
 
 <style>
@@ -141,7 +141,7 @@ function rejectPayment()
 						alert(resultJson.status + " " + resultJson.message);
             return;
 					}
-					alert("Payment rejected. Member notified.")
+					alert(labels['pdAlert2']);
         },
 				error:function (e) {
 	  			alert("rejectPayment ERROR : " + e.status + " - " + e.statusText);

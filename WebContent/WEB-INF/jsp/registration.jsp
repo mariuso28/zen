@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="../../../css/fullcalendar.css" />
 <link rel="stylesheet" href="../../../css/matrix-style.css" />
 <link rel="stylesheet" href="../../../css/matrix-media.css" />
-<link href="/../../../font-awesome/css/font-awesome.css" rel="stylesheet" />
+<link href="../../../css/font-awesome.css" rel="stylesheet" />
 <link rel="stylesheet" href="../../../css/jquery.gritter.css" />
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
 
@@ -79,7 +79,7 @@ function getPunter() {
 					punter = resultJson.result;
           if (punter.paymentMethods.length==0)
           {
-            alert('You have no payment methods set up.\nPlease edit profile to set up at least one.');
+            alert(labels['rAlert1']+'\n'+labels['rAlert2']);
             window.location="/zen/zx4/web/anon/goEditProfile";
             return;
           }
@@ -386,7 +386,7 @@ function populateNewProfile()
           <div class="widget-content nopadding">
             <div class="form-horizontal">
               <div class="control-group">
-                <label class="control-label required-field" id="zenUsername"></label>
+                <label class="control-label required-field" id="zenUsernameLabel"></label>
                 <div class="controls">
                   <input type="text" id="contact" class="span11"/><a href="#" onClick="return generateRandom()" id="generateLabel"> Generate</a>
                 </div>

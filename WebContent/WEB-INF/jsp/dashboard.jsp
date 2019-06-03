@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="../../../css/fullcalendar.css" />
 <link rel="stylesheet" href="../../../css/matrix-style.css" />
 <link rel="stylesheet" href="../../../css/matrix-media.css" />
-<link href="../../font-awesome/css/font-awesome.css" rel="stylesheet" />
+<link href="../../../css/font-awesome.css" rel="stylesheet" />
 <link rel="stylesheet" href="../../../css/jquery.gritter.css" />
 <link href='http:/fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
 
@@ -170,15 +170,6 @@ function createNotificationLi(n)
     return li;
 }
 
-/*
-<li>
-  <div class="user-thumb"> <img width="40" height="40" alt="User" script src="../../../img/demo/av1.jpg"> </div>
-  <div class="article-post"> <span class="user-info"> By: john Deo / Date: 2 Aug 2012 / Time:09:27 AM </span>
-    <p><a href="#">This is a much longer one that will go on for a few lines.It has multiple paragraphs and is full of waffle to pad out the comment.</a> </p>
-  </div>
-</li>
-*/
-
 </script>
 
 
@@ -186,18 +177,22 @@ function createNotificationLi(n)
 <body>
 
 <!--sidebar-menu-->
+
 <jsp:include page="sidebar.jsp"/>
+
 <!--sidebar-menu-->
 
 <!--main-container-part-->
 <div id="content">
+
 <!--breadcrumbs-->
   <div id="content-header">
     <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></div>
   </div>
 <!--End-breadcrumbs-->
 
-  <div class="container-fluid">
+  <div class="container-fluid" >
+
     <jsp:include page="actions.jsp"/>
 
     <div class="row-fluid">

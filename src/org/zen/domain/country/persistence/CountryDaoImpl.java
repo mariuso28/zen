@@ -12,22 +12,47 @@ import org.zen.persistence.PersistenceRuntimeException;
 
 public class CountryDaoImpl extends NamedParameterJdbcDaoSupport implements CountryDao {
 	private static Logger log = Logger.getLogger(CountryDaoImpl.class);
+	private List<CountryDisplayJson> countryListEn = null;						// performance cache - need restart if country table changes
+	private List<CountryDisplayJson> countryListKm = null;
+	
+	@Override
+	public void initializeCountryLists()
+	{
+		 getCountryList("en");
+		 getCountryList("km");
+	}
 	
 	@Override
 	public List<CountryDisplayJson> getCountryList(String isoCode) {
 		try
 		{
-			String sql = "SELECT country,code FROM country ORDER BY displayorder,country";
-			if (isoCode!=null && !isoCode.equals("") && !isoCode.equals("en"))
-				sql = "SELECT country" + isoCode + " AS country,code FROM country ORDER BY displayorder,country";
-			List<CountryDisplayJson> countries = getJdbcTemplate().query(sql,BeanPropertyRowMapper.newInstance(CountryDisplayJson.class));
-			return countries;
+			if (isIsoCodeEn(isoCode))
+			{	
+				if (countryListEn==null)
+				{
+					String sql = "SELECT country,code FROM country ORDER BY displayorder,country";
+					countryListEn = getJdbcTemplate().query(sql,BeanPropertyRowMapper.newInstance(CountryDisplayJson.class));
+				}
+				return countryListEn;
+
+			}
+			if (countryListKm==null)
+			{
+				String sql = "SELECT country" + isoCode + " AS country,code FROM country ORDER BY displayorder,country" + isoCode;
+				countryListKm = getJdbcTemplate().query(sql,BeanPropertyRowMapper.newInstance(CountryDisplayJson.class));
+			}
+			return countryListKm;
 		}
 		catch (DataAccessException e)
 		{
 			log.error("Could not execute : " + e.getMessage(),e);
 			throw new PersistenceRuntimeException("Could not execute getCountryList : " + e.getMessage());
 		}
+	}
+	
+	private boolean isIsoCodeEn(String isoCode)
+	{
+		return isoCode==null || isoCode.equals("") || isoCode.equals("en");
 	}
 	
 	@Override

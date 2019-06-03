@@ -11,4 +11,5 @@ public interface CountryDao {
 	public CountryJson getCountryByCode(String code);
 	public List<CountryDisplayJson> getCountryList(String isoCode);
 	public void update(CountryJson country);
+	public void initializeCountryLists();
 }

@@ -83,7 +83,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 				"/zx4/web/anon/**",
 				"/css/**/**",
 				"/fonts/**",
-				"/font-awesome/**",
+				"/font-awesome/**/**",
 				"/images/**",
 				"/js/**",
 				"/oauth/token"

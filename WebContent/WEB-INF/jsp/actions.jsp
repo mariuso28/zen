@@ -5,7 +5,7 @@ function testAllowed()
 {
   if (punter.rating!=0)
     return true;
-  alert("Feature not available until payment to join complete.");
+  alert(labels['sbDbAlert2']);
   return false;
 }
 
@@ -13,7 +13,7 @@ function testZen()
 {
   if (punter.rating>-1)
     return true;
-  alert("Feature not available for top level Zen.");
+  alert(labels['sbDbAlert1']);
   return false;
 }
 

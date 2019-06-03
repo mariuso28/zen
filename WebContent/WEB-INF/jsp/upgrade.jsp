@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="../../../css/matrix-style.css" />
 <link rel="stylesheet" href="../../../css/matrix-media.css" />
 <link rel="stylesheet" href="../../../css/datepicker.css" />
-<link href="../../font-awesome/css/font-awesome.css" rel="stylesheet" />
+<link href="../../../css/font-awesome.css" rel="stylesheet" />
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
 
 <style>
@@ -121,10 +121,10 @@ function submitTransactionDetails()
   				var result = $.parseJSON(JSON.stringify(data));
   				if (result.status != 'OK')
   				{
-  					alert("Failed " + result.message);
+  					alert(result.message);
   					return;
   				}
-  				alert("Transaction details successfully submitted.\nCheck email for comfirmation of receipt.");
+  				alert(labels['upAlert1']+"\n"+labels['upAlert2']);
           redirectDashboard();
   			},
   			error:function (e) {

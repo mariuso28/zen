@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="../../../css/matrix-style.css" />
 <link rel="stylesheet" href="../../../css/matrix-media.css" />
 <link rel="stylesheet" href="../../../css/jquery.gritter.css" />
+<link href="../../../css/font-awesome.css" rel="stylesheet" />
 <link href='http:/fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
 
 
@@ -362,7 +363,7 @@ function Search() {
     <jsp:include page="actions.jsp"/>
 <!--End-Action boxes-->
     <div id="content-header">
-      <h2 id="myDownlineLabel">My Downline</h2>
+      <h2 id="myDownlineLabel"></h2>
     </div>
 
     <div style="overflow-x: auto">
