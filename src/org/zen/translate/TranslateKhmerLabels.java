@@ -41,7 +41,7 @@ public class TranslateKhmerLabels {
 				"Transaction Information", "Transaction Date", "Transaction Details","Transaction Slip",
 				"Approve", "Reject", "Payment To", "Payment From","Date in (mm-dd-yyyy) format",
 				"None","Due","Pending","Successful","Failed",
-				"Zen Activate Member At Rank ","Zen Upgrade Member To Rank ",
+				"Activate Member At Rank ","Upgrade Member To Rank ",
 				"Payment approved. Member upgraded and notified.","Payment rejected. Member notified.",
 				"Upgrade", "Contratulations!", "Up Line Information", "Rank", "Make Payment to Up Line",		// upgrade
 				"Submit Payment Form", "Submission Information", "Title", "Upload Transaction Slip",

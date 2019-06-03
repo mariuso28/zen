@@ -292,11 +292,14 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy hh:mm");
 		xj.setDate(sdf.format(xt.getDate()));
 		String desc = xt.getDescription().trim();
-		int pos = desc.lastIndexOf("Rank ")+5;
+		int pos = desc.indexOf("Zen ");
+		if (pos>=0)
+			desc = desc.substring(pos+4);
+		pos = desc.lastIndexOf("Rank ")+5;
 		if (pos<0)
 			xj.setDescription(x(xt.getDescription()));
 		else
-			xj.setDescription(x(desc.substring(0,pos))+desc.substring(pos));
+			xj.setDescription("Zen " + x(desc.substring(0,pos))+desc.substring(pos));
 		return xj;
 	}
 
@@ -633,7 +636,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		if (!isSystemOwned)
 			return pj;
 			
-		pj.setGender(punter.getGender());
+		pj.setGender(services.getTxm().xlate(punter.getGender()));
 		pj.setEmail(punter.getEmail());
 		pj.setPhone(punter.getPhone());
 		pj.setPassportIc(punter.getPassportIc());
