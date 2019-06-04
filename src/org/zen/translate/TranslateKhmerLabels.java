@@ -23,6 +23,8 @@ public class TranslateKhmerLabels {
 		String[] src = { "Dashboard", "My Profile", "Edit Profile", "Change Password", "Agents", "Agent List", "Upgrade",
 				"New Registration", "Payment", "Payment Received", "Payment Sent", "Logout", "Password",
 				"Feature not available for top level Zen.","Feature not available until payment to join complete.",
+				"You are not eligible for upgrade at this time.", 
+				"You cannot create a new registration at this time until one of your existing registrations (or downstream member) has paid the joining fee. Please try later.",
 				"My User Profile","Personal Information","User Name", "Zen Sponsor", "Full Name", "Passport ID", // Profile/Reg Stuff
 				"Gender", "Male", "Female", "Other", "Address", "Postcode", "State", "Country", "Phone",
 				"Email", "Your Payment Methods :", "Number", "Method", "Country", "Account Number", "Delete",

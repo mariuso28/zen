@@ -151,11 +151,11 @@ function login() {
       <div class="control-group normal_text">
       <h3>
         <a href="/zen/zx4/web/anon/changeLanguage?isoCode=km">
-          <img src="../../../img/flag_km.png" alt="Logo" width="100"/>
+          <img src="../../../img/flag_km.png" alt="Logo" width="50"/>
         </a>
-        <img src="../../../img/GoldenCircle_02.png" alt="Logo" width="100"/>
+        <img src="../../../img/GoldenCircle_02.png" alt="Logo" width="150"/>
         <a href="/zen/zx4/web/anon/changeLanguage?isoCode=en">
-          <img src="../../../img/flag_en.png" alt="Logo" width="100"/>
+          <img src="../../../img/flag_en.png" alt="Logo" width="50"/>
         </a>
       </h3>
       </div>

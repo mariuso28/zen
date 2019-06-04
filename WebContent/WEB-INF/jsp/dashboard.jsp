@@ -12,15 +12,9 @@
 <link rel="stylesheet" href="../../../css/fullcalendar.css" />
 <link rel="stylesheet" href="../../../css/matrix-style.css" />
 <link rel="stylesheet" href="../../../css/matrix-media.css" />
-<link href="../../../css/font-awesome.css" rel="stylesheet" />
+<link rel="stylesheet" href="../../../css/font-awesome.css" />
 <link rel="stylesheet" href="../../../css/jquery.gritter.css" />
 <link href='http:/fonts.googleapis.com/css?family=Open+Sans:400,700,800' rel='stylesheet' type='text/css'>
-
-<style>
-  body {
-    font-size: 16px;
-  }
-</style>
 
 <script>
 
@@ -170,7 +164,28 @@ function createNotificationLi(n)
     return li;
 }
 
+
 </script>
+
+<style>
+  body {
+    font-size: 16px;
+    width:100%;
+  }
+
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+    padding: 10px;
+  }
+
+  .logo{
+    text-align: center;
+  }
+
+</style>
 
 
 </head>
@@ -182,17 +197,13 @@ function createNotificationLi(n)
 
 <!--sidebar-menu-->
 
+
+
 <!--main-container-part-->
 <div id="content">
 
-<!--breadcrumbs-->
-  <div id="content-header">
-    <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Home</a></div>
-  </div>
-<!--End-breadcrumbs-->
 
   <div class="container-fluid" >
-
     <jsp:include page="actions.jsp"/>
 
     <div class="row-fluid">

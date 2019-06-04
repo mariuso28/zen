@@ -323,7 +323,13 @@ public class PunterMgr {
 		Punter sponsor = validateSponsor(profile.getSponsorContact());
 		Punter parent = null;
 		if (sponsor!=null)
-			parent = getParent(sponsor);
+		{
+			parent = getAvailableParent(sponsor);
+			if (parent==null)
+			{
+				throw new PunterMgrException(x("You cannot create a new registration at this time until one of your existing registrations (or downstream member) has paid the joining fee. Please try later.")); 				
+			}
+		}
 		Punter punter = createPunter(profile,sponsor,parent);
 		
 		try
@@ -481,27 +487,105 @@ public class PunterMgr {
 		return newRating+1;
 	}
 	
-	private Punter getParent(Punter root)
+	private void getQualifiedParents(List<Punter> parents,Punter punter)
+	{
+		List<Punter> children = punterDao.getChildren(punter);
+		if (children.size()<ZenModelOriginal.FULLCHILDREN)
+		{
+			parents.add(punter);
+			return;
+		}
+		for (Punter p : children)
+			if (p.getRating()!=0)
+				getQualifiedParents(parents,punter);
+	}
+	
+
+/*
+	1. if top punter qualifies use
+	2. find list of qualifying children
+	3.  if n>0 find use child with least downline
+	4.  if n==0 && no child has qualifying children
+			use null
+	5. if childs has qualifying children
+	6. build a compound list of qualifying children
+	
+*/
+	
+	public Punter getAvailableParent(Punter root)
 	{
 		List<Punter> children = punterDao.getChildren(root);
 		if (children.size()<ZenModelOriginal.FULLCHILDREN)
 			return root;
-		Punter parent = null;
-		int max = ZenModelOriginal.FULLCHILDREN;
-		for (Punter child : children)
+		while (true)
 		{
-			List<Punter> children1 = punterDao.getChildren(child);
-			if (children1.size()<max)
+			List<Punter> nzc = getNonZeroRatedChildren(children);
+			if (nzc.isEmpty())
+				return null;
+			List<Punter> possibles = getPossibleParents(nzc);
+			if (!possibles.isEmpty())
+				return getLeastDownlinePossible(possibles);
+			List<Punter> fullNzc = getFullNzc(nzc);
+			children.clear();
+			for (Punter p : fullNzc)
 			{
-				parent = child;
-				max = children1.size();
+				children.addAll(punterDao.getChildren(p));
 			}
 		}
-		if (parent != null)
-			return parent;
-		Random r = new Random();
-		parent = children.get(r.nextInt(ZenModelOriginal.FULLCHILDREN));
-		return getParent(parent);
+	}
+	
+	private List<Punter> getFullNzc(List<Punter> nzc) {
+		List<Punter> fullNzc = new ArrayList<Punter>();
+		for (Punter p : nzc)
+			if (p.getChildren().size()==ZenModelOriginal.FULLCHILDREN)
+				fullNzc.add(p);
+		return fullNzc;						// will be at least 1
+	}
+
+	private Punter getLeastDownlinePossible(List<Punter> possibles) {
+		int least = Integer.MAX_VALUE;
+		Punter poss = null;
+		for (Punter p : possibles)
+		{
+			int cnt = getDownLineCnt(p);
+			if (cnt < least)
+			{
+				cnt = least;
+				least = cnt;
+				poss = p;
+			}
+		}
+		return poss;
+	}
+
+	private int getDownLineCnt(Punter p) {
+		List<Punter> children = punterDao.getChildren(p);
+		int cnt = children.size();
+		for (Punter c : children)
+			cnt += getDownLineCnt(c);
+		return cnt;
+	}
+
+	private List<Punter> getPossibleParents(List<Punter> nzc) {
+		List<Punter> possibles = new ArrayList<Punter>();
+		for (Punter c1 : nzc)
+		{
+			punterDao.getChildren(c1);
+			if (c1.getRating()>0 && c1.getChildren().size()<ZenModelOriginal.FULLCHILDREN)
+				possibles.add(c1);
+		}
+		return possibles;
+	}
+
+	private List<Punter> getNonZeroRatedChildren(List<Punter> children) {
+	
+		List<Punter> nzc = new ArrayList<Punter>();
+		for (Punter child : children)
+		{
+			if (child.getRating()>0)
+				nzc.add(child);
+		}
+		return nzc;
 	}
 
 	private Punter validateSponsor(String sponsorContact) throws PunterMgrException {
@@ -603,6 +687,8 @@ public class PunterMgr {
 		try
 		{
 			Punter punter = punterDao.getByContact(contact);
+			if (punter==null)
+				return null;
 			populatePunter(punter);
 			return punter;
 		}

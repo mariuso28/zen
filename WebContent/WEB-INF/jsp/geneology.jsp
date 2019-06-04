@@ -26,10 +26,16 @@
   body {
     font-size: 16px;
   }
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+    padding: 10px;
+  }
 
-  .toplogo {
-    width: 220px;
-    height: 220px;
+  .logo{
+    text-align: center;
   }
 
 </style>

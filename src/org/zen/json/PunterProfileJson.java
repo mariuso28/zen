@@ -22,6 +22,8 @@ public class PunterProfileJson {
 	private String upstreamContact;
 	private String sponsorContact;
 	private boolean systemOwned;
+	private boolean canUpgrade;
+	private boolean canRecruit;
 	private int rating;
 	private ActionJson actions;
 	private Date activated;
@@ -190,6 +192,22 @@ public class PunterProfileJson {
 
 	public void setCountryCode(String countryCode) {
 		this.countryCode = countryCode;
+	}
+
+	public boolean isCanUpgrade() {
+		return canUpgrade;
+	}
+
+	public void setCanUpgrade(boolean canUpgrade) {
+		this.canUpgrade = canUpgrade;
+	}
+
+	public boolean isCanRecruit() {
+		return canRecruit;
+	}
+
+	public void setCanRecruit(boolean canRecruit) {
+		this.canRecruit = canRecruit;
 	}
 
 	

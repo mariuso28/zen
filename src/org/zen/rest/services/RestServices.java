@@ -633,6 +633,8 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		pj.setRating(punter.getRating());
 		pj.setActivated(punter.getActivated());
 		pj.setPaymentMethods(punter.getPaymentMethods());
+		pj.setCanUpgrade(testUpgradable(punter));
+		pj.setCanRecruit(testCanRecruit(punter));
 		if (!isSystemOwned)
 			return pj;
 			
@@ -651,6 +653,15 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			pj.setCountry(cj.getCountry());
 	
 		return pj;
+	}
+
+	private boolean testCanRecruit(Punter punter) {
+		return punterMgr.getAvailableParent(punter) != null;
+	}
+
+	private boolean testUpgradable(Punter punter) {
+		UpgradeStatus us = punter.getUpgradeStatus();
+		return us.getPaymentStatus().equals(PaymentStatus.PAYMENTDUE) || us.getPaymentStatus().equals(PaymentStatus.PAYMENTFAIL);
 	}
 
 	public List<PunterPaymentMethodJson> getPunterPaymentMethods(String contact) {

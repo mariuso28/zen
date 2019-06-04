@@ -213,6 +213,8 @@ public class TranslationLabels {
 		
 		map.put("sbDbAlert1",xlate("Feature not available for top level Zen."));
 		map.put("sbDbAlert2",xlate("Feature not available until payment to join complete."));
+		map.put("sbDbAlert3",xlate("You are not eligible for upgrade at this time."));
+		map.put("sbDbAlert4",xlate("You cannot create a new registration at this time until one of your existing registrations (or downstream member) has paid the joining fee. Please try later."));
 	}
 	
 	private Map<String,String> setupPaymentSentLabels() {

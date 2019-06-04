@@ -1,41 +1,3 @@
-<script>
-
-function testCanRecruit()
-{
-  if (punter.rating!=0)
-  {
-    if (punter.canRecruit==false)
-    {
-      alert(labels['sbDbAlert4']);
-      return false;
-    }
-    return true;
-  }
-  alert(labels['sbDbAlert2']);
-  return false;
-}
-
-function testZen()
-{
-  if (punter.rating>-1)
-    return true;
-  alert(labels['sbDbAlert1']);
-  return false;
-}
-
-function testUpgrade()
-{
-  if (!testZen())
-    return false;
-  if (punter.canUpgrade==false)
-  {
-    alert(labels['sbDbAlert3']);
-    return false;
-  }
-  return true;
-}
-
-</script>
 
 
 <div id="sidebar">
@@ -54,10 +16,10 @@ function testUpgrade()
     <li class="submenu"> <a href="#"><i class="icon icon-group"></i><span id="sbAgentsLabel"></span>
     <span class="caret" style="margin-left:10px; margin-top:8px; border"></span></a>
       <ul>
-        <li><a href="/zen/zx4/web/anon/goGeneology"><span id="sbAgentListLabel"></span></a></li>
+        <li><a href="/zen/zx4/web/anon/goGeneology" onclick="return testAllowed()"><span id="sbAgentListLabel"></span></a></li>
         <li><a href="/zen/zx4/web/anon/goUpgrade" onclick="return testZen()"><span id="sbUpgradeLabel"></span>
                 <span class="label label-important" style="margin-left:5px;" id='upgradable'></span></a></li>
-        <li><a href="/zen/zx4/web/anon/goNewRegistration" onclick="return testCanRecruit()"><span id="sbNewRegistrationLabel"></a></li>
+        <li><a href="/zen/zx4/web/anon/goNewRegistration" onclick="return testAllowed()"><span id="sbNewRegistrationLabel"></a></li>
       </ul>
     </li>
     <li class="submenu"> <a href="#"><i class="icon icon-money"></i>
@@ -74,10 +36,10 @@ function testUpgrade()
     <li><a href="/zen/zx4/web/anon/login"><i class="icon icon-off"></i><span id="sbLogoutLabel"></a> </li>
 
       <a href="/zen/zx4/web/anon/changeLanguage?isoCode=km">
-        <img src="../../../img/flag_km.png" alt="Logo" width="45" class="center"/>
+        <img src="../../../img/flag_km.png" alt="Logo" width="50" class="center"/>
       </a>
       <a href="/zen/zx4/web/anon/changeLanguage?isoCode=en">
-        <img src="../../../img/flag_en.png" alt="Logo" width="45" class="center"/>
+        <img src="../../../img/flag_en.png" alt="Logo" width="50" class="center"/>
       </a>
 
   </ul>

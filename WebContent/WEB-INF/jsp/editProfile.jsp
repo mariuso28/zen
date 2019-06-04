@@ -22,9 +22,16 @@
     font-size: 16px;
   }
 
-  .toplogo {
-    width: 220px;
-    height: 220px;
+  .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+    padding: 10px;
+  }
+
+  .logo{
+    text-align: center;
   }
 
   .required-field::before {

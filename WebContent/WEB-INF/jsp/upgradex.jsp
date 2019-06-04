@@ -18,37 +18,38 @@
   body {
     font-size: 16px;
   }
-  .center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 30%;
-    padding: 10px;
+
+  .toplogo {
+    width: 220px;
+    height: 220px;
   }
 
-  .logo{
-    text-align: center;
-  }
   .table th {
     font-size: 14px;
   }
+
   .a {
     float: left;
     white-space: nowrap;
     overflow:hidden;
   }
+
 </style>
 </head>
 
 <script>
+
 function redirectDashboard()
 {
   window.location.replace("/zen/zx4/web/anon/goDashboard");
 }
+
 var labels;
+
 function getLabels()
 {
   $.ajax({
+
  type: "GET",
       url : '/zen/zx4/api/anon/getLabels?jsp=upgrade',
   cache: false,
@@ -61,10 +62,12 @@ function getLabels()
            alert("could not getLabels")
             return null;
          }
+
        var resultJson = $.parseJSON(JSON.stringify(data));
        if (resultJson.status=='OK')
        {
          labels = resultJson.result;
+
        }
        else
        {
@@ -76,6 +79,7 @@ function getLabels()
      }
   });
 }
+
 function displayLabels()
 {
 //  console.log(labels);
@@ -88,17 +92,22 @@ function displayLabels()
       elem.innerHTML=val;
   }
 }
+
+
 function submitTransactionDetails()
 {
     access_token = sessionStorage.getItem("access_token");
     var bearerHeader = 'Bearer ' + access_token;
+
   	// Attach file
   	var uploadForm = document.getElementById('upload-form');
   	var formData = new FormData(uploadForm);
+
     details = document.getElementById("transactionDetails").value;
     date = document.getElementById("transactionDate").value;
   	formData.append("transactionDate",date);
     formData.append("transactionDetails",details);
+
   	$.ajax({
   	    url: "/zen/zx4/api/punter/submitTransactionDetails",
   			headers: { 'Authorization': bearerHeader },
@@ -124,12 +133,17 @@ function submitTransactionDetails()
         }
   	});
 }
+
 var punter;
+
 function getPunter() {
+
 	access_token = sessionStorage.getItem("access_token");
 //	alert(access_token);
+
   var bearerHeader = 'Bearer ' + access_token;
      $.ajax({
+
     type: "GET",
          url : '/zen/zx4/api/punter/getPunter',
     headers: { 'Authorization': bearerHeader },
@@ -144,6 +158,7 @@ function getPunter() {
 							alert("could not get punter")
                return;
             }
+
           var resultJson = $.parseJSON(JSON.stringify(data));
 					if (resultJson.status!='OK')
 					{
@@ -153,18 +168,25 @@ function getPunter() {
 					}
     //      alert(JSON.stringify(resultJson.result));
 					punter = resultJson.result;
+
         },
 				error:function (e) {
 	  			alert("getPunter ERROR : " + e.status + " - " + e.statusText);
 	      }
      });
  }
+
+
 var upgradeRequest;
+
 function getUpgradeRequest() {
+
  	access_token = sessionStorage.getItem("access_token");
  //	alert(access_token);
+
    var bearerHeader = 'Bearer ' + access_token;
       $.ajax({
+
      type: "GET",
           url : '/zen/zx4/api/punter/getUpgradeRequest',
      headers: { 'Authorization': bearerHeader },
@@ -179,6 +201,7 @@ function getUpgradeRequest() {
  							alert("could not get UpgradeRequest")
                 return;
              }
+
            var resultJson = $.parseJSON(JSON.stringify(data));
  					if (resultJson.status!='OK')
  					{
@@ -195,24 +218,24 @@ function getUpgradeRequest() {
  	      }
       });
 }
+
 function displayUpgradeRequest()
 {
-  document.getElementById("transactionDate").value=upgradeRequest.transactionDate;
   if (punter.rating==0)
   {
-    document.getElementById("msg1").innerHTML = labels['upLabel1'] + "<strong>"
-        + labels['rankLabel'] +
-        ' 1</strong>' + labels['upLabel2'];
-    document.getElementById("title").value = labels['upLabel3'] + "1";
-    document.getElementById("fee").innerHTML = labels['upLabel4'] +"USD " + upgradeRequest.fee;
+    document.getElementById("msg1").innerHTML = labels['uplabel1'] + "<strong>"
+        + labels['Rank'] +
+        '1</strong>' + labels['uplabel2'];
+    document.getElementById("title").value = labels['uplabel3'] + "1";
+    document.getElementById("fee").innerHTML = labels['uplabel4'] +"USD " + upgradeRequest.fee;
   }
   else {
-    document.getElementById("msg1").innerHTML = labels['upLabel5'] +"<strong> "
+    document.getElementById("msg1").innerHTML = labels['uplabel5'] +"<strong>"
                     + upgradeRequest.currentRank +
-    "</strong>." + labels['upLabel6']  + labels['Rank'] + " " + upgradeRequest.upgradeRank
-    + "</strong>"+ labels['upLabel7'];
-    document.getElementById("title").value = labels['upLabel8'] + upgradeRequest.upgradeRank;
-    document.getElementById("fee").innerHTML = labels['upLabel9']+ "USD " + upgradeRequest.fee;
+    "</strong>." + labels['uplabel6']  + labels['Rank'] + upgradeRequest.upgradeRank
+    + "</strong>"+ labels['uplabel7'];
+    document.getElementById("title").value = labels['uplabel8'] + upgradeRequest.upgradeRank;
+    document.getElementById("fee").innerHTML = labels['uplabel9']+ "USD " + upgradeRequest.fee;
   }
   document.getElementById('uplineFullName').appendChild(document.createTextNode(upgradeRequest.upline.fullName));
   document.getElementById('uplineContact').appendChild(document.createTextNode(upgradeRequest.upline.contact));
@@ -220,8 +243,10 @@ function displayUpgradeRequest()
   document.getElementById('uplineCountry').appendChild(document.createTextNode(upgradeRequest.upline.country));
 */
   document.getElementById('uplineRank').appendChild(document.createTextNode(upgradeRequest.upline.rating));
+
   var pl = document.getElementById('paymentMethods');
   pl.innerHTML="";
+
   upgradeRequest.upline.paymentMethods.forEach((pm, i) => {
       tr = document.createElement('tr');
       tr.className = 'gradeA';
@@ -236,11 +261,13 @@ function displayUpgradeRequest()
       tr.appendChild(td);
       pl.appendChild(tr);
     })
+
     document.getElementById("contact").value = punter.contact;
     document.getElementById("fullName").value = punter.fullName;
 //    document.getElementById("phone").value = punter.phone;
 //    document.getElementById("email").value = punter.email;
 }
+
 </script>
 
 <body>
@@ -258,7 +285,7 @@ function displayUpgradeRequest()
       <jsp:include page="actions.jsp"/>
 <!--End-Action boxes-->
     <div id="content-header">
-      <h4 id="upgradeLabel"></h4>
+      <h2 id="upgradeLabel"></h2>
     </div>
     <div class="alert alert2"> <a class="close" data-dismiss="alert" href="#">X</a>
       <h4 class="alert-heading" id="congratulationsLabel"></h4>
@@ -429,17 +456,22 @@ function displayUpgradeRequest()
 <script src="../../../js/matrix.tables.js"></script>
 
 <script>
+
 $.ajaxSetup({
    async: false
 });
 
   getLabels();
+
   getPunter();
 //set Important Lables
   document.getElementById('paymentsPending').innerHTML = punter.actions.paymentsPending;
   document.getElementById('upgradable').innerHTML = punter.actions.upgradable;
+
   getUpgradeRequest();
+
   displayLabels();
+
 </script>
 
 </body>

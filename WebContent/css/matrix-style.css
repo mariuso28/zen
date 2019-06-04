@@ -79,7 +79,7 @@ hr{ border-top-color:#dadada;}
 }
 #search button {
 	border: 0;
-	margin-left:-3px; 
+	margin-left:-3px;
 	margin-top: -11px;
 	padding: 5px 10px 4px;
 }
@@ -120,7 +120,7 @@ hr{ border-top-color:#dadada;}
 	color: #ffffff;  background:#000;
 }
 #user-nav > ul > li > a > i, #sidebar li a i {
-	opacity: .5; 
+	opacity: .5;
 	margin-top: 2px;
 }
 #user-nav > ul > li > a:hover > i, #user-nav > ul > li.open > a > i {
@@ -157,7 +157,7 @@ hr{ border-top-color:#dadada;}
 	position: relative;
 }
 #sidebar > ul > li > a {
-	padding: 10px 0 10px 15px;
+	padding: 10px 0 10px 11px;
 	display: block;
 	color: #939da8;
 }
@@ -309,7 +309,7 @@ hr{ border-top-color:#dadada;}
 .stat-boxes2 {
 	display: inline-block;
 	list-style: none outside none;
-	margin:0px; 
+	margin:0px;
 	text-align: center;
 }
 .stat-boxes2 li {
@@ -374,7 +374,7 @@ hr{ border-top-color:#dadada;}
 	margin: 0 10px 20px;
 }
 .quick-actions li a {
-	padding:10px 30px; 
+	padding:10px 30px;
 }
 .stats-plain li h4 {
 	font-size: 40px;
@@ -395,7 +395,7 @@ hr{ border-top-color:#dadada;}
 }
 .quick-actions li a i[class^="icon-"], .quick-actions li a i[class*=" icon-"] {
 	font-size:30px;
-	display: block;	
+	display: block;
 	margin: 0 auto 5px;
 }
 .quick-actions-horizontal li a i[class^="icon-"], .quick-actions-horizontal li a i[class*=" icon-"] {
@@ -537,10 +537,10 @@ hr{ border-top-color:#dadada;}
 .widget-title, .modal-header, .table th, div.dataTables_wrapper .ui-widget-header {
 	 background:#efefef;
 	border-bottom: 1px solid #CDCDCD;
-	height: 36px;  
+	height: 36px;
 }
 .widget-title .nav-tabs {
-	border-bottom: 0 none; 
+	border-bottom: 0 none;
 }
 .widget-title .nav-tabs li a {
 	border-bottom: medium none !important;
@@ -552,7 +552,7 @@ hr{ border-top-color:#dadada;}
 	margin: 0;
 	outline: medium none;
 	padding: 9px 10px 8px;
-	font-weight: bold; 
+	font-weight: bold;
 	text-shadow: 0 1px 0 #FFFFFF;
 }
 .widget-title .nav-tabs li:first-child a {
@@ -1313,7 +1313,7 @@ form {
 }
 #sidebar .content{ display:none;}
 #content {
-	margin-left: 0 !important;
+	margin-left: 43 !important;
 	border-top-left-radius: 0;
 	margin-top:0px;
 }
@@ -1338,92 +1338,63 @@ form {
 	margin-right: 0;
 	left: 30%;
 }
-#sidebar {
-	float: none;
-	width: 100% !important;
-	display:block;
-	position:relative;
-	top:0px;
-}
-#sidebar > ul {
-	margin:0px;
-	padding:0px;
-	width:100%;
-	display:block;
-	z-index:999;
-	position:relative
+#sidebar > ul{
+	display:block !important;
 }
 #sidebar > ul > li {
-	list-style-type:none;
-	display:block;
-	border-top:1px solid #41BEDD;
-	float:none !important;
-	margin:0px;
-	position:relative;
-	padding:2px 10px;
-	cursor:pointer
+	float:none;
 }
 #sidebar > ul > li:hover ul {
-	display:none;
-}
-#sidebar > ul > li:hover {
-	background-color:#27a9e3;
-}
-#sidebar > ul > li:hover a {
-	background:none;
-}
-#sidebar > ul li ul {
-	margin:0px;
-	padding:0px;
-	top:35px; left:0px;
-	z-index:999;
-	display:none;
-	position:absolute;
-	width:100%;
-	min-width:100%;
-	border-radius:none;
-}
-#sidebar > ul li ul li {
-	list-style-type:none;
-	margin:0px;
-	font-size:12px;
-	line-height:30px;
-}
-#sidebar > ul li ul li a {
 	display:block;
-	padding:5px 10px;
-	color:#fff;
-	text-decoration:none;
-	font-weight:bold;
 }
-#sidebar > ul li ul li:hover a {
-	border-radius:0px;
+#sidebar, #sidebar > ul {
+	width: 43px;
+	display: block;
+	position: absolute;
+	height:100%;
+	z-index:1;
 }
-#sidebar > ul li span {
-	cursor:pointer;
-	margin:0px 2px 0 5px;
-	font-weight:bold;
-	color:#fff;
-	font-size:12px;
+#sidebar > ul ul {
+	display: block;
+	position: absolute;
+	left:43px;
+	top: 0;
+	min-width: 150px;
+	list-style: none;
 }
-#sidebar > ul li a i {
-	background-image: url("../img/glyphicons-halflings-white.png");
-	margin-top:4px;
-	vertical-align: top;
+#sidebar > ul ul li a {
+	white-space: nowrap;
+	padding: 10px 25px;
+}
+#sidebar > ul ul:before {
+	border-top: 7px solid transparent;
+	border-bottom: 7px solid transparent;
+	content: "";
+	display: inline-block;
+	left: -6px;
+	position: absolute;
+	top: 11px;
+}
+#sidebar > ul ul:after {
+	content: "";
+	display: inline-block;
+	left: -5px;
+	position: absolute;
+	top: 12px;
 }
 #sidebar > a {
-	padding: 9px 20px 9px 15px;
-	display: block !important;
-	color: #eeeeee;
-	float:none !important;
-	font-size:12px;
-	font-weight:bold
+	display: none !important;
 }
-#sidebar > ul > li > a {
-	padding:5px;
-	display:block;
-	color: #AAAAAA;
+#sidebar > ul > li.open.submenu > a {
+	border-bottom: none !important;
 }
+#sidebar > ul > li > a > span {
+	display: none;
+}
+#content {
+	margin-left: 43px;
+}
+#sidebar .content{ display:none;}
 .widget-title .buttons > .btn {
 	width: 11px;
 	white-space: nowrap;
@@ -1478,6 +1449,9 @@ body {
 }
 #content {
 	margin-top:0px;
+}
+#sidebar > ul {
+	display:block !important;
 }
 #sidebar > ul > li {
 	float:none;
