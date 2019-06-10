@@ -31,6 +31,7 @@ public class Punter extends BaseUser {
 	private int level;
 	private Date created;
 	private Date updated;
+	private long downlineCnt;
 	
 	public Punter()
 	{
@@ -208,6 +209,14 @@ public class Punter extends BaseUser {
 
 	public void setUpdated(Date updated) {
 		this.updated = updated;
+	}
+
+	public long getDownlineCnt() {
+		return downlineCnt;
+	}
+
+	public void setDownlineCnt(long downlineCnt) {
+		this.downlineCnt = downlineCnt;
 	}
 	
 }

@@ -30,4 +30,5 @@ public interface PunterDao {
 	public List<Punter> getPuntersForLevel(int level);
 	public int getMaxLevelPopulated();
 	public List<Punter> getAllPunters();
+	public Punter getAvailableParent(UUID parentId);
 }

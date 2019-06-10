@@ -1,12 +1,11 @@
 package org.zen.user.test;
 
+import java.util.UUID;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.zen.persistence.home.Home;
 import org.zen.user.punter.Punter;
-import org.zen.user.punter.mgr.PunterMgr;
 
 public class TestGetAvailableParent {
 
@@ -24,8 +23,9 @@ public class TestGetAvailableParent {
 				System.out.println("NOT FOUND");
 				System.exit(0);
 			}
-			PunterMgr pm = (PunterMgr) context.getBean("punterMgr");
-			Punter parent = pm.getAvailableParent(p);
+			Punter parent = home.getPunterDao().getAvailableParent(UUID.fromString("24e6da31-89bc-43c1-a44d-59d0cdae7f4f"));
+			if (parent==null)
+				System.out.println("null");
 			System.out.println(parent.getContact());
 		
 		} catch (Exception e) {

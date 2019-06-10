@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 
 import org.apache.commons.text.RandomStringGenerator;
@@ -487,31 +486,12 @@ public class PunterMgr {
 		return newRating+1;
 	}
 	
-	private void getQualifiedParents(List<Punter> parents,Punter punter)
+	public Punter getAvailableParent(Punter root)
 	{
-		List<Punter> children = punterDao.getChildren(punter);
-		if (children.size()<ZenModelOriginal.FULLCHILDREN)
-		{
-			parents.add(punter);
-			return;
-		}
-		for (Punter p : children)
-			if (p.getRating()!=0)
-				getQualifiedParents(parents,punter);
+		return punterDao.getAvailableParent(root.getId());
 	}
-	
 
 /*
-	1. if top punter qualifies use
-	2. find list of qualifying children
-	3.  if n>0 find use child with least downline
-	4.  if n==0 && no child has qualifying children
-			use null
-	5. if childs has qualifying children
-	6. build a compound list of qualifying children
-	
-*/
-	
 	public Punter getAvailableParent(Punter root)
 	{
 		List<Punter> children = punterDao.getChildren(root);
@@ -587,7 +567,7 @@ public class PunterMgr {
 		}
 		return nzc;
 	}
-
+*/
 	private Punter validateSponsor(String sponsorContact) throws PunterMgrException {
 		if (sponsorContact==null)				// root;
 			return null;

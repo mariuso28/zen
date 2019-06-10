@@ -17,12 +17,37 @@ import org.zen.json.PunterPaymentMethodJson;
 import org.zen.persistence.PersistenceRuntimeException;
 import org.zen.user.account.Account;
 import org.zen.user.punter.Punter;
+import org.zen.user.punter.PunterHead;
 import org.zen.user.punter.upgrade.UpgradeStatus;
 
 @Transactional
 public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements PunterDao {
 	private static Logger log = Logger.getLogger(PunterDaoImpl.class);
-
+	private PunterSupport punterSupport;
+	
+	public PunterDaoImpl()
+	{
+	}
+	
+	@Override
+	public Punter getAvailableParent(UUID parentId)
+	{
+		if (punterSupport==null)
+			punterSupport = new PunterSupport(getJdbcTemplate());
+		try
+		{
+			PunterHead ph = punterSupport.getAvailableParent(parentId);
+			if (ph==null)
+				return null;
+			return getById(ph.getId());
+		}
+		catch (DataAccessException e1)
+		{
+				log.error("Could not execute : " + e1.getMessage(),e1);
+				throw new PersistenceRuntimeException("Could not execute getAvailableParent : " + e1.getMessage());
+		}	
+	}
+	
 	@Override
 	public void setPunterEnabled(Punter punter)
 	{
@@ -201,6 +226,31 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 		}	
 	}
 	
+	private String upSqlP = "UPDATE baseuser SET downlinecnt = downlinecnt + 1 WHERE id=?";
+	private String downSqlP = "UPDATE baseuser SET downlinecnt = downlinecnt - 1 WHERE id=?";
+	private String upSqlC = "UPDATE baseuser SET childrencnt = childrencnt + 1 WHERE id=?";
+	private String downSqlC = "UPDATE baseuser SET childrencnt = childrencnt - 1 WHERE id=?";
+	
+	private synchronized void updateDownlineCnts(UUID parentId,boolean up) throws DataAccessException
+	{
+		String sql;
+		if (up)
+		{
+			sql = upSqlP;
+			getJdbcTemplate().update(upSqlC,new Object[]{ parentId });
+		}
+		else
+		{
+			sql = downSqlP;
+			getJdbcTemplate().update(downSqlC,new Object[]{ parentId });
+		}
+		while (parentId!=null)
+		{
+				getJdbcTemplate().update(sql,new Object[]{ parentId });
+				parentId = getJdbcTemplate().queryForObject("SELECT parentId FROM baseuser WHERE id=?", new Object[]{ parentId }, UUID.class);
+		}	
+	}
+	
 	@Override
 	public void store(final Punter punter) {
 		final Timestamp ts = new Timestamp((new GregorianCalendar()).getTime().getTime());
@@ -209,8 +259,8 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 		{
 			getJdbcTemplate().update("INSERT INTO baseuser (id,contact,email,phone,password,role,enabled,rating,"
 										+ "fullname,gender,passportic,address,state,postcode,country,"
-										+ "parentid,sponsorid,systemowned,level,created) "
-										+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+										+ "parentid,sponsorid,systemowned,level,created,downlinecnt) "
+										+ "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
 			        , new PreparedStatementSetter() {
 						public void setValues(PreparedStatement ps) throws SQLException {
 			    	  	
@@ -244,9 +294,12 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 						ps.setBoolean(18, punter.isSystemOwned());
 						ps.setInt(19, punter.getLevel());
 						ps.setTimestamp(20,ts);
+						ps.setLong(21, 0L);
 			      }
 			    });
 			createPunterObjects(punter);
+			if (punter.getParent()!=null)
+				updateDownlineCnts(punter.getParent().getId(),true);
 		}
 		catch (DataAccessException e1)
 		{
@@ -545,6 +598,7 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	@Override
 	public void deletePunter(final Punter punter)
 	{
+		updateDownlineCnts(punter.getParentId(),false);
 		List<Punter> cs = getChildren(punter);
 		if (!cs.isEmpty())
 		{

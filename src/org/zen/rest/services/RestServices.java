@@ -635,6 +635,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		pj.setPaymentMethods(punter.getPaymentMethods());
 		pj.setCanUpgrade(testUpgradable(punter));
 		pj.setCanRecruit(testCanRecruit(punter));
+		log.info("can recruit : " + pj.isCanRecruit());
 		if (!isSystemOwned)
 			return pj;
 			
