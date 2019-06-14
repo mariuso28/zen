@@ -163,6 +163,23 @@ public class PaymentDaoImpl extends NamedParameterJdbcDaoSupport implements Paym
 	}
 
 	@Override
+	public PaymentMethodJson getPaymentMethodByMethod(String method) {
+		try
+		{
+			final String sql = "SELECT * FROM paymentmethod WHERE method=?";
+			List<PaymentMethodJson> pms = getJdbcTemplate().query(sql,new Object[]{ method },BeanPropertyRowMapper.newInstance(PaymentMethodJson.class));
+			if (pms.isEmpty())
+				return null;
+			return pms.get(0);
+		}
+		catch (DataAccessException e)
+		{
+			log.error("Could not execute : " + e.getMessage(),e);
+			throw new PersistenceRuntimeException("Could not execute getAvailablePaymentMethods : " + e.getMessage());
+		}
+	}
+	
+	@Override
 	public PaymentMethodJson getPaymentMethodById(int id) {
 		try
 		{

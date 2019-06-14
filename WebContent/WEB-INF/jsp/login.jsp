@@ -150,6 +150,9 @@ function login() {
     <form id="loginform" class="form-vertical" action="index.html">
       <div class="control-group normal_text">
       <h3>
+        <a href="/zen/zx4/web/anon/changeLanguage?isoCode=id">
+          <img src="../../../img/flag_id.png" alt="Logo" width="50"/>
+        </a>
         <a href="/zen/zx4/web/anon/changeLanguage?isoCode=km">
           <img src="../../../img/flag_km.png" alt="Logo" width="50"/>
         </a>

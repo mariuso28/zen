@@ -18,6 +18,7 @@ public class TransalationMgr {
 	private List<String> supportedIsoCodes = new ArrayList<String>();
 	private String isoCode;
 	private TranslationLabels jspMapKh;
+	private TranslationLabels jspMapId;
 	private TranslationLabels jspMapEn;
 	private Map<String,Map<String,String>> jspMap;
 	
@@ -25,14 +26,16 @@ public class TransalationMgr {
 	{
 		setTranslationDao(services.getHome().getTranslationDao());
 		services.getHome().getCountryDao().initializeCountryLists();
-		String sic = services.getProp().getProperty("supportedIsoCodes","en;km");
+		String sic = services.getProp().getProperty("supportedIsoCodes","en;km;id");
 		for (String c : sic.split(";"))
 			supportedIsoCodes.add(c);
 		importFrequents();
 		setIsoCode("en");
 		jspMapEn = new TranslationLabels(this);	
 		setIsoCode("km");
-		jspMapKh = new TranslationLabels(this);			// only support khmer at moment
+		jspMapKh = new TranslationLabels(this);	
+		setIsoCode("id");
+		jspMapId = new TranslationLabels(this);	
 		changeIsoCode(supportedIsoCodes.get(0));		// default
 	}
 
@@ -247,6 +250,9 @@ public class TransalationMgr {
 		if (ic.equals("km"))
 			jspMap = jspMapKh.getJspMap();
 		else
+		if (ic.equals("id"))
+			jspMap = jspMapId.getJspMap();
+		else
 			jspMap = jspMapEn.getJspMap();
 	}
 
@@ -280,6 +286,14 @@ public class TransalationMgr {
 
 	public void setCurrFrequent(Map<String,String> currFrequent) {
 		this.currFrequent = currFrequent;
+	}
+
+	public TranslationLabels getJspMapId() {
+		return jspMapId;
+	}
+
+	public void setJspMapId(TranslationLabels jspMapId) {
+		this.jspMapId = jspMapId;
 	}
 
 	

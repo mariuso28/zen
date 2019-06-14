@@ -79,6 +79,8 @@ function testUpgrade()
       <a href="/zen/zx4/web/anon/changeLanguage?isoCode=en">
         <img src="../../../img/flag_en.png" alt="Logo" width="45" class="center"/>
       </a>
-
+      <a href="/zen/zx4/web/anon/changeLanguage?isoCode=id">
+        <img src="../../../img/flag_id.png" alt="Logo" width="45" class="center"/>
+      </a>
   </ul>
 </div>

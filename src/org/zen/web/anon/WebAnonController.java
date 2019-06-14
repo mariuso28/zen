@@ -26,7 +26,7 @@ public class WebAnonController {
 	@RequestMapping(value = "/changeLanguage", method = RequestMethod.GET)
 	public Object changeLanguage(String isoCode,ModelMap model) {
 			
-		log.info("Received changeLanguage");
+		log.info("Received changeLanguage with isoCode : " + isoCode);
 		
 		services.getTxm().changeIsoCode(isoCode);
 		

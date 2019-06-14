@@ -48,6 +48,7 @@ public class ZenModel {
 		if (initLevel==0)
 		{
 			root = zmi.initializeModel();
+			addPaymentMethod(root.getContact());
 			log.info("Populating levels " + 0 + " - " + level);
 			recruitPuntersToLevel(root,0,level);
 		}
@@ -130,9 +131,9 @@ public class ZenModel {
 	}
 	
 	private void addPaymentMethod(String npContact) {
-		List<PaymentMethodJson> pms = restServices.getServices().getHome().getPaymentDao().getAvailablePaymentMethods();
-		PaymentMethodJson first = pms.get(0);
-		restServices.addPunterPaymentMethod(npContact,Integer.toString(first.getId()),"99999999");
+		PaymentMethodJson pm = restServices.getServices().getHome().getPaymentDao().getPaymentMethodByMethod("Wing");
+		// default cambodia company payment 
+		restServices.addPunterPaymentMethod(npContact,Integer.toString(pm.getId()),"968157361");
 	}
 	
 	// COMBINED CHECK AND UPGRADE FOR MODEL INITIALIZATION - 
