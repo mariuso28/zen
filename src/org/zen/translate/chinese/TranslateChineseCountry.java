@@ -1,16 +1,18 @@
-package org.zen.translate.indon;
+package org.zen.translate.chinese;
+
+import java.util.List;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.zen.json.CountryJson;
 import org.zen.persistence.home.Home;
-import org.zen.translate.Keys;
 
 import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.Translate.TranslateOption;
 import com.google.cloud.translate.TranslateOptions;
 import com.google.cloud.translate.Translation;
-import com.google.cloud.translate.Translate.TranslateOption;
 
-public class TranslateKhmerMessages {
+public class TranslateChineseCountry {
 
 	public static void main(String... args)
 	{
@@ -21,16 +23,17 @@ public class TranslateKhmerMessages {
 		
 		Translate translate = TranslateOptions.getDefaultInstance().getService();
 
-		Keys keys = new Keys();
-		for (String k : keys.getKeys())
+		List<CountryJson> cs = home.getCountryDao().getCountries();
+		for (CountryJson c : cs)
 		{
 			 Translation translation =
 				        translate.translate(
-				            k,
+				            c.getCountry(),
 				            TranslateOption.sourceLanguage("en"),
-				            TranslateOption.targetLanguage("id"));
-			 System.out.println("xlate : " + k + " to : " + translation.getTranslatedText());
-			 home.getTranslationDao().store("id", k, translation.getTranslatedText());
+				            TranslateOption.targetLanguage("zh-CN"));
+			 System.out.println("xlate : " + c.getCountry() + " to : " + translation.getTranslatedText());
+			 c.setCountryid(translation.getTranslatedText());
+			 home.getCountryDao().update(c);
 		}
 		System.out.println("DONE");
 	}

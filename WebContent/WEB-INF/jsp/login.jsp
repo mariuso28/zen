@@ -160,6 +160,9 @@ function login() {
         <a href="/zen/zx4/web/anon/changeLanguage?isoCode=en">
           <img src="../../../img/flag_en.png" alt="Logo" width="50"/>
         </a>
+        <a href="/zen/zx4/web/anon/changeLanguage?isoCode=ch">
+          <img src="../../../img/flag_ch.jpeg" alt="Logo" width="50"/>
+        </a>
       </h3>
       </div>
       <div class="control-group">

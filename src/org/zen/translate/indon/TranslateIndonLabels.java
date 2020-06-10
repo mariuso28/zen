@@ -23,8 +23,8 @@ public class TranslateIndonLabels {
 
 		for (String k : Labels.src)
 		{
-			if (home.getTranslationDao().translate(k, "id")!=null)
-				continue;
+		//	if (home.getTranslationDao().translate(k, "id")!=null)
+		//		continue;
 			Translation translation =
 				        translate.translate(
 				            k,

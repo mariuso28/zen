@@ -20,13 +20,14 @@ public class TransalationMgr {
 	private TranslationLabels jspMapKh;
 	private TranslationLabels jspMapId;
 	private TranslationLabels jspMapEn;
+	private TranslationLabels jspMapCh;
 	private Map<String,Map<String,String>> jspMap;
 	
 	public TransalationMgr(Services services)
 	{
 		setTranslationDao(services.getHome().getTranslationDao());
 		services.getHome().getCountryDao().initializeCountryLists();
-		String sic = services.getProp().getProperty("supportedIsoCodes","en;km;id");
+		String sic = services.getProp().getProperty("supportedIsoCodes","en;km;id;ch");
 		for (String c : sic.split(";"))
 			supportedIsoCodes.add(c);
 		importFrequents();
@@ -36,6 +37,8 @@ public class TransalationMgr {
 		jspMapKh = new TranslationLabels(this);	
 		setIsoCode("id");
 		jspMapId = new TranslationLabels(this);	
+		setIsoCode("ch");
+		jspMapCh = new TranslationLabels(this);	
 		changeIsoCode(supportedIsoCodes.get(0));		// default
 	}
 
@@ -252,6 +255,9 @@ public class TransalationMgr {
 		else
 		if (ic.equals("id"))
 			jspMap = jspMapId.getJspMap();
+		else
+		if (ic.equals("ch"))
+			jspMap = jspMapCh.getJspMap();
 		else
 			jspMap = jspMapEn.getJspMap();
 	}
