@@ -422,7 +422,7 @@ function displayUpgradeRequest()
             <h4 style="color:darkblue; text-indent: 2.5em;" id='cpLabel1'></h4>
             <h4 style="color:darkblue; text-indent: 2.5em;" id='cpLabel2'></h4>
             <h4 style="color:darkblue; text-indent: 2.5em;"><span id='cpLabel3'></span>
-            <a href="mailto:help@goldmine.online">&lt;help@goldmine.online&gt;</a>
+            <a href="mailto:help@zenwing.net">&lt;help@zenwing.net&gt;</a>
             <span id='cpLabel4'></span></h4>
           </div>
         </div>

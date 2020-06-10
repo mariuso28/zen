@@ -22,7 +22,7 @@ import org.zen.user.BaseUser;
 public class Mail 
 {
 	private static Logger log = Logger.getLogger(Mail.class);
-	public static String SITEHTMLLINK =  "<a href='http://goldmine.online'>goldmine.online</a>";
+	public static String SITEHTMLLINK =  "<a href='http://zenwing.net'>zen</a>";
 	
 	private JavaMailSender mailSender;
 	private String mailCcNotifications;
