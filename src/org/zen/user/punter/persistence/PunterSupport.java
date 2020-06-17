@@ -83,7 +83,7 @@ public class PunterSupport {
 		}
 	}
 		
-	private String getPunterAtLevelSql(UUID parentId,int level,boolean fail)
+	private String getPunterAtLevelSql(@SuppressWarnings("unused") UUID parentId,int level,boolean fail)
 	{
 		String sql;
 		if (level==1)

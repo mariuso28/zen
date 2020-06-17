@@ -20,10 +20,10 @@ public class FakeContactGen {
 	private int nextSurname;
 	private int nextGiven;
 	
-	public FakeContactGen(Services services)
+	public FakeContactGen()
 	{
-		String givenNamePath = services.getProp().getProperty("fakeGivenNamesPath");
-		String surNamePath = services.getProp().getProperty("fakeSurnamesPath");
+		String givenNamePath = Services.getProp().getProperty("fakeGivenNamesPath");
+		String surNamePath = Services.getProp().getProperty("fakeSurnamesPath");
 		log.info("Using given names from : " + givenNamePath);
 		log.info("Using surnames from : " + surNamePath);
 		loadNames(surNamePath,givenNamePath);
@@ -40,11 +40,11 @@ public class FakeContactGen {
 		if (nextGiven==givenNames.size())
 			nextGiven = 0;
 		FakeContact fc = new FakeContact();
-		String contact = surNames.get(nextSurname++);
+		String contact = givenNames.get(nextGiven++);;
 		fc.setContact(contact.toLowerCase());
-		fc.setSurName(contact);
-		fc.setGivenName(givenNames.get(nextGiven++));
-		fc.setFullName(fc.getSurName()+" "+fc.getGivenName());
+		fc.setGivenName(contact);
+		fc.setSurName(surNames.get(nextSurname++));
+		fc.setFullName(fc.getGivenName()+" "+fc.getSurName());
 		return fc;
 	}
 	

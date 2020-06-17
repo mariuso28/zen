@@ -18,6 +18,10 @@ public interface RestAnonController
 	@RequestMapping(value = "/getSuccess")
 	// ResultJson contains message if success, message if fail
 	public ResultJson getSuccess();	
+	
+	@RequestMapping(value = "/getSupportedIsoCodes")
+	// ResultJson contains List<String> if success, message if fail
+	public ResultJson getSupportedIsoCodes();
 				
 	@RequestMapping(value = "/getCountries")
 	// ResultJson contains List<CountryDisplayJson> if success, message if fail

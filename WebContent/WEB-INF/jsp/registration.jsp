@@ -200,7 +200,7 @@ function getCountries()
             return null;
          }
 
-       var resultJson = $.parseJSON(JSON.stringify(data));
+       var resultJson = data;
        if (resultJson.status=='OK')
        {
          countries = resultJson.result;
@@ -229,7 +229,6 @@ function displayCountries()
   });
 }
 
-
 var newPunter;
 
 function initializeRegistration() {
@@ -254,7 +253,7 @@ function initializeRegistration() {
                return null;
             }
 
-          var resultJson = $.parseJSON(JSON.stringify(data));
+          var resultJson = data;
 					if (resultJson.status=='OK')
 					{
 			//		alert(resultJson.status + " " + resultJson.message);
@@ -305,7 +304,7 @@ function initializeRegistration() {
               dataType: "json",
               data:JSON.stringify(jsonData),
                success: function(data) {
-                    var result = $.parseJSON(JSON.stringify(data));
+                    var result = data;
                     if (data == '')
                       {
           							alert("could not store registration")
@@ -483,7 +482,7 @@ function populateNewProfile()
 <!--Footer-part-->
 
 <div class="row-fluid">
-  <div id="footer" class="span12"> 2019 &copy; Zen</div>
+  <div id="footer" class="span12"> 2020 &copy; Zen</div>
 </div>
 
 <!--end-Footer-part-->

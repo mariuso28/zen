@@ -1,4 +1,4 @@
-package org.zen.payment.initialize;
+package org.zen.payment.maintenance;
 
 import java.util.List;
 
@@ -7,7 +7,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.zen.json.PaymentMethodJson;
 import org.zen.persistence.home.Home;
 
-public class CreatePaymentMethods {
+public class DeleteCountryPaymentMethods {
+	
+	public static void deletePaymentMethods(Home home,String country)
+	{
+		home.getPaymentDao().deletePaymentMethodByCountry(country);
+	}
 	
 	public static void main(String[] args)
 	{
@@ -16,16 +21,12 @@ public class CreatePaymentMethods {
 				"zen-service.xml");
 		try
 		{
+			
 			Home home = (Home) context.getBean("home");
-			PaymentMethodJson pm = new PaymentMethodJson();
-			pm.setMethod("Test1");
-			pm.setCountry("Cambodia");
-			home.getPaymentDao().storePaymentMethod(pm);
-			pm.setMethod("Test2");
-			pm.setCountry("Cambodia");
-			home.getPaymentDao().storePaymentMethod(pm);
-			List<PaymentMethodJson> pms = home.getPaymentDao().getAvailablePaymentMethods();
-			System.out.println(pms);
+			deletePaymentMethods(home,"Cambodia");
+			
+			List<PaymentMethodJson> pmsz = home.getPaymentDao().getAvailablePaymentMethods();
+			System.out.println(pmsz);
 		
 		} catch (Exception e) {
 			e.printStackTrace();

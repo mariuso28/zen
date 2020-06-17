@@ -12,6 +12,7 @@ public interface PaymentDao {
 	
 	public PaymentMethodJson getPaymentMethodByMethod(String method);
 	public List<PaymentMethodJson> getAvailablePaymentMethods();
+	public void deletePaymentMethodByCountry(final String country);
 	public void storePaymentMethod(PaymentMethodJson pm);
 	public void storePunterPaymentMethod(PunterPaymentMethodJson ppm);
 	public PaymentMethodJson getPaymentMethodById(int id);

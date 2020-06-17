@@ -1,5 +1,6 @@
 package org.zen.rest.anon;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -69,6 +70,26 @@ public class RestAnonControllerImpl implements RestAnonController{
 	}
 	
 	@Override
+	@RequestMapping(value = "/getSupportedIsoCodes")
+	// ResultJson contains List<String> if success, message if fail
+	public ResultJson getSupportedIsoCodes() {
+		log.info("Received getSupportedIsoCodes");
+		ResultJson result = new ResultJson();
+		try
+		{
+			List<String> isoCodes = restServices.getServices().getTxm().getSupportedIsoCodes();
+			log.info("Supported codes are : " + isoCodes);
+			result.success(isoCodes);
+		}
+		catch (Exception e)
+		{
+			log.error(e.getMessage(),e);
+			result.fail(e.getMessage());
+		}
+		return result;
+	}
+	
+	@Override
 	@RequestMapping(value = "/getCountries")
 	// ResultJson contains List<CountryDisplayJson> if success, message if fail
 	public ResultJson getCountries() {
@@ -77,6 +98,7 @@ public class RestAnonControllerImpl implements RestAnonController{
 		try
 		{
 			String isoCode = restServices.getServices().getTxm().getIsoCode();
+			log.info("Received getCountries for iso : " + isoCode);
 			result.success(restServices.getServices().getHome().getCountryDao().getCountryList(isoCode));
 		}
 		catch (Exception e)

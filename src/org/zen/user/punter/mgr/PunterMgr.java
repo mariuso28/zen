@@ -57,10 +57,10 @@ public class PunterMgr {
 	public void init()
 	{
 		ratingMgr = new RatingMgr();
-		fakeContactGen = new FakeContactGen(services);
-		String zenRootContact = services.getProp().getProperty("zenRootContact", "mony;Mony;Seyha"); 
+		fakeContactGen = new FakeContactGen();
+		String zenRootContact = Services.getProp().getProperty("zenRootContact", "mony;Mony;Seyha"); 
 		String[] toks = zenRootContact.split(";");
-		String zenSupportEmail = services.getProp().getProperty("zenSupportEmail","zen@test.com");
+		String zenSupportEmail = Services.getProp().getProperty("zenSupportEmail","zen@test.com");
 		setZenContact(new FakeContact(toks[0],toks[1],toks[2],zenSupportEmail));		
 	}
 	
@@ -175,13 +175,17 @@ public class PunterMgr {
 		}
 	}
 	
-	private String createRandomPassword()
+	public static String createRandomPassword()
 	{
 		RandomStringGenerator generator = new RandomStringGenerator.Builder()
-		        .withinRange('0', 'z')
+		        .withinRange('2', 'Z')
 		        .filteredBy(LETTERS, DIGITS)
 		        .build();
 		String random = generator.generate(8);
+		random = random.replace('O','Z');
+		random = random.replace('L','C');
+		random = random.replace("0","X").toLowerCase();
+		
 		return random;
 	}
 	

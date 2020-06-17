@@ -21,7 +21,6 @@ import org.zen.user.punter.persistence.PunterDao;
 
 public class Services {
 
-	@SuppressWarnings("unused")
 	private static Logger log = Logger.getLogger(Services.class);
 	
 	@Autowired
@@ -30,7 +29,7 @@ public class Services {
 	private Home home;
 	private Mail mail;
 	private String propertiesPath;
-	private Properties prop;
+	private static Properties prop;
 	private MailNotifier mailNotifier;
 	private TransalationMgr txm;
 	
@@ -161,12 +160,8 @@ public class Services {
 		this.propertiesPath = propertiesPath;
 	}
 	
-	public Properties getProp() {
+	public static Properties getProp() {
 		return prop;
-	}
-	
-	public void setProp(Properties prop) {
-		this.prop = prop;
 	}
 	
 	public Mail getMail() {

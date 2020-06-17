@@ -27,7 +27,7 @@ public class TransalationMgr {
 	{
 		setTranslationDao(services.getHome().getTranslationDao());
 		services.getHome().getCountryDao().initializeCountryLists();
-		String sic = services.getProp().getProperty("supportedIsoCodes","en;km;id;ch");
+		String sic = Services.getProp().getProperty("supportedIsoCodes","en;km;id;ch");
 		for (String c : sic.split(";"))
 			supportedIsoCodes.add(c);
 		importFrequents();

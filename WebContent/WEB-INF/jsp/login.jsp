@@ -20,6 +20,57 @@
 <script>
 
 var labels;
+var isoCodes;
+
+function getSupportedIsoCodes()
+{
+  $.ajax({
+
+ type: "GET",
+      url : '/zen/zx4/api/anon/getSupportedIsoCodes',
+  cache: false,
+ contentType: 'application/json;',
+      dataType: "json",
+       async: false,
+      success: function(data) {
+        if (data == '')
+         {
+           alert("could not getSupportedIsoCodes")
+            return null;
+         }
+
+       var resultJson = data;
+       if (resultJson.status=='OK')
+       {
+         isoCodes = resultJson.result;
+         showIsoCodes();
+       }
+       else
+       {
+         alert(resultJson.message);
+       }
+     },
+     error:function (e) {
+       alert("getSupportedIsoCodes ERROR : " + e.status + " - " + e.statusText);
+     }
+  });
+}
+
+function showIsoCodes()
+{
+  var i;
+  for (i=0; i<isoCodes.length; i++)
+  {
+    var cd = isoCodes[i];
+    var id = cd+'Id';
+    elem = document.getElementById(id);
+    if (elem != null)
+    {
+        elem.innerHTML = '<a href="/zen/zx4/web/anon/changeLanguage?isoCode=' + cd + '">' +
+                      '<img src="../../../img/flag_' + cd + '.png" alt="Logo" width="50"/></a>';
+    }
+  }
+}
 
 function getLabels()
 {
@@ -143,6 +194,25 @@ function login() {
 
 </script>
 
+
+<style>
+  .languageIconStrip {
+  width: 80%
+  height: 60px;
+  margin: auto;
+  margin-bottom: 50px;
+  text-align: center;
+  }
+
+  .languageEntry {
+  width: 50px;
+  height: 50px;
+  margin-left: 20px;
+  margin-right: 20px;
+  display: inline-block
+  }
+</style>
+
 </head>
 
 <body>
@@ -150,20 +220,18 @@ function login() {
     <form id="loginform" class="form-vertical" action="index.html">
       <div class="control-group normal_text">
       <h3>
-        <a href="/zen/zx4/web/anon/changeLanguage?isoCode=id">
-          <img src="../../../img/flag_id.png" alt="Logo" width="50"/>
-        </a>
-        <a href="/zen/zx4/web/anon/changeLanguage?isoCode=km">
-          <img src="../../../img/flag_km.png" alt="Logo" width="50"/>
-        </a>
         <img src="../../../img/GoldenCircle_02.png" alt="Logo" width="150"/>
-        <a href="/zen/zx4/web/anon/changeLanguage?isoCode=en">
-          <img src="../../../img/flag_en.png" alt="Logo" width="50"/>
-        </a>
-        <a href="/zen/zx4/web/anon/changeLanguage?isoCode=ch">
-          <img src="../../../img/flag_ch.jpeg" alt="Logo" width="50"/>
-        </a>
       </h3>
+      </div>
+      <div class="languageIconStrip">
+        <div class="languageEntry" id="enId">
+        </div>
+        <div class="languageEntry" id="chId">
+        </div>
+        <div class="languageEntry" id="idId">
+        </div>
+        <div class="languageEntry" id="kmId">
+        </div>
       </div>
       <div class="control-group">
         <div class="controls">
@@ -194,6 +262,7 @@ function login() {
   <script src="js/matrix.login.js"></script>
 
 <script>
+  getSupportedIsoCodes();
   getLabels();
 </script>
 

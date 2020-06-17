@@ -520,7 +520,7 @@ function updateProfile() {
               <div class="control-group">
                 <label class="control-label required-field" id="phoneLabel"></label>
                 <div class="controls">
-                  <input type="text" id="phone" class="span11" value="+855 "/>
+                  <input type="text" id="phone" class="span11" value="+60 "/>
                 </div>
               </div>
               <div class="control-group">
@@ -574,7 +574,7 @@ function updateProfile() {
 <!--Footer-part-->
 
 <div class="row-fluid">
-  <div id="footer" class="span12"> 2019 &copy; Zen</div>
+  <div id="footer" class="span12"> 2020 &copy; Zen</div>
 </div>
 
 <!--end-Footer-part-->

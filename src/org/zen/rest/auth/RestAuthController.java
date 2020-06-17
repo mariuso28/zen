@@ -79,7 +79,8 @@ public class RestAuthController {
 		
 		ResultJson result = new ResultJson();
 		String path;
-		path = "http://localhost:8080/zen/zx4/oauth/token";
+		String tomcatPort = Services.getProp().getProperty("tomcatPort","8080").trim();
+		path = "http://localhost:" + tomcatPort + "/zen/zx4/oauth/token";
 		try
 		{
 			BaseUser baseUser = services.getHome().getBaseUserDao().getByContact(username);
@@ -131,7 +132,8 @@ public class RestAuthController {
 			){
 		ResultJson result = new ResultJson();
 		String path;
-		path = "http://localhost:8080/zen/zx4/oauth/token";
+		String tomcatPort = Services.getProp().getProperty("tomcatPort","8080").trim();
+		path = "http://localhost:" + tomcatPort + "/zen/zx4/oauth/token";
 		try {
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);

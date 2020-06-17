@@ -237,7 +237,7 @@ function createNotificationLi(n)
 <!--Footer-part-->
 
 <div class="row-fluid">
-  <div id="footer" class="span12"> 2019 &copy; Zen</div>
+  <div id="footer" class="span12"> 2020 &copy; Zen</div>
 </div>
 
 <!--end-Footer-part-->
@@ -272,6 +272,7 @@ $.ajaxSetup({
 
 
 access_token = sessionStorage.getItem("access_token");
+
 
 getLabels();
 getPunter();

@@ -197,6 +197,21 @@ public class PaymentDaoImpl extends NamedParameterJdbcDaoSupport implements Paym
 	}
 	
 	@Override
+	public void deletePaymentMethodByCountry(final String country)
+	{
+		try
+		{
+			getJdbcTemplate().update("DELETE FROM paymentmethod WHERE country=?", new Object[] { country } );
+		}
+		catch (DataAccessException e)
+		{
+			log.error("Could not execute : " + e.getMessage(),e);
+			throw new PersistenceRuntimeException("Could not execute deletePaymentMethodByCountry : " + e.getMessage());
+		}
+	}
+	
+	
+	@Override
 	public void deletePunterPaymentMethodById(long id)
 	{
 		try

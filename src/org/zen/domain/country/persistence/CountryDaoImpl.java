@@ -14,12 +14,16 @@ public class CountryDaoImpl extends NamedParameterJdbcDaoSupport implements Coun
 	private static Logger log = Logger.getLogger(CountryDaoImpl.class);
 	private List<CountryDisplayJson> countryListEn = null;						// performance cache - need restart if country table changes
 	private List<CountryDisplayJson> countryListKm = null;
+	private List<CountryDisplayJson> countryListId = null;
+	private List<CountryDisplayJson> countryListCh = null;
 	
 	@Override
 	public void initializeCountryLists()
 	{
 		 getCountryList("en");
 		 getCountryList("km");
+		 getCountryList("id");
+		 getCountryList("ch");
 	}
 	
 	@Override
@@ -36,12 +40,38 @@ public class CountryDaoImpl extends NamedParameterJdbcDaoSupport implements Coun
 				return countryListEn;
 
 			}
-			if (countryListKm==null)
+			else
+			if (isoCode.equals("km"))
 			{
-				String sql = "SELECT country" + isoCode + " AS country,code FROM country ORDER BY displayorder,country" + isoCode;
-				countryListKm = getJdbcTemplate().query(sql,BeanPropertyRowMapper.newInstance(CountryDisplayJson.class));
+				if (countryListKm==null)
+				{
+					String sql = "SELECT country" + isoCode + " AS country,code FROM country ORDER BY displayorder,country" + isoCode;
+					countryListKm = getJdbcTemplate().query(sql,BeanPropertyRowMapper.newInstance(CountryDisplayJson.class));
+				}
+				return countryListKm;
 			}
-			return countryListKm;
+			else
+			if (isoCode.equals("id"))
+			{
+				if (countryListId==null)
+				{
+					String sql = "SELECT country" + isoCode + " AS country,code FROM country ORDER BY displayorder,country" + isoCode;
+					countryListId = getJdbcTemplate().query(sql,BeanPropertyRowMapper.newInstance(CountryDisplayJson.class));
+				}
+				return countryListId;
+			}
+			else
+			if (isoCode.equals("ch"))
+			{
+				if (countryListCh==null)
+				{
+					String sql = "SELECT country" + isoCode + " AS country,code FROM country ORDER BY displayorder,country" + isoCode;
+					countryListCh = getJdbcTemplate().query(sql,BeanPropertyRowMapper.newInstance(CountryDisplayJson.class));
+				}
+				return countryListCh;
+			}
+			log.error("UNKNOWN COUNTRY CODE!!! : " + isoCode);
+			return null;
 		}
 		catch (DataAccessException e)
 		{
@@ -87,10 +117,12 @@ public class CountryDaoImpl extends NamedParameterJdbcDaoSupport implements Coun
 
 	@Override
 	public void update(CountryJson country) {
-		String sql = "UPDATE country SET country=?,countrykm=? WHERE code=?";
+		String sql = "UPDATE country SET country=?,countrykm=?,countryid=?,countrych=? WHERE code=?";
 		try
 		{
-			 getJdbcTemplate().update(sql, new Object[] { country.getCountry(), country.getCountrykm(), country.getCode() });
+			 getJdbcTemplate().update(sql, new Object[] { country.getCountry(), country.getCountrykm(), 
+					 				country.getCountryid(), country.getCountrych(),		
+					 						country.getCode() });
 		}
 		catch (DataAccessException e)
 		{

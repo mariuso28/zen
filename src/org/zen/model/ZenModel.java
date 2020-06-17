@@ -48,7 +48,7 @@ public class ZenModel {
 		if (initLevel==0)
 		{
 			root = zmi.initializeModel();
-			addPaymentMethod(root.getContact());
+			addPaymentMethod(root.getContact(),0);
 			log.info("Populating levels " + 0 + " - " + level);
 			recruitPuntersToLevel(root,0,level);
 		}
@@ -118,8 +118,9 @@ public class ZenModel {
 			FakeContact fc = punterMgr.getFakeContact(sponsor.getLevel()<ZenModelOriginal.SYSTEMLEVELS);
 			PunterProfileJson np = zenModelFake.createProfile(sponsor,fc);
 			restServices.register(sponsor.getContact(),np);
-			addPaymentMethod(np.getContact());
 			Punter punter = punterDao.getByContact(np.getContact());
+			addPaymentMethod(np.getContact(),punter.getLevel());
+			punter = punterDao.getByContact(np.getContact());
 			// performUpgrades(zenRoot,punter.getLevel());
 			performUpgrades(punter);
 		}
@@ -130,10 +131,12 @@ public class ZenModel {
 		}
 	}
 	
-	private void addPaymentMethod(String npContact) {
-		PaymentMethodJson pm = restServices.getServices().getHome().getPaymentDao().getPaymentMethodByMethod("Wing");
-		// default cambodia company payment 
-		restServices.addPunterPaymentMethod(npContact,Integer.toString(pm.getId()),"968157361");
+	private void addPaymentMethod(String npContact,int level) {
+		String acNum = "";
+		for (int i=0; i<8; i++)
+			acNum += level;
+		PaymentMethodJson pm = restServices.getServices().getHome().getPaymentDao().getPaymentMethodByMethod("Touch n Go");
+		restServices.addPunterPaymentMethod(npContact,Integer.toString(pm.getId()),acNum);
 	}
 	
 	// COMBINED CHECK AND UPGRADE FOR MODEL INITIALIZATION - 

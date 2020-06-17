@@ -219,4 +219,5 @@ public class Punter extends BaseUser {
 		this.downlineCnt = downlineCnt;
 	}
 	
+	
 }

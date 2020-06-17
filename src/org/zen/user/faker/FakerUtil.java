@@ -72,11 +72,39 @@ public class FakerUtil {
 		return faker.phoneNumber().cellPhone();
 	}
 	
+	public static void createFakeEnglishSurnames()
+	{
+		int cnt = 0;
+		Set<String> sns = new HashSet<String>();
+		while (cnt<200)
+		{
+			Faker faker = new Faker();
+			String sn = faker.name().lastName();
+			if (sns.contains(sn) || sn.length()>8)
+				continue;
+			System.out.println(sn);
+			cnt++;
+		}
+	}
+	
+	public static void createFakeEnglishFirstNames()
+	{
+		int cnt = 0;
+		Set<String> sns = new HashSet<String>();
+		while (cnt<200)
+		{
+			Faker faker = new Faker();
+			String sn = faker.name().firstName();
+			if (sns.contains(sn) || sn.length()>5)
+				continue;
+			System.out.println(sn);
+			cnt++;
+		}
+	}
+	
 	public static void main(String args[])
 	{
-		FakerUtil fu = new FakerUtil();
-		for (int i=0; i<104; i++)
-			System.out.println(fu.getExclusiveRandomName());
+		createFakeEnglishFirstNames();
 		
 	/*	Faker faker = new Faker();
 

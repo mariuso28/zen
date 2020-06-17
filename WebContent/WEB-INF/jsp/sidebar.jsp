@@ -1,4 +1,58 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 <script>
+
+
+var isoCodes;
+
+function getSupportedIsoCodes()
+{
+  $.ajax({
+
+ type: "GET",
+      url : '/zen/zx4/api/anon/getSupportedIsoCodes',
+  cache: false,
+ contentType: 'application/json;',
+      dataType: "json",
+       async: false,
+      success: function(data) {
+        if (data == '')
+         {
+           alert("could not getSupportedIsoCodes")
+            return null;
+         }
+
+       var resultJson = data;
+       if (resultJson.status=='OK')
+       {
+         isoCodes = resultJson.result;
+         showIsoCodes();
+       }
+       else
+       {
+         alert(resultJson.message);
+       }
+     },
+     error:function (e) {
+       alert("getSupportedIsoCodes ERROR : " + e.status + " - " + e.statusText);
+     }
+  });
+}
+
+function showIsoCodes()
+{
+  var i;
+  var html="";
+  for (i=0; i<isoCodes.length; i++)
+  {
+    var cd = isoCodes[i];
+    var id = cd+'Id';
+    html += '<a href="/zen/zx4/web/anon/changeLanguage?isoCode=' + cd + '">' +
+                      '<img src="../../../img/flag_' + cd + '.png" alt="Logo" width="45" class="center"/></a>';
+  }
+  elem = document.getElementById('isoCodesId');
+  elem.innerHTML = html;
+}
 
 function testCanRecruit()
 {
@@ -72,18 +126,11 @@ function testUpgrade()
       </ul>
     </li>
     <li><a href="/zen/zx4/web/anon/login"><i class="icon icon-off"></i><span id="sbLogoutLabel"></a> </li>
-
-      <a href="/zen/zx4/web/anon/changeLanguage?isoCode=km">
-        <img src="../../../img/flag_km.png" alt="Logo" width="45" class="center"/>
-      </a>
-      <a href="/zen/zx4/web/anon/changeLanguage?isoCode=en">
-        <img src="../../../img/flag_en.png" alt="Logo" width="45" class="center"/>
-      </a>
-      <a href="/zen/zx4/web/anon/changeLanguage?isoCode=id">
-        <img src="../../../img/flag_id.png" alt="Logo" width="45" class="center"/>
-      </a>
-      <a href="/zen/zx4/web/anon/changeLanguage?isoCode=ch">
-        <img src="../../../img/flag_ch.jpeg" alt="Logo" width="45" class="center"/>
-      </a>
+    <ul id='isoCodesId' style="margin-left:20px;">
+    </ul>
   </ul>
 </div>
+
+<script>
+  getSupportedIsoCodes();
+</script>

@@ -32,7 +32,7 @@ public class TranslateChineseCountry {
 				            TranslateOption.sourceLanguage("en"),
 				            TranslateOption.targetLanguage("zh-CN"));
 			 System.out.println("xlate : " + c.getCountry() + " to : " + translation.getTranslatedText());
-			 c.setCountryid(translation.getTranslatedText());
+			 c.setCountrych(translation.getTranslatedText());
 			 home.getCountryDao().update(c);
 		}
 		System.out.println("DONE");

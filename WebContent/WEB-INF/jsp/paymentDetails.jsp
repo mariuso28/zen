@@ -221,7 +221,7 @@ function getPaymentDetails(paymentId,memberType) {
      tr.appendChild(td);
      td = document.createElement('td');
      td.style = "text-align:center";
-     td.appendChild(document.createTextNode("USD " + payment.amount));
+     td.appendChild(document.createTextNode("RM " + payment.amount));
      tr.appendChild(td);
      td = document.createElement('td');
      td.style = "text-align:center";
@@ -333,7 +333,7 @@ function getPaymentDetails(paymentId,memberType) {
 <!--Footer-part-->
 
 <div class="row-fluid">
-  <div id="footer" class="span12"> 2019 &copy; Zen</div>
+  <div id="footer" class="span12"> 2020 &copy; Zen</div>
 </div>
 
 <!--end-Footer-part-->

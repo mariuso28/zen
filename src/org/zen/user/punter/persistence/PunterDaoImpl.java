@@ -159,7 +159,7 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	{
 		final String sql = "SELECT bu.*,s.contact as sponsorcontact,p.contact as parentcontact FROM baseuser as bu " +
 				"INNER JOIN baseuser AS s ON s.id = bu.sponsorid " + 
-				"INNER JOIN baseuser AS p ON p.id = bu.parentid";
+				"INNER JOIN baseuser AS p ON p.id = bu.parentid ORDER BY bu.rating DESC,bu.contact ASC";
 		try
 		{
 			List<Punter> punters = getJdbcTemplate().query(sql,BeanPropertyRowMapper.newInstance(Punter.class));

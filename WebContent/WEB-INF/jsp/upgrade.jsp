@@ -414,7 +414,7 @@ function displayUpgradeRequest()
 <!--Footer-part-->
 
 <div class="row-fluid">
-  <div id="footer" class="span12"> 2019 &copy; Zen</div>
+  <div id="footer" class="span12"> 2020 &copy; Zen</div>
 </div>
 
 <!--end-Footer-part-->
