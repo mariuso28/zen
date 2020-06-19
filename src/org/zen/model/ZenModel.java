@@ -13,6 +13,7 @@ import org.zen.json.PunterProfileJson;
 import org.zen.json.RatingJson;
 import org.zen.rating.RatingMgr;
 import org.zen.rest.services.RestServices;
+import org.zen.rest.services.RestServicesException;
 import org.zen.services.Services;
 import org.zen.user.faker.FakeContact;
 import org.zen.user.punter.Punter;
@@ -111,13 +112,11 @@ public class ZenModel {
 		}
 	}
 	
-	private void recruitNewPunter(Punter sponsor)
+	public void recruitNewPunter(Punter sponsor)
 	{
 		try
 		{
-			FakeContact fc = punterMgr.getFakeContact(sponsor.getLevel()<ZenModelOriginal.SYSTEMLEVELS);
-			PunterProfileJson np = zenModelFake.createProfile(sponsor,fc);
-			restServices.register(sponsor.getContact(),np);
+			PunterProfileJson np = getNewPunter(sponsor);
 			Punter punter = punterDao.getByContact(np.getContact());
 			addPaymentMethod(np.getContact(),punter.getLevel());
 			punter = punterDao.getByContact(np.getContact());
@@ -131,6 +130,25 @@ public class ZenModel {
 		}
 	}
 	
+	public PunterProfileJson getNewPunter(Punter sponsor)
+	{
+	    log.info("Creating new punter");
+		while (true)
+		{
+			try
+			{
+				FakeContact fc = punterMgr.getFakeContact(sponsor.getLevel()<ZenModelOriginal.SYSTEMLEVELS);
+				PunterProfileJson np = zenModelFake.createProfile(sponsor,fc);
+				restServices.register(sponsor.getContact(),np);
+				return np;
+			}
+			catch (RestServicesException e)
+			{
+				log.warn("Create punter failed : " + e.getMessage() + " recreating punter");
+			}
+		}
+	}
+	
 	private void addPaymentMethod(String npContact,int level) {
 		String acNum = "";
 		for (int i=0; i<8; i++)
@@ -140,7 +158,8 @@ public class ZenModel {
 	}
 	
 	// COMBINED CHECK AND UPGRADE FOR MODEL INITIALIZATION - 
-	// OTHER SHOULD BE SEPARATE - FOR SIMULATION CHECK ELIGIBLE THEN SCHEDULE WHEN
+	// OTHER SHOULD BE SEPARATE - 
+	// FOR SIMULATION CHECK ELIGIBLE THEN SCHEDULE WHEN
 	// FOR REAL CHECK THEN PUNTER WILL EXECUTE WHEN WANTS
 	public void tryUpgrade(Punter punter) throws PunterMgrException
 	{
@@ -160,7 +179,7 @@ public class ZenModel {
 	}
 	
 	// COMBINED CHECK AND UPGRADE FOR MODEL INITIALIZATION WITH 
-	private int canUpgrade2(Punter punter) throws PunterMgrException
+	public int canUpgrade2(Punter punter) throws PunterMgrException
 	{
 		if (punter.getRating()==0)
 			return -1;

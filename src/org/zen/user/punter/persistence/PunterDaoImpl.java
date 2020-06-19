@@ -690,36 +690,36 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 		try
 		{
 			final String sql0 = "DELETE FROM upgradestatus AS pus WHERE "
-					+ "pus.id IN (SELECT bu.id FROM baseuser AS bu WHERE systemowned='" + systemOwned + "')";
+					+ "pus.id IN (SELECT bu.id FROM baseuser AS bu WHERE systemowned=" + systemOwned + ")";
 			getJdbcTemplate().update(sql0);
 			
 			final String sql = "DELETE FROM punterpaymentmethod AS pmm WHERE "
-					+ "pmm.punterid IN (SELECT bu.id FROM baseuser AS bu WHERE systemowned='" + systemOwned + "')";
+					+ "pmm.punterid IN (SELECT bu.id FROM baseuser AS bu WHERE systemowned=" + systemOwned + ")";
 			getJdbcTemplate().update(sql);
 			
 			final String sql1 = "DELETE FROM account AS acc WHERE "
-					+ "acc.id IN (SELECT bu.id FROM baseuser AS bu WHERE systemowned='" + systemOwned + "')";
+					+ "acc.id IN (SELECT bu.id FROM baseuser AS bu WHERE systemowned=" + systemOwned + ")";
 			getJdbcTemplate().update(sql1);
 			
 			final String sqlpi1 = "DELETE FROM paymentinfo WHERE xtransactionid IN "
 					+ "(SELECT id FROM xtransaction WHERE payerid IN "
-					+ "(SELECT bu.contact FROM baseuser AS bu WHERE systemowned='" + systemOwned + "'))";
+					+ "(SELECT bu.id FROM baseuser AS bu WHERE systemowned=" + systemOwned + "))";
 			getJdbcTemplate().update(sqlpi1);
 			
 			final String sqlpi2 = "DELETE FROM paymentinfo WHERE xtransactionid IN "
 					+ "(SELECT id FROM xtransaction WHERE payeeid IN "
-					+ "(SELECT bu.contact FROM baseuser AS bu WHERE systemowned='" + systemOwned + "'))";
+					+ "(SELECT bu.id FROM baseuser AS bu WHERE systemowned=" + systemOwned + "))";
 			getJdbcTemplate().update(sqlpi2);
 			
 			final String sqlx = "DELETE FROM xtransaction WHERE payerid IN " + 
-										"(SELECT bu.contact FROM baseuser AS bu WHERE systemowned='" + systemOwned + "'))";
+										"(SELECT bu.id FROM baseuser AS bu WHERE systemowned=" + systemOwned + ")";
 			getJdbcTemplate().update(sqlx);
 			
 			final String sqlx2 = "DELETE FROM xtransaction WHERE payeeid IN " + 
-					"(SELECT bu.contact FROM baseuser AS bu WHERE systemowned='" + systemOwned + "'))";
+					"(SELECT bu.id FROM baseuser AS bu WHERE systemowned=" + systemOwned + ")";
 			getJdbcTemplate().update(sqlx2);
 				
-			final String sql2 = "DELETE FROM baseuser WHERE Role = 'ROLE_PUNTER' AND systemowned='" + systemOwned + "'";
+			final String sql2 = "DELETE FROM baseuser WHERE Role = 'ROLE_PUNTER' AND systemowned=" + systemOwned;
 			getJdbcTemplate().update(sql2);
 		}
 		catch (DataAccessException e)

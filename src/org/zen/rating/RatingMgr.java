@@ -23,18 +23,18 @@ public class RatingMgr {
 	private void createRatings() {
 		ratings.add(new RatingJson(Integer.MAX_VALUE,0,RatingImageImport.loadImage("12")));
 		ratings.add(new RatingJson(0,0,RatingImageImport.loadImage("0")));
-		ratings.add(new RatingJson(1,RatingLevel2.ZENBUYIN,RatingImageImport.loadImage("1")));
-		ratings.add(new RatingJson(2,RatingLevel2.ZEN2,RatingImageImport.loadImage("2")));
-		ratings.add(new RatingJson(3,RatingLevel2.ZEN3,RatingImageImport.loadImage("3")));
-		ratings.add(new RatingJson(4,RatingLevel2.ZEN4,RatingImageImport.loadImage("4")));
-		ratings.add(new RatingJson(5,RatingLevel2.ZEN5,RatingImageImport.loadImage("5")));
-		ratings.add(new RatingJson(6,RatingLevel2.ZEN6,RatingImageImport.loadImage("6")));
-		ratings.add(new RatingJson(7,RatingLevel2.ZEN7,RatingImageImport.loadImage("7")));
-		ratings.add(new RatingJson(8,RatingLevel2.ZEN8,RatingImageImport.loadImage("8")));
-		ratings.add(new RatingJson(9,RatingLevel2.ZEN9,RatingImageImport.loadImage("9")));
-		ratings.add(new RatingJson(10,RatingLevel2.ZEN10,RatingImageImport.loadImage("10")));
-		ratings.add(new RatingJson(11,RatingLevel2.ZEN11,RatingImageImport.loadImage("11")));
-		ratings.add(new RatingJson(12,RatingLevel2.ZEN12,RatingImageImport.loadImage("13")));		// use 12 image for root
+		ratings.add(new RatingJson(1,RatingLevel3.ZENBUYIN,RatingImageImport.loadImage("1")));
+		ratings.add(new RatingJson(2,RatingLevel3.ZEN2,RatingImageImport.loadImage("2")));
+		ratings.add(new RatingJson(3,RatingLevel3.ZEN3,RatingImageImport.loadImage("3")));
+		ratings.add(new RatingJson(4,RatingLevel3.ZEN4,RatingImageImport.loadImage("4")));
+		ratings.add(new RatingJson(5,RatingLevel3.ZEN5,RatingImageImport.loadImage("5")));
+		ratings.add(new RatingJson(6,RatingLevel3.ZEN6,RatingImageImport.loadImage("6")));
+		ratings.add(new RatingJson(7,RatingLevel3.ZEN7,RatingImageImport.loadImage("7")));
+		ratings.add(new RatingJson(8,RatingLevel3.ZEN8,RatingImageImport.loadImage("8")));
+		ratings.add(new RatingJson(9,RatingLevel3.ZEN9,RatingImageImport.loadImage("9")));
+		ratings.add(new RatingJson(10,RatingLevel3.ZEN10,RatingImageImport.loadImage("10")));
+		ratings.add(new RatingJson(11,RatingLevel3.ZEN11,RatingImageImport.loadImage("11")));
+		ratings.add(new RatingJson(12,RatingLevel3.ZEN12,RatingImageImport.loadImage("13")));		// use 12 image for root
 		for (int i=1; i<=12; i++)
 		{
 			ratings.get(i).setUpgradeThreshold(ratings.get(i-1).getUpgradeThreshold() + (int) Math.pow(ZenModel.FULLCHILDREN,i));

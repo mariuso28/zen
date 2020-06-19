@@ -1,7 +1,9 @@
 package org.zen.simulate;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ public class ZenSimModel {
 	private ZenModel zenModel;
 	private ModelCalendar modelCalendar = new ModelCalendar(DURATION);
 	private List<Punter> systemPunters;
+	private Set<String> sheduledUpgrades = new HashSet<String>();
 	
 	public ZenSimModel() 
 	{
@@ -60,8 +63,14 @@ public class ZenSimModel {
 	}
 
 	public void scheduleUpgrade(Punter punter)
-	{
-		int sd = upgradeDays(punter);
+	{	
+		if (sheduledUpgrades.contains(punter.getContact()))
+		{
+			executeUpgrade(punter);
+		}
+		
+		sheduledUpgrades.add(punter.getContact());
+		int sd = upgradeDays();
 		int newRating = punter.getRating()+1;
 		log.info("Scheduling upgrade for " + punter.getEmail() + " to rating : " 
 				+ newRating + " in " + sd + " days");
@@ -70,38 +79,50 @@ public class ZenSimModel {
 		day.getEvents().add(meu);
 	}
 	
+	public void executeUpgrade(Punter punter)
+	{
+		try
+		{
+			sheduledUpgrades.remove(punter.getContact());
+			int newRating = getZenModel().canUpgrade2(punter);
+			if (newRating<=0)
+				return;
+			getZenModel().upgrade(punter,newRating);
+		}
+		catch (Exception e)
+		{
+			log.error("Couldn't execute upgrade",e);
+		}
+	}
+
 	public void scheduleAcquisitions(Punter punter) {
 		
-		Normal normal = new Normal();
+//		Normal normal = new Normal();
 		
-		int children = normal.getGaussian(3, 1);
+//		int children = normal.getGaussian(3, 1);
+		int children = 3;
 		log.info("Scheduling + " + children + " acquisitions for punter : " + punter.getContact());
 		for (int i=0; i<children; i++)
 		{
-			int ad = acquisitionDays(punter);
+			int ad = acquisitionDays();
 			if (ad<0 || ad >= modelCalendar.getDays().size())
 				continue;
 			
-			log.info("Scheduling acquisition for " + punter.getEmail() + " in " + ad + " days");
+			log.info("Scheduling acquisition for " + punter.getContact() + " in " + ad + " days");
 			ModelDay day = modelCalendar.getDays().get(ad);
 			ModelEventAcquisition mea = new ModelEventAcquisition(punter,this);
 			day.getEvents().add(mea);
 		}
 	}
 
-	private int upgradeDays(Punter punter)
+	private int upgradeDays()
 	{
-/*	
-		Normal normal = new Normal();
-		
-		return normal.getGaussian(5, 1);
-		*/
 		if (new Random().nextBoolean())
 			return 1;
 		return 0;
 	}
 	
-	private int acquisitionDays(Punter punter)
+	private int acquisitionDays()
 	{
 		Normal normal = new Normal();	
 		return normal.getGaussian(ACQUISITIONMEAN, ACQUISITIONVARIANCE);
@@ -147,6 +168,14 @@ public class ZenSimModel {
 		}
 		log.info("Model ran");
 	
+	}
+
+	public Set<String> getSheduledUpgrades() {
+		return sheduledUpgrades;
+	}
+
+	public void setSheduledUpgrades(Set<String> sheduledUpgrades) {
+		this.sheduledUpgrades = sheduledUpgrades;
 	}
 	
 }

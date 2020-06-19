@@ -13,8 +13,7 @@ public class ModelEventUpgrade extends ModelEvent {
 	@Override
 	public void execute() {
 		log.info("Executing upgrade for : " + punter.getEmail());
-//		model.getZenModel().upgrade(punter);
-		
+		model.executeUpgrade(punter);
 	}
 	
 	

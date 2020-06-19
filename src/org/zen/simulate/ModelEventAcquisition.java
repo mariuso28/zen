@@ -18,13 +18,11 @@ public class ModelEventAcquisition extends ModelEvent {
 		
 		log.info("Executing acquisition for : " + punter.getContact());
 		ZenModel zenModel = model.getZenModel();
-/*		
-		PunterProfileJson childProfile = zenModel.getZenModelFake().createProfile(false,punter);
-		Punter child = zenModel.getPunterMgr().registerPunter(childProfile);
-		zenModel.payJoinFee(child);
-	*/	
-		zenModel.tryUpgrade(punter);
-	//	model.scheduleAcquisitions(child);
+		zenModel.recruitNewPunter(punter);
+		int newRating = model.getZenModel().canUpgrade2(punter);
+		if (newRating<=0)
+			return;
+		model.scheduleUpgrade(punter);
 	}
 
 

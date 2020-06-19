@@ -49,6 +49,11 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
 
+	<bean id="reportDao"
+		class="org.zen.report.persistence.ReportDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
+	</bean>
+
 	<bean id="home"
 		class="org.zen.persistence.home.HomeImpl"> 
 		<property name="baseUserDao" ref="baseUserDao" />
@@ -56,6 +61,7 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 		<property name="countryDao" ref="countryDao" />
 		<property name="paymentDao" ref="paymentDao" />
 		<property name="translationDao" ref="translationDao" />
+		<property name="reportDao" ref="reportDao" />
 	</bean>
 
 

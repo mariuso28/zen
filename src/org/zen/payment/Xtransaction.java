@@ -23,10 +23,10 @@ public class Xtransaction {
 	private PaymentStatus paymentStatus;
 	private PaymentInfo paymentInfo;
 	private String description;
+	private int newRating;
 	
 	public Xtransaction()
 	{
-		
 	}
 
 	public Date getDate() {
@@ -139,6 +139,14 @@ public class Xtransaction {
 
 	public void setPayeePhone(String payeePhone) {
 		this.payeePhone = payeePhone;
+	}
+
+	public int getNewRating() {
+		return newRating;
+	}
+
+	public void setNewRating(int newRating) {
+		this.newRating = newRating;
 	}
 	
 	

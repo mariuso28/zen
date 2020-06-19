@@ -212,6 +212,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 				us.setPaymentStatus(PaymentStatus.PAYMENTMADE);
 				xt.setPaymentStatus(us.getPaymentStatus());
 				xt.setPaymentInfo(pi);
+				xt.setNewRating(us.getNewRating());
 				
 				services.storePaymentMade(punter,xt);
 				

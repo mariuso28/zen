@@ -95,9 +95,9 @@ public class PaymentDaoImpl extends NamedParameterJdbcDaoSupport implements Paym
 	}
 	
 	@Override
-	public void storeXtransaction(Xtransaction xt)
+	public void storeXtransaction(final Xtransaction xt)
 	{
-		String sql = "INSERT INTO xtransaction (payerId,payeeId,date,amount,paymentstatus,description) VALUES (?,?,?,?,?,?)";
+		String sql = "INSERT INTO xtransaction (payerId,payeeId,date,amount,paymentstatus,description,newrating) VALUES (?,?,?,?,?,?,?)";
 	
 		try
 		{
@@ -114,6 +114,7 @@ public class PaymentDaoImpl extends NamedParameterJdbcDaoSupport implements Paym
 						ps.setDouble(4, xt.getAmount());
 						ps.setString(5, xt.getPaymentStatus().name());
 						ps.setString(6, xt.getDescription());
+						ps.setInt(7, xt.getNewRating());
 						return ps;
 					}
 				},keyHolder);

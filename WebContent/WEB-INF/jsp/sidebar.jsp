@@ -126,8 +126,8 @@ function testUpgrade()
       </ul>
     </li>
     <li><a href="/zen/zx4/web/anon/login"><i class="icon icon-off"></i><span id="sbLogoutLabel"></a> </li>
-    <ul id='isoCodesId' style="margin-left:20px;">
-    </ul>
+    <span id='isoCodesId'>
+    </span>
   </ul>
 </div>
 
