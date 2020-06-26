@@ -15,6 +15,8 @@ import org.zen.rating.RatingMgr;
 import org.zen.rest.services.RestServices;
 import org.zen.rest.services.RestServicesException;
 import org.zen.services.Services;
+import org.zen.simulate.rest.RestSimulate;
+import org.zen.simulate.rest.RestSimulateAquisitions;
 import org.zen.user.faker.FakeContact;
 import org.zen.user.punter.Punter;
 import org.zen.user.punter.mgr.PunterMgr;
@@ -35,7 +37,6 @@ public class ZenModel {
 	private PunterDao punterDao;
 	private RatingMgr ratingMgr;
 	private ZenModelFake zenModelFake = new ZenModelFake();
-	
 	public final static int FULLCHILDREN = 3;
 	
 	public ZenModel()
@@ -276,6 +277,21 @@ public class ZenModel {
 		this.zenModelFake = zenModelFake;
 	}
 	
+	private static void altCreateModel(RestServices rs,ZenModel zm, ZenModelInitialize zmi) throws Exception
+	{
+		Punter root = zmi.initializeModel();
+		zm.addPaymentMethod(root.getContact(),0);
+		new RestSimulateAquisitions(rs,root);
+		
+		RestSimulate rSim = new RestSimulate(rs);
+		for (int i=1; i<4; i++)
+		{
+			rSim.simulateAcquisitionsAtLevel(i);
+//			rSim.sumulateUpgradesFromLevel(i);
+		}
+		
+	}
+	
 	public static void main(String[] args)
 	{
 		@SuppressWarnings("resource")
@@ -283,9 +299,15 @@ public class ZenModel {
 				"zen-service.xml");
 		try
 		{
+			RestServices rs = (RestServices) context.getBean("restServices");
+			
 			ZenModelInitialize zmi = (ZenModelInitialize) context.getBean("zenModelInitialize");
 			ZenModel zm = (ZenModel) context.getBean("zenModel");
-			zm.recruitPunters(zmi, 0, 4);
+		
+			altCreateModel(rs,zm,zmi);
+
+			
+		//	zm.recruitPunters(zmi, 0, 4);
 //			zmi.printModel(root);
 		}
 		catch (Exception e)

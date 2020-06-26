@@ -9,6 +9,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.UUID;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.RandomStringGenerator;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -265,6 +266,8 @@ public class PunterMgr {
 			{
 				fc = fakeContactGen.getFakeContact();
 			}
+			if (!StringUtils.isAlphanumeric(fc.getContact()))
+				continue;	
 			if (zenContact.getContact().equals(fc.getContact()))
 				continue;
 			if (!punterDao.getByFullName(fc.getFullName()).isEmpty())
@@ -338,6 +341,10 @@ public class PunterMgr {
 		try
 		{
 			punterDao.store(punter);
+			if (sponsor!=null && parent!=null)
+				log.info("Created punter : " + punter.getContact() + " sponsor : " + sponsor.getContact() + " parent : " + parent.getContact());
+			else
+				log.info("Created root punter : " + punter.getContact());
 			return punterDao.getByContact(punter.getContact());
 		}
 		catch (Exception e)
@@ -402,14 +409,14 @@ public class PunterMgr {
 			punter.setRating(-1);
 			punter.setLevel(0);
 			us.setPaymentStatus(PaymentStatus.NONE);
-			us.setSponsorContact("");
+			us.setPayeeContact("");
 		}
 		else
 		{
 			punter.setRating(0);
 			punter.setLevel(parent.getLevel()+1);
 			us.setPaymentStatus(PaymentStatus.PAYMENTDUE);
-			us.setSponsorContact(sponsor.getContact());
+			us.setPayeeContact(sponsor.getContact());
 			us.setNewRating(1);
 		}
 		punter.setSystemOwned(punter.getLevel()<=ZenModelOriginal.SYSTEMLEVELS);
@@ -422,10 +429,12 @@ public class PunterMgr {
 
 	public void tryUpgrade(Punter punter, RestServices restServices) throws PunterMgrException
 	{
+		log.info("trying upgrade for : " + punter.getContact());
 		int newRating = canUpgrade2(punter);
 		if (newRating<=0)
 			return;
 		
+		log.info("can upgrade for : " + punter.getContact());
 		scheduleUpgrade(punter,newRating,restServices);
 		while (true)
 		{
@@ -433,6 +442,7 @@ public class PunterMgr {
 			newRating = canUpgrade2(parent);
 			if (newRating<=0)
 				return;
+			log.info("can upgrade for parent : " + parent.getContact());
 			scheduleUpgrade(parent,newRating,restServices);
 			punter = parent;
 		}
@@ -448,14 +458,15 @@ public class PunterMgr {
 			parentToPay = getByUUID(parentToPay.getParentId());
 		}
 		// find the parent above rating
-		while (parentToPay.getRating() != -1 && parentToPay.getRating()<punter.getRating())
+		while (parentToPay.getRating() != -1 && newRating>=parentToPay.getRating())
 		{
 			parentToPay = getByUUID(parentToPay.getParentId());
 		}
-		us.setSponsorContact(parentToPay.getContact());
+		us.setPayeeContact(parentToPay.getContact());
 		punterDao.updateUpgradeStatus(punter);
 		if (punter.isSystemOwned())						// upgrade automatically
 		{
+			log.info("system punter " + punter.getContact() + " - auto upgraded");
 			SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
 			String ds = sdf.format((new GregorianCalendar()).getTime());
 			long paymentId = restServices.submitTransactionDetails(punter.getContact(),null,ds,
@@ -464,6 +475,7 @@ public class PunterMgr {
 		}
 		else
 		{
+			log.info("non-system punter " + punter.getContact() + " - notify for upgrade");
 			double fee = ratingMgr.getUpgradeFeeForRating(newRating);
 			services.getMailNotifier().notifyUpgradeRequired(punter,fee);
 		}

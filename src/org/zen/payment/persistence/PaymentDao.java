@@ -3,6 +3,7 @@ package org.zen.payment.persistence;
 import java.util.List;
 import java.util.UUID;
 
+import org.zen.json.PaymentInfoJson;
 import org.zen.json.PaymentMethodJson;
 import org.zen.json.PunterPaymentMethodJson;
 import org.zen.payment.Xtransaction;
@@ -22,5 +23,6 @@ public interface PaymentDao {
 			long offset, long limit);
 	public Xtransaction getXtransactionById(long id);
 	public void updateXtransaction(long id, PaymentStatus paymentStatus);
+	public PaymentInfoJson getPaymentInfoByTranactionId(final long id);
 
 }

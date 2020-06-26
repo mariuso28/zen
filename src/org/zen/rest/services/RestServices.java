@@ -109,9 +109,9 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		}
 	}
 
-	public void approvePayment(String contact,String paymentId) {
+	public void approvePayment(String sponsorContact,String paymentId) {
 		
-		Punter sponsor = getPunter(contact);
+		Punter sponsor = getPunter(sponsorContact);
 		try {
 			long idL = Long.parseLong(paymentId);
 			Xtransaction xt = services.getHome().getPaymentDao().getXtransactionById(idL);
@@ -120,14 +120,16 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			us.setChanged((new GregorianCalendar()).getTime());
 			us.setPaymentStatus(PaymentStatus.PAYMENTSUCCESS);
 			punter.setRating(us.getNewRating());
+			log.info("New rating for punter : " + punter.getContact() + " is : " + punter.getRating());
 			xt.setPaymentStatus(PaymentStatus.PAYMENTSUCCESS);
 			services.updatePaymentSuccess(xt,sponsor, punter);
 			
-			log.info("Payment approved for : " + contact);
+			log.info("Payment approved by : " + sponsorContact + " for : " + punter.getContact());
 			services.getMailNotifier().notifyUpgradeSuccessful(punter);
 			
+			Punter parent = services.getHome().getPunterDao().getById(punter.getParentId());
 			// SET NEW UPGRADESTATUS for upstream
-			punterMgr.tryUpgrade(sponsor,this);
+			punterMgr.tryUpgrade(parent,this);
 			
 		} catch (Exception e) {
 			log.error(e.getMessage(),e);
@@ -201,10 +203,13 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			try {
 				UpgradeStatus us = punter.getUpgradeStatus();
 				xt.setPayerId(punter.getId());
-				Punter sponsor = punterMgr.getPunterDao().getByContact(us.getSponsorContact());
-				xt.setPayeeId(sponsor.getId());
+				Punter payee = punterMgr.getPunterDao().getByContact(us.getPayeeContact());
+				xt.setPayeeId(payee.getId());
 				xt.setDate((new GregorianCalendar().getTime()));
-				xt.setAmount(ratingMgr.getUpgradeFeeForRating(us.getNewRating()));
+				if (punter.isSystemOwned() && payee.isSystemOwned())
+					xt.setAmount(0);
+				else
+					xt.setAmount(ratingMgr.getUpgradeFeeForRating(us.getNewRating()));
 				if (us.getNewRating()==1)
 					xt.setDescription("Zen Activate Member At Rank 1");
 				else
@@ -213,7 +218,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 				xt.setPaymentStatus(us.getPaymentStatus());
 				xt.setPaymentInfo(pi);
 				xt.setNewRating(us.getNewRating());
-				
+				xt.setPayeeRating(payee.getRating());
 				services.storePaymentMade(punter,xt);
 				
 				return xt.getId();
@@ -679,4 +684,21 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		this.services = services;
 	}
 
+	public PunterMgr getPunterMgr() {
+		return punterMgr;
+	}
+
+	public void setPunterMgr(PunterMgr punterMgr) {
+		this.punterMgr = punterMgr;
+	}
+
+	public RatingMgr getRatingMgr() {
+		return ratingMgr;
+	}
+
+	public void setRatingMgr(RatingMgr ratingMgr) {
+		this.ratingMgr = ratingMgr;
+	}
+
+	
 }

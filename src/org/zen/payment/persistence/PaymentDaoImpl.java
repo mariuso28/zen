@@ -17,6 +17,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.transaction.annotation.Transactional;
+import org.zen.json.PaymentInfoJson;
 import org.zen.json.PaymentMethodJson;
 import org.zen.json.PunterPaymentMethodJson;
 import org.zen.payment.PaymentInfo;
@@ -97,7 +98,7 @@ public class PaymentDaoImpl extends NamedParameterJdbcDaoSupport implements Paym
 	@Override
 	public void storeXtransaction(final Xtransaction xt)
 	{
-		String sql = "INSERT INTO xtransaction (payerId,payeeId,date,amount,paymentstatus,description,newrating) VALUES (?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO xtransaction (payerId,payeeId,date,amount,paymentstatus,description,newrating,payeerating) VALUES (?,?,?,?,?,?,?,?)";
 	
 		try
 		{
@@ -115,6 +116,7 @@ public class PaymentDaoImpl extends NamedParameterJdbcDaoSupport implements Paym
 						ps.setString(5, xt.getPaymentStatus().name());
 						ps.setString(6, xt.getDescription());
 						ps.setInt(7, xt.getNewRating());
+						ps.setInt(8, xt.getPayeeRating());
 						return ps;
 					}
 				},keyHolder);
@@ -194,6 +196,23 @@ public class PaymentDaoImpl extends NamedParameterJdbcDaoSupport implements Paym
 		{
 			log.error("Could not execute : " + e.getMessage(),e);
 			throw new PersistenceRuntimeException("Could not execute getAvailablePaymentMethods : " + e.getMessage());
+		}
+	}
+	
+	@Override
+	public PaymentInfoJson getPaymentInfoByTranactionId(final long id) {
+		try
+		{
+			final String sql = "SELECT * FROM paymentinfo WHERE xtransactionid=?";
+			List<PaymentInfoJson> pms = getJdbcTemplate().query(sql,new Object[]{ id },BeanPropertyRowMapper.newInstance(PaymentInfoJson.class));
+			if (pms.isEmpty())
+				return null;
+			return pms.get(0);
+		}
+		catch (DataAccessException e)
+		{
+			log.error("Could not execute : " + e.getMessage(),e);
+			throw new PersistenceRuntimeException("Could not execute getPaymentInfoByTranactionId : " + e.getMessage());
 		}
 	}
 	

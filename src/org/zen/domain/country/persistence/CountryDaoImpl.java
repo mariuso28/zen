@@ -16,6 +16,7 @@ public class CountryDaoImpl extends NamedParameterJdbcDaoSupport implements Coun
 	private List<CountryDisplayJson> countryListKm = null;
 	private List<CountryDisplayJson> countryListId = null;
 	private List<CountryDisplayJson> countryListCh = null;
+	private List<CountryDisplayJson> countryListMs = null;
 	
 	@Override
 	public void initializeCountryLists()
@@ -24,6 +25,7 @@ public class CountryDaoImpl extends NamedParameterJdbcDaoSupport implements Coun
 		 getCountryList("km");
 		 getCountryList("id");
 		 getCountryList("ch");
+		 getCountryList("ms");
 	}
 	
 	@Override
@@ -69,6 +71,16 @@ public class CountryDaoImpl extends NamedParameterJdbcDaoSupport implements Coun
 					countryListCh = getJdbcTemplate().query(sql,BeanPropertyRowMapper.newInstance(CountryDisplayJson.class));
 				}
 				return countryListCh;
+			}
+			else
+			if (isoCode.equals("ms"))
+			{
+				if (countryListMs==null)
+				{
+					String sql = "SELECT country" + isoCode + " AS country,code FROM country ORDER BY displayorder,country" + isoCode;
+					countryListMs = getJdbcTemplate().query(sql,BeanPropertyRowMapper.newInstance(CountryDisplayJson.class));
+				}
+				return countryListMs;
 			}
 			log.error("UNKNOWN COUNTRY CODE!!! : " + isoCode);
 			return null;
@@ -117,11 +129,11 @@ public class CountryDaoImpl extends NamedParameterJdbcDaoSupport implements Coun
 
 	@Override
 	public void update(CountryJson country) {
-		String sql = "UPDATE country SET country=?,countrykm=?,countryid=?,countrych=? WHERE code=?";
+		String sql = "UPDATE country SET country=?,countrykm=?,countryid=?,countrych=?,countryms=? WHERE code=?";
 		try
 		{
 			 getJdbcTemplate().update(sql, new Object[] { country.getCountry(), country.getCountrykm(), 
-					 				country.getCountryid(), country.getCountrych(),		
+					 				country.getCountryid(), country.getCountrych(),	country.getCountryms(),		
 					 						country.getCode() });
 		}
 		catch (DataAccessException e)

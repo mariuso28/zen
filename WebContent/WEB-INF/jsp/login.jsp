@@ -228,6 +228,8 @@ function login() {
         </div>
         <div class="languageEntry" id="chId">
         </div>
+        <div class="languageEntry" id="msId">
+        </div>
         <div class="languageEntry" id="idId">
         </div>
         <div class="languageEntry" id="kmId">

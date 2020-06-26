@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.zen.util.EmailValidator;
 
 import com.github.javafaker.Faker;
@@ -76,12 +77,14 @@ public class FakerUtil {
 	{
 		int cnt = 0;
 		Set<String> sns = new HashSet<String>();
-		while (cnt<200)
+		while (cnt<500)
 		{
 			Faker faker = new Faker();
 			String sn = faker.name().lastName();
 			if (sns.contains(sn) || sn.length()>8)
 				continue;
+			if (!StringUtils.isAlphanumeric(sn))
+				continue;	
 			System.out.println(sn);
 			cnt++;
 		}
@@ -91,12 +94,14 @@ public class FakerUtil {
 	{
 		int cnt = 0;
 		Set<String> sns = new HashSet<String>();
-		while (cnt<200)
+		while (cnt<500)
 		{
 			Faker faker = new Faker();
 			String sn = faker.name().firstName();
 			if (sns.contains(sn) || sn.length()>5)
 				continue;
+			if (!StringUtils.isAlphanumeric(sn))
+				continue;	
 			System.out.println(sn);
 			cnt++;
 		}
@@ -104,7 +109,7 @@ public class FakerUtil {
 	
 	public static void main(String args[])
 	{
-		createFakeEnglishFirstNames();
+		createFakeEnglishSurnames();
 		
 	/*	Faker faker = new Faker();
 

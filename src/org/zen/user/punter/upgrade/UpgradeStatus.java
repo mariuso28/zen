@@ -1,11 +1,13 @@
 package org.zen.user.punter.upgrade;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class UpgradeStatus {
+	private UUID id;
 	private PaymentStatus paymentStatus;
 	private int newRating;
-	private String sponsorContact;
+	private String payeeContact;
 	private Date changed;
 	
 	public UpgradeStatus()
@@ -28,12 +30,12 @@ public class UpgradeStatus {
 		this.newRating = newRating;
 	}
 
-	public String getSponsorContact() {
-		return sponsorContact;
+	public String getPayeeContact() {
+		return payeeContact;
 	}
 
-	public void setSponsorContact(String sponsorContact) {
-		this.sponsorContact = sponsorContact;
+	public void setPayeeContact(String payeeContact) {
+		this.payeeContact = payeeContact;
 	}
 
 	public Date getChanged() {
@@ -42,6 +44,14 @@ public class UpgradeStatus {
 
 	public void setChanged(Date changed) {
 		this.changed = changed;
+	}
+
+	public UUID getId() {
+		return id;
+	}
+
+	public void setId(UUID id) {
+		this.id = id;
 	}
 	
 	

@@ -320,12 +320,12 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 		
 		UpgradeStatus us = punter.getUpgradeStatus();
 		Timestamp ts = new Timestamp(us.getChanged().getTime());
-		getJdbcTemplate().update("INSERT INTO upgradestatus (id,sponsorcontact,changed,paymentstatus,newrating) "
+		getJdbcTemplate().update("INSERT INTO upgradestatus (id,payeecontact,changed,paymentstatus,newrating) "
 						+ "VALUES (?,?,?,?,?)"
 						, new PreparedStatementSetter() {
 							public void setValues(PreparedStatement ps) throws SQLException {
 								ps.setObject(1, punter.getId());
-								ps.setString(2,us.getSponsorContact());
+								ps.setString(2,us.getPayeeContact());
 								ps.setTimestamp(3, ts);
 								ps.setString(4, us.getPaymentStatus().name());
 								ps.setInt(5,us.getNewRating());
@@ -342,11 +342,11 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 			UpgradeStatus us = punter.getUpgradeStatus();
 			us.setChanged((new GregorianCalendar()).getTime());
 			Timestamp ts = new Timestamp(us.getChanged().getTime());
-			getJdbcTemplate().update("UPDATE upgradestatus SET sponsorcontact=?,changed=?,paymentstatus=?,newrating=? "
+			getJdbcTemplate().update("UPDATE upgradestatus SET payeecontact=?,changed=?,paymentstatus=?,newrating=? "
 							+ "WHERE id=?"
 							, new PreparedStatementSetter() {
 								public void setValues(PreparedStatement ps) throws SQLException {
-									ps.setString(1,us.getSponsorContact());
+									ps.setString(1,us.getPayeeContact());
 									ps.setTimestamp(2, ts);
 									ps.setString(3, us.getPaymentStatus().name());
 									ps.setInt(4,us.getNewRating());
@@ -488,7 +488,7 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 		final String sql = "SELECT bu.*,s.contact as sponsorcontact,p.contact as parentcontact FROM baseuser as bu " +
 				"INNER JOIN baseuser AS s ON s.id = bu.sponsorid " + 
 				"INNER JOIN baseuser AS p ON p.id = bu.parentid " +
-				"WHERE bu.level=?";
+				"WHERE bu.level=? ORDER BY s.contact,bu.contact";
 		try
 		{
 			List<Punter> punters = getJdbcTemplate().query(sql,new PreparedStatementSetter() {
@@ -542,6 +542,21 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 		{
 			log.error("Could not execute : " + e.getMessage(),e);
 			throw new PersistenceRuntimeException("Could not execute getChildren : " + e.getMessage());
+		}
+	}
+	
+	@Override
+	public List<UpgradeStatus> getEligibleUpgrades(final Integer level) {
+		try
+		{
+			final String sql = "select us.* from upgradestatus as us join baseuser as p on p.id = us.id where paymentstatus = 'PAYMENTDUE' AND p.level=?";
+			List<UpgradeStatus> uss = getJdbcTemplate().query(sql, new Object[] { level },  BeanPropertyRowMapper.newInstance(UpgradeStatus.class));
+			return uss;
+		}
+		catch (DataAccessException e)
+		{
+			log.error("Could not execute : " + e.getMessage(),e);
+			throw new PersistenceRuntimeException("Could not execute getEligibleUpgrades : " + e.getMessage());
 		}
 	}
 
@@ -638,42 +653,42 @@ public class PunterDaoImpl extends NamedParameterJdbcDaoSupport implements Punte
 	
 	public void deletePuntersBetweenLevels(int from,int to) {
 		
-		for (int level=to; level>=from; level--)
+		for (Integer level=to; level>=from; level--)
 		{
 			try
 			{
 				final String sql0 = "DELETE FROM upgradestatus AS pus WHERE "
-						+ "pus.id IN (SELECT bu.id FROM baseuser AS bu WHERE level='" + level + "')";
-				getJdbcTemplate().update(sql0);
+						+ "pus.id IN (SELECT bu.id FROM baseuser AS bu WHERE level=?)";
+				getJdbcTemplate().update(sql0,new Object[] { level });
 				
 				final String sql = "DELETE FROM punterpaymentmethod AS pmm WHERE "
-						+ "pmm.punterid IN (SELECT bu.id FROM baseuser AS bu WHERE level='" + level + "')";
-				getJdbcTemplate().update(sql);
+						+ "pmm.punterid IN (SELECT bu.id FROM baseuser AS bu WHERE level=?)";
+				getJdbcTemplate().update(sql,new Object[] { level });
 				
 				final String sql1 = "DELETE FROM account AS acc WHERE "
-						+ "acc.id IN (SELECT bu.id FROM baseuser AS bu WHERE level='" + level + "')";
-				getJdbcTemplate().update(sql1);
+						+ "acc.id IN (SELECT bu.id FROM baseuser AS bu WHERE level=?)";
+				getJdbcTemplate().update(sql1,new Object[] { level });
 				
 				final String sqlpi1 = "DELETE FROM paymentinfo WHERE xtransactionid IN "
 						+ "(SELECT id FROM xtransaction WHERE payerid IN "
-						+ "(SELECT bu.contact FROM baseuser AS bu WHERE level='" + level + "'))";
-				getJdbcTemplate().update(sqlpi1);
+						+ "(SELECT bu.id FROM baseuser AS bu WHERE level=?))";
+				getJdbcTemplate().update(sqlpi1,new Object[] { level });
 				
 				final String sqlpi2 = "DELETE FROM paymentinfo WHERE xtransactionid IN "
 						+ "(SELECT id FROM xtransaction WHERE payeeid IN "
-						+ "(SELECT bu.contact FROM baseuser AS bu WHERE level='" + level + "'))";
-				getJdbcTemplate().update(sqlpi2);
+						+ "(SELECT bu.id FROM baseuser AS bu WHERE level=?))";
+				getJdbcTemplate().update(sqlpi2,new Object[] { level });
 				
 				final String sqlx = "DELETE FROM xtransaction WHERE payerid IN " + 
-											"(SELECT bu.contact FROM baseuser AS bu WHERE level='" + level + "'))";
-				getJdbcTemplate().update(sqlx);
+											"(SELECT bu.id FROM baseuser AS bu WHERE level=?)";
+				getJdbcTemplate().update(sqlx,new Object[] { level });
 				
 				final String sqlx2 = "DELETE FROM xtransaction WHERE payeeid IN " + 
-						"(SELECT bu.contact FROM baseuser AS bu WHERE level='" + level + "'))";
-				getJdbcTemplate().update(sqlx2);
+						"(SELECT bu.id FROM baseuser AS bu WHERE level=?)";
+				getJdbcTemplate().update(sqlx2,new Object[] { level });
 					
-				final String sql2 = "DELETE FROM baseuser WHERE Role = 'ROLE_PUNTER' AND level='" + level + "'";
-				getJdbcTemplate().update(sql2);
+				final String sql2 = "DELETE FROM baseuser WHERE Role = 'ROLE_PUNTER' AND level=?";
+				getJdbcTemplate().update(sql2,new Object[] { level });
 			}
 			catch (DataAccessException e)
 			{

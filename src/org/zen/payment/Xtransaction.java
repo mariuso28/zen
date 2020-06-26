@@ -24,6 +24,7 @@ public class Xtransaction {
 	private PaymentInfo paymentInfo;
 	private String description;
 	private int newRating;
+	private int payeeRating;
 	
 	public Xtransaction()
 	{
@@ -147,6 +148,14 @@ public class Xtransaction {
 
 	public void setNewRating(int newRating) {
 		this.newRating = newRating;
+	}
+
+	public int getPayeeRating() {
+		return payeeRating;
+	}
+
+	public void setPayeeRating(int payeeRating) {
+		this.payeeRating = payeeRating;
 	}
 	
 	

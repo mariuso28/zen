@@ -89,6 +89,8 @@ public class Services {
 				doPerformUpdateAccounts(sponsor,punter);
 			}
 		});
+		log.info("Updated account for punter : " + punter.getContact() + " : " + punter.getAccount().getBalance()
+				+ " sponsor : " + sponsor.getContact() + " : " + sponsor.getAccount().getBalance());
 	}
 	
 	private void doPerformUpdateAccounts(final Punter sponsor, final Punter punter) {
@@ -108,6 +110,7 @@ public class Services {
 		
 	private void doUpdatePaymentFail(Xtransaction xt,Punter sponsor,Punter punter) {
 		// update the paymentstatus xtransaction, upgradestatus, rating of punter, email the punter
+		log.info("Updating payment fail for punter : " + punter.getContact() + " sponsor : " + sponsor.getContact());
 		home.getPunterDao().updateUpgradeStatus(punter);
 		home.getPaymentDao().updateXtransaction(xt.getId(), xt.getPaymentStatus());
 	}
@@ -123,6 +126,7 @@ public class Services {
 		
 	private void doUpdatePaymentSuccess(Xtransaction xt,Punter sponsor,Punter punter) {
 		// update the paymentstatus xtransaction, upgradestatus, rating of punter, email the punter
+		log.info("Updating payment success for punter : " + punter.getContact() + " sponsor : " + sponsor.getContact());
 		home.getPunterDao().updateRating(punter);
 		home.getPunterDao().updateUpgradeStatus(punter);
 		home.getPaymentDao().updateXtransaction(xt.getId(), xt.getPaymentStatus());

@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.zen.user.account.Account;
 import org.zen.user.punter.Punter;
+import org.zen.user.punter.upgrade.UpgradeStatus;
 
 public interface PunterDao {
 
@@ -27,6 +28,7 @@ public interface PunterDao {
 	public void setPunterEnabled(Punter punter);
 	public List<Punter> getSponsoredChildren(Punter parent);
 	public void updateUpgradeStatus(Punter punter);
+	public List<UpgradeStatus> getEligibleUpgrades(final Integer level);
 	public List<Punter> getPuntersForLevel(int level);
 	public int getMaxLevelPopulated();
 	public List<Punter> getAllPunters();
