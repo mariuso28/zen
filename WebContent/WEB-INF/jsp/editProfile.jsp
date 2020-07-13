@@ -166,14 +166,25 @@ function getAvailablePaymentMethods()
          }
          // alert(JSON.stringify(data));
        var resultJson = $.parseJSON(JSON.stringify(data));
+       console.log("Punter level : " + punter.level);
        if (resultJson.status=='OK')
        {
-         paymentMethods = resultJson.result;
-        $('#avaiLabelPaymentMethods').empty();
-         $('#avaiLabelPaymentMethods').append($('<option id="methodCountryLabel"/>').attr("value", -1).text("Method - Country"));
-         $.each(paymentMethods, function(i, option) {
-            $('#avaiLabelPaymentMethods').append($('<option/>').attr("value", i).text(option.method + " - " + option.country));
-         });
+         if (punter.level!=4)
+         {
+           paymentMethods = resultJson.result;
+          $('#avaiLabelPaymentMethods').empty();
+           $('#avaiLabelPaymentMethods').append($('<option id="methodCountryLabel"/>').attr("value", -1).text("Method - Country"));
+           $.each(paymentMethods, function(i, option) {
+              $('#avaiLabelPaymentMethods').append($('<option/>').attr("value", i).text(option.method + " - " + option.country));
+           });
+         }
+         else {
+           var element = document.getElementById('addPaymentMethodGroup');
+           element. parentNode. removeChild(element);
+
+           var element1 = document.getElementById('deleteLabel');
+           element1. parentNode. removeChild(element1);
+         }
        }
        else
        {
@@ -363,19 +374,23 @@ function displayPaymentMethods()
         td = document.createElement('td');
         td.appendChild(document.createTextNode(pm.accountNum));
         tr.appendChild(td);
-        td = document.createElement('td');
 
-        var t = document.createElement('IMG');
-        t.setAttribute('src',"../../../img/delete.jpeg");
-        t.setAttribute('border', 0);
-        t.setAttribute('width',"20px");
-        t.setAttribute('height',"20px");
-        t.addEventListener('click',function (e) {
-            deletePaymentMethod(pm.id);
-          });
-        td.appendChild(t);
+        if (punter.level!=4)
+        {
+          td = document.createElement('td');
 
-        tr.appendChild(td);
+          var t = document.createElement('IMG');
+          t.setAttribute('src',"../../../img/delete.jpeg");
+          t.setAttribute('border', 0);
+          t.setAttribute('width',"20px");
+          t.setAttribute('height',"20px");
+          t.addEventListener('click',function (e) {
+              deletePaymentMethod(pm.id);
+            });
+          td.appendChild(t);
+          tr.appendChild(td);
+        }
+
         pl.appendChild(tr);
       })
 }
@@ -547,7 +562,7 @@ function updateProfile() {
                 </table>
                 <div>
               </div>
-              <div class="control-group">
+              <div class="control-group" id="addPaymentMethodGroup">
                 <label class="control-label" id="addPaymentMethodLabel"></label>
                 <div class="controls">
                   <select id="avaiLabelPaymentMethods" onchange="addPaymentMethod(value)">

@@ -646,6 +646,7 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 		if (!isSystemOwned)
 			return pj;
 			
+		pj.setLevel(punter.getLevel());
 		pj.setGender(services.getTxm().xlate(punter.getGender()));
 		pj.setEmail(punter.getEmail());
 		pj.setPhone(punter.getPhone());

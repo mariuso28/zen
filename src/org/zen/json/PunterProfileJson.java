@@ -25,6 +25,7 @@ public class PunterProfileJson {
 	private boolean canUpgrade;
 	private boolean canRecruit;
 	private int rating;
+	private int level;
 	private ActionJson actions;
 	private Date activated;
 	private List<PunterPaymentMethodJson> paymentMethods = new ArrayList<PunterPaymentMethodJson>();
@@ -208,6 +209,14 @@ public class PunterProfileJson {
 
 	public void setCanRecruit(boolean canRecruit) {
 		this.canRecruit = canRecruit;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
 	}
 
 	
