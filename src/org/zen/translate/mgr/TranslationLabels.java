@@ -68,7 +68,7 @@ public class TranslationLabels {
 		Map<String,String> map = new HashMap<String,String>();
 		setMainLabels(map);
 		map.put("upgradeLabel",xlate("Upgrade"));
-		map.put("congratulationsLabel",xlate("Contratulations!"));
+		map.put("congratulationsLabel",xlate("Congratulations!"));
 		map.put("uplineInformationLabel",xlate("Up Line Information"));
 		map.put("fullNameLabel",xlate("Full Name"));
 		map.put("fullNameLabel2",xlate("Full Name"));
@@ -104,7 +104,7 @@ public class TranslationLabels {
 		map.put("upLabel8",xlate("Zen Upgrade Member To Rank "));
 		map.put("upLabel9",xlate("Upgrade Fee: "));
 		map.put("upAlert1",xlate("Transaction details successfully submitted."));
-		map.put("upAlert2",xlate("Check email for comfirmation of receipt."));
+		map.put("upAlert2",xlate("Check email for confirmation of receipt."));
 		return map;
 	}
 	

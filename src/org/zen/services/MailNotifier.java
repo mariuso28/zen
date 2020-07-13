@@ -150,7 +150,7 @@ public class MailNotifier {
 		final String msg = x("Hi ") + punter.getFullName() 
 				+ "<br/>"+x("Your Zen password has been reset for username :")+"<br/><br/>" 
 				+ punter.getContact() + "<br/>"+x(" to : ")+"<strong>" + newPw  + "</strong>"
-				+ "<br/><br/>"+x("Please login and change at your covenience.");
+				+ "<br/><br/>"+x("Please login and change at your convenience.");
 				
 		
 		final List<String> attactments = new  ArrayList<String>();

@@ -12,7 +12,7 @@ public class Labels {
 			"Add Payment Method :", "Save", "Cancel", "Method - Country",
 			"Profile successfully updated",
 			"New User Registration", "Sponsor Information", "Zen User Name", "New Agent Information",		// Registration only stuff
-			"Zen Username", "Password", "Confrim Password", "Generate",
+			"Zen Username", "Password", "Confirm Password", "Generate",
 			"You have no payment methods set up","Please edit profile to set up at least one.",
 			"Change Password", "Old Password", "New Password", "Confirm Password",							// Password stuff
 			"Password/verify password must match.",
@@ -26,7 +26,7 @@ public class Labels {
 			"None","Due","Pending","Successful","Failed",
 			"Activate Member At Rank ","Upgrade Member To Rank ",
 			"Payment approved. Member upgraded and notified.","Payment rejected. Member notified.",
-			"Upgrade", "Contratulations!", "Up Line Information", "Rank", "Make Payment to Up Line",		// upgrade
+			"Upgrade", "Congratulations!", "Up Line Information", "Rank", "Make Payment to Up Line",		// upgrade
 			"Submit Payment Form", "Submission Information", "Title", "Upload Transaction Slip",
 			"Submit", "Check Payment Email", "Check your email for the payment confirmation from us.",
 			"If you do not receive the email confirmation within 24 hours, please check your SPAM folder.",
@@ -34,7 +34,7 @@ public class Labels {
 			"You have successfully registered with Zen. Make you registration payment today to proceed to ",
 			" and start making money!", "Zen Activate Member At Rank ","Activation Fee: ","You are now at Rank ",
 			" Upgrade today to "," to start earning more!","Zen Upgrade Member To Rank ", "Upgrade Fee: ",
-			"Transaction details successfully submitted.","Check email for comfirmation of receipt.",
+			"Transaction details successfully submitted.","Check email for confirmation of receipt.",
 			"Latest"																						// dashboard
 			};
 }

@@ -14,6 +14,26 @@ public class TranslationDaoImpl extends NamedParameterJdbcDaoSupport implements 
 	private static Logger log = Logger.getLogger(TranslationDaoImpl.class);
 	
 	@Override
+	public void override(final String isoCode, final String old, final String new1)
+	{
+		try
+		{getJdbcTemplate().update("UPDATE translations SET translation=? WHERE translation=? AND isocode=?"
+				, new PreparedStatementSetter() {
+					public void setValues(PreparedStatement ps) throws SQLException {
+						ps.setString(1, new1);
+						ps.setString(2, old);
+						ps.setString(3, isoCode);
+					}
+				});
+		}
+		catch (DataAccessException e)
+		{
+			log.error("Could not execute : " + e.getMessage(),e);
+			throw new PersistenceRuntimeException("Could not override : " + e.getMessage());
+		}
+	}
+	
+	@Override
 	public void store(String isoCode, String src, String translation) {
 		try
 		{

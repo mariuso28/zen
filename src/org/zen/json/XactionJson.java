@@ -8,6 +8,7 @@ public class XactionJson {
 	private String description;
 	private double amount;
 	private String status;
+	private String displayStatus;
 	private String date;
 	private PaymentInfoJson paymentInfo;
 	
@@ -85,6 +86,14 @@ public class XactionJson {
 
 	public void setPaymentInfo(PaymentInfoJson paymentInfo) {
 		this.paymentInfo = paymentInfo;
+	}
+
+	public String getDisplayStatus() {
+		return displayStatus;
+	}
+
+	public void setDisplayStatus(String displayStatus) {
+		this.displayStatus = displayStatus;
 	}
 
 	

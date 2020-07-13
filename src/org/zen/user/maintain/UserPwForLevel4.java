@@ -27,6 +27,7 @@ public class UserPwForLevel4 {
 			List<Punter> ps = home.getPunterDao().getPuntersForLevel(4);
 			for (Punter p : ps)
 			{
+				System.out.println("Changing : " + p.getContact());
 				p.setPassword(pw);
 				home.getPunterDao().updatePassword(p);
 				cnt++;

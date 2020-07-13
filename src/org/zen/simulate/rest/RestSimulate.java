@@ -67,7 +67,7 @@ public class RestSimulate {
 			RestServices rs = (RestServices) context.getBean("restServices");
 			RestSimulate rSim = new RestSimulate(rs);
 		//	rs.getServices().getHome().getPunterDao().deletePuntersBetweenLevels(9,10);
-			for (int i=9; i<11; i++)
+			for (int i=0; i<4; i++)
 			{
 				log.info("#### simulating for level : " + i + "####");
 				rSim.simulateAcquisitionsAtLevel(i);

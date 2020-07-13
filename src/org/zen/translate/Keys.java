@@ -36,7 +36,7 @@ public class Keys {
 		keys.add("Zen - password reset");
 		keys.add("Your Zen password has been reset for username :");
 		keys.add("to : ");
-		keys.add("Please login and change at your covenience.");
+		keys.add("Please login and change at your convenience.");
 		keys.add("Zen Member : ");
 		keys.add(" not found - please check.");
 		keys.add("Invalid transaction date : ");

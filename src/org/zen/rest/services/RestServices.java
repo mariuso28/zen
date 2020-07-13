@@ -294,7 +294,8 @@ private static final Logger log = Logger.getLogger(RestServices.class);
 			xj.setFullName(xt.getPayerFullName());
 			xj.setPhone(xt.getPayerPhone());
 		}
-		xj.setStatus(x(xt.getPaymentStatus().getDisplayStatus()));
+		xj.setStatus(xt.getPaymentStatus().getDisplayStatus());
+		xj.setDisplayStatus(x(xt.getPaymentStatus().getDisplayStatus()));
 		SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy hh:mm");
 		xj.setDate(sdf.format(xt.getDate()));
 		String desc = xt.getDescription().trim();

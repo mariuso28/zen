@@ -199,6 +199,7 @@ function getPaymentDetails(paymentId,memberType) {
         document.getElementById('cp').innerHTML=labels['paymentToLabel'];
      }
 
+     console.log('Payment status : ' + payment.status);
      if (memberType=='payer' || payment.status!='Pending')
      {
        ardiv = document.getElementById('approveRejectDiv');
@@ -225,7 +226,7 @@ function getPaymentDetails(paymentId,memberType) {
      tr.appendChild(td);
      td = document.createElement('td');
      td.style = "text-align:center";
-     td.appendChild(document.createTextNode(payment.status));
+     td.appendChild(document.createTextNode(payment.displayStatus));
      tr.appendChild(td);
      td = document.createElement('td');
      td.style = "text-align:center";
